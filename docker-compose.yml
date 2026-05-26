@@ -1,0 +1,33 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://bidel:bidel123@db:5432/bidel
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+
+  db:
+    image: postgres:15
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_DB: bidel
+      POSTGRES_USER: bidel
+      POSTGRES_PASSWORD: bidel123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bidel"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
