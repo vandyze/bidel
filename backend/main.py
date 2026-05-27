@@ -1,4 +1,6 @@
 import random as random_module
+from datetime import date
+from typing import Optional
 
 from fastapi import FastAPI, Depends, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -35,6 +37,11 @@ class RegisterRequest(BaseModel):
 class LoginRequest(BaseModel):
     email: str
     password: str
+
+class UpdateMeRequest(BaseModel):
+    username: Optional[str] = None
+    email: Optional[str] = None
+    password: Optional[str] = None
 
 class UserResponse(BaseModel):
     id: int
@@ -114,6 +121,40 @@ def me(current_user: models.User = Depends(get_current_user)):
         email=current_user.email,
         created_at=current_user.created_at.isoformat(),
     )
+
+
+@app.put("/auth/me", response_model=UserResponse)
+def update_me(
+    body: UpdateMeRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    if body.username and body.username != current_user.username:
+        if db.query(models.User).filter(models.User.username == body.username).first():
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="این نام کاربری قبلاً ثبت شده")
+        current_user.username = body.username
+
+    if body.email and body.email != current_user.email:
+        if db.query(models.User).filter(models.User.email == body.email).first():
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="این ایمیل قبلاً ثبت شده")
+        current_user.email = body.email
+
+    if body.password:
+        current_user.hashed_password = hash_password(body.password)
+
+    db.commit()
+    db.refresh(current_user)
+    return UserResponse(
+        id=current_user.id,
+        username=current_user.username,
+        email=current_user.email,
+        created_at=current_user.created_at.isoformat(),
+    )
+
+
+@app.post("/auth/logout")
+def logout(current_user: models.User = Depends(get_current_user)):
+    return {"message": "خروج موفق"}
 
 
 # --- Bookmark Schemas ---
@@ -426,8 +467,54 @@ def get_terjee_keywords(number: int, db: Session = Depends(get_db)):
     ]
 
 
+@app.get("/poems/verse-of-day")
+def verse_of_day(db: Session = Depends(get_db)):
+    total = db.query(models.Ghazal).count()
+    if not total:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="داده‌ای یافت نشد")
+
+    today = date.today()
+    seed = today.year * 10000 + today.month * 100 + today.day
+    ghazal_offset = seed % total
+    ghazal = db.query(models.Ghazal).order_by(models.Ghazal.number).offset(ghazal_offset).first()
+
+    couplet_index = seed % len(ghazal.couplets)
+    couplet = ghazal.couplets[couplet_index]
+
+    return {
+        "poem_id": ghazal.id,
+        "ghazal_number": ghazal.number,
+        "ghazal_title": ghazal.title,
+        "couplet_index": couplet_index,
+        "text1": couplet[0] if len(couplet) > 0 else "",
+        "text2": couplet[1] if len(couplet) > 1 else "",
+    }
+
+
 # --- Keyword Routes ---
-# NOTE: /keywords/categories must be defined before /keywords/{word}
+# NOTE: specific paths (/featured, /categories) must be defined before /keywords/{word}
+
+@app.get("/keywords/featured")
+def get_featured_keywords(db: Session = Depends(get_db)):
+    keywords = db.query(models.Keyword).order_by(models.Keyword.id).all()
+    if not keywords:
+        return []
+
+    today = date.today()
+    seed = today.year * 10000 + today.month * 100 + today.day
+    rng = random_module.Random(seed)
+    selected = rng.sample(keywords, min(4, len(keywords)))
+
+    return [
+        {
+            "word": k.word,
+            "count": k.count,
+            "category": k.category,
+            "meaning": k.meaning,
+        }
+        for k in selected
+    ]
+
 
 @app.get("/keywords/categories")
 def get_keyword_categories(db: Session = Depends(get_db)):
@@ -440,7 +527,7 @@ def get_keyword_categories(db: Session = Depends(get_db)):
 @app.get("/keywords")
 def list_keywords(
     page: int = Query(1, ge=1),
-    limit: int = Query(50, ge=1, le=200),
+    limit: int = Query(50, ge=1, le=250),
     category: str | None = Query(None),
     maqam: str | None = Query(None),
     db: Session = Depends(get_db),
