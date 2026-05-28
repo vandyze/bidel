@@ -1,7 +1,10 @@
+import asyncio
+import os
 import random as random_module
 from datetime import date
 from typing import Optional
 
+import httpx
 from fastapi import FastAPI, Depends, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -15,6 +18,23 @@ from auth import hash_password, verify_password, create_access_token, decode_acc
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+
+# --- Telegram Notification ---
+
+async def notify_telegram(msg: str):
+    token = os.getenv("TELEGRAM_TOKEN")
+    chat_id = os.getenv("TELEGRAM_CHAT_ID")
+    if not token or not chat_id:
+        return
+    try:
+        async with httpx.AsyncClient() as client:
+            await client.post(
+                f"https://api.telegram.org/bot{token}/sendMessage",
+                json={"chat_id": chat_id, "text": msg}
+            )
+    except:
+        pass
 
 app.add_middleware(
     CORSMiddleware,
@@ -86,7 +106,7 @@ def root():
 
 
 @app.post("/auth/register", status_code=status.HTTP_201_CREATED)
-def register(body: RegisterRequest, db: Session = Depends(get_db)):
+async def register(body: RegisterRequest, db: Session = Depends(get_db)):
     if db.query(models.User).filter(models.User.email == body.email).first():
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="این ایمیل قبلاً ثبت شده")
     if db.query(models.User).filter(models.User.username == body.username).first():
@@ -100,6 +120,7 @@ def register(body: RegisterRequest, db: Session = Depends(get_db)):
     db.add(user)
     db.commit()
     db.refresh(user)
+    asyncio.create_task(notify_telegram(f"🎉 کاربر جدید: {user.username}\nایمیل: {user.email}"))
     return {"message": "ثبت‌نام با موفقیت انجام شد", "user_id": user.id}
 
 
