@@ -422,6 +422,65 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 3px}
 .tw-seg{display:flex;background:var(--ik);border-radius:9px;padding:3px;gap:2px}
 .tw-seg button{flex:1;background:transparent;border:none;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:12px;padding:6px 0;border-radius:7px;cursor:pointer;transition:all .15s}
 .tw-seg button.on{background:var(--go);color:#fff;font-weight:700}
+
+/* ─── MOOD / حال‌وهوا ──────────────────────── */
+.mood-card{background:linear-gradient(180deg,var(--sf2),var(--sf));border:1px solid var(--br2);border-radius:16px;padding:14px 14px 12px;margin-bottom:14px;position:relative;overflow:hidden}
+.mood-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
+.mood-title{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.1em;font-weight:600;display:flex;align-items:center;gap:6px;cursor:pointer}
+.mood-title::before{content:'';width:14px;height:14px;border-radius:99px;background:radial-gradient(circle at 35% 35%,var(--sa),var(--sa2));flex-shrink:0;box-shadow:0 0 0 3px var(--sah)}
+.mood-dom{font-size:11px;color:var(--sa2);font-family:"IRANYekanX",sans-serif;font-weight:700;background:var(--sah);border-radius:99px;padding:3px 10px;flex-shrink:0;white-space:nowrap;cursor:pointer}
+.mood-hint{font-size:10px;color:var(--fa);font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em;text-align:center;margin-top:2px;cursor:pointer}
+.mood-radar-wrap{display:flex;justify-content:center;padding:4px 0 2px}
+.mood-radar{width:100%;max-width:300px;height:auto;overflow:visible;touch-action:manipulation}
+.mr-grid{fill:none;stroke:var(--br2);stroke-width:1}
+.mr-spoke{stroke:var(--br2);stroke-width:1}
+.mr-area{fill:var(--go);fill-opacity:0.14;stroke:var(--go);stroke-width:2;stroke-linejoin:round}
+.mr-vtx{fill:var(--sf2);stroke:var(--go);stroke-width:2;cursor:pointer;transition:r .12s,fill .12s}
+.mr-vtx:hover{fill:var(--sa);stroke:var(--sa2)}
+.mr-hit{fill:transparent;cursor:pointer}
+.mr-lab{font-family:"IRANYekanX",sans-serif;font-size:12.5px;font-weight:700;fill:var(--tx2);cursor:pointer;user-select:none}
+.mr-lab.dom{fill:var(--sa2)}
+.mr-lab-pct{font-family:"IRANYekanX",sans-serif;font-size:9.5px;fill:var(--mu);cursor:pointer;user-select:none}
+.mood-axis-g:hover .mr-lab{fill:var(--go)}
+.mr-center-n{font-family:"IRANYekanX",sans-serif;font-size:20px;font-weight:700;fill:var(--gd);font-variant-numeric:tabular-nums}
+.mr-center-lab{font-family:"IRANYekanX",sans-serif;font-size:8.5px;fill:var(--mu);letter-spacing:0.04em}
+.ms-bg{position:fixed;inset:0;background:rgba(26,34,24,0.5);display:flex;align-items:flex-end;justify-content:center;z-index:120;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
+.ms-bg.open{opacity:1;pointer-events:all}
+.ms-sheet{background:var(--sf);border-radius:18px 18px 0 0;border-top:1px solid var(--br);width:100%;max-width:500px;max-height:82vh;overflow-y:auto;padding:8px 16px 28px;transform:translateY(100%);transition:transform .26s cubic-bezier(.2,.7,.2,1)}
+.ms-bg.open .ms-sheet{transform:translateY(0)}
+.ms-grip{width:38px;height:4px;border-radius:99px;background:var(--br);margin:6px auto 12px}
+.ms-h{display:flex;align-items:center;gap:11px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--br2)}
+.ms-dot{width:34px;height:34px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ms-h-tx{flex:1;min-width:0}
+.ms-h-name{font-size:21px;color:var(--gd);font-weight:700;line-height:1.15}
+.ms-h-sub{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-top:2px}
+.ms-meter{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.ms-meter-track{flex:1;height:7px;border-radius:99px;background:var(--ik);overflow:hidden;position:relative}
+.ms-meter-fill{position:absolute;inset:0 0 0 auto;height:100%;border-radius:99px}
+.ms-meter-val{font-size:13px;font-weight:700;font-family:"IRANYekanX",sans-serif;font-variant-numeric:tabular-nums;flex-shrink:0;width:38px;text-align:left;direction:ltr}
+.ms-desc{font-size:15px;color:var(--tx);line-height:1.95;text-align:justify;text-justify:inter-word;margin-bottom:16px}
+.ms-sec-h{font-size:11px;color:var(--sa2);font-family:"IRANYekanX",sans-serif;letter-spacing:0.1em;margin-bottom:9px;font-weight:600;display:flex;align-items:center;gap:6px}
+.ms-sec-h::before{content:'';width:16px;height:1px;background:var(--sa)}
+.ms-sec{margin-bottom:18px}
+.ms-sec:last-child{margin-bottom:0}
+.ms-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ms-empty{font-size:13px;color:var(--vf);font-family:"IRANYekanX",sans-serif;padding:2px 0}
+.ms-cp{background:var(--sf2);border:1px solid var(--br2);border-radius:12px;padding:10px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
+.ms-cp:hover{border-color:var(--go)}
+.ms-cp .ms-cp1{font-size:16px;color:var(--tx);line-height:1.85}
+.ms-cp .ms-cp2{font-size:16px;color:var(--mu);line-height:1.85;text-align:left}
+.ms-cp .ms-cp-n{font-size:10px;color:var(--fa);font-family:"IRANYekanX",sans-serif;margin-top:5px;letter-spacing:0.04em}
+.ms-ov-row{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--br2);cursor:pointer}
+.ms-ov-row:last-child{border-bottom:none}
+.ms-ov-row:hover .ms-ov-name{color:var(--go)}
+.ms-ov-dot{width:11px;height:11px;border-radius:99px;flex-shrink:0}
+.ms-ov-name{font-size:15px;color:var(--gd);font-weight:700;width:48px;flex-shrink:0}
+.ms-ov-track{flex:1;height:7px;border-radius:99px;background:var(--ik);overflow:hidden;position:relative}
+.ms-ov-fill{position:absolute;inset:0 0 0 auto;height:100%;border-radius:99px}
+.ms-ov-pct{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-variant-numeric:tabular-nums;width:34px;text-align:left;direction:ltr;flex-shrink:0}
+.ms-ov-chev{color:var(--vf);font-size:16px;flex-shrink:0}
+.cp-flash{animation:cpFlash 1.4s ease}
+@keyframes cpFlash{0%,100%{box-shadow:0 0 0 0 rgba(200,144,48,0)}25%{box-shadow:0 0 0 2px var(--sa)}}
 </style>
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -540,6 +599,12 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 3px}
       <div class="auth-err" id="auth-register-err"></div>
       <button class="auth-submit" id="auth-register-btn">ثبت‌نام</button>
     </form>
+  </div>
+</div>
+
+<div class="ms-bg" id="mood-sheet-bg">
+  <div class="ms-sheet" id="mood-sheet">
+    <div id="mood-sheet-body"></div>
   </div>
 </div>
 
@@ -789,6 +854,179 @@ function getCategories(){
   return [{id:'all', label:'همه'}, ...cats.filter(c=>c!=='سایر').map(c=>({id:c, label:c})), {id:'سایر', label:'سایر'}];
 }
 
+// ─── MOOD / حال‌وهوا ────────────────────────
+const MOODS = [
+  {id:'talab',   label:'طلب',    color:'#b0823e', sub:'آغاز راه و جست‌وجو',
+   desc:'نخستین وادی، بیداری دل و تشنگی جست‌وجوی حقیقت. سالک باید از تعلقات دست بشوید و صد دشواری را پشت سر بگذارد تا آتش طلب در جانش شعله‌ور شود. در شعر بیدل، شور و بی‌قراری آغاز سیر.'},
+  {id:'eshgh',   label:'عشق',    color:'#b0566a', sub:'وادی آتش',
+   desc:'سالک سراپا آتش عشق می‌شود و علم و حساب را نادیده می‌انگارد. اینجا جان را در راه می‌بازند و سود و زیان معنا ندارد، نیرویی که کل هستی بیدل را به حرکت درمی‌آورد و راهی رسیده است.'},
+  {id:'marefat', label:'معرفت',  color:'#6a7bb0', sub:'شناخت به قدر استعداد',
+   desc:'وادی شناخت، هر سالک به اندازه ظرفیتش به معرفتی حق می‌رسد. راه‌ها به شمار نفوس خواهند بود و حقیقت بر هر کس به گونه‌ای جلوه می‌کند. در بیدل: آینه و بصیرت باطن.'},
+  {id:'esteghna',label:'استغنا', color:'#5d8f7e', sub:'بی‌نیازی و فراغت',
+   desc:'وادی بی‌نیازی، نه کوشش به کار آید نه دانش. هفت آسمان و زمین در برابر بی‌نیازی حق چون ذره‌ای است و سالک از همه چیز فارغ می‌شود، نمان قناعت و کاسه گدا که گنجه بیدل است.'},
+  {id:'towhid',  label:'توحید',  color:'#5d8f5d', sub:'یگانگی و وحدت',
+   desc:'وادی یگانگی، کثرت رخت بربیدد و همه در وحدت محو می‌شوند. آنچه هست یکی است و دوگانگی از میان برخیزد — نمان قطره و دریا و سیمرغ سی‌مرغ.'},
+  {id:'heyrat',  label:'حیرت',   color:'#7b6cae', sub:'سرگشتگی و بهت',
+   desc:'وادی سرگردانی، سالک از فرط حیرت دانسته‌هایش را گم می‌کند، نه می‌داند که هست یا نیست. حالتی بنیادین شعر بیدل: بهت در برابر شگفتی هستی، آنجا که علم خاموش می‌ماند.'},
+  {id:'fana',    label:'فنا',    color:'#8a8076', sub:'نور و نیستی',
+   desc:'واپسین وادی، فنا. سالک در حق فانی می‌شود و قطره به دریا می‌پیوندد، خود نمی‌ماند تا حق بماند. در بیدل انجام سلوک: شکسته، نیست شده و رهایی از همه خویش — فنا که عین بقاست.'},
+];
+const MOOD_BY = Object.fromEntries(MOODS.map(m=>[m.id,m]));
+const MAQAM_MOOD = {
+  'طلب':{talab:0.8}, 'عشق':{eshgh:0.8},
+  'معرفت':{marefat:0.8}, 'استغنا':{esteghna:0.8},
+  'توحید':{towhid:0.8}, 'حیرت':{heyrat:0.8}, 'فنا':{fana:0.8}
+};
+
+function _seed(n){
+  let s=(n*2654435761)%2147483647; if(s<=0) s+=2147483646;
+  return ()=>{ s=(s*16807)%2147483647; return (s-1)/2147483646; };
+}
+
+function computeMoods(n, poem, kwObjs){
+  const raw={}; MOODS.forEach(m=>raw[m.id]=0);
+  const moodKws={}; MOODS.forEach(m=>moodKws[m.id]=[]);
+  (kwObjs||[]).forEach(k=>{
+    const w=k.word||k;
+    const weight=k.count||1;
+    if(!k.maqam||k.maqam==='سایر') return;
+    const map=MAQAM_MOOD[k.maqam];
+    if(!map) return;
+    for(const id in map){
+      raw[id]+=map[id]*weight;
+      if(map[id]>=0.4 && !moodKws[id].includes(w)) moodKws[id].push(w);
+    }
+  });
+  const rnd=_seed(n);
+  MOODS.forEach(m=>{ raw[m.id]+=0.01+rnd()*0.05; });
+  const max=Math.max(...MOODS.map(m=>raw[m.id]),0.001);
+  const scores={}; MOODS.forEach(m=>scores[m.id]=raw[m.id]/max);
+  const couplets=poem?poem.couplets:[];
+  const list=MOODS.map(m=>{
+    const cps=[];
+    couplets.forEach((c,ci)=>{
+      const txt=(c[0]||'')+' '+(c[1]||'');
+      if(moodKws[m.id].some(w=>txt.indexOf(w)!==-1)) cps.push({m1:c[0]||'',m2:c[1]||'',ci});
+    });
+    return {...m, val:scores[m.id], pct:Math.round(scores[m.id]*100), kws:moodKws[m.id], couplets:cps};
+  });
+  let dom=MOODS[0].id, dv=-1;
+  MOODS.forEach(m=>{ if(scores[m.id]>dv){dv=scores[m.id]; dom=m.id;} });
+  return {scores, dom, list};
+}
+
+let _moodState=null;
+
+function renderMoodCard(n, poem, kwObjs){
+  const data=computeMoods(n, poem, kwObjs);
+  _moodState={n, kwObjs, data};
+  const domMood=MOOD_BY[data.dom];
+  let h='<div class="mood-card" id="mood-card">';
+  h+='<div class="mood-head"><span class="mood-title">حال‌وهوای غزل</span>';
+  h+='<span class="mood-dom" data-mood="'+data.dom+'">غالب: '+domMood.label+'</span></div>';
+  h+=renderMoodRadar(data, (kwObjs||[]).length);
+  h+='<div class="mood-hint fa">روی هر حالت بزنید تا واژه‌ها و ابیاتش را ببینید</div>';
+  h+='</div>';
+  return h;
+}
+
+function renderMoodRadar(data, kwCount){
+  const N=MOODS.length, cx=150, cy=120, R=78;
+  const step=360/N;
+  const rings=[0.34,0.67,1];
+  const pt=(i,r)=>{ const a=(-90+i*step)*Math.PI/180; return [cx+R*r*Math.cos(a), cy+R*r*Math.sin(a)]; };
+  let s='<div class="mood-radar-wrap"><svg class="mood-radar" viewBox="0 0 300 248" role="img" aria-label="نمودار هفت‌وادی حال‌وهوا">';
+  rings.forEach(r=>{
+    const pts=MOODS.map((_,i)=>pt(i,r).map(v=>v.toFixed(1)).join(',')).join(' ');
+    s+='<polygon class="mr-grid" points="'+pts+'"/>';
+  });
+  MOODS.forEach((_,i)=>{ const [x,y]=pt(i,1); s+='<line class="mr-spoke" x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'"/>'; });
+  const dpts=MOODS.map((m,i)=>pt(i,Math.max(0.08,data.scores[m.id])).map(v=>v.toFixed(1)).join(',')).join(' ');
+  s+='<polygon class="mr-area" points="'+dpts+'"/>';
+  MOODS.forEach((m,i)=>{
+    const [vx,vy]=pt(i,Math.max(0.08,data.scores[m.id]));
+    const [lx,ly]=pt(i,1.0);
+    const isDom=(m.id===data.dom);
+    let anchor='middle', dx=0;
+    if(Math.abs(lx-cx)<18){ anchor='middle'; dx=0; }
+    else if(lx>cx){ anchor='start'; dx=7; }
+    else { anchor='end'; dx=-7; }
+    let dyName, dyPct;
+    if(ly<cy-50){ dyName=-12; dyPct=-1; }
+    else if(ly>cy+50){ dyName=16; dyPct=28; }
+    else { dyName=2; dyPct=15; }
+    s+='<g class="mood-axis-g" data-mood="'+m.id+'" style="cursor:pointer">';
+    s+='<text class="mr-lab'+(isDom?' dom':'')+'" x="'+(lx+dx).toFixed(1)+'" y="'+(ly+dyName).toFixed(1)+'" text-anchor="'+anchor+'">'+m.label+'</text>';
+    s+='<text class="mr-lab-pct" x="'+(lx+dx).toFixed(1)+'" y="'+(ly+dyPct).toFixed(1)+'" text-anchor="'+anchor+'">٪'+toFa(Math.round(data.scores[m.id]*100))+'</text>';
+    s+='<circle class="mr-hit" cx="'+lx.toFixed(1)+'" cy="'+ly.toFixed(1)+'" r="24"/>';
+    s+='<circle class="mr-vtx" cx="'+vx.toFixed(1)+'" cy="'+vy.toFixed(1)+'" r="'+(isDom?5:3.5)+'"'+(isDom?' style="fill:var(--sa);stroke:var(--sa2)"':'')+'/>';
+    s+='</g>';
+  });
+  if(kwCount){
+    s+='<text class="mr-center-n" x="'+cx+'" y="'+(cy-3)+'" text-anchor="middle">'+toFa(kwCount)+'</text>';
+    s+='<text class="mr-center-lab" x="'+cx+'" y="'+(cy+11)+'" text-anchor="middle">واژه کلیدی</text>';
+  }
+  s+='</svg></div>';
+  return s;
+}
+
+function _tint(hex,a){
+  const c=hex.replace('#','');
+  const r=parseInt(c.slice(0,2),16), g=parseInt(c.slice(2,4),16), b=parseInt(c.slice(4,6),16);
+  return 'rgba('+r+','+g+','+b+','+a+')';
+}
+
+function openMoodSheet(moodId){
+  if(!_moodState) return;
+  const body=document.getElementById('mood-sheet-body');
+  if(!body) return;
+  body.innerHTML=moodId?renderMoodDetail(moodId):renderMoodOverview();
+  document.getElementById('mood-sheet').scrollTop=0;
+  document.getElementById('mood-sheet-bg').classList.add('open');
+}
+function closeMoodSheet(){ document.getElementById('mood-sheet-bg').classList.remove('open'); }
+
+function renderMoodOverview(){
+  const sorted=_moodState.data.list.slice().sort((a,b)=>b.val-a.val);
+  const domMood=MOOD_BY[_moodState.data.dom];
+  let h='<div class="ms-grip"></div>';
+  h+='<div class="ms-h"><div class="ms-dot" style="background:'+_tint(domMood.color,0.16)+'"><div style="width:14px;height:14px;border-radius:99px;background:'+domMood.color+'"></div></div>';
+  h+='<div class="ms-h-tx"><div class="ms-h-name">حال‌وهوای غزل</div><div class="ms-h-sub fa">شدت نسبی هر حالت در این غزل</div></div></div>';
+  for(const m of sorted){
+    h+='<div class="ms-ov-row" data-mood="'+m.id+'">';
+    h+='<span class="ms-ov-dot" style="background:'+m.color+'"></span>';
+    h+='<span class="ms-ov-name">'+m.label+'</span>';
+    h+='<span class="ms-ov-track"><span class="ms-ov-fill" style="width:'+Math.max(4,Math.round(m.val*100))+'%;background:'+m.color+'"></span></span>';
+    h+='<span class="ms-ov-pct fa">٪'+toFa(m.pct)+'</span>';
+    h+='<span class="ms-ov-chev">‹</span>';
+    h+='</div>';
+  }
+  return h;
+}
+
+function renderMoodDetail(moodId){
+  const m=_moodState.data.list.find(x=>x.id===moodId); if(!m) return renderMoodOverview();
+  let h='<div class="ms-grip"></div>';
+  h+='<div class="ms-h"><div class="ms-dot" style="background:'+_tint(m.color,0.16)+'"><div style="width:15px;height:15px;border-radius:99px;background:'+m.color+'"></div></div>';
+  h+='<div class="ms-h-tx"><div class="ms-h-name">'+m.label+'</div><div class="ms-h-sub fa">'+m.sub+'</div></div></div>';
+  h+='<div class="ms-meter"><span class="ms-meter-track"><span class="ms-meter-fill" style="width:'+Math.max(4,Math.round(m.val*100))+'%;background:'+m.color+'"></span></span><span class="ms-meter-val" style="color:'+m.color+'">٪'+toFa(m.pct)+'</span></div>';
+  h+='<div class="ms-desc">'+m.desc+'</div>';
+  h+='<div class="ms-sec"><div class="ms-sec-h">واژه‌های این حالت در غزل</div>';
+  if(m.kws.length){ h+='<div class="ms-chips">'; for(const w of m.kws) h+='<button class="gkw" data-kwword="'+w+'">'+w+'</button>'; h+='</div>'; }
+  else h+='<div class="ms-empty fa">واژه‌ای شاخص از این حالت در این غزل نیست</div>';
+  h+='</div>';
+  h+='<div class="ms-sec"><div class="ms-sec-h">ابیاتی هم‌حال</div>';
+  if(m.couplets.length){
+    for(const c of m.couplets){
+      h+='<div class="ms-cp" data-ci="'+c.ci+'"><div class="ms-cp1">'+c.m1+'</div>';
+      if(c.m2) h+='<div class="ms-cp2">'+c.m2+'</div>';
+      h+='<div class="ms-cp-n fa">بیت '+toFa(c.ci+1)+' · برای رفتن بزنید</div></div>';
+    }
+  } else h+='<div class="ms-empty fa">بیتی شاخص برای این حالت یافت نشد</div>';
+  h+='</div>';
+  return h;
+}
+
 // ─── HOME ─────────────────────────────────
 function showHome(){
   curTab='home'; curView='home'; backStack=[];
@@ -945,6 +1183,9 @@ async function showG(n,kw){
   let h='<div class="pm">';
   h+='<div class="pmeta"><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div></div>';
   h+='<div class="ghazal-kw-row" id="ghazal-keywords"><span class="gkw-lab fa">واژگان کلیدی</span></div>';
+  const ghazalKwWords=resolveGhazalKeywords(n,p);
+  const ghazalKwObjs=ghazalKwWords.map(w=>kwBy(w)).filter(Boolean);
+  h+=renderMoodCard(n,p,ghazalKwObjs);
   p.couplets.forEach(([m1,m2],ci)=>{
     const key=bkey('g',n,ci);
     h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','g',kw||'');
@@ -961,6 +1202,7 @@ async function showG(n,kw){
       const keywords=Array.isArray(data)?data:(data.keywords||[]);
       if(!keywords.length){ el.style.display='none'; return; }
 
+      // UI: فقط ۵ تا نشون بده
       const first5=keywords.slice(0,5);
       const rest=keywords.slice(5);
 
@@ -982,6 +1224,16 @@ async function showG(n,kw){
         document.querySelector('.kw-rest').style.display='inline';
         btn.style.display='none';
       });
+
+      // Mood card: همه keyword‌ها با maqam از API
+      const allKwObjs=keywords.map(k=>({
+        word: k.word||k,
+        maqam: k.maqam||'',
+        category: k.category||'',
+        count: k.count||0,
+      }));
+      const moodCard=document.getElementById('mood-card');
+      if(moodCard) moodCard.outerHTML=renderMoodCard(n,p,allKwObjs);
     });
 }
 
@@ -1414,6 +1666,10 @@ async function doSrch(){
 
 // ─── EVENT DELEGATION ────────────────────
 ctEl.addEventListener('click', function(e){
+  // Mood card: axis labels, bar rows, dominant chip → open sheet
+  const moodEl=e.target.closest('#mood-card [data-mood]');
+  if(moodEl){ openMoodSheet(moodEl.dataset.mood); return; }
+  if(e.target.closest('#mood-card .mood-title')||e.target.closest('#mood-card .mood-hint')){ openMoodSheet(null); return; }
   // Profile rows
   const pr = e.target.closest('.pr-row');
   if(pr){
@@ -1760,6 +2016,25 @@ window.addEventListener('message', e=>{
   else if(d.type==='__deactivate_edit_mode') closeTweaks();
 });
 try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
+
+// ─── MOOD SHEET EVENTS ───────────────────
+document.getElementById('mood-sheet-bg').addEventListener('click', e=>{
+  if(e.target.id==='mood-sheet-bg'){ closeMoodSheet(); return; }
+  const kw=e.target.closest('.gkw');
+  if(kw){ closeMoodSheet(); showKeyword(kw.dataset.kwword); return; }
+  const ov=e.target.closest('.ms-ov-row');
+  if(ov){ openMoodSheet(ov.dataset.mood); return; }
+  const cp=e.target.closest('.ms-cp');
+  if(cp){
+    const ci=parseInt(cp.dataset.ci);
+    closeMoodSheet();
+    setTimeout(()=>{
+      const el=ctEl.querySelector('.cp[data-key="'+bkey('g',cg,ci)+'"]');
+      if(el){ ctEl.scrollTo({top:Math.max(0,el.offsetTop-12),behavior:'smooth'}); el.classList.add('cp-flash'); setTimeout(()=>el.classList.remove('cp-flash'),1400); }
+    },230);
+    return;
+  }
+});
 
 // ─── API DATA LOADERS ────────────────────
 async function loadAllKeywords(){
