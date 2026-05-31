@@ -3,6 +3,7 @@ import os
 import random as random_module
 from datetime import date
 from typing import Optional
+from urllib.parse import quote
 
 import httpx
 from fastapi import FastAPI, Depends, HTTPException, Query, status
@@ -581,29 +582,33 @@ def list_keywords(
 
 
 @app.get("/sitemap.xml", include_in_schema=False)
-def sitemap():
+def sitemap(db: Session = Depends(get_db)):
     BASE = "https://bideli.ir"
+
+    def url(loc, priority, changefreq="monthly"):
+        return f"  <url>\n    <loc>{loc}</loc>\n    <changefreq>{changefreq}</changefreq>\n    <priority>{priority}</priority>\n  </url>"
+
     urls = []
 
-    urls.append(f"""  <url>
-    <loc>{BASE}/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>""")
+    urls.append(url(f"{BASE}/",        "1.0", "weekly"))
+    urls.append(url(f"{BASE}/ghazals", "0.9"))
+    urls.append(url(f"{BASE}/terjee",  "0.8"))
+    urls.append(url(f"{BASE}/keywords","0.8"))
+    urls.append(url(f"{BASE}/zand",    "0.7"))
 
     for n in range(1, 2828):
-        urls.append(f"""  <url>
-    <loc>{BASE}/ghazal/{n}</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>""")
+        urls.append(url(f"{BASE}/ghazal/{n}", "0.8"))
 
     for n in range(1, 35):
-        urls.append(f"""  <url>
-    <loc>{BASE}/terjee/{n}</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>""")
+        urls.append(url(f"{BASE}/terjee/{n}", "0.7"))
+
+    zand_numbers = db.query(models.Zand.number).order_by(models.Zand.number).all()
+    for (n,) in zand_numbers:
+        urls.append(url(f"{BASE}/zand/{n}", "0.6"))
+
+    keywords = db.query(models.Keyword.word).order_by(models.Keyword.word).all()
+    for (word,) in keywords:
+        urls.append(url(f"{BASE}/keywords/{quote(word, safe='')}", "0.7"))
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

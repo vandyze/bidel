@@ -11,6 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="بیدل">
+<meta name="google-site-verification" content="CjGisdAuB7c4W_Pj5hvO09zTtRI5IujRRe2H1K4t39Y" />
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
 <meta name="description" content="دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند و زند">
 <meta property="og:title" content="دیوان بیدل دهلوی">
@@ -1631,8 +1632,8 @@ async function doSrch(){
   const normalized=raw.trim().replace(/[۰-۹]/g,d=>persianMap[d]);
   const num=parseInt(normalized);
   if(!isNaN(num) && num>0 && String(num)===normalized){
-    if(num>=1 && num<=TOT){ showG(num); return; }
-    if(num>=1 && num<=TB){ showT(num); return; }
+    if(num>=1 && num<=TOT){ navigate('/ghazal/'+num); return; }
+    if(num>=1 && num<=TB){ navigate('/terjee/'+num); return; }
     resultsEl.innerHTML='<div class="nr2">شماره '+toFa(num)+' یافت نشد</div>';
     return;
   }
@@ -1687,8 +1688,8 @@ ctEl.addEventListener('click', function(e){
     if(act==='edit'){ _editingProfile=true; renderProfileLoggedIn(); setTimeout(()=>{const el=document.getElementById('pr-inp-name');if(el)el.focus();},50); return; }
     if(act==='bms'){ showBm(); return; }
     if(act==='logout'){ showConfirm(); return; }
-    if(act==='go-browse'){ showBrowse('g'); return; }
-    if(act==='go-kw'){ showKeywords(); return; }
+    if(act==='go-browse'){ navigate('/ghazals'); return; }
+    if(act==='go-kw'){ navigate('/keywords'); return; }
     if(act==='go-search'){ showSearch(); return; }
     return;
   }
@@ -1703,10 +1704,10 @@ ctEl.addEventListener('click', function(e){
   const qc = e.target.closest('.qc');
   if(qc){
     const dest = qc.dataset.go;
-    if(dest==='browse-g'){ browseSub='g'; showBrowse('g'); }
-    else if(dest==='browse-t'){ browseSub='t'; showBrowse('t'); }
-    else if(dest==='browse-z'){ browseSub='z'; showBrowse('z'); }
-    else if(dest==='kw'){ showKeywords(); }
+    if(dest==='browse-g'){ navigate('/ghazals'); }
+    else if(dest==='browse-t'){ navigate('/terjee'); }
+    else if(dest==='browse-z'){ navigate('/zand'); }
+    else if(dest==='kw'){ navigate('/keywords'); }
     return;
   }
   // Verse of day → open ghazal
@@ -1717,14 +1718,12 @@ ctEl.addEventListener('click', function(e){
   if(hs){ showSearch(); return; }
   // Top keyword strip
   const ksc = e.target.closest('.kw-strip-card');
-  if(ksc){ showKeyword(ksc.dataset.kwword); return; }
+  if(ksc){ navigate('/keywords/'+encodeURIComponent(ksc.dataset.kwword)); return; }
   // Browse segmented
   const segb = e.target.closest('#browse-seg button');
   if(segb){
-    browseSub = segb.dataset.sub;
-    document.querySelectorAll('#browse-seg button').forEach(b=>b.classList.toggle('on', b===segb));
-    setHeader('غزلیات بیدل', browseSub==='g'?'۲۸۲۷ غزل':browseSub==='t'?'۳۴ بند · ترجیع‌بند':'شرح شروین وکیلی');
-    renderBrowseBody();
+    const _sub = segb.dataset.sub;
+    navigate(_sub==='g'?'/ghazals':_sub==='t'?'/terjee':'/zand');
     return;
   }
   // Keyword filter chip
@@ -1732,16 +1731,16 @@ ctEl.addEventListener('click', function(e){
   if(fc){ _kwFilter = fc.dataset.kwfilter; renderKeywordList(); return; }
   // Keyword card
   const kc = e.target.closest('.kw-card');
-  if(kc){ showKeyword(kc.dataset.kwword); return; }
+  if(kc){ navigate('/keywords/'+encodeURIComponent(kc.dataset.kwword)); return; }
   // Tag inside ghazal/search
   const gtag = e.target.closest('.gkw');
-  if(gtag){ showKeyword(gtag.dataset.kwword); return; }
+  if(gtag){ navigate('/keywords/'+encodeURIComponent(gtag.dataset.kwword)); return; }
   // Keyword inside search results
   const kwr = e.target.closest('.ri.kw');
-  if(kwr){ showKeyword(kwr.dataset.kwword); return; }
+  if(kwr){ navigate('/keywords/'+encodeURIComponent(kwr.dataset.kwword)); return; }
   // Zand section
   const zc = e.target.closest('.zcard');
-  if(zc){ showZand(parseInt(zc.dataset.zid)); return; }
+  if(zc){ navigate('/zand/'+zc.dataset.zid); return; }
   // Result item
   const ri = e.target.closest('.ri');
   if(ri && !e.target.closest('button')){
@@ -1806,9 +1805,9 @@ document.querySelector('.bn').addEventListener('click', e=>{
   const it = e.target.closest('.bn-item');
   if(!it) return;
   const tab = it.dataset.tab;
-  if(tab==='home') showHome();
-  else if(tab==='browse') showBrowse(browseSub);
-  else if(tab==='kw') showKeywords();
+  if(tab==='home') navigate('/');
+  else if(tab==='browse') navigate(browseSub==='t'?'/terjee':browseSub==='z'?'/zand':'/ghazals');
+  else if(tab==='kw') navigate('/keywords');
   else if(tab==='bm') showBm();
   else if(tab==='srch') showSearch();
   else if(tab==='profile') showProfile();
@@ -1816,22 +1815,10 @@ document.querySelector('.bn').addEventListener('click', e=>{
 
 // ─── HEADER BACK ─────────────────────────
 btnBack.addEventListener('click', ()=>{
-  // Smart back: depending on current view, go to its parent
-  if(curView==='gh' || curView==='tr'){
-    if(curTab==='browse') showBrowse(browseSub);
-    else if(curTab==='kw') showKeywords();
-    else if(curTab==='srch') showSearch();
-    else if(curTab==='bm') showBm();
-    else if(curTab==='profile') showProfile();
-    else showHome();
-  } else if(curView==='zsec'){
-    showBrowse('z');
-  } else if(curView==='kwd'){
-    showKeywords();
-  } else if(curView==='profile'){
-    showHome();
+  if(history.length > 1){
+    history.back();
   } else {
-    showHome();
+    navigate('/');
   }
 });
 
@@ -1860,7 +1847,7 @@ gp.addEventListener('click', ()=>navigate('/ghazal/'+Math.max(1,cg-1)));
 gn.addEventListener('click', ()=>navigate('/ghazal/'+Math.min(TOT,cg+1)));
 tp2.addEventListener('click', ()=>navigate('/terjee/'+Math.max(1,ct-1)));
 tn2.addEventListener('click', ()=>navigate('/terjee/'+Math.min(TB,ct+1)));
-document.getElementById('tallbands').addEventListener('click', ()=>{ browseSub='t'; showBrowse('t'); });
+document.getElementById('tallbands').addEventListener('click', ()=>navigate('/terjee'));
 
 // ─── NOTE MODAL ──────────────────────────
 function openModal(key,verse){
@@ -2031,7 +2018,7 @@ try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
 document.getElementById('mood-sheet-bg').addEventListener('click', e=>{
   if(e.target.id==='mood-sheet-bg'){ closeMoodSheet(); return; }
   const kw=e.target.closest('.gkw');
-  if(kw){ closeMoodSheet(); showKeyword(kw.dataset.kwword); return; }
+  if(kw){ closeMoodSheet(); navigate('/keywords/'+encodeURIComponent(kw.dataset.kwword)); return; }
   const ov=e.target.closest('.ms-ov-row');
   if(ov){ openMoodSheet(ov.dataset.mood); return; }
   const cp=e.target.closest('.ms-cp');
@@ -2090,6 +2077,15 @@ function handleRoute(path){
   if(mg){ showG(parseInt(mg[1])); return; }
   const mt = path.match(/^\/terjee\/(\d+)$/);
   if(mt){ showT(parseInt(mt[1])); return; }
+  if(path === '/ghazals'){ showBrowse('g'); return; }
+  if(path === '/terjee'){ showBrowse('t'); return; }
+  const mz = path.match(/^\/zand\/(\d+)$/);
+  if(mz){ showZand(parseInt(mz[1])); return; }
+  if(path === '/zand'){ showBrowse('z'); return; }
+  if(path.startsWith('/keywords/')){
+    showKeyword(decodeURIComponent(path.slice(10))); return;
+  }
+  if(path === '/keywords'){ showKeywords(); return; }
   showHome();
 }
 window.addEventListener('popstate', ()=>handleRoute(location.pathname));
