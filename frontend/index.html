@@ -12,6 +12,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="بیدل">
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
+<meta name="description" content="دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند و زند">
+<meta property="og:title" content="دیوان بیدل دهلوی">
+<meta property="og:description" content="دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند و زند">
+<meta property="og:url" content="">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="دیوان بیدل دهلوی">
 <link rel="preload" href="fonts/IRANYekanX-Regular.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="preload" href="fonts/IRANYekanX-Bold.ttf" as="font" type="font/ttf" crossorigin>
 <style>
@@ -1032,6 +1038,7 @@ function showHome(){
   curTab='home'; curView='home'; backStack=[];
   setBnActive('home'); setBack(false); hideSubnavs(); setNavHidden(false);
   setHeader('بیدلی','');
+  setMeta('دیوان کامل بیدل دهلوی', 'دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند و زند');
   const greeting = (()=>{ const h=new Date().getHours(); return h<5?'شب بخیر':h<12?'صبح بخیر':h<17?'ظهر بخیر':h<20?'عصر بخیر':'شب بخیر' })();
   // Pick a "verse of the day" deterministically
   const dayNum = Math.floor(Date.now()/86400000) % TOT + 1;
@@ -1180,6 +1187,8 @@ async function showG(n,kw){
   if(!p){ctEl.innerHTML='<div class="er">غزل یافت نشد</div>';return;}
   _poemCache['g_'+n]=p;
   setHeader('غزل '+toFa(n), p.title+' · '+toFa(p.couplets.length)+' بیت');
+  const _c0=p.couplets[0]||['',''];
+  setMeta('غزل '+toPersianNum(n)+' — '+((_c0[0]||'').slice(0,30)), (_c0[0]||'')+(_c0[1]?'\n'+_c0[1]:''));
   let h='<div class="pm">';
   h+='<div class="pmeta"><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div></div>';
   h+='<div class="ghazal-kw-row" id="ghazal-keywords"><span class="gkw-lab fa">واژگان کلیدی</span></div>';
@@ -1250,6 +1259,7 @@ async function showT(n,kw){
   if(!band){ctEl.innerHTML='<div class="er">بند یافت نشد</div>';return;}
   _poemCache['t_'+n]=band;
   setHeader('بند '+toFa(n), 'ترجیع‌بند حیرت · '+toFa(band.couplets.length)+' بیت');
+  setMeta('ترجیع‌بند '+toPersianNum(n), 'ترجیع‌بند شماره '+toPersianNum(n)+' از دیوان بیدل دهلوی');
   let h='<div class="pm"><div class="pmeta"><div class="pnum fa">ترجیع‌بند حیرت</div><div class="ptitle">بند '+toFa(n)+'</div><div class="psub fa">از '+toFa(TB)+' بند</div></div>';
   band.couplets.forEach(([m1,m2],ci)=>{
     const key=bkey('t',n,ci);
@@ -1701,7 +1711,7 @@ ctEl.addEventListener('click', function(e){
   }
   // Verse of day → open ghazal
   const vod = e.target.closest('#verse-of-day');
-  if(vod){ showG(parseInt(vod.dataset.n)); return; }
+  if(vod){ navigate('/ghazal/'+parseInt(vod.dataset.n)); return; }
   // Home search bar → open search
   const hs = e.target.closest('#home-search');
   if(hs){ showSearch(); return; }
@@ -1736,15 +1746,15 @@ ctEl.addEventListener('click', function(e){
   const ri = e.target.closest('.ri');
   if(ri && !e.target.closest('button')){
     const kw=ri.dataset.kw||'';
-    if(ri.dataset.tp==='g'){ showG(parseInt(ri.dataset.n),kw); }
-    else if(ri.dataset.tp==='t'){ showT(parseInt(ri.dataset.n),kw); }
+    if(ri.dataset.tp==='g'){ history.pushState({}, '', '/ghazal/'+parseInt(ri.dataset.n)); showG(parseInt(ri.dataset.n),kw); }
+    else if(ri.dataset.tp==='t'){ history.pushState({}, '', '/terjee/'+parseInt(ri.dataset.n)); showT(parseInt(ri.dataset.n),kw); }
     return;
   }
   // Bookmark item
   const bi = e.target.closest('.bi');
   if(bi && !e.target.closest('button')){
-    if(bi.dataset.tp==='g'){ showG(parseInt(bi.dataset.id)); }
-    else{ showT(parseInt(bi.dataset.id)); }
+    if(bi.dataset.tp==='g'){ navigate('/ghazal/'+parseInt(bi.dataset.id)); }
+    else{ navigate('/terjee/'+parseInt(bi.dataset.id)); }
     return;
   }
   // Delete bookmark
@@ -1842,14 +1852,14 @@ document.getElementById('auth-modal-bg').addEventListener('click', e=>{
 // ─── RANDOM ──────────────────────────────
 document.getElementById('btn-rand').addEventListener('click', async ()=>{
   const g = await apiFetch(API_URL+'/poems/ghazal/random');
-  if(g) showG(g.number);
+  if(g) navigate('/ghazal/'+g.number);
 });
 
 // ─── PREV/NEXT ───────────────────────────
-gp.addEventListener('click', ()=>showG(Math.max(1,cg-1)));
-gn.addEventListener('click', ()=>showG(Math.min(TOT,cg+1)));
-tp2.addEventListener('click', ()=>showT(Math.max(1,ct-1)));
-tn2.addEventListener('click', ()=>showT(Math.min(TB,ct+1)));
+gp.addEventListener('click', ()=>navigate('/ghazal/'+Math.max(1,cg-1)));
+gn.addEventListener('click', ()=>navigate('/ghazal/'+Math.min(TOT,cg+1)));
+tp2.addEventListener('click', ()=>navigate('/terjee/'+Math.max(1,ct-1)));
+tn2.addEventListener('click', ()=>navigate('/terjee/'+Math.min(TB,ct+1)));
 document.getElementById('tallbands').addEventListener('click', ()=>{ browseSub='t'; showBrowse('t'); });
 
 // ─── NOTE MODAL ──────────────────────────
@@ -2058,13 +2068,39 @@ async function loadVerseOfDay(){
   }catch(e){}
 }
 
+// ─── META / SEO ──────────────────────────
+function toPersianNum(n){
+  return String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+}
+function setMeta(title, description){
+  document.title = title + ' | دیوان بیدل دهلوی';
+  document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', location.href);
+}
+
+// ─── ROUTER ──────────────────────────────
+function navigate(path){
+  history.pushState({}, '', path);
+  handleRoute(path);
+}
+function handleRoute(path){
+  const mg = path.match(/^\/ghazal\/(\d+)$/);
+  if(mg){ showG(parseInt(mg[1])); return; }
+  const mt = path.match(/^\/terjee\/(\d+)$/);
+  if(mt){ showT(parseInt(mt[1])); return; }
+  showHome();
+}
+window.addEventListener('popstate', ()=>handleRoute(location.pathname));
+
 // ─── BOOT ────────────────────────────────
 _loadMockBms();
 loadUserData();
 Promise.all([loadAllKeywords(), loadFeaturedKeywords(), loadVerseOfDay()]).then(()=>{
-  showHome();
+  if(curView === 'home') showHome();
 });
-showHome(); // show immediately, will re-render after data loads
+handleRoute(location.pathname); // show immediately, will re-render after data loads
 
 })();
 </script>

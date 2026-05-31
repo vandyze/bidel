@@ -6,6 +6,7 @@ from typing import Optional
 
 import httpx
 from fastapi import FastAPI, Depends, HTTPException, Query, status
+from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
@@ -577,6 +578,38 @@ def list_keywords(
             for k in keywords
         ],
     }
+
+
+@app.get("/sitemap.xml", include_in_schema=False)
+def sitemap():
+    BASE = "https://bideli.ir"
+    urls = []
+
+    urls.append(f"""  <url>
+    <loc>{BASE}/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>""")
+
+    for n in range(1, 2828):
+        urls.append(f"""  <url>
+    <loc>{BASE}/ghazal/{n}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>""")
+
+    for n in range(1, 35):
+        urls.append(f"""  <url>
+    <loc>{BASE}/terjee/{n}</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>""")
+
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    xml += "\n".join(urls)
+    xml += "\n</urlset>"
+    return Response(content=xml, media_type="application/xml")
 
 
 @app.get("/keywords/{word}")
