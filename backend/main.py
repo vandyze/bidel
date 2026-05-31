@@ -6,8 +6,8 @@ from typing import Optional
 from urllib.parse import quote
 
 import httpx
-from fastapi import FastAPI, Depends, HTTPException, Query, status
-from fastapi.responses import Response
+from fastapi import FastAPI, Depends, HTTPException, Query, Request, status
+from fastapi.responses import HTMLResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
@@ -454,6 +454,56 @@ def get_zand(number: int, db: Session = Depends(get_db)):
     if not section:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="بخش یافت نشد")
     return {"number": section.number, "title": section.title, "type": section.type, "content": section.content}
+
+
+BOT_AGENTS = ("googlebot", "bingbot", "facebookexternalhit", "twitterbot", "crawler", "spider", "bot")
+
+@app.get("/poems/ghazal/{number}/html", include_in_schema=False)
+def get_ghazal_html(number: int, request: Request, preview: int = 0, db: Session = Depends(get_db)):
+    ua = request.headers.get("user-agent", "").lower()
+    if not preview and not any(b in ua for b in BOT_AGENTS):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    ghazal = db.query(models.Ghazal).filter(models.Ghazal.number == number).first()
+    if not ghazal:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="غزل یافت نشد")
+
+    first = ghazal.couplets[0] if ghazal.couplets else ["", ""]
+    description = " / ".join(p for p in first if p)
+
+    couplets_html = ""
+    for i, (m1, m2) in enumerate(ghazal.couplets, 1):
+        couplets_html += f'<div class="couplet"><p>{m1}</p>'
+        if m2:
+            couplets_html += f'<p class="m2">{m2}</p>'
+        couplets_html += "</div>\n"
+
+    html = f"""<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>غزل {number} — {ghazal.title} | دیوان بیدل دهلوی</title>
+<meta name="description" content="{description}">
+<link rel="canonical" href="https://bideli.ir/ghazal/{number}">
+<style>
+  body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
+  .couplet{{margin-bottom:1.2rem;border-bottom:1px solid #eee;padding-bottom:0.8rem}}
+  .m2{{color:#555}}
+  h1{{font-size:1.4rem;margin-bottom:0.3rem}}
+  .meta{{color:#888;font-size:0.9rem;margin-bottom:2rem}}
+  .back{{display:block;margin-top:2rem;color:#5a7048}}
+</style>
+</head>
+<body>
+<h1>غزل {number} — {ghazal.title}</h1>
+<div class="meta">دیوان بیدل دهلوی · {len(ghazal.couplets)} بیت</div>
+<main>
+{couplets_html}</main>
+<a class="back" href="https://bideli.ir/ghazal/{number}">مشاهده در سایت بیدلی ←</a>
+</body>
+</html>"""
+
+    return HTMLResponse(content=html)
 
 
 @app.get("/poems/ghazal/{number}/keywords")
