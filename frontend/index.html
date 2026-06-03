@@ -952,16 +952,16 @@ function renderMoodRadar(data, kwCount){
   s+='<polygon class="mr-area" points="'+dpts+'"/>';
   MOODS.forEach((m,i)=>{
     const [vx,vy]=pt(i,Math.max(0.08,data.scores[m.id]));
-    const [lx,ly]=pt(i,1.0);
+    const [lx,ly]=pt(i,1.25);
     const isDom=(m.id===data.dom);
     let anchor='middle', dx=0;
     if(Math.abs(lx-cx)<18){ anchor='middle'; dx=0; }
-    else if(lx>cx){ anchor='start'; dx=7; }
-    else { anchor='end'; dx=-7; }
+    else if(lx>cx){ anchor='start'; dx=8; }
+    else { anchor='end'; dx=-8; }
     let dyName, dyPct;
-    if(ly<cy-50){ dyName=-12; dyPct=-1; }
-    else if(ly>cy+50){ dyName=16; dyPct=28; }
-    else { dyName=2; dyPct=15; }
+    if(ly<cy-50){ dyName=-9; dyPct=4; }
+    else if(ly>cy+50){ dyName=5; dyPct=17; }
+    else { dyName=-5; dyPct=8; }
     s+='<g class="mood-axis-g" data-mood="'+m.id+'" style="cursor:pointer">';
     s+='<text class="mr-lab'+(isDom?' dom':'')+'" x="'+(lx+dx).toFixed(1)+'" y="'+(ly+dyName).toFixed(1)+'" text-anchor="'+anchor+'">'+m.label+'</text>';
     s+='<text class="mr-lab-pct" x="'+(lx+dx).toFixed(1)+'" y="'+(ly+dyPct).toFixed(1)+'" text-anchor="'+anchor+'">٪'+toFa(Math.round(data.scores[m.id]*100))+'</text>';
