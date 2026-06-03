@@ -952,20 +952,19 @@ function renderMoodRadar(data, kwCount){
   s+='<polygon class="mr-area" points="'+dpts+'"/>';
   MOODS.forEach((m,i)=>{
     const [vx,vy]=pt(i,Math.max(0.08,data.scores[m.id]));
-    const a_rad=(-90+i*step)*Math.PI/180;
-    const ux=Math.cos(a_rad), uy=Math.sin(a_rad);
-    const [lx,ly]=pt(i,1.25);
+    const [lx,ly]=pt(i,1.0);
     const isDom=(m.id===data.dom);
-    let anchor='middle';
-    if(ux>0.2) anchor='start';
-    else if(ux<-0.2) anchor='end';
+    let anchor='middle', dx=0;
+    if(Math.abs(lx-cx)<18){ anchor='middle'; dx=0; }
+    else if(lx>cx){ anchor='start'; dx=7; }
+    else { anchor='end'; dx=-7; }
     let dyName, dyPct;
-    if(uy<-0.3){ dyName=-10; dyPct=3; }
-    else if(uy>0.3){ dyName=3; dyPct=16; }
-    else { dyName=-5; dyPct=8; }
+    if(ly<cy-50){ dyName=-12; dyPct=-1; }
+    else if(ly>cy+50){ dyName=16; dyPct=28; }
+    else { dyName=2; dyPct=15; }
     s+='<g class="mood-axis-g" data-mood="'+m.id+'" style="cursor:pointer">';
-    s+='<text class="mr-lab'+(isDom?' dom':'')+'" x="'+lx.toFixed(1)+'" y="'+(ly+dyName).toFixed(1)+'" text-anchor="'+anchor+'">'+m.label+'</text>';
-    s+='<text class="mr-lab-pct" x="'+lx.toFixed(1)+'" y="'+(ly+dyPct).toFixed(1)+'" text-anchor="'+anchor+'">٪'+toFa(Math.round(data.scores[m.id]*100))+'</text>';
+    s+='<text class="mr-lab'+(isDom?' dom':'')+'" x="'+(lx+dx).toFixed(1)+'" y="'+(ly+dyName).toFixed(1)+'" text-anchor="'+anchor+'">'+m.label+'</text>';
+    s+='<text class="mr-lab-pct" x="'+(lx+dx).toFixed(1)+'" y="'+(ly+dyPct).toFixed(1)+'" text-anchor="'+anchor+'">٪'+toFa(Math.round(data.scores[m.id]*100))+'</text>';
     s+='<circle class="mr-hit" cx="'+lx.toFixed(1)+'" cy="'+ly.toFixed(1)+'" r="24"/>';
     s+='<circle class="mr-vtx" cx="'+vx.toFixed(1)+'" cy="'+vy.toFixed(1)+'" r="'+(isDom?5:3.5)+'"'+(isDom?' style="fill:var(--sa);stroke:var(--sa2)"':'')+'/>';
     s+='</g>';
