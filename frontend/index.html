@@ -174,7 +174,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 /* ─── POEM (ghazal/terjee reading) ──────── */
 .pm{animation:fu .25s ease}
 @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.pmeta{text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--br2)}
+.pmeta{position:relative;text-align:center;margin-bottom:12px;padding:0 46px 10px;border-bottom:1px solid var(--br2)}
 .pnum{font-size:10px;letter-spacing:0.12em;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:3px}
 .ptitle{font-size:21px;color:var(--gd);font-weight:700;line-height:1.2}
 .psub{font-size:12px;color:var(--mu);margin-top:3px;font-family:"IRANYekanX",sans-serif}
@@ -185,25 +185,31 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .gkw:hover{background:var(--go);color:#fff;border-color:var(--go)}
 .kw-more{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;cursor:pointer;margin:2px;color:var(--accent,#c8883a);border:1px solid var(--accent,#c8883a);background:transparent}
 
-.cp{margin-bottom:8px;background:var(--sf);border:1px solid var(--br2);border-radius:12px;overflow:hidden;transition:border-color .15s}
-.cp:hover{border-color:var(--br)}
-.cp.gbm{border-color:var(--sa);background:var(--sah)}
-.cp.tbm{border-color:var(--sa);background:var(--sah)}
-.cpb{padding:11px 14px}
-.ms{font-size:19px;line-height:1.9;color:var(--tx)}
-.ms.s2{border-top:1px solid var(--br2);margin-top:5px;padding-top:5px;color:var(--mu);text-align:left}
-.cp.gbm .ms.s2,.cp.tbm .ms.s2{border-top-color:var(--vf)}
-mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 3px}
+.cp{position:relative;background:transparent;border:none;border-radius:14px;padding:16px 16px 16px 36px;cursor:pointer;transition:background .18s}
+.cp+.cp{border-top:1px solid var(--br2)}
+.cp.open{background:var(--sf)}
+.cp.gbm,.cp.tbm{background:linear-gradient(90deg,var(--sah),transparent 70%)}
+.cp.gbm::before,.cp.tbm::before{content:"";position:absolute;top:14px;bottom:14px;right:0;width:3px;border-radius:99px;background:var(--sa)}
+.cn{position:absolute;top:17px;left:14px;font-size:11px;color:var(--vf);font-weight:700;font-variant-numeric:tabular-nums}
+.cpb{padding:0}
+.ms{font-size:19px;line-height:1.95;color:var(--tx)}
+.ms.s2{margin-top:2px;color:var(--mu);text-align:left}
+mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
+.acts{max-height:0;opacity:0;overflow:hidden;margin-top:0;transition:max-height .3s ease,opacity .22s,margin-top .3s}
+.cp.open .acts{max-height:120px;opacity:1;margin-top:12px}
 .ca{display:flex;border-top:1px solid var(--br2)}
 .cp.gbm .ca,.cp.tbm .ca{border-top-color:var(--vf)}
-.ca button{flex:1;background:transparent;border:none;border-left:1px solid var(--br2);padding:7px 0;font-size:15px;cursor:pointer;color:var(--mu)}
-.cp.gbm .ca button,.cp.tbm .ca button{border-left-color:var(--vf)}
-.ca button:first-child{border-left:none}
-.ca button:active{background:var(--ik)}
-.ca button.gon{color:var(--sa2)}
-.ca button.ton{color:var(--sa2)}
-.nd{font-size:13px;color:var(--gd);padding:7px 14px;border-top:1px solid var(--br2);background:var(--gh);line-height:1.6;cursor:pointer}
-.cp.gbm .nd,.cp.tbm .nd{border-top-color:var(--vf);background:rgba(200,144,48,0.10)}
+.ca button{flex:1;background:transparent;border:none;border-inline-start:1px solid var(--br2);padding:11px 0;cursor:pointer;color:var(--mu);display:flex;align-items:center;justify-content:center;gap:7px;font-family:"IRANYekanX",sans-serif;font-size:13px;font-weight:600;transition:background .15s}
+.cp.gbm .ca button,.cp.tbm .ca button{border-inline-start-color:var(--vf)}
+.ca button:first-child{border-inline-start:none}
+.ca button:hover{background:var(--ik)}
+.ca button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ca button.gon,.ca button.ton{color:var(--sa2)}
+.ca button.gon svg,.ca button.ton svg{fill:var(--sa);stroke:var(--sa2)}
+.cal{font-size:12px}
+.nd{font-size:13px;color:var(--gd);margin-top:11px;padding:9px 12px;border:1px solid var(--br2);border-radius:11px;background:var(--gh);line-height:1.7;cursor:pointer;display:flex;gap:8px;align-items:flex-start}
+.nd svg{width:15px;height:15px;flex-shrink:0;margin-top:3px;stroke:var(--gd);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cp.gbm .nd,.cp.tbm .nd{background:rgba(200,144,48,0.10);border-color:var(--br)}
 .pf{text-align:center;font-size:11px;color:var(--fa);margin-top:8px;font-family:"IRANYekanX",sans-serif;letter-spacing:0.06em}
 
 /* ─── KEYWORDS ─────────────────────────────── */
@@ -488,6 +494,37 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 3px}
 .ms-ov-chev{color:var(--vf);font-size:16px;flex-shrink:0}
 .cp-flash{animation:cpFlash 1.4s ease}
 @keyframes cpFlash{0%,100%{box-shadow:0 0 0 0 rgba(200,144,48,0)}25%{box-shadow:0 0 0 2px var(--sa)}}
+
+/* ─── POEM SHARE BUTTON ─────────────────── */
+.pshare{position:absolute;left:0;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:11px;background:var(--sf);border:1px solid var(--br);color:var(--gd);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:border-color .15s,background .15s}
+.pshare:hover{border-color:var(--go);background:var(--sf2)}
+.pshare:active{transform:translateY(-50%) scale(.94)}
+.pshare svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ─── SHARE LINK SHEET ─────────────────── */
+.shbg{position:fixed;inset:0;background:rgba(26,34,24,0.5);display:flex;align-items:flex-end;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
+.shbg.open{opacity:1;pointer-events:all}
+.sho{background:var(--sf);border-radius:18px 18px 0 0;border-top:1px solid var(--br);width:100%;max-width:500px;padding:16px 16px 28px;transform:translateY(100%);transition:transform .25s}
+.shbg.open .sho{transform:translateY(0)}
+.sh-t{font-size:15px;font-weight:800;color:var(--gd);text-align:center;margin-bottom:5px}
+.sh-v{font-size:13px;color:var(--mu);text-align:center;line-height:1.8;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--br2)}
+.sh-row{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--br);border-radius:12px;padding:6px 8px 6px 14px;margin-bottom:10px}
+.sh-url{flex:1;font-size:13px;color:var(--gd);font-weight:600;direction:ltr;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:ui-monospace,"SF Mono",monospace}
+.sh-copy{flex-shrink:0;border:none;background:var(--gd);color:#f3efe2;border-radius:9px;padding:10px 15px;font-family:"IRANYekanX",sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+.sh-copy:active{background:#2a3322}
+.sh-share{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--br);background:transparent;color:var(--gd);border-radius:12px;padding:13px;font-family:"IRANYekanX",sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.sh-share:hover{background:var(--ik);border-color:var(--go)}
+.sh-share svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ─── TOP TOAST ────────────────────────── */
+.ts-wrap{position:fixed;top:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;padding:calc(env(safe-area-inset-top) + 12px) 12px 0;z-index:300;pointer-events:none}
+.tst{max-width:460px;width:calc(100% - 24px);background:var(--gd);color:#f3efe2;border-radius:14px;padding:11px 15px;box-shadow:0 12px 28px -8px rgba(26,34,24,.45);display:flex;align-items:center;gap:9px;font-family:"IRANYekanX",sans-serif;font-size:13.5px;font-weight:700;transform:translateY(-140%);opacity:0}
+.tst.show{animation:tstIn .34s cubic-bezier(.2,.9,.2,1) forwards}
+.tst.hide{animation:tstOut .26s ease forwards}
+@keyframes tstIn{from{transform:translateY(-140%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes tstOut{from{transform:translateY(0);opacity:1}to{transform:translateY(-140%);opacity:0}}
+.tst .chk{width:20px;height:20px;border-radius:99px;background:var(--sa);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tst .chk svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 </style>
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -614,6 +651,16 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 3px}
     <div id="mood-sheet-body"></div>
   </div>
 </div>
+
+<div class="shbg" id="shbg">
+  <div class="sho">
+    <div class="sh-t" id="sh-t">اشتراکِ بیت</div>
+    <div class="sh-v" id="sh-v"></div>
+    <div class="sh-row"><span class="sh-url" id="sh-url"></span><button class="sh-copy" id="sh-copy">کپی لینک</button></div>
+    <button class="sh-share" id="sh-share"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>اشتراک‌گذاری…</span></button>
+  </div>
+</div>
+<div class="ts-wrap" id="tswrap"></div>
 
 <script>
 (async function(){
@@ -1163,18 +1210,25 @@ async function renderBrowseBody(){
 }
 
 // ─── COUPLET RENDERING ───────────────────
-function mkCp(m1,m2,key,isBm,note,type,kw){
+function mkCp(m1,m2,key,isBm,note,type,kw,ci){
   const cls = isBm?(type==='g'?' gbm':' tbm'):'';
+  const onCls = isBm?(type==='g'?'gon':'ton'):'';
+  const IC_BM='<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>';
+  const IC_NOTE='<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>';
+  const IC_COPY='<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>';
+  const IC_SHARE='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
   let h='<div class="cp'+cls+'" data-key="'+key+'">';
+  if(ci!=null) h+='<span class="cn">'+toFa(ci+1)+'</span>';
   h+='<div class="cpb"><div class="ms">'+hl(m1,kw)+'</div>';
   if(m2) h+='<div class="ms s2">'+hl(m2,kw)+'</div>';
   h+='</div>';
-  if(note) h+='<div class="nd" data-action="note" data-key="'+key+'">📝 '+note+'</div>';
-  h+='<div class="ca">';
-  h+='<button data-action="bm" class="'+(isBm?(type==='g'?'gon':'ton'):'')+'">'+(isBm?'★':'☆')+'</button>';
-  h+='<button data-action="note">📝</button>';
-  h+='<button data-action="copy">📋</button>';
-  h+='</div></div>';
+  if(note) h+='<div class="nd" data-action="note" data-key="'+key+'">'+IC_NOTE+'<span>'+note+'</span></div>';
+  h+='<div class="acts"><div class="ca">';
+  h+='<button data-action="bm" class="'+onCls+'">'+IC_BM+'<span class="cal">'+(isBm?'نشان‌شده':'نشان')+'</span></button>';
+  h+='<button data-action="note">'+IC_NOTE+'<span class="cal">یادداشت</span></button>';
+  h+='<button data-action="share">'+IC_SHARE+'<span class="cal">اشتراک</span></button>';
+  h+='<button data-action="copy">'+IC_COPY+'<span class="cal">رونوشت</span></button>';
+  h+='</div></div></div>';
   return h;
 }
 
@@ -1193,15 +1247,16 @@ async function showG(n,kw){
   setHeader('غزل '+toFa(n), p.title+' · '+toFa(p.couplets.length)+' بیت');
   const _c0=p.couplets[0]||['',''];
   setMeta('غزل '+toPersianNum(n)+' — '+((_c0[0]||'').slice(0,30)), (_c0[0]||'')+(_c0[1]?'\n'+_c0[1]:''));
+  const IC_SHARE_BTN='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
   let h='<div class="pm">';
-  h+='<div class="pmeta"><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div></div>';
+  h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل">'+IC_SHARE_BTN+'</button><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div></div>';
   h+='<div class="ghazal-kw-row" id="ghazal-keywords"><span class="gkw-lab fa">واژگان کلیدی</span></div>';
   const ghazalKwWords=resolveGhazalKeywords(n,p);
   const ghazalKwObjs=ghazalKwWords.map(w=>kwBy(w)).filter(Boolean);
   h+=renderMoodCard(n,p,ghazalKwObjs);
   p.couplets.forEach(([m1,m2],ci)=>{
     const key=bkey('g',n,ci);
-    h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','g',kw||'');
+    h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','g',kw||'',ci);
   });
   h+='<div class="pf fa">'+toFa(p.couplets.length)+' بیت</div></div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
@@ -1264,10 +1319,11 @@ async function showT(n,kw){
   _poemCache['t_'+n]=band;
   setHeader('بند '+toFa(n), 'ترجیع‌بند حیرت · '+toFa(band.couplets.length)+' بیت');
   setMeta('ترجیع‌بند '+toPersianNum(n), 'ترجیع‌بند شماره '+toPersianNum(n)+' از دیوان بیدل دهلوی');
-  let h='<div class="pm"><div class="pmeta"><div class="pnum fa">ترجیع‌بند حیرت</div><div class="ptitle">بند '+toFa(n)+'</div><div class="psub fa">از '+toFa(TB)+' بند</div></div>';
+  const IC_SHARE_BTN2='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+  let h='<div class="pm"><div class="pmeta"><button class="pshare" data-pshare="t_'+n+'" aria-label="اشتراکِ بند">'+IC_SHARE_BTN2+'</button><div class="pnum fa">ترجیع‌بند حیرت</div><div class="ptitle">بند '+toFa(n)+'</div><div class="psub fa">از '+toFa(TB)+' بند</div></div>';
   band.couplets.forEach(([m1,m2],ci)=>{
     const key=bkey('t',n,ci);
-    h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','t',kw||'');
+    h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','t',kw||'',ci);
   });
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
@@ -1413,6 +1469,7 @@ async function toggleBm(tp,id,ci){
   const bmBtn=ctEl.querySelector(`.cp[data-key="${key}"] [data-action="bm"]`);
   if(bmBtn){ bmBtn.disabled=true; bmBtn._prev=bmBtn.innerHTML; bmBtn.innerHTML=LOADER_HTML; }
   if(MOCK_MODE){
+    const _adding=!_bms[key];
     if(_bms[key]){ delete _bms[key]; }
     else{
       const poem=_poemCache[tp+'_'+id];
@@ -1423,10 +1480,13 @@ async function toggleBm(tp,id,ci){
     _saveMockBms();
     updateBmBadge();
     if(tp==='g') showG(cg); else showT(ct);
+    showToast(_adding?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
+    scrollToCouplet(key);
     return;
   }
   const token=getToken();
   if(!token){ setToken(null); _saveUser(null); showAuthModal({type:'bm',tp,id,ci}); return; }
+  const _adding=!_bms[key];
   const resp=await fetch(API_URL+'/bookmarks',{
     method:'POST',
     headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
@@ -1435,6 +1495,8 @@ async function toggleBm(tp,id,ci){
   if(resp.status===401){ setToken(null); _saveUser(null); showAuthModal({type:'bm',tp,id,ci}); return; }
   await loadUserData();
   if(tp==='g') showG(cg); else showT(ct);
+  showToast(_adding?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
+  scrollToCouplet(key);
 }
 
 function _saveMockBms(){
@@ -1766,9 +1828,19 @@ ctEl.addEventListener('click', function(e){
     toggleBm(p2[0],parseInt(p2[1]),parseInt(p2[2]));
     return;
   }
-  // Couplet buttons
-  const btn=e.target.closest('.ca button');
+  // Share whole ghazal/band from poem-meta
+  const psh=e.target.closest('.pshare');
+  if(psh){ const pp=psh.dataset.pshare.split('_'); openShareGhazal(pp[0], parseInt(pp[1])); return; }
+  // Couplet accordion toggle (tap body to open/close action bar)
   const cp=e.target.closest('.cp');
+  if(cp && !e.target.closest('[data-action]') && !e.target.closest('.nd')){
+    const wasOpen=cp.classList.contains('open');
+    ctEl.querySelectorAll('.cp.open').forEach(c=>{ if(c!==cp) c.classList.remove('open'); });
+    cp.classList.toggle('open', !wasOpen);
+    return;
+  }
+  // Couplet action buttons
+  const btn=e.target.closest('.ca button');
   const nd=e.target.closest('.nd');
   if(!cp) return;
   const key=cp.dataset.key;
@@ -1779,6 +1851,7 @@ ctEl.addEventListener('click', function(e){
   const action=btn.dataset.action;
   if(action==='bm'){ toggleBm(tp,id,ci); return; }
   if(action==='note'){ openModal(key, getVerse(tp,id,ci)); return; }
+  if(action==='share'){ openShare(tp,id,ci); return; }
   if(action==='copy'){
     const [m1,m2]=getCouplet(tp,id,ci);
     const txt=m1+(m2?'\n'+m2:'');
@@ -1790,7 +1863,8 @@ ctEl.addEventListener('click', function(e){
     range.selectNodeContents(el); sel.removeAllRanges(); sel.addRange(range);
     try{document.execCommand('copy');}catch(e){}
     sel.removeAllRanges(); document.body.removeChild(el);
-    const o=btn.textContent; btn.textContent='✓'; setTimeout(()=>btn.textContent=o,1000);
+    showToast('بیت کپی شد');
+    const lab=btn.querySelector('.cal')||btn; const o=lab.textContent; lab.textContent='کپی شد ✓'; setTimeout(()=>lab.textContent=o,1000);
   }
 });
 
@@ -1802,6 +1876,91 @@ function getCouplet(tp,id,ci){
   const poem=_poemCache[tp+'_'+id];
   return poem?(poem.couplets[ci]||['','']):['',''];
 }
+
+// ─── SHARE & TOAST ───────────────────────
+const shbg=document.getElementById('shbg');
+let _shData=null;
+let _tstTimer=null;
+
+function showToast(msg){
+  const wrap=document.getElementById('tswrap');
+  const t=document.createElement('div');
+  t.className='tst';
+  t.innerHTML='<span class="chk"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span>'+msg+'</span>';
+  wrap.innerHTML=''; wrap.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  clearTimeout(_tstTimer);
+  _tstTimer=setTimeout(()=>{ t.classList.remove('show'); t.classList.add('hide'); setTimeout(()=>{ if(t.parentElement) t.remove(); },300); }, 1900);
+}
+
+function scrollToCouplet(key){
+  setTimeout(()=>{
+    const el=ctEl.querySelector('.cp[data-key="'+key+'"]');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+  }, 100);
+}
+
+function _copyFallback(t){ try{const el=document.createElement('textarea');el.value=t;el.style.cssText='position:fixed;opacity:0;top:0;left:0';document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();}catch(e){} }
+function copyTextTo(t){ try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).catch(()=>_copyFallback(t)); return; } }catch(e){} _copyFallback(t); }
+
+function openShare(tp, id, ci){
+  const [m1,m2] = getCouplet(tp,id,ci);
+  const seg = tp==='g'?'g':'t';
+  const url = 'https://bideli.ir/'+seg+'/'+id+'/'+(ci+1);
+  const text = m1 + (m2 ? '\n' + m2 : '') + '\n\n— بیدل دهلوی\n' + url;
+  _shData = {url, text};
+  document.getElementById('sh-t').textContent = 'اشتراکِ بیت '+toFa(ci+1);
+  document.getElementById('sh-v').textContent = m1+(m2?' / '+m2:'');
+  document.getElementById('sh-url').textContent = 'bideli.ir/'+seg+'/'+id+'/'+(ci+1);
+  shbg.classList.add('open');
+}
+
+function openShareGhazal(tp, id){
+  const seg = tp==='g'?'g':'t';
+  const poem = _poemCache[tp+'_'+id];
+  const title = tp==='g'?(poem?.title||''):'';
+  const url = 'https://bideli.ir/'+seg+'/'+id;
+  let text = '';
+  if(tp==='g'){
+    text = (title ? title+'\n' : 'غزل '+toFa(id)+'\n');
+    if(poem && poem.couplets){
+      poem.couplets.forEach(c=>{
+        text += (c[0]||'') + '\n' + (c[1]||'') + '\n';
+      });
+    }
+    text += '\n— بیدل دهلوی\n' + url;
+  } else {
+    text = 'ترجیع‌بند حیرت · بند '+toFa(id)+'\n\n— بیدل دهلوی\n'+url;
+  }
+  _shData = {url, text};
+  document.getElementById('sh-t').textContent = tp==='g'?('اشتراکِ غزل '+toFa(id)):('اشتراکِ بند '+toFa(id));
+  document.getElementById('sh-v').textContent = tp==='g'?(title||('غزل '+toFa(id))):('ترجیع‌بند حیرت');
+  document.getElementById('sh-url').textContent = 'bideli.ir/'+seg+'/'+id;
+  shbg.classList.add('open');
+}
+
+function cshare(){ shbg.classList.remove('open'); _shData=null; }
+
+document.getElementById('sh-copy').addEventListener('click',()=>{
+  if(_shData) copyTextTo(_shData.url);
+  showToast('لینک کپی شد');
+  const b=document.getElementById('sh-copy'); const o=b.textContent; b.textContent='کپی شد ✓'; setTimeout(()=>{b.textContent=o;},1300);
+});
+document.getElementById('sh-share').addEventListener('click',()=>{
+  if(!_shData) return;
+  if(navigator.share){
+    navigator.share({title:'دیوان بیدل دهلوی', text:_shData.text, url:_shData.url}).catch(()=>{});
+  } else {
+    copyTextTo(_shData.text);
+    showToast('متن و لینک کپی شد');
+    const b=document.getElementById('sh-share');
+    const sp=b.querySelector('span');
+    const o=sp.textContent;
+    sp.textContent='کپی شد ✓';
+    setTimeout(()=>{sp.textContent=o;},1300);
+  }
+});
+shbg.addEventListener('click', e=>{ if(e.target===shbg) cshare(); });
 
 // ─── BOTTOM NAV ──────────────────────────
 document.querySelector('.bn').addEventListener('click', e=>{
@@ -1874,6 +2033,8 @@ async function svn(){
     if(curView==='gh') showG(cg);
     else if(curView==='tr') showT(ct);
     else if(curView==='bm') showBm();
+    showToast(v?'یادداشت ذخیره شد':'یادداشت حذف شد');
+    scrollToCouplet(bkey(tp,pid,ci));
     return;
   }
   const token=getToken();
@@ -1892,6 +2053,8 @@ async function svn(){
   if(curView==='gh') showG(cg);
   else if(curView==='tr') showT(ct);
   else if(curView==='bm') showBm();
+  showToast(v?'یادداشت ذخیره شد':'یادداشت حذف شد');
+  scrollToCouplet(bkey(tp,pid,ci));
 }
 document.getElementById('btn-mcancel').addEventListener('click', cmob);
 document.getElementById('btn-msave').addEventListener('click', svn);
