@@ -938,40 +938,43 @@ function renderMoodCard(n, poem, kwObjs){
 }
 
 function renderMoodRadar(data, kwCount){
-  const N=MOODS.length, cx=150, cy=120, R=78;
+  const N=MOODS.length, cx=150, cy=116, R=70;
   const step=360/N;
   const rings=[0.34,0.67,1];
-  const pt=(i,r)=>{ const a=(-90+i*step)*Math.PI/180; return [cx+R*r*Math.cos(a), cy+R*r*Math.sin(a)]; };
-  let s='<div class="mood-radar-wrap"><svg class="mood-radar" viewBox="0 0 300 248" role="img" aria-label="نمودار هفت‌وادی حال‌وهوا">';
+  const pt=(i,r)=>{ const a=(-90 + i*step)*Math.PI/180; return [cx+R*r*Math.cos(a), cy+R*r*Math.sin(a)]; };
+  let s='<div class="mood-radar-wrap"><svg class="mood-radar" viewBox="0 0 300 250" role="img" aria-label="نمودار هفت‌وادیِ حال و هوا">';
   rings.forEach(r=>{
     const pts=MOODS.map((_,i)=>pt(i,r).map(v=>v.toFixed(1)).join(',')).join(' ');
     s+='<polygon class="mr-grid" points="'+pts+'"/>';
   });
   MOODS.forEach((_,i)=>{ const [x,y]=pt(i,1); s+='<line class="mr-spoke" x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'"/>'; });
-  const dpts=MOODS.map((m,i)=>pt(i,Math.max(0.08,data.scores[m.id])).map(v=>v.toFixed(1)).join(',')).join(' ');
+  const dpts=MOODS.map((m,i)=>pt(i, Math.max(0.08,data.scores[m.id])).map(v=>v.toFixed(1)).join(',')).join(' ');
   s+='<polygon class="mr-area" points="'+dpts+'"/>';
   MOODS.forEach((m,i)=>{
-    const [vx,vy]=pt(i,Math.max(0.08,data.scores[m.id]));
-    const [lx,ly]=pt(i,1.0);
+    const a=(-90 + i*step)*Math.PI/180;
+    const ux=Math.cos(a), uy=Math.sin(a);
+    const [rx,ry]=pt(i,1);
+    const [vx,vy]=pt(i, Math.max(0.08,data.scores[m.id]));
     const isDom=(m.id===data.dom);
-    let anchor='middle', dx=0;
-    if(Math.abs(lx-cx)<18){ anchor='middle'; dx=0; }
-    else if(lx>cx){ anchor='start'; dx=7; }
-    else { anchor='end'; dx=-7; }
-    let dyName, dyPct;
-    if(ly<cy-50){ dyName=-12; dyPct=-1; }
-    else if(ly>cy+50){ dyName=16; dyPct=28; }
-    else { dyName=2; dyPct=15; }
+    const GAP=8;
+    let anchor, lx;
+    if(ux > 0.30){ anchor='end';   lx = rx + GAP; }
+    else if(ux < -0.30){ anchor='start'; lx = rx - GAP; }
+    else { anchor='middle'; lx = rx; }
+    let lyName, lyPct;
+    if(uy < -0.30){ lyName = ry - 15; lyPct = ry - 3; }
+    else if(uy > 0.30){ lyName = ry + 17; lyPct = ry + 29; }
+    else { lyName = ry - 2; lyPct = ry + 11; }
     s+='<g class="mood-axis-g" data-mood="'+m.id+'" style="cursor:pointer">';
-    s+='<text class="mr-lab'+(isDom?' dom':'')+'" x="'+(lx+dx).toFixed(1)+'" y="'+(ly+dyName).toFixed(1)+'" text-anchor="'+anchor+'">'+m.label+'</text>';
-    s+='<text class="mr-lab-pct" x="'+(lx+dx).toFixed(1)+'" y="'+(ly+dyPct).toFixed(1)+'" text-anchor="'+anchor+'">٪'+toFa(Math.round(data.scores[m.id]*100))+'</text>';
-    s+='<circle class="mr-hit" cx="'+lx.toFixed(1)+'" cy="'+ly.toFixed(1)+'" r="24"/>';
+    s+='<text class="mr-lab'+(isDom?' dom':'')+'" x="'+lx.toFixed(1)+'" y="'+lyName.toFixed(1)+'" text-anchor="'+anchor+'">'+m.label+'</text>';
+    s+='<text class="mr-lab-pct" x="'+lx.toFixed(1)+'" y="'+lyPct.toFixed(1)+'" text-anchor="'+anchor+'">٪'+toFa(Math.round(data.scores[m.id]*100))+'</text>';
+    s+='<circle class="mr-hit" cx="'+rx.toFixed(1)+'" cy="'+ry.toFixed(1)+'" r="22"/>';
     s+='<circle class="mr-vtx" cx="'+vx.toFixed(1)+'" cy="'+vy.toFixed(1)+'" r="'+(isDom?5:3.5)+'"'+(isDom?' style="fill:var(--sa);stroke:var(--sa2)"':'')+'/>';
     s+='</g>';
   });
   if(kwCount){
     s+='<text class="mr-center-n" x="'+cx+'" y="'+(cy-3)+'" text-anchor="middle">'+toFa(kwCount)+'</text>';
-    s+='<text class="mr-center-lab" x="'+cx+'" y="'+(cy+11)+'" text-anchor="middle">واژه کلیدی</text>';
+    s+='<text class="mr-center-lab" x="'+cx+'" y="'+(cy+11)+'" text-anchor="middle">واژهٔ کلیدی</text>';
   }
   s+='</svg></div>';
   return s;
