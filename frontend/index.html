@@ -1217,7 +1217,7 @@ function mkCp(m1,m2,key,isBm,note,type,kw,ci){
   const IC_NOTE='<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>';
   const IC_COPY='<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>';
   const IC_SHARE='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
-  let h='<div class="cp'+cls+'" data-key="'+key+'">';
+  let h='<div class="cp'+cls+'" data-key="'+key+'" id="cp-'+key+'">';
   if(ci!=null) h+='<span class="cn">'+toFa(ci+1)+'</span>';
   h+='<div class="cpb"><div class="ms">'+hl(m1,kw)+'</div>';
   if(m2) h+='<div class="ms s2">'+hl(m2,kw)+'</div>';
@@ -1905,18 +1905,19 @@ function copyTextTo(t){ try{ if(navigator.clipboard&&navigator.clipboard.writeTe
 
 function openShare(tp, id, ci){
   const [m1,m2] = getCouplet(tp,id,ci);
-  const seg = tp==='g'?'g':'t';
-  const url = 'https://bideli.ir/'+seg+'/'+id+'/'+(ci+1);
-  const text = m1 + (m2 ? '\n' + m2 : '') + '\n\n— بیدل دهلوی\n' + url;
+  const key = tp+'_'+id+'_'+ci;
+  const seg = tp==='g'?'ghazal':'terjee';
+  const url = 'https://bideli.ir/'+seg+'/'+id+'#cp-'+key;
+  const text = m1 + (m2 ? '\n' + m2 : '') + '\n\n— بیدل دهلوی';
   _shData = {url, text};
   document.getElementById('sh-t').textContent = 'اشتراکِ بیت '+toFa(ci+1);
   document.getElementById('sh-v').textContent = m1+(m2?' / '+m2:'');
-  document.getElementById('sh-url').textContent = 'bideli.ir/'+seg+'/'+id+'/'+(ci+1);
+  document.getElementById('sh-url').textContent = 'bideli.ir/'+seg+'/'+id;
   shbg.classList.add('open');
 }
 
 function openShareGhazal(tp, id){
-  const seg = tp==='g'?'g':'t';
+  const seg = tp==='g'?'ghazal':'terjee';
   const poem = _poemCache[tp+'_'+id];
   const title = tp==='g'?(poem?.title||''):'';
   const url = 'https://bideli.ir/'+seg+'/'+id;
@@ -1928,9 +1929,9 @@ function openShareGhazal(tp, id){
         text += (c[0]||'') + '\n' + (c[1]||'') + '\n';
       });
     }
-    text += '\n— بیدل دهلوی\n' + url;
+    text += '\n— بیدل دهلوی';
   } else {
-    text = 'ترجیع‌بند حیرت · بند '+toFa(id)+'\n\n— بیدل دهلوی\n'+url;
+    text = 'ترجیع‌بند حیرت · بند '+toFa(id)+'\n\n— بیدل دهلوی';
   }
   _shData = {url, text};
   document.getElementById('sh-t').textContent = tp==='g'?('اشتراکِ غزل '+toFa(id)):('اشتراکِ بند '+toFa(id));
@@ -1948,10 +1949,14 @@ document.getElementById('sh-copy').addEventListener('click',()=>{
 });
 document.getElementById('sh-share').addEventListener('click',()=>{
   if(!_shData) return;
+  const shareText = _shData.text + '\n' + _shData.url;
   if(navigator.share){
-    navigator.share({title:'دیوان بیدل دهلوی', text:_shData.text, url:_shData.url}).catch(()=>{});
+    navigator.share({
+      title: 'دیوان بیدل دهلوی',
+      text: shareText
+    }).catch(()=>{});
   } else {
-    copyTextTo(_shData.text);
+    copyTextTo(shareText);
     showToast('متن و لینک کپی شد');
     const b=document.getElementById('sh-share');
     const sp=b.querySelector('span');
@@ -2263,6 +2268,28 @@ Promise.all([loadAllKeywords(), loadFeaturedKeywords(), loadVerseOfDay()]).then(
   if(curView === 'home') showHome();
 });
 handleRoute(location.pathname); // show immediately, will re-render after data loads
+
+if(window.location.hash){
+  const hash = window.location.hash.slice(1);
+  if(hash.startsWith('cp-g_') || hash.startsWith('cp-t_')){
+    const parts = hash.replace('cp-','').split('_');
+    const tp = parts[0];
+    const id = parseInt(parts[1]);
+    const ci = parseInt(parts[2]);
+    if(!isNaN(id)){
+      const showFn = tp==='g' ? showG(id) : showT(id);
+      showFn.then(()=>{
+        setTimeout(()=>{
+          const el = document.getElementById(hash);
+          if(el){
+            el.scrollIntoView({behavior:'smooth', block:'center'});
+            el.classList.add('open');
+          }
+        }, 600);
+      });
+    }
+  }
+}
 
 })();
 </script>
