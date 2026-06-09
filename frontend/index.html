@@ -19,6 +19,7 @@
 <meta property="og:url" content="">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="دیوان بیدل دهلوی">
+<link rel="canonical" id="canonical-url" href="https://bideli.ir/">
 <link rel="preload" href="fonts/IRANYekanX-Regular.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="preload" href="fonts/IRANYekanX-Bold.ttf" as="font" type="font/ttf" crossorigin>
 <style>
@@ -2236,6 +2237,7 @@ function setMeta(title, description){
   document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
   document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
   document.querySelector('meta[property="og:url"]')?.setAttribute('content', location.href);
+  document.getElementById('canonical-url')?.setAttribute('href', 'https://bideli.ir' + location.pathname);
 }
 
 // ─── ROUTER ──────────────────────────────
