@@ -667,6 +667,50 @@ def sitemap(db: Session = Depends(get_db)):
     return Response(content=xml, media_type="application/xml")
 
 
+@app.get("/keywords/{word}/html", include_in_schema=False)
+def get_keyword_html(word: str, request: Request, preview: int = 0, db: Session = Depends(get_db)):
+    ua = request.headers.get("user-agent", "").lower()
+    if not preview and not any(b in ua for b in BOT_AGENTS):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    kw = db.query(models.Keyword).filter(models.Keyword.word == word).first()
+    if not kw:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="کلمه کلیدی یافت نشد")
+
+    description = kw.meaning or f"واژه {word} در دیوان بیدل دهلوی"
+
+    html = f"""<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>{word} در دیوان بیدل دهلوی</title>
+<meta name="description" content="{description}">
+<link rel="canonical" href="https://bideli.ir/keywords/{word}">
+<style>
+  body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
+  h1{{font-size:1.6rem;margin-bottom:0.3rem}}
+  .meta{{color:#888;font-size:0.9rem;margin-bottom:1.5rem}}
+  .field{{margin-bottom:0.8rem}}
+  .label{{color:#888;font-size:0.85rem}}
+  .value{{font-size:1rem}}
+  .meaning{{font-size:1.05rem;line-height:1.9;margin-bottom:1.5rem;border-right:3px solid #5a7048;padding-right:0.8rem}}
+  .back{{display:block;margin-top:2rem;color:#5a7048}}
+</style>
+</head>
+<body>
+<h1>{word}</h1>
+<div class="meta">دیوان بیدل دهلوی · {kw.count or 0} بار تکرار</div>
+{"<div class='meaning'>" + kw.meaning + "</div>" if kw.meaning else ""}
+<div class="field"><span class="label">مقام: </span><span class="value">{kw.maqam or '—'}</span></div>
+<div class="field"><span class="label">دسته‌بندی: </span><span class="value">{kw.category or '—'}</span></div>
+<div class="field"><span class="label">تعداد تکرار: </span><span class="value">{kw.count or 0}</span></div>
+<a class="back" href="https://bideli.ir/keywords/{word}">مشاهده در سایت بیدلی ←</a>
+</body>
+</html>"""
+
+    return HTMLResponse(content=html)
+
+
 @app.get("/keywords/{word}")
 def get_keyword(word: str, db: Session = Depends(get_db)):
     kw = db.query(models.Keyword).filter(models.Keyword.word == word).first()
