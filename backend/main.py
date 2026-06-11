@@ -1,7 +1,7 @@
 import asyncio
 import os
 import random as random_module
-from datetime import date
+from datetime import date, datetime
 from typing import Optional
 from urllib.parse import quote
 
@@ -352,6 +352,75 @@ def get_notes(
             created_at=n.created_at.isoformat(),
         )
         for n in notes
+    ]
+
+
+# --- History Routes ---
+
+@app.post("/history/ghazal/{number}")
+def record_ghazal_view(
+    number: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    ghazal = db.query(models.Ghazal).filter(models.Ghazal.number == number).first()
+    if not ghazal:
+        raise HTTPException(status_code=404, detail="Ghazal not found")
+    view = db.query(models.GhazalView).filter(
+        models.GhazalView.user_id == current_user.id,
+        models.GhazalView.ghazal_id == ghazal.id,
+    ).first()
+    from datetime import date
+    today = datetime.utcnow().date()
+    if view:
+        if view.last_viewed_at.date() < today:
+            view.view_count += 1
+            view.last_viewed_at = datetime.utcnow()
+    else:
+        view = models.GhazalView(user_id=current_user.id, ghazal_id=ghazal.id)
+        db.add(view)
+    db.commit()
+    return {"view_count": view.view_count, "last_viewed_at": view.last_viewed_at}
+
+
+@app.get("/history/ghazal/{number}")
+def get_ghazal_view(
+    number: int,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    ghazal = db.query(models.Ghazal).filter(models.Ghazal.number == number).first()
+    if not ghazal:
+        raise HTTPException(status_code=404, detail="Ghazal not found")
+    view = db.query(models.GhazalView).filter(
+        models.GhazalView.user_id == current_user.id,
+        models.GhazalView.ghazal_id == ghazal.id,
+    ).first()
+    if not view:
+        return None
+    return {"view_count": view.view_count, "last_viewed_at": view.last_viewed_at}
+
+
+@app.get("/history/ghazals")
+def get_ghazal_history(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    views = (
+        db.query(models.GhazalView, models.Ghazal)
+        .join(models.Ghazal, models.GhazalView.ghazal_id == models.Ghazal.id)
+        .filter(models.GhazalView.user_id == current_user.id)
+        .order_by(models.GhazalView.last_viewed_at.desc())
+        .all()
+    )
+    return [
+        {
+            "ghazal_number": ghazal.number,
+            "ghazal_title": ghazal.title,
+            "view_count": view.view_count,
+            "last_viewed_at": view.last_viewed_at,
+        }
+        for view, ghazal in views
     ]
 
 

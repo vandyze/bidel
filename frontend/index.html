@@ -179,6 +179,10 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .pnum{font-size:10px;letter-spacing:0.12em;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:3px}
 .ptitle{font-size:21px;color:var(--gd);font-weight:700;line-height:1.2}
 .psub{font-size:12px;color:var(--mu);margin-top:3px;font-family:"IRANYekanX",sans-serif}
+.pview{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif}
+.pview-badge{display:inline-flex;align-items:center;gap:5px;background:var(--sah);color:var(--sa2);border:1px solid #e8d5a0;border-radius:99px;padding:3px 10px;font-size:12px;font-family:"IRANYekanX",sans-serif;font-weight:600}
+.pview-badge.first{background:var(--gh);color:var(--go);border-color:#c5d9a8}
+.pview-msg{font-size:11px;color:var(--mu);margin-top:2px;font-family:"IRANYekanX",sans-serif}
 
 .ghazal-kw-row{display:flex;flex-wrap:wrap;gap:5px;padding:8px 2px 12px;margin-bottom:10px;border-bottom:1px solid var(--br2);align-items:center}
 .gkw-lab{font-size:10px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.08em;margin-left:3px}
@@ -378,6 +382,7 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .pr-row-ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
 .pr-row-ic.sa{background:var(--sah);color:var(--sa2)}
 .pr-row-ic.er{background:#f4dcd4;color:var(--er)}
+.pr-row-ic.new{background:var(--sah);color:var(--sa2)}
 .pr-row-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .pr-row-t1{font-size:15px;color:var(--gd);font-weight:700;line-height:1.2;display:block}
 .pr-row-t2{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;display:block}
@@ -407,6 +412,18 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .pr-guest-bts .pr-reg:active{background:var(--ik)}
 
 .pr-foot{text-align:center;font-size:11px;color:var(--fa);font-family:"IRANYekanX",sans-serif;letter-spacing:0.06em;padding:14px 0 4px}
+.hi-card{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:12px 14px;margin-bottom:8px;cursor:pointer;display:flex;gap:12px;align-items:flex-start;transition:all .15s}
+.hi-card:active{transform:scale(.99);background:var(--sf2)}
+.hi-num{font-size:22px;font-weight:700;color:var(--go);min-width:36px;text-align:center;line-height:1.1;padding-top:2px}
+.hi-num-lab{display:block;font-size:9px;color:var(--mu);letter-spacing:0.06em;text-align:center}
+.hi-body{flex:1;min-width:0}
+.hi-top{display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap}
+.hi-time-badge{font-size:10px;background:var(--gh);color:var(--go);border-radius:99px;padding:1px 8px;font-weight:600}
+.hi-title{font-size:15px;font-weight:700;color:var(--gd)}
+.hi-line{font-size:13px;color:var(--mu);margin-bottom:5px;line-height:1.6}
+.hi-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--fa);flex-wrap:wrap}
+.hi-count{color:var(--mu)}
+.hi-count.hi-count-high{color:var(--sa2);font-weight:600}
 
 /* logout confirm */
 .cf-bg{position:fixed;inset:0;background:rgba(26,34,24,0.5);display:flex;align-items:center;justify-content:center;z-index:150;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
@@ -688,6 +705,13 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 function toFa(n){return String(n).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);}
+
+function formatJalali(isoStr){
+  try{
+    const d=new Date(isoStr);
+    return d.toLocaleDateString('fa-IR',{year:'numeric',month:'long',day:'numeric'});
+  }catch(e){return '';}
+}
 
 // ─── API ──────────────────────────────────
 const API_URL = (
@@ -1143,6 +1167,7 @@ function showHome(){
   h += '</div>';
   ctEl.innerHTML = h;
   ctEl.scrollTop = 0;
+
 }
 
 // ─── BROWSE (ghazals / terjees / zand) ────
@@ -1250,7 +1275,7 @@ async function showG(n,kw){
   setMeta('غزل '+toPersianNum(n)+' — '+((_c0[0]||'').slice(0,30)), (_c0[0]||'')+(_c0[1]?'\n'+_c0[1]:''));
   const IC_SHARE_BTN='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
   let h='<div class="pm">';
-  h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل">'+IC_SHARE_BTN+'</button><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div></div>';
+  h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل">'+IC_SHARE_BTN+'</button><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div><div class="pview" id="ghazal-view-info"></div></div>';
   h+='<div class="ghazal-kw-row" id="ghazal-keywords"><span class="gkw-lab fa">واژگان کلیدی</span></div>';
   const ghazalKwWords=resolveGhazalKeywords(n,p);
   const ghazalKwObjs=ghazalKwWords.map(w=>kwBy(w)).filter(Boolean);
@@ -1262,6 +1287,7 @@ async function showG(n,kw){
   h+='<div class="pf fa">'+toFa(p.couplets.length)+' بیت</div></div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
   gp.disabled=(n<=1); gn.disabled=(n>=TOT);
+  recordAndShowView(n);
   if(kw) setTimeout(()=>{const el=ctEl.querySelector('mark');if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},100);
   // لود async کلمات کلیدی از API
   apiFetch(API_URL+'/poems/ghazal/'+n+'/keywords')
@@ -1545,10 +1571,10 @@ function renderProfileLoggedIn(){
   h+='<div class="pr-email">'+(_user.email||'')+'</div>';
   h+='</div>';
 
-  h+='<div class="pr-stats">';
+  h+='<div class="pr-stats" id="pr-stats-block">';
   h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa(bmCount)+'</div><div class="pr-stat-lab">نشان</div></div>';
   h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa(ntCount)+'</div><div class="pr-stat-lab">یادداشت</div></div>';
-  h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa((bmCount||0)+(ntCount||0))+'</div><div class="pr-stat-lab">مجموع</div></div>';
+  h+='<div class="pr-stat" id="pr-stat-read"><div class="pr-stat-val">—</div><div class="pr-stat-lab">خوانده</div></div>';
   h+='</div>';
 
   if(_editingProfile){
@@ -1568,6 +1594,8 @@ function renderProfileLoggedIn(){
   } else {
     h+='<div class="pr-section-h fa">حساب</div>';
     h+='<div class="pr-list">';
+    h+=_prRow('history','تاریخچه خواندن','غزل‌های خوانده‌شده',
+      '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>', 'new');
     h+=_prRow('edit','ویرایش اطلاعات','نام، ایمیل و رمز عبور',
       '<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>');
     h+=_prRow('bms','نشان‌های من',toFa(bmCount)+' بیت ذخیره‌شده',
@@ -1580,6 +1608,87 @@ function renderProfileLoggedIn(){
   h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه ۱.۰</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+// لود تعداد غزل‌های خوانده‌شده
+  const token=getToken();
+  if(token){
+    fetch(API_URL+'/history/ghazals',{headers:{'Authorization':'Bearer '+token}})
+      .then(r=>r.ok?r.json():null)
+      .then(data=>{
+        const el=document.getElementById('pr-stat-read');
+        if(el&&data) el.querySelector('.pr-stat-val').textContent=toFa(data.length);
+      }).catch(()=>{});
+  }
+
+async function showHistory(){
+  curView='history'; setBack(true); hideSubnavs(); setNavHidden(false);
+  setBnActive('ac');
+  setHeader('تاریخچه','غزل‌هایی که خوانده‌اید');
+  ctEl.innerHTML='<div class="book-loader"><span></span><span></span><span></span></div>';
+  const token=getToken();
+  if(!token){ctEl.innerHTML='<div class="er">ابتدا وارد شوید</div>';return;}
+  try{
+    const resp=await fetch(API_URL+'/history/ghazals',{
+      headers:{'Authorization':'Bearer '+token}
+    });
+    if(!resp.ok){ctEl.innerHTML='<div class="er">خطا در بارگذاری</div>';return;}
+    const data=await resp.json();
+
+    // آمار کلی
+    const total=data.length;
+    const totalViews=data.reduce((s,i)=>s+i.view_count,0);
+
+    let h='<div class="pr">';
+    h+='<div class="pr-stats" style="margin-bottom:0">';
+    h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa(total)+'</div><div class="pr-stat-lab">خوانده</div></div>';
+    h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa(totalViews)+'</div><div class="pr-stat-lab">بازدید</div></div>';
+    h+='</div>';
+
+    // فیلتر جدیدترین
+    h+='<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 2px 6px">';
+    h+='<div class="fa" style="font-size:11px;color:var(--mu)">'+toFa(total)+' غزل خوانده‌شده</div>';
+    h+='<div class="fa" style="font-size:11px;color:var(--mu);display:flex;align-items:center;gap:4px">🕐 جدیدترین</div>';
+    h+='</div>';
+
+    if(!data.length){
+      h+='<div class="nb2"><div class="nbi">📖</div>هنوز غزلی نخوانده‌اید</div>';
+    } else {
+      // لود لیست غزل‌ها برای گرفتن مصراع اول
+      if(!_listCache.ghazals) _listCache.ghazals=await apiFetch(API_URL+'/poems/ghazals');
+      for(const item of data){
+        const meta=_listCache.ghazals?_listCache.ghazals.find(g=>g.number===item.ghazal_number):null;
+        const firstLine=meta?.first_couplet?.[0]||'';
+        const titleShort=(item.ghazal_title||'').length>16?(item.ghazal_title||'').slice(0,16)+'…':(item.ghazal_title||'');
+        const dateStr=formatJalali(item.last_viewed_at);
+
+        // برچسب زمانی (امروز/دیروز/تاریخ)
+        let timeLabel='';
+        try{
+          const d=new Date(item.last_viewed_at);
+          const now=new Date();
+          const diffDays=Math.floor((now-d)/86400000);
+          if(diffDays===0) timeLabel='امروز';
+          else if(diffDays===1) timeLabel='دیروز';
+          else timeLabel='';
+        }catch(e){}
+
+        h+='<div class="hi-card" data-tp="g" data-n="'+item.ghazal_number+'">';
+        h+='<div class="hi-num fa">'+toFa(item.ghazal_number)+'<span class="hi-num-lab fa">غزل</span></div>';
+        h+='<div class="hi-body">';
+        h+='<div class="hi-top">';
+        if(timeLabel) h+='<span class="hi-time-badge fa">'+timeLabel+'</span>';
+        h+='<div class="hi-title">'+titleShort+'</div></div>';
+        if(firstLine) h+='<div class="hi-line fa">'+firstLine.slice(0,30)+(firstLine.length>30?'…':'')+'</div>';
+        h+='<div class="hi-meta fa">';
+        h+='<span>🕐 آخرین بار: '+dateStr+'</span>';
+        h+='<span class="hi-count '+(item.view_count>=3?'hi-count-high':'')+'">👁 '+toFa(item.view_count)+' بار</span>';
+        h+='</div>';
+        h+='</div></div>';
+      }
+    }
+    h+='</div>';
+    ctEl.innerHTML=h; ctEl.scrollTop=0;
+  }catch(e){ctEl.innerHTML='<div class="er">خطا در بارگذاری</div>';console.error(e);}
 }
 
 function renderProfileGuest(){
@@ -1608,6 +1717,41 @@ function renderProfileGuest(){
   h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه ۱.۰</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+async function recordAndShowView(ghazalNumber){
+  const token=getToken();
+  if(!token) return;
+  try{
+    // دریافت وضعیت قبلی
+    const prevResp=await fetch(API_URL+'/history/ghazal/'+ghazalNumber,{
+      headers:{'Authorization':'Bearer '+token}
+    });
+    const prev=(prevResp.ok && prevResp.status!==204)?await prevResp.json():null;
+
+    // ثبت بازدید جدید
+    await fetch(API_URL+'/history/ghazal/'+ghazalNumber,{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+token}
+    });
+
+    // نمایش در UI
+    const el=document.getElementById('ghazal-view-info');
+    if(!el) return;
+
+    if(!prev){
+      // بازدید اول
+      el.innerHTML='<span class="pview-badge first">✦ نخستین خواندن</span>'
+        +'<div class="pview-msg fa">همین حالا به تاریخچه افزوده شد</div>';
+    } else {
+      // بازدید قبلی داشته
+      const newCount=prev.view_count+1;
+      const dateStr=formatJalali(prev.last_viewed_at);
+      el.innerHTML='<span class="pview-badge">👁 '+toFa(newCount)+' بار خوانده‌اید</span>'
+        +(dateStr?'<span style="color:var(--vf);font-size:11px">•</span>'
+        +'<span class="fa" style="font-size:11px;color:var(--mu)">آخرین بار: '+dateStr+'</span>':'');
+    }
+  }catch(e){console.error('view history error',e);}
 }
 
 function _prRow(act,t1,t2,svg,extra){
@@ -1753,6 +1897,7 @@ ctEl.addEventListener('click', function(e){
     const act = pr.dataset.pract;
     if(act==='edit'){ _editingProfile=true; renderProfileLoggedIn(); setTimeout(()=>{const el=document.getElementById('pr-inp-name');if(el)el.focus();},50); return; }
     if(act==='bms'){ showBm(); return; }
+    if(act==='history'){ showHistory(); return; }
     if(act==='logout'){ showConfirm(); return; }
     if(act==='go-browse'){ navigate('/ghazals'); return; }
     if(act==='go-kw'){ navigate('/keywords'); return; }
@@ -1808,6 +1953,8 @@ ctEl.addEventListener('click', function(e){
   const zc = e.target.closest('.zcard');
   if(zc){ navigate('/zand/'+zc.dataset.zid); return; }
   // Result item
+  const hiCard=e.target.closest('.hi-card');
+  if(hiCard){ navigate('/ghazal/'+hiCard.dataset.n); return; }
   const ri = e.target.closest('.ri');
   if(ri && !e.target.closest('button')){
     const kw=ri.dataset.kw||'';

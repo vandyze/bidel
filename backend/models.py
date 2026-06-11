@@ -17,6 +17,7 @@ class User(Base):
 
     bookmarks = relationship("Bookmark", back_populates="user", cascade="all, delete-orphan")
     notes = relationship("Note", back_populates="user", cascade="all, delete-orphan")
+    ghazal_views = relationship("GhazalView", back_populates="user")
 
 
 class Bookmark(Base):
@@ -55,6 +56,7 @@ class Ghazal(Base):
     couplets = Column(JSON, nullable=False)
 
     keywords = relationship("GhazalKeyword", back_populates="ghazal", cascade="all, delete-orphan")
+    views = relationship("GhazalView", back_populates="ghazal")
 
 
 class Keyword(Base):
@@ -105,6 +107,18 @@ class TerjeeKeyword(Base):
 
     terjee = relationship("Terjee", back_populates="keywords")
     keyword = relationship("Keyword", back_populates="terjees")
+
+
+class GhazalView(Base):
+    __tablename__ = "ghazal_views"
+
+    user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
+    ghazal_id = Column(Integer, ForeignKey("ghazals.id"), primary_key=True)
+    view_count = Column(Integer, default=1)
+    last_viewed_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User", back_populates="ghazal_views")
+    ghazal = relationship("Ghazal", back_populates="views")
 
 
 class Zand(Base):
