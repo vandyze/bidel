@@ -154,6 +154,12 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .rh{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:10px;text-align:center;letter-spacing:0.04em}
 
 .ri{background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:11px 14px;margin-bottom:7px;cursor:pointer;transition:all .15s}
+.ri.gc{display:flex;gap:12px;align-items:flex-start;padding:12px 14px}
+.gc-num{font-size:20px;font-weight:700;color:var(--go);min-width:34px;text-align:center;line-height:1.1;padding-top:2px;flex-shrink:0}
+.gc-num-lab{display:block;font-size:9px;color:var(--mu);letter-spacing:0.06em;text-align:center;font-weight:400}
+.gc-body{flex:1;min-width:0}
+.gc-title{font-size:15px;font-weight:700;color:var(--gd);margin-bottom:3px}
+.gc-line{font-size:13px;color:var(--mu);line-height:1.6}
 .ri:hover{border-color:var(--go);background:var(--sf2)}
 .ri:active{transform:scale(.99)}
 .ri.tr{border-color:var(--br2)}
@@ -706,6 +712,19 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
 
 function toFa(n){return String(n).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);}
 
+function mkGhazalCard(number, title, firstLine, extraClass, extraData){
+  extraData = extraData || '';
+  const titleShort = (title||'').length > 18 ? (title||'').slice(0,18)+'…' : (title||'');
+  const lineShort = (firstLine||'').length > 32 ? (firstLine||'').slice(0,32)+'…' : (firstLine||'');
+  return '<div class="ri gc" data-tp="g" data-n="'+number+'"'+(extraClass?' data-kw="'+(extraClass||'')+'"':'')+extraData+'>'
+    +'<div class="gc-num fa">'+toFa(number)+'<span class="gc-num-lab fa">غزل</span></div>'
+    +'<div class="gc-body">'
+    +'<div class="gc-title">'+titleShort+'</div>'
+    +(lineShort?'<div class="gc-line fa">'+lineShort+'</div>':'')
+    +'</div>'
+    +'</div>';
+}
+
 function formatJalali(isoStr){
   try{
     const d=new Date(isoStr);
@@ -1211,7 +1230,7 @@ async function renderBrowseBody(){
     let h='<div class="rh fa">فهرست غزلیات</div>';
     for(const g of _listCache.ghazals){
       const pv=g.first_couplet[0]||'';
-      h+='<div class="ri" data-tp="g" data-n="'+g.number+'"><div class="rt fa">غزل '+toFa(g.number)+'</div><div class="rti">'+g.title+'</div><div class="rp">'+pv+'</div></div>';
+      h+=mkGhazalCard(g.number, g.title, pv);
     }
     body.innerHTML = h;
   } else if(browseSub==='t'){
@@ -1454,9 +1473,7 @@ function showKeyword(word){
       const ghazalMeta = _listCache.ghazals ? _listCache.ghazals.find(g=>g.number===(p.number||p.n)) : null;
       const m1 = hl(ghazalMeta?.first_couplet?.[0] || p.first_couplet&&p.first_couplet[0] || p.m1 || '', kWord);
       const m2 = ghazalMeta?.first_couplet?.[1] || p.first_couplet&&p.first_couplet[1] || p.m2 || '';
-      ph+='<div class="ri" data-tp="g" data-n="'+(p.number||p.n||'')+'" data-kw="'+kWord+'">';
-      ph+='<div class="rti">غزل '+toFa(p.number||p.n||'')+((p.title||p.t)?' · '+(p.title||p.t):'')+'</div>';
-      ph+='<div class="rp">'+m1+(m2?' / '+hl(m2,kWord):'')+'</div></div>';
+      ph+=mkGhazalCard(p.number||p.n||'', p.title||p.t||'', m1, kWord);
     }
     if(numGhazals > Math.min(poems.length,20)){
       ph+='<div class="nr2" style="padding:18px 0 4px;font-size:12px">… و '+toFa(numGhazals-Math.min(poems.length,20))+' غزل دیگر</div>';
@@ -1878,9 +1895,13 @@ async function doSrch(){
     h += '<div class="rp">'+meanShort+'</div></div>';
   }
   for(const m of ms){
-    h+='<div class="ri'+(m.tp==='t'?' tr':'')+'" data-tp="'+m.tp+'" data-n="'+m.n+'" data-kw="'+kw+'">';
-    if(m.tp==='t') h+='<div class="rt fa">ترجیع‌بند</div>';
-    h+='<div class="rti">'+m.ti2+'</div><div class="rp">'+hl(m.pv,kw)+'</div></div>';
+    if(m.tp==='t'){
+      h+='<div class="ri tr" data-tp="t" data-n="'+m.n+'" data-kw="'+kw+'">';
+      h+='<div class="rt fa">ترجیع‌بند</div>';
+      h+='<div class="rti">'+m.ti2+'</div><div class="rp">'+hl(m.pv,kw)+'</div></div>';
+    } else {
+      h+=mkGhazalCard(m.n, m.ti2, hl(m.pv,kw), kw);
+    }
   }
   resultsEl.innerHTML = h;
 }
