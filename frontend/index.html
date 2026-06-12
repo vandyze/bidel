@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260612_005130">
+<meta name="deploy-version" content="20260612_205940">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -716,7 +716,8 @@ function toFa(n){return String(n).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d])
 function mkGhazalCard(number, title, firstLine, extraClass, extraData){
   extraData = extraData || '';
   const titleShort = (title||'').length > 18 ? (title||'').slice(0,18)+'…' : (title||'');
-  const lineShort = (firstLine||'').length > 32 ? (firstLine||'').slice(0,32)+'…' : (firstLine||'');
+  const plainLine = (firstLine||'').replace(/<[^>]*>/g,'');
+  const lineShort = plainLine.length > 32 ? plainLine.slice(0,32)+'…' : plainLine;
   return '<div class="ri gc" data-tp="g" data-n="'+number+'"'+(extraClass?' data-kw="'+(extraClass||'')+'"':'')+extraData+'>'
     +'<div class="gc-num fa">'+toFa(number)+'<span class="gc-num-lab fa">غزل</span></div>'
     +'<div class="gc-body">'
