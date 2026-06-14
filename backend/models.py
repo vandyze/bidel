@@ -129,3 +129,18 @@ class Zand(Base):
     title = Column(String, nullable=False)
     type = Column(String, nullable=False)
     content = Column(Text, nullable=True)
+
+
+class Khanesh(Base):
+    __tablename__ = "khanesh"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    slug = Column(String, unique=True, nullable=False, index=True)
+    content = Column(Text, nullable=False)
+    terjee_number = Column(Integer, ForeignKey("terjees.number"), nullable=False)
+    instructor = Column(String, nullable=False)
+    role = Column(String, nullable=True)
+    tags = Column(JSON, default=list)
+    published_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
