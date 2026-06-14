@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260615_000556">
+<meta name="deploy-version" content="20260615_004059">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -849,6 +849,7 @@ function khBandSection(terjeeNum){
 
 async function showKhaneshList(instant){
   curView='khlist'; backStack=[];
+  if(!instant) history.pushState({view:'khlist'}, '', '/khanesh');
   setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
   setHeader('خوانش‌ها','تفسیر و شرحِ ترجیع‌بند');
   if(!instant){ ctEl.innerHTML=khLoader(''); ctEl.scrollTop=0; await new Promise(r=>setTimeout(r,420)); }
@@ -871,6 +872,7 @@ async function showKhaneshList(instant){
 async function showKhanesh(slug, from, instant){
   if(from) _khFrom=from;
   curView='khd'; _khSlug=slug;
+  if(!instant) history.pushState({view:'khd', slug:slug, from:_khFrom}, '', '/khanesh/'+slug);
   setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
   if(!instant){ ctEl.innerHTML=khLoader(''); ctEl.scrollTop=0; await new Promise(r=>setTimeout(r,360)); }
   let k;
@@ -878,9 +880,10 @@ async function showKhanesh(slug, from, instant){
   if(!k){ ctEl.innerHTML='<div class="er">خطا در بارگذاری</div>'; return; }
   setHeader('خوانش','بند '+toFa(k.terjee_number)+' · '+k.instructor);
   const initial=(k.instructor||'?').trim().charAt(0);
+  const IC_SHARE_BTN_KH='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
   let h='<div class="kh-d">';
   h+='<div class="kh-d-band fa">ترجیع‌بند · بند '+toFa(k.terjee_number)+'</div>';
-  h+='<div class="kh-d-title">'+k.title+'</div>';
+  h+='<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;"><div class="kh-d-title" style="flex:1;margin-bottom:0;">'+k.title+'</div><button class="pshare" data-pshare="kh_'+slug+'" aria-label="اشتراکِ خوانش" title="اشتراکِ خوانش" style="position:static;transform:none;flex-shrink:0;margin-top:4px;">'+IC_SHARE_BTN_KH+'</button></div>';
   h+='<div class="kh-d-meta"><div class="kh-d-av">'+initial+'</div><div class="kh-d-who"><span class="kh-d-name">'+k.instructor+'</span>'+(k.role?'<span class="kh-d-role fa">'+k.role+'</span>':'')+'</div><span class="kh-d-date fa">'+toFaPubDate(k.published_at)+'</span></div>';
   if(k.tags&&k.tags.length) h+='<div class="kh-d-tags">'+k.tags.map(t=>'<span class="kh-tag">'+t+'</span>').join('')+'</div>';
   h+='<div class="kh-content">'+k.content+'</div>';
@@ -2165,7 +2168,22 @@ ctEl.addEventListener('click', function(e){
   }
   // Share whole ghazal/band from poem-meta
   const psh=e.target.closest('.pshare');
-  if(psh){ const pp=psh.dataset.pshare.split('_'); openShareGhazal(pp[0], parseInt(pp[1])); return; }
+  if(psh){
+    const pshare=psh.dataset.pshare;
+    if(pshare.startsWith('kh_')){
+      const khSlug=pshare.slice(3);
+      const khItem=(_khaneshCache||[]).find(x=>x.slug===khSlug);
+      const url='https://bideli.ir/khanesh/'+khSlug;
+      _shData={url, text: (khItem?khItem.title+'\n\n':'')+url};
+      document.getElementById('sh-t').textContent='اشتراکِ خوانش';
+      document.getElementById('sh-v').textContent=khItem?khItem.title:'خوانش';
+      document.getElementById('sh-url').textContent='bideli.ir/khanesh/'+khSlug;
+      shbg.classList.add('open');
+    } else {
+      const pp=pshare.split('_'); openShareGhazal(pp[0], parseInt(pp[1]));
+    }
+    return;
+  }
   // Couplet accordion toggle (tap body to open/close action bar)
   const cp=e.target.closest('.cp');
   if(cp && !e.target.closest('[data-action]') && !e.target.closest('.nd')){
@@ -2593,9 +2611,17 @@ function handleRoute(path){
     showKeyword(decodeURIComponent(path.slice(10))); return;
   }
   if(path === '/keywords'){ showKeywords(); return; }
+  if(path === '/khanesh'){ showKhaneshList(true); return; }
+  const khMatch = path.match(/^\/khanesh\/([^/]+)$/);
+  if(khMatch){ showKhanesh(khMatch[1], 'direct', true); return; }
   showHome();
 }
-window.addEventListener('popstate', ()=>handleRoute(location.pathname));
+window.addEventListener('popstate', e=>{
+  const st = e.state || {};
+  if(st.view==='khlist'){ showKhaneshList(true); return; }
+  if(st.view==='khd' && st.slug){ showKhanesh(st.slug, st.from||'list', true); return; }
+  handleRoute(location.pathname);
+});
 
 // ─── BOOT ────────────────────────────────
 _loadMockBms();
