@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260615_004059">
+<meta name="deploy-version" content="20260618_094706">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -615,6 +615,12 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .kh-rel-chev{color:var(--vf);flex-shrink:0;display:flex;align-items:center}
 .kh-rel-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .kh-empty{font-size:13px;color:var(--mu);text-align:center;line-height:1.9;padding:18px 16px;background:var(--sf);border:1px dashed var(--br);border-radius:12px}
+.kh-beit-card{display:flex;flex-direction:column;gap:6px;background:var(--sah);border:1px solid var(--sa);border-radius:12px;padding:14px 16px;margin:14px 0;cursor:pointer;transition:all .15s;}
+.kh-beit-card:hover{border-color:var(--sa2);background:#f0e0b0}
+.kh-beit-card:active{transform:scale(.99)}
+.kh-beit-meta{font-size:11px;color:var(--sa2);font-weight:600;letter-spacing:.03em;}
+.kh-beit-m1{font-size:16px;color:var(--tx2);font-weight:600;line-height:2;}
+.kh-beit-m2{font-size:16px;color:var(--mu);font-weight:500;line-height:2;}
 </style>
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -1783,7 +1789,7 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.15</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.18</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -1892,7 +1898,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.15</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.18</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -2142,6 +2148,14 @@ ctEl.addEventListener('click', function(e){
   if(khr){ showKhanesh(khr.dataset.slug, 'terjee'); return; }
   const khbb = e.target.closest('.kh-backband');
   if(khbb){ showT(parseInt(khbb.dataset.band)); return; }
+  const beitCard = e.target.closest('.kh-beit-card');
+  if(beitCard){
+    const type = beitCard.dataset.type;
+    const num = parseInt(beitCard.dataset.num);
+    if(type==='g') showG(num);
+    else showT(num);
+    return;
+  }
   // Result item
   const hiCard=e.target.closest('.hi-card');
   if(hiCard){ navigate('/ghazal/'+hiCard.dataset.n); return; }

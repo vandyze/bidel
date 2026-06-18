@@ -1,10 +1,12 @@
-cat > add_khanesh.sh << 'EOF'
 #!/bin/bash
-set -e
 
 # ── config ──────────────────────────────────────────────
 API="https://bideli.ir/api"
-TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzgxODE2MTg2fQ.Aa3tQQXOq_rMYO1ljSZLEA7wFEKL9uzzgLc_sxtb0GY"
+TOKEN=$(curl -s -X POST "$API/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{\"email\":\"s@g.com\",\"password\":\"123456\"}" | \
+  python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('access_token') or d.get('token',''))")
+echo "==> Got token"
 
 # ── args ────────────────────────────────────────────────
 DOCX="$1"
@@ -24,11 +26,11 @@ fi
 # ── convert docx → html ─────────────────────────────────
 echo "==> Converting $DOCX to HTML..."
 CONTENT=$(python3 - << PYEOF
-import sys, re
+import sys
 try:
     from docx import Document
 except ImportError:
-    print("ERROR: python-docx not installed. Run: pip install python-docx", file=sys.stderr)
+    print("ERROR: python-docx not installed.", file=sys.stderr)
     sys.exit(1)
 
 doc = Document("$DOCX")
@@ -37,19 +39,26 @@ for para in doc.paragraphs:
     text = para.text.strip()
     if not text:
         continue
-    style = para.style.name.lower()
+    style = ''
+    try:
+        style = para.style.name.lower() if para.style and para.style.name else ''
+    except:
+        style = ''
     if 'heading 1' in style:
         html.append(f'<h2>{text}</h2>')
     elif 'heading 2' in style or 'heading 3' in style:
         html.append(f'<h3>{text}</h3>')
     else:
-        # bold runs → em
         inner = ''
         for run in para.runs:
             t = run.text
             if not t:
                 continue
-            if run.bold:
+            try:
+                is_bold = run.bold
+            except:
+                is_bold = False
+            if is_bold:
                 inner += f'<em>{t}</em>'
             else:
                 inner += t
@@ -61,7 +70,7 @@ PYEOF
 )
 
 if [ -z "$CONTENT" ]; then
-  echo "ERROR: conversion failed"
+  echo "ERROR: conversion failed — check if python-docx is installed and file exists"
   exit 1
 fi
 
@@ -90,12 +99,11 @@ print(json.dumps(payload, ensure_ascii=False))
 
 # ── call api ────────────────────────────────────────────
 echo "==> Sending to API..."
-RESPONSE=$(curl -s -X POST "$API/khanesh" \
+RESPONSE=$(curl -s -v -X POST "$API/khanesh" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   -d "$PAYLOAD")
-
-echo "==> Response: $RESPONSE"
+echo "==> Raw response: $RESPONSE"
 
 # ── check result ────────────────────────────────────────
 if echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print('✓ OK — slug:', d.get('slug','?'))" 2>/dev/null; then
@@ -104,5 +112,3 @@ else
   echo "==> ERROR — check response above"
   exit 1
 fi
-EOF
-chmod +x add_khanesh.sh
