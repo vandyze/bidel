@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bidel-v20260619_170508';
+const CACHE_NAME = 'bidel-v20260619_174058';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
@@ -16,8 +16,7 @@ self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   // index.html و API هیچ‌وقت cache نمی‌شن
   if (url.pathname === '/' || url.pathname === '/index.html' || url.pathname.startsWith('/api/')) {
-    e.respondWith(fetch(e.request));
-    return;
+    return; // API و HTML را pass-through کن بدون interceptدرخواست
   }
   // فونت‌ها و آیکون‌ها cache می‌شن
   e.respondWith(

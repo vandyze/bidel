@@ -304,6 +304,34 @@ def login(body: LoginRequest, db: Session = Depends(get_db)):
     return {"access_token": token, "token_type": "bearer"}
 
 
+@app.post("/auth/login-otp")
+def login_otp(data: VerifyOTPInput, db: Session = Depends(get_db)):
+    otp = db.query(models.OTPCode).filter(
+        models.OTPCode.phone == data.phone,
+        models.OTPCode.purpose == "login",
+        models.OTPCode.used == False
+    ).order_by(models.OTPCode.created_at.desc()).first()
+
+    if not otp or datetime.utcnow() > otp.expires_at:
+        raise HTTPException(status_code=400, detail="کد منقضی شده یا پیدا نشد")
+    if otp.attempts >= 3:
+        raise HTTPException(status_code=400, detail="کد باطل شده است")
+    if otp.code != data.code:
+        otp.attempts += 1
+        db.commit()
+        raise HTTPException(status_code=400, detail="کد اشتباه است")
+
+    otp.used = True
+    db.commit()
+
+    user = db.query(models.User).filter(models.User.phone == data.phone).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="کاربر پیدا نشد")
+
+    token = create_access_token({"sub": str(user.id)})
+    return {"access_token": token, "token_type": "bearer"}
+
+
 @app.get("/auth/me", response_model=UserResponse)
 def me(current_user: models.User = Depends(get_current_user)):
     return UserResponse(
