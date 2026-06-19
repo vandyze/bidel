@@ -56,7 +56,7 @@ async def send_sms_otp(phone: str, code: str):
             "https://api.sms.ir/v1/send/verify",
             headers={"x-api-key": SMS_IR_API_KEY, "Content-Type": "application/json"},
             json={
-                "mobile": phone,
+                "mobile": phone.lstrip('0'),
                 "templateId": SMS_IR_TEMPLATE_ID,
                 "parameters": [{"name": "OTP", "value": code}]
             }
