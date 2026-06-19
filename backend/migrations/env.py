@@ -1,0 +1,37 @@
+from logging.config import fileConfig
+from sqlalchemy import engine_from_config, pool
+from alembic import context
+import sys, os
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from database import Base, DATABASE_URL as SQLALCHEMY_DATABASE_URL
+import models
+
+config = context.config
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
+
+target_metadata = Base.metadata
+
+def run_migrations_offline():
+    context.configure(
+        url=SQLALCHEMY_DATABASE_URL,
+        target_metadata=target_metadata,
+        literal_binds=True,
+        dialect_opts={"paramstyle": "named"},
+    )
+    with context.begin_transaction():
+        context.run_migrations()
+
+def run_migrations_online():
+    from sqlalchemy import create_engine
+    connectable = create_engine(SQLALCHEMY_DATABASE_URL)
+    with connectable.connect() as connection:
+        context.configure(connection=connection, target_metadata=target_metadata)
+        with context.begin_transaction():
+            context.run_migrations()
+
+if context.is_offline_mode():
+    run_migrations_offline()
+else:
+    run_migrations_online()

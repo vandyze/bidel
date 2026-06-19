@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON, Boolean
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -13,11 +13,25 @@ class User(Base):
     username = Column(String, unique=True, index=True, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
+    name = Column(String, nullable=True)
+    phone = Column(String, unique=True, nullable=True, index=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     bookmarks = relationship("Bookmark", back_populates="user", cascade="all, delete-orphan")
     notes = relationship("Note", back_populates="user", cascade="all, delete-orphan")
     ghazal_views = relationship("GhazalView", back_populates="user")
+
+
+class OTPCode(Base):
+    __tablename__ = "otp_codes"
+    id = Column(Integer, primary_key=True, index=True)
+    phone = Column(String, nullable=False, index=True)
+    code = Column(String, nullable=False)
+    purpose = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime, nullable=False)
+    used = Column(Boolean, default=False)
+    attempts = Column(Integer, default=0)
 
 
 class Bookmark(Base):

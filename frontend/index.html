@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260618_094706">
+<meta name="deploy-version" content="20260619_164815">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -340,18 +340,11 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .mcl{background:transparent;color:var(--mu)}
 
 /* ─── AUTH MODAL ─────────────────────────── */
-.auth-bg{position:fixed;inset:0;background:rgba(26,34,24,0.55);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(3px)}
+.auth-bg{position:fixed;inset:0;background:var(--bg);z-index:200;opacity:0;pointer-events:none;transition:opacity .2s;display:flex;flex-direction:column;max-width:500px;margin:0 auto;left:0;right:0}
 .auth-bg.open{opacity:1;pointer-events:all}
-.auth-modal{background:var(--sf);border:1px solid var(--br);border-radius:18px;padding:22px;width:min(360px,92vw);display:flex;flex-direction:column;gap:14px;box-shadow:0 12px 40px rgba(26,34,24,0.25)}
-.auth-title{font-size:1.3rem;font-weight:700;text-align:center;color:var(--gd)}
-.auth-sub{font-size:12px;text-align:center;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-top:-8px}
-.auth-tabs{display:flex;gap:4px;background:var(--ik);border-radius:11px;padding:3px}
-.auth-tabs button{flex:1;padding:8px;border-radius:9px;border:none;background:transparent;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:15px;cursor:pointer;transition:all .15s}
-.auth-tabs button.on{background:var(--go);color:#fff;font-weight:700}
-.auth-form{display:flex;flex-direction:column;gap:8px}
-.auth-form input{background:var(--bg);border:1px solid var(--br);border-radius:11px;padding:11px 14px;color:var(--tx);font-family:"IRANYekanX",sans-serif;font-size:15px;outline:none;direction:ltr}
-.auth-form input:focus{border-color:var(--go)}
-.auth-submit{background:var(--go);color:#fff;border:none;border-radius:11px;padding:12px;font-family:"IRANYekanX",sans-serif;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px}
+.auth-modal{flex:1;display:flex;flex-direction:column;padding:0 24px 32px;overflow-y:auto;gap:0}
+.auth-sub{font-size:12px;text-align:center;color:var(--mu);font-family:"IRANYekanX",sans-serif}
+.auth-submit{background:var(--go);color:#fff;border:none;border-radius:12px;padding:14px;font-family:"IRANYekanX",sans-serif;font-size:16px;font-weight:700;cursor:pointer}
 .auth-submit:active{background:var(--gd)}
 .auth-err{color:var(--er);font-size:13px;min-height:18px;text-align:center;font-family:"IRANYekanX",sans-serif}
 
@@ -443,10 +436,53 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .cf-cancel{background:transparent;color:var(--mu)}
 .cf-confirm{background:var(--er);color:#fff;border-color:var(--er)}
 
-/* auth modal close button */
+/* auth modal */
 .auth-close{position:absolute;top:12px;left:14px;background:transparent;border:none;color:var(--mu);font-size:20px;cursor:pointer;line-height:1;padding:4px 6px}
 .auth-close:hover{color:var(--gd)}
-.auth-modal{position:relative}
+.auth-topbar{display:flex;align-items:center;padding:16px 0 8px;min-height:52px;flex-shrink:0}
+.auth-back{background:transparent;border:none;color:var(--gd);font-size:22px;cursor:pointer;padding:4px 8px;line-height:1;margin-right:auto}
+.auth-topbar-title{font-size:17px;font-weight:700;color:var(--gd);font-family:"IRANYekanX",sans-serif;flex:1;text-align:center}
+.auth-topbar-space{width:40px}
+.auth-logo{width:72px;height:72px;border-radius:20px;margin:0 auto 16px;box-shadow:0 4px 16px rgba(58,72,48,0.2);display:block;object-fit:cover}
+.auth-hero-title{font-size:28px;font-weight:700;text-align:center;color:var(--gd);margin-bottom:8px}
+.auth-hero-sub{font-size:14px;text-align:center;color:var(--mu);font-family:"IRANYekanX",sans-serif;line-height:1.7;margin-bottom:32px}
+.auth-welcome-foot{font-size:11px;text-align:center;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-top:16px}
+.auth-screen{display:flex;flex-direction:column;flex:1;padding:0 24px 32px;overflow-y:auto}
+.auth-form{display:flex;flex-direction:column;gap:10px;margin-top:8px;flex:1}
+.auth-form input{background:var(--ik);border:1.5px solid var(--br);border-radius:12px;padding:13px 14px;color:var(--tx);font-family:"IRANYekanX",sans-serif;font-size:15px;outline:none}
+.auth-form input:focus{border-color:var(--go)}
+.auth-section-label{font-size:13px;font-weight:600;color:var(--gd);margin-bottom:2px;font-family:"IRANYekanX",sans-serif}
+.auth-step-pill{background:var(--ik);color:var(--mu);font-size:12px;padding:3px 10px;border-radius:99px;text-align:center;align-self:center;font-family:"IRANYekanX",sans-serif;margin-bottom:8px}
+.auth-topbar{display:flex;align-items:center;gap:8px;margin-bottom:2px;direction:rtl}
+.auth-topbar-back{background:transparent;border:none;color:var(--gd);cursor:pointer;padding:4px;line-height:1;display:flex;align-items:center;flex-shrink:0}
+.auth-topbar-back svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.auth-topbar-title{font-size:17px;font-weight:700;color:var(--gd);font-family:"IRANYekanX",sans-serif;flex:1;text-align:right}
+.auth-topbar-side{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;flex-shrink:0}
+.auth-prog{display:flex;gap:5px;margin:10px 0 18px}
+.auth-prog span{flex:1;height:3px;border-radius:99px;background:var(--br)}
+.auth-prog span.on{background:var(--go)}
+.auth-pw-wrap{position:relative;display:flex;align-items:center}
+.auth-pw-wrap input{flex:1;padding-left:40px !important}
+.auth-pw-eye{position:absolute;left:10px;background:transparent;border:none;color:var(--mu);cursor:pointer;padding:4px;display:flex;align-items:center}
+.auth-pw-eye svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.auth-field-label{font-size:13px;font-weight:600;color:var(--gd);margin-bottom:-4px;font-family:"IRANYekanX",sans-serif;direction:rtl;text-align:right}
+.auth-link-btn{background:transparent;border:none;color:var(--go);font-family:"IRANYekanX",sans-serif;font-size:13px;cursor:pointer;padding:0}
+.auth-link-btn:disabled{color:var(--mu);cursor:default}
+.auth-note{background:var(--ik);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;direction:rtl;line-height:1.6}
+.auth-timer{font-size:13px;color:var(--mu);text-align:center;font-family:"IRANYekanX",sans-serif;min-height:22px;margin-top:4px}
+.auth-timer.expired{color:var(--er)}
+#auth-otp-resend{color:var(--mu);font-size:13px;font-family:"IRANYekanX",sans-serif;background:transparent;border:none;cursor:default;padding:4px 0;transition:color .2s,font-weight .1s}
+#auth-otp-resend:not(:disabled){color:var(--go);cursor:pointer;font-weight:700}
+#auth-otp-input{text-align:center;font-size:26px;letter-spacing:10px;font-family:"IRANYekanX",sans-serif}
+.auth-grow{flex:1}
+.auth-tabs{display:flex;gap:4px;background:var(--ik);border-radius:11px;padding:3px;direction:rtl}
+.auth-tabs button{flex:1;padding:9px;border-radius:9px;border:none;background:transparent;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:14px;cursor:pointer;transition:all .15s}
+.auth-tabs button.on{background:var(--sf2);color:var(--gd);font-weight:700;box-shadow:0 1px 4px rgba(58,72,48,0.12)}
+.auth-forgot-row{display:flex;justify-content:flex-end;margin-top:-2px}
+.auth-forgot-btn{background:transparent;border:none;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:13px;cursor:pointer;padding:2px 0;direction:rtl}
+.auth-forgot-btn:hover{color:var(--go)}
+.auth-info-box{background:var(--ik);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;direction:rtl;line-height:1.7;display:flex;align-items:flex-start;gap:8px}
+.auth-info-box svg{width:16px;height:16px;flex-shrink:0;stroke:var(--mu);fill:none;stroke-width:1.8;margin-top:2px}
 
 /* ─── TWEAKS PANEL ───────────────────────── */
 .tw-panel{position:fixed;bottom:80px;right:14px;background:var(--sf);border:1px solid var(--go);border-radius:14px;padding:14px 16px;width:min(300px,calc(100vw - 28px));z-index:300;box-shadow:0 10px 30px rgba(58,72,48,0.2);display:none;font-family:"IRANYekanX",sans-serif}
@@ -615,12 +651,12 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .kh-rel-chev{color:var(--vf);flex-shrink:0;display:flex;align-items:center}
 .kh-rel-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .kh-empty{font-size:13px;color:var(--mu);text-align:center;line-height:1.9;padding:18px 16px;background:var(--sf);border:1px dashed var(--br);border-radius:12px}
-.kh-beit-card{display:flex;flex-direction:column;gap:6px;background:var(--sah);border:1px solid var(--sa);border-radius:12px;padding:14px 16px;margin:14px 0;cursor:pointer;transition:all .15s;}
-.kh-beit-card:hover{border-color:var(--sa2);background:#f0e0b0}
+.kh-beit-card{display:flex;flex-direction:column;gap:0;background:var(--sf);border:none;border-right:3px solid var(--sa);border-radius:0 10px 10px 0;padding:14px 16px;margin:16px 0;cursor:pointer;transition:background .15s;}
+.kh-beit-card:hover{background:var(--sah)}
 .kh-beit-card:active{transform:scale(.99)}
-.kh-beit-meta{font-size:11px;color:var(--sa2);font-weight:600;letter-spacing:.03em;}
-.kh-beit-m1{font-size:16px;color:var(--tx2);font-weight:600;line-height:2;}
-.kh-beit-m2{font-size:16px;color:var(--mu);font-weight:500;line-height:2;}
+.kh-beit-meta{font-size:10.5px;color:var(--sa2);font-weight:600;letter-spacing:.03em;margin-bottom:8px;font-family:"IRANYekanX",sans-serif;}
+.kh-beit-m1{font-size:19px;line-height:1.95;color:var(--tx);}
+.kh-beit-m2{font-size:19px;line-height:1.95;color:var(--mu);text-align:left;}
 </style>
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -718,28 +754,174 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 </div>
 
 <div class="auth-bg" id="auth-modal-bg">
-  <div class="auth-modal">
-    <button class="auth-close" id="auth-close" aria-label="بستن">✕</button>
-    <div class="auth-title">دیوان بیدل</div>
-    <div class="auth-sub fa">برای ذخیره نشان‌ها و یادداشت‌ها وارد شوید — سایر بخش‌ها بدون ورود نیز در دسترس است</div>
-    <div class="auth-tabs">
-      <button id="auth-tab-login" class="on">ورود</button>
-      <button id="auth-tab-register">ثبت‌نام</button>
+
+  <!-- ── Welcome ── -->
+  <div id="auth-screen-welcome" class="auth-modal auth-screen">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:40px">
+      <img class="auth-logo" src="/icons/icon-192.png" alt="بیدل">
+      <div class="auth-hero-title">دیوان بیدل</div>
+      <div class="auth-hero-sub">هزار غزل بیدل دهلوی، در دست شما — برای ذخیرهٔ نشان‌ها و یادداشت‌ها وارد شوید.</div>
     </div>
-    <form class="auth-form" id="auth-form-login" style="display:flex" onsubmit="return false">
-      <input type="email" id="auth-email" placeholder="email" autocomplete="email" dir="ltr">
-      <input type="password" id="auth-password" placeholder="password" autocomplete="current-password" dir="ltr">
+    <div class="auth-form" style="gap:11px">
+      <button class="auth-submit" id="auth-goto-login">ورود</button>
+      <button class="auth-submit" style="background:var(--ik);color:var(--tx);border:1.5px solid var(--br)" id="auth-goto-register">ساخت حساب کاربری</button>
+      <button class="auth-link-btn" id="auth-skip" style="text-align:center;padding:8px;margin-top:2px">بدون ورود ادامه می‌دهم</button>
+    </div>
+    <div class="auth-welcome-foot">با ورود، شرایط استفاده و حریم خصوصی را می‌پذیرید.</div>
+  </div>
+
+  <!-- صفحه: ورود -->
+  <div id="auth-screen-login" class="auth-screen" style="display:none">
+    <div class="auth-topbar">
+      <button class="auth-topbar-back" id="auth-back-login" aria-label="بازگشت">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <span class="auth-topbar-title">ورود</span>
+    </div>
+    <div class="auth-tabs">
+      <button id="auth-tab-pw" class="on">رمز عبور</button>
+      <button id="auth-tab-otp">کد یکبارمصرف</button>
+    </div>
+    <!-- تب رمز عبور -->
+    <div id="auth-login-pw-form" class="auth-form">
+      <div class="auth-field-label">شماره تلفن</div>
+      <input type="tel" id="auth-login-id" placeholder="09xxxxxxxxx" dir="rtl" inputmode="numeric" autocomplete="tel">
+      <div class="auth-field-label">رمز عبور</div>
+      <div class="auth-pw-wrap">
+        <input type="password" id="auth-login-password" placeholder="••••••••" dir="rtl" autocomplete="current-password">
+        <button type="button" class="auth-pw-eye" id="auth-login-pw-eye" aria-label="نمایش رمز">
+          <svg id="auth-login-pw-icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div class="auth-forgot-row">
+        <button class="auth-forgot-btn" id="auth-goto-forgot">رمز عبور را فراموش کرده‌اید؟</button>
+      </div>
       <div class="auth-err" id="auth-login-err"></div>
       <button class="auth-submit" id="auth-login-btn">ورود</button>
-    </form>
-    <form class="auth-form" id="auth-form-register" style="display:none" onsubmit="return false">
-      <input type="text" id="auth-username" placeholder="username" autocomplete="username" dir="ltr">
-      <input type="email" id="auth-reg-email" placeholder="email" autocomplete="email" dir="ltr">
-      <input type="password" id="auth-reg-password" placeholder="password" autocomplete="new-password" dir="ltr">
-      <div class="auth-err" id="auth-register-err"></div>
-      <button class="auth-submit" id="auth-register-btn">ثبت‌نام</button>
-    </form>
+    </div>
+    <!-- تب OTP ورود -->
+    <div id="auth-login-otp-form" class="auth-form" style="display:none">
+      <div class="auth-info-box">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        <span>کاربران قدیمی بدون شماره تلفن از تب «رمز عبور» وارد شوند.</span>
+      </div>
+      <div class="auth-field-label">شماره تلفن</div>
+      <input type="tel" id="auth-login-phone" placeholder="09xxxxxxxxx" dir="rtl" inputmode="numeric">
+      <div class="auth-err" id="auth-login-otp-err"></div>
+      <button class="auth-submit" id="auth-login-otp-btn">ارسال کد</button>
+    </div>
   </div>
+
+  <!-- صفحه: ثبت‌نام -->
+  <div id="auth-screen-register" class="auth-screen" style="display:none">
+    <div class="auth-topbar">
+      <button class="auth-topbar-back" id="auth-back-register" aria-label="بازگشت">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <span class="auth-topbar-title">ساخت حساب کاربری</span>
+      <span class="auth-topbar-side">۱ از ۳</span>
+    </div>
+    <div class="auth-prog">
+      <span class="on"></span><span></span><span></span>
+    </div>
+    <div class="auth-form">
+      <div class="auth-field-label">نام</div>
+      <input type="text" id="auth-reg-name" placeholder="نام و نام خانوادگی" dir="rtl" autocomplete="name">
+      <div class="auth-field-label">شماره تلفن</div>
+      <input type="tel" id="auth-reg-phone" placeholder="09xxxxxxxxx" dir="rtl" inputmode="numeric">
+      <div class="auth-field-label">رمز عبور</div>
+      <div class="auth-pw-wrap">
+        <input type="password" id="auth-reg-password" placeholder="حداقل ۶ کاراکتر" dir="rtl" autocomplete="new-password">
+        <button type="button" class="auth-pw-eye" id="auth-reg-pw-eye" aria-label="نمایش رمز">
+          <svg id="auth-reg-pw-icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div class="auth-err" id="auth-register-err"></div>
+      <button class="auth-submit" id="auth-register-btn">دریافت کد تأیید</button>
+    </div>
+  </div>
+
+  <!-- ── Forgot ── -->
+  <div id="auth-screen-forgot" class="auth-screen" style="display:none">
+    <div class="auth-topbar">
+      <button class="auth-topbar-back" id="auth-back-forgot" aria-label="بازگشت">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <span class="auth-topbar-title">بازیابی رمز عبور</span>
+      <span class="auth-topbar-side">۱ از ۳</span>
+    </div>
+    <div class="auth-prog">
+      <span class="on"></span><span></span><span></span>
+    </div>
+    <div class="auth-form">
+      <div class="auth-info-box">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        <span>شماره تلفن حساب خود را وارد کنید تا کد بازیابی برایتان ارسال شود.</span>
+      </div>
+      <div class="auth-field-label">شماره تلفن</div>
+      <input type="tel" id="auth-forgot-phone" placeholder="09xxxxxxxxx" dir="rtl" inputmode="numeric">
+      <div class="auth-err" id="auth-forgot-err"></div>
+      <button class="auth-submit" id="auth-forgot-btn">ارسال کد بازیابی</button>
+    </div>
+  </div>
+
+  <!-- ── OTP ── -->
+  <div id="auth-screen-otp" class="auth-screen" style="display:none">
+    <div class="auth-topbar">
+      <button class="auth-topbar-back" id="auth-back-otp" aria-label="بازگشت">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <span class="auth-topbar-title" id="auth-otp-title">تأیید شماره</span>
+      <span class="auth-topbar-side" id="auth-otp-topbar-side"></span>
+    </div>
+    <div class="auth-prog" id="auth-otp-prog" style="display:none">
+      <span class="on"></span><span class="on"></span><span></span>
+    </div>
+    <div style="display:flex;justify-content:center;margin:16px 0">
+      <div style="width:56px;height:56px;border-radius:16px;background:var(--ik);display:flex;align-items:center;justify-content:center;color:var(--go)">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 3v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <div class="auth-sub fa" id="auth-otp-desc" style="text-align:center;font-size:14px;line-height:1.7;margin-bottom:16px"></div>
+    <div class="auth-form">
+      <input type="text" id="auth-otp-input" placeholder="·····" dir="ltr" inputmode="numeric" maxlength="5" autocomplete="one-time-code">
+      <div class="auth-err" id="auth-otp-err"></div>
+      <div id="auth-otp-timer" class="auth-timer"></div>
+      <div style="text-align:center">
+        <button id="auth-otp-resend" disabled>ارسال مجدد کد</button>
+      </div>
+      <div class="auth-grow"></div>
+      <button class="auth-submit" id="auth-otp-btn">تأیید</button>
+    </div>
+  </div>
+
+  <!-- ── Reset Password ── -->
+  <div id="auth-screen-reset" class="auth-screen" style="display:none">
+    <div class="auth-topbar">
+      <button class="auth-topbar-back" id="auth-back-reset" aria-label="بازگشت">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <span class="auth-topbar-title">رمز عبور جدید</span>
+      <span class="auth-topbar-side">۳ از ۳</span>
+    </div>
+    <div class="auth-prog">
+      <span class="on"></span><span class="on"></span><span class="on"></span>
+    </div>
+    <div class="auth-form">
+      <div class="auth-field-label">رمز عبور جدید</div>
+      <div class="auth-pw-wrap">
+        <input type="password" id="auth-reset-pw1" placeholder="حداقل ۶ کاراکتر" dir="rtl" autocomplete="new-password">
+        <button type="button" class="auth-pw-eye" id="auth-reset-pw-eye" aria-label="نمایش رمز">
+          <svg id="auth-reset-pw-icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div class="auth-field-label">تکرار رمز عبور</div>
+      <input type="password" id="auth-reset-pw2" placeholder="رمز را دوباره وارد کنید" dir="rtl" autocomplete="new-password">
+      <div class="auth-err" id="auth-reset-err"></div>
+      <button class="auth-submit" id="auth-reset-btn">ثبت رمز و ورود</button>
+    </div>
+  </div>
+
 </div>
 
 <div class="ms-bg" id="mood-sheet-bg">
@@ -964,11 +1146,21 @@ function getToken(){return localStorage.getItem('bidel_token')}
 function setToken(t){if(t)localStorage.setItem('bidel_token',t);else localStorage.removeItem('bidel_token')}
 function authHeaders(){return{'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'}}
 function isAuthed(){return !!_user}
-function showAuthModal(pending){
-  if(pending) _pendingAction = pending;
+// ═══════════ AUTH MODAL ═══════════
+let _authOtpCtx = { purpose: 'register', phone: '' };
+let _authOtpToken = null;
+let _authTimerInterval = null;
+let _authTimerLeft = 120;
+
+function showAuthModal(pending) {
+  if (pending) _pendingAction = pending;
   document.getElementById('auth-modal-bg').classList.add('open');
+  _authGoScreen('welcome');
 }
-function hideAuthModal(){document.getElementById('auth-modal-bg').classList.remove('open')}
+function hideAuthModal() {
+  document.getElementById('auth-modal-bg').classList.remove('open');
+  if (_authTimerInterval) { clearInterval(_authTimerInterval); _authTimerInterval = null; }
+}
 
 function _loadCachedUser(){
   try{
@@ -982,6 +1174,26 @@ function _saveUser(u){
   else localStorage.removeItem('bidel_user');
   updateProfileBadge();
   refreshNav();
+}
+async function _loadUser() {
+  const token = getToken();
+  if (!token) return;
+  try {
+    const resp = await fetch(API_URL + '/auth/me', { headers: { 'Authorization': 'Bearer ' + token } });
+    if (resp.ok) { _saveUser(await resp.json()); }
+    else if (resp.status === 401) { setToken(null); _saveUser(null); }
+  } catch(e) {}
+  await loadUserData();
+}
+function handlePendingAction(a) {
+  if (!a) { if (curView === 'profile') showProfile(); return; }
+  if (a.type === 'bm') { toggleBm(a.tp, a.id, a.ci); return; }
+  if (a.type === 'note') {
+    const k = bkey(a.tp, a.id, a.ci);
+    if (a.text) { _nts[k] = a.text; _saveMockBms(); }
+    if (curView === 'gh') showG(cg);
+    else if (curView === 'tr') showT(ct);
+  }
 }
 function updateProfileBadge(){
   const btn = document.getElementById('btn-profile');
@@ -1752,7 +1964,7 @@ function renderProfileLoggedIn(){
   h+='<div class="pr-card">';
   h+='<div class="pr-av">'+initial+'</div>';
   h+='<div class="pr-name">'+(_user.username||'کاربر')+'</div>';
-  h+='<div class="pr-email">'+(_user.email||'')+'</div>';
+  h+='<div class="pr-email">'+(_toFa(_user.phone||''))+'</div>';
   h+='</div>';
 
   h+='<div class="pr-stats" id="pr-stats-block">';
@@ -1766,8 +1978,6 @@ function renderProfileLoggedIn(){
     h+='<div class="pr-edit-form">';
     h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">نام کاربری</label>';
     h+='<input class="pr-edit-inp" dir="rtl" id="pr-inp-name" value="'+(_user.username||'').replace(/"/g,'&quot;')+'" placeholder="نام کاربری"></div>';
-    h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">ایمیل</label>';
-    h+='<input class="pr-edit-inp" id="pr-inp-email" type="email" value="'+(_user.email||'').replace(/"/g,'&quot;')+'" placeholder="email"></div>';
     h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">رمز عبور جدید <span style="color:var(--vf)">(اختیاری)</span></label>';
     h+='<input class="pr-edit-inp" id="pr-inp-pass" type="password" placeholder="••••••••"></div>';
     h+='<div class="pr-edit-msg" id="pr-edit-msg"></div>';
@@ -1780,7 +1990,7 @@ function renderProfileLoggedIn(){
     h+='<div class="pr-list">';
     h+=_prRow('history','تاریخچه خواندن','غزل‌های خوانده‌شده',
       '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>', 'new');
-    h+=_prRow('edit','ویرایش اطلاعات','نام، ایمیل و رمز عبور',
+    h+=_prRow('edit','ویرایش اطلاعات','نام کاربری و رمز عبور',
       '<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>');
     h+=_prRow('bms','نشان‌های من',toFa(bmCount)+' بیت ذخیره‌شده',
       '<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>', 'sa');
@@ -1789,7 +1999,7 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.18</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.19</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -1898,7 +2108,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.18</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.19</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -1948,24 +2158,23 @@ function _prRow(act,t1,t2,svg,extra){
 
 async function saveProfileEdit(){
   const name=document.getElementById('pr-inp-name').value.trim();
-  const email=document.getElementById('pr-inp-email').value.trim();
   const pass=document.getElementById('pr-inp-pass').value;
   const msg=document.getElementById('pr-edit-msg');
   msg.className='pr-edit-msg';
-  if(!name || !email){
+  if(!name){
     msg.classList.add('er');
-    msg.textContent='نام و ایمیل الزامی است';
+    msg.textContent='نام کاربری الزامی است';
     return;
   }
   if(MOCK_MODE){
-    _saveUser({username:name, email:email});
+    _saveUser({..._user, username:name});
     msg.classList.add('ok');
     msg.textContent='اطلاعات با موفقیت ذخیره شد ✓';
     setTimeout(()=>{ _editingProfile=false; showProfile(); }, 800);
     return;
   }
   try{
-    const body={username:name, email:email};
+    const body={username:name};
     if(pass) body.password=pass;
     const r=await fetch(API_URL+'/auth/me',{method:'PUT',headers:authHeaders(),body:JSON.stringify(body)});
     if(!r.ok){
@@ -1973,7 +2182,7 @@ async function saveProfileEdit(){
       msg.textContent='خطا در ذخیره اطلاعات';
       return;
     }
-    _saveUser({username:name, email:email});
+    _saveUser({..._user, username:name});
     msg.classList.add('ok');
     msg.textContent='ذخیره شد ✓';
     setTimeout(()=>{ _editingProfile=false; showProfile(); }, 800);
@@ -2095,10 +2304,6 @@ ctEl.addEventListener('click', function(e){
   // Profile edit save/cancel
   if(e.target.closest('#pr-save-edit')){ saveProfileEdit(); return; }
   if(e.target.closest('#pr-cancel-edit')){ _editingProfile=false; showProfile(); return; }
-  // Profile guest buttons
-  if(e.target.closest('#pr-guest-login')){ switchAuthTab('login'); showAuthModal(); return; }
-  if(e.target.closest('#pr-guest-reg')){ switchAuthTab('register'); showAuthModal(); return; }
-
   // Home quick cards
   const qc = e.target.closest('.qc');
   if(qc){
@@ -2357,18 +2562,15 @@ btnBack.addEventListener('click', ()=>{
 });
 
 // ─── PROFILE BUTTON ──────────────────────
-document.getElementById('btn-profile').addEventListener('click', showProfile);
+document.getElementById('btn-profile').addEventListener('click', ()=>{
+  if(_user){ showProfile(); }
+  else { _authGoScreen('login'); _authSwitchLoginTab('pw'); showAuthModal(); }
+});
 
 // ─── LOGOUT CONFIRM ──────────────────────
 document.getElementById('cf-cancel').addEventListener('click', hideConfirm);
 document.getElementById('cf-confirm').addEventListener('click', doLogout);
 document.getElementById('cf-bg').addEventListener('click', e=>{ if(e.target.id==='cf-bg') hideConfirm(); });
-
-// ─── AUTH CLOSE ──────────────────────────
-document.getElementById('auth-close').addEventListener('click', ()=>{ _pendingAction=null; hideAuthModal(); });
-document.getElementById('auth-modal-bg').addEventListener('click', e=>{
-  if(e.target.id==='auth-modal-bg'){ _pendingAction=null; hideAuthModal(); }
-});
 
 // ─── RANDOM ──────────────────────────────
 document.getElementById('btn-rand').addEventListener('click', async ()=>{
@@ -2433,99 +2635,254 @@ document.getElementById('btn-msave').addEventListener('click', svn);
 mbg.addEventListener('click', e=>{ if(e.target===mbg) cmob(); });
 
 // ─── AUTH ────────────────────────────────
-function switchAuthTab(tab){
-  document.getElementById('auth-tab-login').classList.toggle('on',tab==='login');
-  document.getElementById('auth-tab-register').classList.toggle('on',tab==='register');
-  document.getElementById('auth-form-login').style.display=tab==='login'?'flex':'none';
-  document.getElementById('auth-form-register').style.display=tab==='register'?'flex':'none';
+function _authGoScreen(name){
+  document.querySelectorAll('.auth-screen').forEach(s=>s.style.display='none');
+  const el=document.getElementById('auth-screen-'+name);
+  if(el)el.style.display='flex';
+  document.querySelectorAll('.auth-err').forEach(e=>e.textContent='');
 }
-function addTap(id, handler){
-  const el=document.getElementById(id);
-  el.addEventListener('touchstart',function(e){e.preventDefault();handler();},{passive:false});
-  el.addEventListener('click',handler);
+function _authSwitchLoginTab(tab){
+  document.getElementById('auth-tab-pw').classList.toggle('on',tab==='pw');
+  document.getElementById('auth-tab-otp').classList.toggle('on',tab==='otp');
+  document.getElementById('auth-login-pw-form').style.display=tab==='pw'?'flex':'none';
+  document.getElementById('auth-login-otp-form').style.display=tab==='otp'?'flex':'none';
 }
-addTap('auth-tab-login',()=>switchAuthTab('login'));
-addTap('auth-tab-register',()=>switchAuthTab('register'));
-
-async function doLogin(){
-  const email=document.getElementById('auth-email').value.trim();
-  const password=document.getElementById('auth-password').value;
-  const err=document.getElementById('auth-login-err');
-  err.textContent='';
-  if(!email||!password){err.textContent='ایمیل و رمز عبور الزامی است';return;}
+const _toFa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const _fromFa=s=>String(s).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+function _authStartTimer(seconds){
+  if(_authTimerInterval)clearInterval(_authTimerInterval);
+  _authTimerLeft=seconds;
+  const timerEl=document.getElementById('auth-otp-timer');
+  const resendBtn=document.getElementById('auth-otp-resend');
+  if(resendBtn)resendBtn.disabled=true;
+  const update=()=>{
+    if(_authTimerLeft<=0){clearInterval(_authTimerInterval);timerEl.textContent='کد منقضی شد';timerEl.classList.add('expired');if(resendBtn)resendBtn.disabled=false;return;}
+    const m=String(Math.floor(_authTimerLeft/60)).padStart(2,'0');
+    const s=String(_authTimerLeft%60).padStart(2,'0');
+    timerEl.textContent=_toFa(m)+':'+_toFa(s)+' تا انقضای کد';
+    timerEl.classList.remove('expired');
+    _authTimerLeft--;
+  };
+  update();
+  _authTimerInterval=setInterval(update,1000);
+}
+function _authShowOtpScreen(purpose,phone){
+  _authOtpCtx={purpose,phone};
+  const titleMap={register:'ساخت حساب کاربری',reset:'بازیابی رمز عبور',login:'تأیید شماره'};
+  const sideMap={register:'۲ از ۳',reset:'۲ از ۳',login:''};
+  document.getElementById('auth-otp-title').textContent=titleMap[purpose]||'تأیید شماره';
+  document.getElementById('auth-otp-topbar-side').textContent=sideMap[purpose]||'';
+  const prog=document.getElementById('auth-otp-prog');
+  prog.style.display=(purpose==='register'||purpose==='reset')?'flex':'none';
+  document.getElementById('auth-otp-desc').textContent='کد ۵ رقمی به شمارهٔ '+_toFa(phone)+' پیامک شد.';
+  document.getElementById('auth-otp-input').value='';
+  _authGoScreen('otp');
+  _authStartTimer(120);
+}
+async function _authSendOtp(purpose,phone){
   try{
-    const resp=await fetch(API_URL+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email, password})});
-    if(!resp.ok){
-      const errData=await resp.json().catch(()=>({}));
-      err.textContent=errData.detail||'خطا در ورود';
-      return;
-    }
-    const data=await resp.json();
-    const token = data.access_token || data.token;
-    setToken(token);
-    // Fetch real user profile from /auth/me
-    let userProfile = {username: email.split('@')[0], email: email};
-    try{
-      const meResp=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+token}});
-      if(meResp.ok) userProfile=await meResp.json();
-    }catch(e){}
-    _saveUser(userProfile);
+    const resp=await fetch(API_URL+'/auth/send-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone,purpose})});
+    const d=await resp.json().catch(()=>({}));
+    if(!resp.ok)return{error:d.detail||'خطا در ارسال کد'};
+    return{ok:true};
+  }catch{return{error:'خطای شبکه'};}
+}
+
+// ── Auth modal events ──
+document.getElementById('auth-goto-login').addEventListener('click',()=>{_authGoScreen('login');_authSwitchLoginTab('pw');});
+document.getElementById('auth-goto-register').addEventListener('click',()=>_authGoScreen('register'));
+document.getElementById('auth-tab-pw').addEventListener('click',()=>_authSwitchLoginTab('pw'));
+document.getElementById('auth-tab-otp').addEventListener('click',()=>_authSwitchLoginTab('otp'));
+document.getElementById('auth-goto-forgot').addEventListener('click',()=>_authGoScreen('forgot'));
+document.getElementById('auth-back-login').addEventListener('click',()=>_authGoScreen('welcome'));
+document.getElementById('auth-login-pw-eye').addEventListener('click',()=>{
+  const inp=document.getElementById('auth-login-password');
+  const icon=document.getElementById('auth-login-pw-icon');
+  if(inp.type==='password'){
+    inp.type='text';
+    icon.innerHTML='<path d="M3 3l18 18"/><path d="M10.6 6.1A9.7 9.7 0 0112 6c6.5 0 10 6 10 6a16 16 0 01-3.4 4M6.3 7.6A16 16 0 002 12s3.5 7 10 7a9.4 9.4 0 004-.9"/><path d="M9.5 10.5a3 3 0 004 4"/>';
+  }else{
+    inp.type='password';
+    icon.innerHTML='<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>';
+  }
+});
+document.getElementById('auth-back-register').addEventListener('click',()=>_authGoScreen('welcome'));
+document.getElementById('auth-reg-pw-eye').addEventListener('click',()=>{
+  const inp=document.getElementById('auth-reg-password');
+  const icon=document.getElementById('auth-reg-pw-icon');
+  if(inp.type==='password'){
+    inp.type='text';
+    icon.innerHTML='<path d="M3 3l18 18"/><path d="M10.6 6.1A9.7 9.7 0 0112 6c6.5 0 10 6 10 6a16 16 0 01-3.4 4M6.3 7.6A16 16 0 002 12s3.5 7 10 7a9.4 9.4 0 004-.9"/><path d="M9.5 10.5a3 3 0 004 4"/>';
+  } else {
+    inp.type='password';
+    icon.innerHTML='<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>';
+  }
+});
+document.getElementById('auth-back-forgot').addEventListener('click',()=>_authGoScreen('login'));
+document.getElementById('auth-back-otp').addEventListener('click',()=>{
+  if(_authOtpCtx.purpose==='register')_authGoScreen('register');
+  else if(_authOtpCtx.purpose==='reset')_authGoScreen('forgot');
+  else _authGoScreen('login');
+});
+document.getElementById('auth-back-reset').addEventListener('click',()=>_authGoScreen('otp'));
+document.getElementById('auth-reset-pw-eye').addEventListener('click',()=>{
+  const inp=document.getElementById('auth-reset-pw1');
+  const icon=document.getElementById('auth-reset-pw-icon');
+  if(inp.type==='password'){
+    inp.type='text';
+    icon.innerHTML='<path d="M3 3l18 18"/><path d="M10.6 6.1A9.7 9.7 0 0112 6c6.5 0 10 6 10 6a16 16 0 01-3.4 4M6.3 7.6A16 16 0 002 12s3.5 7 10 7a9.4 9.4 0 004-.9"/><path d="M9.5 10.5a3 3 0 004 4"/>';
+  }else{
+    inp.type='password';
+    icon.innerHTML='<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>';
+  }
+});
+document.getElementById('auth-skip').addEventListener('click',()=>hideAuthModal());
+document.getElementById('auth-otp-input').addEventListener('input',function(){
+  let v=this.value.replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]).replace(/[^۰-۹]/g,'');
+  if(v.length>5)v=v.slice(0,5);
+  this.value=v;
+});
+
+document.getElementById('auth-login-btn').addEventListener('click',async()=>{
+  const loginId=document.getElementById('auth-login-id').value.trim();
+  const password=document.getElementById('auth-login-password').value;
+  const errEl=document.getElementById('auth-login-err');
+  if(!loginId||!password){errEl.textContent='شماره تلفن و رمز عبور الزامی است';return;}
+  errEl.textContent='';
+  const btn=document.getElementById('auth-login-btn');
+  btn.disabled=true;btn.textContent='در حال ورود…';
+  try{
+    const resp=await fetch(API_URL+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({login_id:loginId,password})});
+    const d=await resp.json().catch(()=>({}));
+    if(!resp.ok){errEl.textContent=d.detail||'خطا در ورود';return;}
+    setToken(d.access_token);
+    const meR=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+d.access_token}});
+    if(meR.ok){const u=await meR.json();_saveUser({username:u.username,email:u.email||'',phone:u.phone||''});}
     hideAuthModal();
-    await loadUserData();
-    showHome();
-    _runPending();
-  }catch(e){
-    err.textContent='خطا در اتصال به سرور';
-  }
-}
-async function doRegister(){
-  const username=document.getElementById('auth-username').value.trim();
-  const email=document.getElementById('auth-reg-email').value.trim();
+    if(_pendingAction){const a=_pendingAction;_pendingAction=null;handlePendingAction(a);}
+  }catch{errEl.textContent='خطای شبکه';}
+  finally{btn.disabled=false;btn.textContent='ورود';}
+});
+
+document.getElementById('auth-login-otp-btn').addEventListener('click',async()=>{
+  const phone=document.getElementById('auth-login-phone').value.trim();
+  const errEl=document.getElementById('auth-login-otp-err');
+  if(!/^09\d{9}$/.test(phone)){errEl.textContent='شماره باید با ۰۹ شروع شود و ۱۱ رقم باشد';return;}
+  errEl.textContent='';
+  const btn=document.getElementById('auth-login-otp-btn');
+  btn.disabled=true;btn.textContent='در حال ارسال…';
+  const result=await _authSendOtp('login',phone);
+  btn.disabled=false;btn.textContent='ارسال کد';
+  if(result.error){errEl.textContent=result.error;return;}
+  _authShowOtpScreen('login',phone);
+});
+
+document.getElementById('auth-forgot-btn').addEventListener('click',async()=>{
+  const phone=document.getElementById('auth-forgot-phone').value.trim();
+  const errEl=document.getElementById('auth-forgot-err');
+  if(!/^09\d{9}$/.test(phone)){errEl.textContent='شماره معتبر نیست';return;}
+  errEl.textContent='';
+  const btn=document.getElementById('auth-forgot-btn');
+  btn.disabled=true;btn.textContent='در حال ارسال…';
+  const result=await _authSendOtp('reset',phone);
+  btn.disabled=false;btn.textContent='ارسال کد بازیابی';
+  if(result.error){errEl.textContent=result.error;return;}
+  _authShowOtpScreen('reset',phone);
+});
+
+document.getElementById('auth-register-btn').addEventListener('click',async()=>{
+  const name=document.getElementById('auth-reg-name').value.trim();
+  const phone=document.getElementById('auth-reg-phone').value.trim();
   const password=document.getElementById('auth-reg-password').value;
-  const err=document.getElementById('auth-register-err');
-  err.textContent='';
-  if(!username||!email||!password){err.textContent='همه فیلدها الزامی است';return;}
+  const errEl=document.getElementById('auth-register-err');
+  if(!name){errEl.textContent='نام الزامی است';return;}
+  if(!/^09\d{9}$/.test(phone)){errEl.textContent='شماره تلفن معتبر نیست';return;}
+  if(password.length<6){errEl.textContent='رمز حداقل ۶ کاراکتر';return;}
+  errEl.textContent='';
+  const btn=document.getElementById('auth-register-btn');
+  btn.disabled=true;btn.textContent='در حال ارسال کد…';
+  const result=await _authSendOtp('register',phone);
+  btn.disabled=false;btn.textContent='دریافت کد تأیید';
+  if(result.error){errEl.textContent=result.error;return;}
+  _authShowOtpScreen('register',phone);
+});
+
+document.getElementById('auth-otp-btn').addEventListener('click',async()=>{
+  const code=_fromFa(document.getElementById('auth-otp-input').value.trim());
+  const errEl=document.getElementById('auth-otp-err');
+  if(code.length<5){errEl.textContent='کد ۵ رقمی را وارد کنید';return;}
+  errEl.textContent='';
+  const btn=document.getElementById('auth-otp-btn');
+  btn.disabled=true;btn.textContent='در حال تأیید…';
   try{
-    const resp=await fetch(API_URL+'/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username,email,password})});
-    if(!resp.ok){
-      const errData=await resp.json().catch(()=>({}));
-      err.textContent=errData.detail||'خطا در ثبت‌نام';
+    if(_authOtpCtx.purpose==='login'){
+      const resp=await fetch(API_URL+'/auth/login-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:_authOtpCtx.phone,code,purpose:'login'})});
+      const d=await resp.json().catch(()=>({}));
+      if(!resp.ok){errEl.textContent=d.detail||'کد اشتباه است';return;}
+      setToken(d.access_token);
+      const meR=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+d.access_token}});
+      if(meR.ok){const u=await meR.json();_saveUser({username:u.username,email:u.email||'',phone:u.phone||''});}
+      hideAuthModal();
+      if(_pendingAction){const a=_pendingAction;_pendingAction=null;handlePendingAction(a);}
       return;
     }
-    document.getElementById('auth-email').value=email;
-    document.getElementById('auth-password').value=password;
-    switchAuthTab('login');
-    await doLogin();
-  }catch(e){
-    err.textContent='خطا در اتصال به سرور';
-  }
-}
-
-function _runPending(){
-  const p = _pendingAction; _pendingAction=null;
-  if(!p){
-    // refresh current view if profile
-    if(curView==='profile') showProfile();
-    return;
-  }
-  if(p.type==='bm'){ toggleBm(p.tp, p.id, p.ci); return; }
-  if(p.type==='note'){
-    // restore the note draft and re-open save flow
-    const k = bkey(p.tp,p.id,p.ci);
-    if(p.text){
-      _nts[k] = p.text;
-      _saveMockBms();
+    const resp=await fetch(API_URL+'/auth/verify-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:_authOtpCtx.phone,code,purpose:_authOtpCtx.purpose})});
+    const d=await resp.json().catch(()=>({}));
+    if(!resp.ok){errEl.textContent=d.detail||'کد اشتباه است';return;}
+    _authOtpToken=d.otp_token;
+    if(_authOtpCtx.purpose==='reset'){
+      _authGoScreen('reset');
+    }else if(_authOtpCtx.purpose==='register'){
+      const name=document.getElementById('auth-reg-name').value.trim();
+      const password=document.getElementById('auth-reg-password').value;
+      const r2=await fetch(API_URL+'/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,username:name,phone:_authOtpCtx.phone,password,otp_token:_authOtpToken})});
+      const d2=await r2.json().catch(()=>({}));
+      if(!r2.ok){errEl.textContent=d2.detail||'خطا در ثبت‌نام';return;}
+      setToken(d2.access_token);
+      const meR=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+d2.access_token}});
+      if(meR.ok){const u=await meR.json();_saveUser({username:u.username,email:u.email||'',phone:u.phone||''});}
+      hideAuthModal();
+      if(_pendingAction){const a=_pendingAction;_pendingAction=null;handlePendingAction(a);}
     }
-    if(curView==='gh') showG(cg);
-    else if(curView==='tr') showT(ct);
-    return;
-  }
-}
-addTap('auth-login-btn',doLogin);
-addTap('auth-register-btn',doRegister);
-document.getElementById('auth-email').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
-document.getElementById('auth-password').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
-document.getElementById('auth-reg-password').addEventListener('keydown',e=>{if(e.key==='Enter')doRegister()});
+  }catch{errEl.textContent='خطای شبکه';}
+  finally{btn.disabled=false;btn.textContent='تأیید';}
+});
+
+document.getElementById('auth-otp-resend').addEventListener('click',async()=>{
+  const btn=document.getElementById('auth-otp-resend');
+  btn.disabled=true;btn.textContent='در حال ارسال…';
+  const result=await _authSendOtp(_authOtpCtx.purpose,_authOtpCtx.phone);
+  btn.textContent='ارسال مجدد کد';
+  if(result.error){btn.disabled=false;document.getElementById('auth-otp-err').textContent=result.error;return;}
+  _authStartTimer(120);
+});
+
+document.getElementById('auth-reset-btn').addEventListener('click',async()=>{
+  const pw1=document.getElementById('auth-reset-pw1').value;
+  const pw2=document.getElementById('auth-reset-pw2').value;
+  const errEl=document.getElementById('auth-reset-err');
+  if(pw1.length<6){errEl.textContent='رمز حداقل ۶ کاراکتر';return;}
+  if(pw1!==pw2){errEl.textContent='رمزها یکسان نیستند';return;}
+  errEl.textContent='';
+  const btn=document.getElementById('auth-reset-btn');
+  btn.disabled=true;btn.textContent='در حال ثبت…';
+  try{
+    const resp=await fetch(API_URL+'/auth/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:_authOtpCtx.phone,new_password:pw1,otp_token:_authOtpToken})});
+    const d=await resp.json().catch(()=>({}));
+    if(!resp.ok){errEl.textContent=d.detail||'خطا';return;}
+    setToken(d.access_token);
+    const meR=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+d.access_token}});
+    if(meR.ok){const u=await meR.json();_saveUser({username:u.username,email:u.email||'',phone:u.phone||''});}
+    hideAuthModal();
+  }catch{errEl.textContent='خطای شبکه';}
+  finally{btn.disabled=false;btn.textContent='ثبت رمز و ورود';}
+});
+
+// guest buttons در پروفایل
+document.addEventListener('click',e=>{
+  if(e.target.closest('#pr-guest-login')){_authGoScreen('login');_authSwitchLoginTab('pw');showAuthModal();return;}
+  if(e.target.closest('#pr-guest-reg')){_authGoScreen('register');showAuthModal();return;}
+});
 
 // ─── TWEAKS PANEL ────────────────────────
 const twPanel = document.getElementById('tw-panel');

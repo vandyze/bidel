@@ -1,7 +1,8 @@
 import asyncio
 import os
-import random as random_module
-from datetime import date, datetime
+import random
+import re
+from datetime import date, datetime, timedelta
 from typing import List, Optional
 from urllib.parse import quote
 
@@ -40,6 +41,34 @@ async def notify_telegram(msg: str):
     except:
         pass
 
+# ── کاوه‌نگار SMS ──
+SMS_IR_API_KEY = os.getenv("SMS_IR_API_KEY", "")
+SMS_IR_TEMPLATE_ID = int(os.getenv("SMS_IR_TEMPLATE_ID", "0"))
+
+async def send_sms_otp(phone: str, code: str):
+    import sys
+    if not SMS_IR_API_KEY:
+        print(f"[OTP] {phone} → {code}", flush=True)
+        sys.stdout.flush()
+        return
+    async with httpx.AsyncClient() as client:
+        await client.post(
+            "https://api.sms.ir/v1/send/verify",
+            headers={"x-api-key": SMS_IR_API_KEY, "Content-Type": "application/json"},
+            json={
+                "mobile": phone,
+                "templateId": SMS_IR_TEMPLATE_ID,
+                "parameters": [{"name": "Code", "value": code}]
+            }
+        )
+
+def gen_otp() -> str:
+    return str(random.randint(10000, 99999))
+
+def validate_phone(phone: str) -> bool:
+    return bool(re.match(r'^09\d{9}$', phone))
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -53,13 +82,34 @@ bearer_scheme = HTTPBearer()
 
 # --- Schemas ---
 
+class SendOTPInput(BaseModel):
+    phone: str
+    purpose: str  # 'register' | 'login' | 'reset'
+
+class VerifyOTPInput(BaseModel):
+    phone: str
+    code: str
+    purpose: str
+
+class RegisterWithOTPInput(BaseModel):
+    name: str
+    username: str
+    phone: str
+    password: str
+    otp_token: str  # JWT کوتاه‌مدت که بعد از verify برگشت
+
+class ResetPasswordInput(BaseModel):
+    phone: str
+    new_password: str
+    otp_token: str
+
 class RegisterRequest(BaseModel):
     username: str
     email: str
     password: str
 
 class LoginRequest(BaseModel):
-    email: str
+    login_id: str  # username | email | phone
     password: str
 
 class UpdateMeRequest(BaseModel):
@@ -71,6 +121,7 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: str
+    phone: Optional[str] = None
     created_at: str
 
     class Config:
@@ -109,30 +160,145 @@ def root():
     return {"message": "سلام از بیدل API"}
 
 
+@app.post("/auth/send-otp")
+async def send_otp(data: SendOTPInput, db: Session = Depends(get_db)):
+    if not validate_phone(data.phone):
+        raise HTTPException(status_code=400, detail="شماره تلفن معتبر نیست")
+
+    # بررسی rate limit: حداکثر ۵ بار در ۱۰ دقیقه
+    ten_min_ago = datetime.utcnow() - timedelta(minutes=10)
+    recent_count = db.query(models.OTPCode).filter(
+        models.OTPCode.phone == data.phone,
+        models.OTPCode.created_at > ten_min_ago
+    ).count()
+    if recent_count >= 5:
+        raise HTTPException(status_code=429, detail="تعداد درخواست‌های OTP بیش از حد مجاز است")
+
+    # بررسی شرایط خاص purpose
+    if data.purpose == "register":
+        existing = db.query(models.User).filter(models.User.phone == data.phone).first()
+        if existing:
+            raise HTTPException(status_code=400, detail="این شماره قبلاً ثبت شده است")
+    elif data.purpose in ("login", "reset"):
+        user = db.query(models.User).filter(models.User.phone == data.phone).first()
+        if not user:
+            raise HTTPException(status_code=404, detail="این شماره در سیستم ثبت نشده است")
+
+    code = gen_otp()
+    expires = datetime.utcnow() + timedelta(minutes=2)
+    otp = models.OTPCode(phone=data.phone, code=code, purpose=data.purpose, expires_at=expires)
+    db.add(otp)
+    db.commit()
+
+    await send_sms_otp(data.phone, code)
+    return {"status": "sent"}
+
+
+@app.post("/auth/verify-otp")
+def verify_otp(data: VerifyOTPInput, db: Session = Depends(get_db)):
+    otp = db.query(models.OTPCode).filter(
+        models.OTPCode.phone == data.phone,
+        models.OTPCode.purpose == data.purpose,
+        models.OTPCode.used == False
+    ).order_by(models.OTPCode.created_at.desc()).first()
+
+    if not otp:
+        raise HTTPException(status_code=400, detail="کد OTP پیدا نشد. دوباره درخواست دهید")
+    if datetime.utcnow() > otp.expires_at:
+        raise HTTPException(status_code=400, detail="کد منقضی شده است")
+    if otp.attempts >= 3:
+        raise HTTPException(status_code=400, detail="کد باطل شده است. دوباره ارسال کنید")
+    if otp.code != data.code:
+        otp.attempts += 1
+        db.commit()
+        remaining = 3 - otp.attempts
+        if remaining <= 0:
+            raise HTTPException(status_code=400, detail="کد باطل شد؛ دوباره ارسال کنید")
+        raise HTTPException(status_code=400, detail=f"کد اشتباه است. {remaining} تلاش باقی مانده")
+
+    otp.used = True
+    db.commit()
+
+    otp_token = create_access_token({"sub": data.phone, "purpose": data.purpose}, expires_delta=timedelta(minutes=10))
+    return {"otp_token": otp_token}
+
+
 @app.post("/auth/register", status_code=status.HTTP_201_CREATED)
-async def register(body: RegisterRequest, db: Session = Depends(get_db)):
-    if db.query(models.User).filter(models.User.email == body.email).first():
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="این ایمیل قبلاً ثبت شده")
-    if db.query(models.User).filter(models.User.username == body.username).first():
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="این نام کاربری قبلاً ثبت شده")
+async def register(data: RegisterWithOTPInput, db: Session = Depends(get_db)):
+    # تأیید otp_token
+    try:
+        payload = decode_access_token(data.otp_token)
+        if payload is None or payload.get("purpose") != "register" or payload.get("sub") != data.phone:
+            raise HTTPException(status_code=400, detail="توکن نامعتبر")
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(status_code=400, detail="توکن منقضی یا نامعتبر")
+
+    if not data.name.strip():
+        raise HTTPException(status_code=400, detail="نام الزامی است")
+    if not data.username.strip():
+        raise HTTPException(status_code=400, detail="نام کاربری الزامی است")
+    if len(data.password) < 6:
+        raise HTTPException(status_code=400, detail="رمز عبور حداقل ۶ کاراکتر")
+
+    existing = db.query(models.User).filter(
+        (models.User.username == data.username) | (models.User.phone == data.phone)
+    ).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="نام کاربری یا شماره قبلاً ثبت شده")
 
     user = models.User(
-        username=body.username,
-        email=body.email,
-        hashed_password=hash_password(body.password),
+        name=data.name,
+        username=data.username,
+        email=f"{data.username}@phone.local",
+        phone=data.phone,
+        hashed_password=hash_password(data.password),
     )
     db.add(user)
     db.commit()
     db.refresh(user)
-    asyncio.create_task(notify_telegram(f"🎉 کاربر جدید: {user.username}\nایمیل: {user.email}"))
-    return {"message": "ثبت‌نام با موفقیت انجام شد", "user_id": user.id}
+
+    await notify_telegram(f"ثبت‌نام جدید: {data.username} | {data.phone}")
+
+    token = create_access_token({"sub": str(user.id)})
+    return {"access_token": token, "token_type": "bearer"}
+
+
+@app.post("/auth/reset-password")
+def reset_password(data: ResetPasswordInput, db: Session = Depends(get_db)):
+    try:
+        payload = decode_access_token(data.otp_token)
+        if payload is None or payload.get("purpose") != "reset" or payload.get("sub") != data.phone:
+            raise HTTPException(status_code=400, detail="توکن نامعتبر")
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(status_code=400, detail="توکن منقضی یا نامعتبر")
+
+    if len(data.new_password) < 6:
+        raise HTTPException(status_code=400, detail="رمز عبور حداقل ۶ کاراکتر")
+
+    user = db.query(models.User).filter(models.User.phone == data.phone).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="کاربر پیدا نشد")
+
+    user.hashed_password = hash_password(data.new_password)
+    db.commit()
+
+    token = create_access_token({"sub": str(user.id)})
+    return {"access_token": token, "token_type": "bearer"}
 
 
 @app.post("/auth/login")
 def login(body: LoginRequest, db: Session = Depends(get_db)):
-    user = db.query(models.User).filter(models.User.email == body.email).first()
+    user = db.query(models.User).filter(
+        (models.User.username == body.login_id) |
+        (models.User.email == body.login_id) |
+        (models.User.phone == body.login_id)
+    ).first()
     if not user or not verify_password(body.password, user.hashed_password):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="ایمیل یا رمز عبور اشتباه است")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="اطلاعات ورود اشتباه است")
 
     token = create_access_token({"sub": str(user.id)})
     return {"access_token": token, "token_type": "bearer"}
@@ -144,6 +310,7 @@ def me(current_user: models.User = Depends(get_current_user)):
         id=current_user.id,
         username=current_user.username,
         email=current_user.email,
+        phone=current_user.phone,
         created_at=current_user.created_at.isoformat(),
     )
 
@@ -173,6 +340,7 @@ def update_me(
         id=current_user.id,
         username=current_user.username,
         email=current_user.email,
+        phone=current_user.phone,
         created_at=current_user.created_at.isoformat(),
     )
 
@@ -451,7 +619,7 @@ def random_ghazal(db: Session = Depends(get_db)):
     count = db.query(models.Ghazal).count()
     if not count:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="داده‌ای یافت نشد")
-    ghazal = db.query(models.Ghazal).offset(random_module.randint(0, count - 1)).first()
+    ghazal = db.query(models.Ghazal).offset(random.randint(0, count - 1)).first()
     return {"number": ghazal.number, "title": ghazal.title, "couplets": ghazal.couplets}
 
 
@@ -646,7 +814,7 @@ def get_featured_keywords(db: Session = Depends(get_db)):
 
     today = date.today()
     seed = today.year * 10000 + today.month * 100 + today.day
-    rng = random_module.Random(seed)
+    rng = random.Random(seed)
     selected = rng.sample(keywords, min(4, len(keywords)))
 
     return [
