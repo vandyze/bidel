@@ -58,7 +58,7 @@ async def send_sms_otp(phone: str, code: str):
             json={
                 "mobile": phone,
                 "templateId": SMS_IR_TEMPLATE_ID,
-                "parameters": [{"name": "Code", "value": code}]
+                "parameters": [{"name": "OTP", "value": code}]
             }
         )
 
