@@ -7,16 +7,17 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260620_113831">
+<meta name="deploy-version" content="20260815_010852">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="بیدل">
 <meta name="google-site-verification" content="CjGisdAuB7c4W_Pj5hvO09zTtRI5IujRRe2H1K4t39Y" />
 <link rel="apple-touch-icon" href="/icons/icon-192.png">
-<meta name="description" content="دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند و زند">
+<meta name="description" content="دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند، زند بیدل و خوانش‌های تفسیری، به‌همراه واژه‌نامهٔ کلمات کلیدی">
+<meta name="keywords" content="بیدل دهلوی, دیوان بیدل, غزلیات بیدل, ترجیع‌بند بیدل, ترجیع‌بند حیرت, زند بیدل, شروین وکیلی, خوانش ترجیع‌بند, واژگان کلیدی بیدل, شعر فارسی, شعر هندی">
 <meta property="og:title" content="دیوان بیدل دهلوی">
-<meta property="og:description" content="دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند و زند">
+<meta property="og:description" content="دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند، زند بیدل و خوانش‌های تفسیری، به‌همراه واژه‌نامهٔ کلمات کلیدی">
 <meta property="og:url" content="">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="دیوان بیدل دهلوی">
@@ -161,6 +162,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .gc-body{flex:1;min-width:0}
 .gc-title{font-size:15px;font-weight:700;color:var(--gd);margin-bottom:3px}
 .gc-line{font-size:13px;color:var(--mu);line-height:1.6}
+.gc-line.s2{text-align:left}
 .ri:hover{border-color:var(--go);background:var(--sf2)}
 .ri:active{transform:scale(.99)}
 .ri.tr{border-color:var(--br2)}
@@ -178,6 +180,10 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .zsec{padding:8px 0}
 .zsec-title{font-size:20px;color:var(--gd);font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--br2)}
 .zsec-body{font-size:15px;line-height:2.1;color:var(--tx);direction:rtl;white-space:pre-wrap}
+.zsec-nav{display:flex;gap:10px;margin-top:22px;padding-top:16px;border-top:1px solid var(--br2)}
+.zsec-nav-btn{flex:1;background:var(--sf);border:1px solid var(--br);color:var(--gd);border-radius:12px;padding:13px 10px;font-family:"IRANYekanX",sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;transition:border-color .15s,background .15s}
+.zsec-nav-btn:hover{border-color:var(--go);background:var(--sf2)}
+.zsec-nav-btn:disabled{opacity:.4;cursor:default;pointer-events:none}
 
 /* ─── POEM (ghazal/terjee reading) ──────── */
 .pm{animation:fu .25s ease}
@@ -186,6 +192,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .pnum{font-size:10px;letter-spacing:0.12em;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:3px}
 .ptitle{font-size:21px;color:var(--gd);font-weight:700;line-height:1.2}
 .psub{font-size:12px;color:var(--mu);margin-top:3px;font-family:"IRANYekanX",sans-serif}
+.pvazn{font-size:11px;color:var(--sa2);margin-top:5px;font-family:"IRANYekanX",sans-serif;background:var(--sah);display:inline-block;padding:2px 10px;border-radius:99px}
 .pview{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif}
 .pview-badge{display:inline-flex;align-items:center;gap:5px;background:var(--sah);color:var(--sa2);border:1px solid #e8d5a0;border-radius:99px;padding:3px 10px;font-size:12px;font-family:"IRANYekanX",sans-serif;font-weight:600}
 .pview-badge.first{background:var(--gh);color:var(--go);border-color:#c5d9a8}
@@ -221,6 +228,7 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .cal{font-size:12px}
 .nd{font-size:13px;color:var(--gd);margin-top:11px;padding:9px 12px;border:1px solid var(--br2);border-radius:11px;background:var(--gh);line-height:1.7;cursor:pointer;display:flex;gap:8px;align-items:flex-start}
 .nd svg{width:15px;height:15px;flex-shrink:0;margin-top:3px;stroke:var(--gd);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.nd span{min-width:0;overflow-wrap:anywhere}
 .cp.gbm .nd,.cp.tbm .nd{background:rgba(200,144,48,0.10);border-color:var(--br)}
 .pf{text-align:center;font-size:11px;color:var(--fa);margin-top:8px;font-family:"IRANYekanX",sans-serif;letter-spacing:0.06em}
 
@@ -294,9 +302,10 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .bpt{font-size:11px;color:var(--sa2);margin-bottom:4px;font-weight:700;font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em}
 .bm2{font-size:16px;color:var(--tx);line-height:1.85}
 .bm2 .bm-m2{text-align:left;color:var(--mu)}
-.bnt{font-size:13px;color:var(--gd);margin-top:6px;padding-top:6px;border-top:1px solid var(--vf);line-height:1.6}
-.bdl{position:absolute;top:8px;left:10px;background:transparent;border:none;color:var(--vf);font-size:14px;cursor:pointer;padding:2px 6px}
-.bdl:hover{color:var(--er)}
+.bnt{font-size:13px;color:var(--gd);margin-top:6px;padding-top:6px;border-top:1px solid var(--vf);line-height:1.6;overflow-wrap:anywhere;word-break:break-word}
+.bdl,.ndl{position:absolute;top:8px;left:10px;background:transparent;border:none;color:var(--vf);font-size:14px;cursor:pointer;padding:2px 6px}
+.bdl:hover,.ndl:hover{color:var(--er)}
+.bmseg{margin-top:2px}
 
 /* empty / messages */
 .nb2,.nr2{text-align:center;padding:36px 18px;color:var(--mu);font-size:14px;line-height:2;font-family:"IRANYekanX",sans-serif}
@@ -323,6 +332,10 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
   0%,100%{opacity:0.55}
   50%{opacity:1}
 }
+
+/* ─── LOADING OVERLAY ────────────────────── */
+.load-ov{position:fixed;inset:0;background:rgba(26,34,24,0.35);display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;pointer-events:none;transition:opacity .15s;backdrop-filter:blur(1px)}
+.load-ov.open{opacity:1;pointer-events:all}
 
 /* ─── NOTE MODAL ─────────────────────────── */
 .mbg{position:fixed;inset:0;background:rgba(26,34,24,0.5);display:flex;align-items:flex-end;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
@@ -576,6 +589,8 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .sh-share{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--br);background:transparent;color:var(--gd);border-radius:12px;padding:13px;font-family:"IRANYekanX",sans-serif;font-size:14px;font-weight:700;cursor:pointer}
 .sh-share:hover{background:var(--ik);border-color:var(--go)}
 .sh-share svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sh-note-opt{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--tx);font-family:"IRANYekanX",sans-serif;margin-bottom:14px;cursor:pointer;user-select:none}
+.sh-note-opt input{width:17px;height:17px;accent-color:var(--go);cursor:pointer;flex-shrink:0}
 
 /* ─── TOP TOAST ────────────────────────── */
 .ts-wrap{position:fixed;top:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;padding:calc(env(safe-area-inset-top) + 12px) 12px 0;z-index:300;pointer-events:none}
@@ -707,6 +722,10 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
       <span class="bn-lab">حساب</span>
     </button>
   </nav>
+</div>
+
+<div class="load-ov" id="load-ov">
+  <div class="book-loader"><span></span><span></span><span></span></div>
 </div>
 
 <div class="mbg" id="mbg">
@@ -934,6 +953,7 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
   <div class="sho">
     <div class="sh-t" id="sh-t">اشتراکِ بیت</div>
     <div class="sh-v" id="sh-v"></div>
+    <label class="sh-note-opt" id="sh-note-opt" style="display:none"><input type="checkbox" id="sh-note-chk"><span>افزودن یادداشتم به متن اشتراک‌گذاری</span></label>
     <div class="sh-row"><span class="sh-url" id="sh-url"></span><button class="sh-copy" id="sh-copy">کپی لینک</button></div>
     <button class="sh-share" id="sh-share"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>اشتراک‌گذاری…</span></button>
   </div>
@@ -950,7 +970,9 @@ let browseSub='g';      // browse segmented sub: g/t/z
 let mkey=null;
 let _poemCache={}, _listCache={};
 let _kwFilter='all', _curKw=null;
+let _kwPoems=[], _kwPoemsWord='', _kwPoemsShown=0;
 let _bms={}, _nts={};
+let bmTab='bm';
 let _user=null;          // {username, email} if logged in
 let _editingProfile=false;
 let _pendingAction=null; // action to retry after login
@@ -966,17 +988,24 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
 
 function toFa(n){return String(n).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);}
 
-function mkGhazalCard(number, title, firstLine, extraClass, extraData){
+function mkGhazalCard(number, title, firstLine, extraClass, extraData, coupletLines, tp, label){
   extraData = extraData || '';
-  const titleShort = (title||'').length > 18 ? (title||'').slice(0,18)+'…' : (title||'');
-  const plainLine = (firstLine||'').replace(/<[^>]*>/g,'');
-  const lineShort = plainLine.length > 32 ? plainLine.slice(0,32)+'…' : plainLine;
-  return '<div class="ri gc" data-tp="g" data-n="'+number+'"'+(extraClass?' data-kw="'+(extraClass||'')+'"':'')+extraData+'>'
-    +'<div class="gc-num fa">'+toFa(number)+'<span class="gc-num-lab fa">غزل</span></div>'
-    +'<div class="gc-body">'
-    +'<div class="gc-title">'+titleShort+'</div>'
-    +(lineShort?'<div class="gc-line fa">'+lineShort+'</div>':'')
-    +'</div>'
+  tp = tp || 'g';
+  label = label || 'غزل';
+  let bodyHtml;
+  if(coupletLines){
+    bodyHtml = '<div class="gc-line fa">'+(coupletLines[0]||'')+'</div>'
+      + (coupletLines[1] ? '<div class="gc-line s2 fa">'+coupletLines[1]+'</div>' : '');
+  } else {
+    const titleShort = (title||'').length > 18 ? (title||'').slice(0,18)+'…' : (title||'');
+    const plainLine = (firstLine||'').replace(/<[^>]*>/g,'');
+    const lineShort = plainLine.length > 32 ? plainLine.slice(0,32)+'…' : plainLine;
+    bodyHtml = '<div class="gc-title">'+titleShort+'</div>'
+      + (lineShort?'<div class="gc-line fa">'+lineShort+'</div>':'');
+  }
+  return '<div class="ri gc" data-tp="'+tp+'" data-n="'+number+'"'+(extraClass?' data-kw="'+(extraClass||'')+'"':'')+extraData+'>'
+    +'<div class="gc-num fa">'+toFa(number)+'<span class="gc-num-lab fa">'+label+'</span></div>'
+    +'<div class="gc-body">'+bodyHtml+'</div>'
     +'</div>';
 }
 
@@ -1040,6 +1069,7 @@ async function showKhaneshList(instant){
   if(!instant) history.pushState({view:'khlist'}, '', '/khanesh');
   setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
   setHeader('خوانش‌ها','تفسیر و شرحِ ترجیع‌بند');
+  setMeta('خوانش‌ها', 'خوانش‌ها — مقاله‌های تفسیری بر بندهای ترجیع‌بند حیرت بیدل دهلوی');
   if(!instant){ ctEl.innerHTML=khLoader(''); ctEl.scrollTop=0; await new Promise(r=>setTimeout(r,420)); }
   const list = await fetchKhaneshList();
   if(!list.length){ ctEl.innerHTML='<div class="nb2"><div class="nbi">✦</div>هنوز خوانشی ثبت نشده است</div>'; return; }
@@ -1067,6 +1097,7 @@ async function showKhanesh(slug, from, instant){
   try { k=await apiFetch(API_URL+'/khanesh/'+slug); } catch(e){ k=null; }
   if(!k){ ctEl.innerHTML='<div class="er">خطا در بارگذاری</div>'; return; }
   setHeader('خوانش','بند '+toFa(k.terjee_number)+' · '+k.instructor);
+  setMeta(k.title, 'خوانشِ بندِ '+toFa(k.terjee_number)+' ترجیع‌بند بیدل، به قلم '+k.instructor);
   const initial=(k.instructor||'?').trim().charAt(0);
   const IC_SHARE_BTN_KH='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
   let h='<div class="kh-d">';
@@ -1146,6 +1177,20 @@ function getToken(){return localStorage.getItem('bidel_token')}
 function setToken(t){if(t)localStorage.setItem('bidel_token',t);else localStorage.removeItem('bidel_token')}
 function authHeaders(){return{'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'}}
 function isAuthed(){return !!_user}
+
+// ─── SEARCH HISTORY (localStorage) ──────
+const SRCH_HIST_KEY='bidel_search_history', SRCH_HIST_MAX=8;
+function getSrchHistory(){
+  try{ const raw=localStorage.getItem(SRCH_HIST_KEY); return raw?JSON.parse(raw):[]; }catch(e){ return []; }
+}
+function addSrchHistory(q){
+  q=(q||'').trim(); if(!q) return;
+  let h=getSrchHistory().filter(x=>x!==q);
+  h.unshift(q);
+  if(h.length>SRCH_HIST_MAX) h=h.slice(0,SRCH_HIST_MAX);
+  localStorage.setItem(SRCH_HIST_KEY, JSON.stringify(h));
+}
+function clearSrchHistory(){ localStorage.removeItem(SRCH_HIST_KEY); }
 // ═══════════ AUTH MODAL ═══════════
 let _authOtpCtx = { purpose: 'register', phone: '' };
 let _authOtpToken = null;
@@ -1239,6 +1284,7 @@ async function loadUserData(){
   const bmsArr=await rb.json(), ntsArr=await rn.json();
   const _toFetch={};
   for(const b of bmsArr) _toFetch[b.poem_type+'_'+b.poem_id]=b;
+  for(const n of ntsArr) _toFetch[n.poem_type+'_'+n.poem_id]=n;
   await Promise.all(Object.values(_toFetch).map(async b=>{
     const ep=b.poem_type==='g'?'/poems/ghazal/':'/poems/terjee/';
     const r=await fetch(API_URL+ep+b.poem_id);
@@ -1262,6 +1308,9 @@ function bkey(tp,id,ci){return tp+'_'+id+'_'+ci}
 
 // ─── ELEMENTS ─────────────────────────────
 const ctEl=document.getElementById('ct');
+const loadOv=document.getElementById('load-ov');
+function showLoadOv(){loadOv.classList.add('open');}
+function hideLoadOv(){loadOv.classList.remove('open');}
 const subnavG=document.getElementById('subnav-g');
 const subnavT=document.getElementById('subnav-t');
 const gp=document.getElementById('gp');
@@ -1503,7 +1552,7 @@ function showHome(){
   curTab='home'; curView='home'; backStack=[];
   setBnActive('home'); setBack(false); hideSubnavs(); setNavHidden(false);
   setHeader('بیدلی','');
-  setMeta('دیوان کامل بیدل دهلوی', 'دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند و زند');
+  setMeta('دیوان کامل بیدل دهلوی', 'دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند، زند بیدل و خوانش‌های تفسیری، به‌همراه واژه‌نامهٔ کلمات کلیدی');
   const greeting = (()=>{ const h=new Date().getHours(); return h<5?'شب بخیر':h<12?'صبح بخیر':h<17?'ظهر بخیر':h<20?'عصر بخیر':'شب بخیر' })();
   // Pick a "verse of the day" deterministically
   const dayNum = Math.floor(Date.now()/86400000) % TOT + 1;
@@ -1536,7 +1585,7 @@ function showHome(){
   h += '<div class="qc" data-go="browse-g"><div class="qc-ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg></div><div><div class="qc-title">غزلیات</div><div class="qc-sub fa">۲۸۲۷ غزل</div></div></div>';
   h += '<div class="qc" data-go="browse-t"><div class="qc-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div><div><div class="qc-title">ترجیع‌بند</div><div class="qc-sub fa">۳۴ بند · حیرت</div></div></div>';
   h += '<div class="qc" data-go="browse-z"><div class="qc-ic"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg></div><div><div class="qc-title">زند بیدل</div><div class="qc-sub fa">شرح وکیلی</div></div></div>';
-  h += '<div class="qc" data-go="kw"><div class="qc-ic sa"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg></div><div><div class="qc-title">واژه‌نامه</div><div class="qc-sub fa">۲۲۲ واژه</div></div></div>';
+  h += '<div class="qc" data-go="kw"><div class="qc-ic sa"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg></div><div><div class="qc-title">کلمات کلیدی</div><div class="qc-sub fa">۲۲۲ واژه</div></div></div>';
   h += '</div>';  // close the .qg grid BEFORE adding khanesh card
   h += '<div class="qc qc-kh" data-go="khanesh"><div class="qc-ic sa">'+IC_KH+'</div><div class="qc-kh-tx"><div class="qc-title">خوانش‌ها <span class="qc-kh-new">تازه</span></div><div class="qc-sub fa">تفسیر و شرح بندهای ترجیع‌بند</div></div><span class="qc-kh-chev"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
 
@@ -1567,7 +1616,13 @@ async function showBrowse(sub){
   browseSub = sub || browseSub || 'g';
   const titles = {g:'غزلیات', t:'ترجیع‌بند', z:'زند بیدل'};
   const subs = {g:'۲۸۲۷ غزل', t:'۳۴ بند · حیرت', z:'شرح شروین وکیلی'};
+  const metaDesc = {
+    g: 'فهرست کامل ۲۸۲۷ غزل دیوان بیدل دهلوی',
+    t: 'ترجیع‌بند حیرت بیدل دهلوی در ۳۴ بند',
+    z: 'زند بیدل — شرح و تفسیر شروین وکیلی بر ترجیع‌بند بیدل دهلوی',
+  };
   setHeader(titles[browseSub], subs[browseSub]);
+  setMeta(titles[browseSub], metaDesc[browseSub]);
 
   let h = '<div id="browse-body"></div>';
   ctEl.innerHTML = h;
@@ -1600,8 +1655,7 @@ async function renderBrowseBody(){
     if(!_listCache.ghazals){ body.innerHTML='<div class="er">خطا در بارگذاری</div>'; return; }
     let h='<div class="rh fa">فهرست غزلیات</div>';
     for(const g of _listCache.ghazals){
-      const pv=g.first_couplet[0]||'';
-      h+=mkGhazalCard(g.number, g.title, pv);
+      h+=mkGhazalCard(g.number, g.title, '', '', '', [g.first_couplet[0]||'', g.first_couplet[1]||'']);
     }
     body.innerHTML = h;
   } else if(browseSub==='t'){
@@ -1665,7 +1719,7 @@ async function showG(n,kw){
   setMeta('غزل '+toPersianNum(n)+' — '+((_c0[0]||'').slice(0,30)), (_c0[0]||'')+(_c0[1]?'\n'+_c0[1]:''));
   const IC_SHARE_BTN='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
   let h='<div class="pm">';
-  h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل">'+IC_SHARE_BTN+'</button><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div><div class="pview" id="ghazal-view-info"></div></div>';
+  h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل">'+IC_SHARE_BTN+'</button><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div>'+(p.vazn?'<div class="pvazn fa">وزن: '+p.vazn+'</div>':'')+'<div class="pview" id="ghazal-view-info"></div></div>';
   h+='<div class="ghazal-kw-row" id="ghazal-keywords"><span class="gkw-lab fa">واژگان کلیدی</span></div>';
   const ghazalKwWords=resolveGhazalKeywords(n,p);
   const ghazalKwObjs=ghazalKwWords.map(w=>kwBy(w)).filter(Boolean);
@@ -1759,11 +1813,21 @@ async function showT(n,kw){
 async function showZand(id){
   curView='zsec'; setBack(true); hideSubnavs(); setNavHidden(false);
   showLoading('در حال بارگذاری…');
+  if(!_listCache.zand) _listCache.zand=await apiFetch(API_URL+'/poems/zand');
   const z=await apiFetch(API_URL+'/poems/zand/'+id);
   if(!z) return;
   setHeader(z.title, 'زند بیدل · شروین وکیلی');
+  setMeta(z.title+' — زند بیدل', (z.content||'').replace(/\s+/g,' ').trim().slice(0,160));
   let h='<div class="zsec"><div class="zsec-title">'+z.title+'</div>';
-  h+='<div class="zsec-body">'+z.content+'</div></div>';
+  h+='<div class="zsec-body">'+z.content+'</div>';
+  const list=(_listCache.zand||[]).filter(s=>s.has_content);
+  const idx=list.findIndex(s=>s.number===id);
+  const prevS=idx>0?list[idx-1]:null;
+  const nextS=(idx>=0 && idx<list.length-1)?list[idx+1]:null;
+  h+='<div class="zsec-nav">';
+  h+='<button class="zsec-nav-btn" data-znav="prev"'+(prevS?' data-zid="'+prevS.number+'"':' disabled')+'>→ بخش قبلی</button>';
+  h+='<button class="zsec-nav-btn" data-znav="next"'+(nextS?' data-zid="'+nextS.number+'"':' disabled')+'>بخش بعدی ←</button>';
+  h+='</div></div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
 
@@ -1782,6 +1846,7 @@ function renderKeywordList(){
   else list.sort((a,b)=>(b.count||0)-(a.count||0));
   const maxN = Math.max(...all.map(k=>k.count||0), 1);
   setHeader('واژه‌نامه بیدل', toFa(list.length)+' واژه از ۲۲۲');
+  setMeta('واژه‌نامهٔ بیدل', 'کلمات کلیدی و واژگان پربسامد دیوان بیدل دهلوی، به‌همراه معنی و بسامد هر واژه');
   const cats = getCategories();
   let h = '<div class="kw-filters">';
   for(const c of cats){
@@ -1823,6 +1888,7 @@ function showKeyword(word){
   const kMaqam = k.maqam||'';
   const kContrast = k.contrast||'';
   setHeader('واژه «'+kWord+'»', getCategoryLabel(kCat));
+  setMeta(kWord, kMean || ('واژهٔ کلیدی «'+kWord+'» در دیوان بیدل دهلوی — '+getCategoryLabel(kCat)));
   const numGhazals = Math.round(kCount / 4.27);
   let h='<div class="pm kw-detail">';
   h+='<div class="kw-d-head"><div class="kw-d-word">'+kWord+'</div><div class="kw-d-cat fa">'+getCategoryLabel(kCat)+'</div></div>';
@@ -1847,18 +1913,31 @@ function showKeyword(word){
     if(!el) return;
     const poems = (data && (data.ghazals||data.poems||[])) || [];
     if(!poems.length){ el.innerHTML='<div class="nr2" style="font-size:12px">غزلی یافت نشد</div>'; return; }
-    let ph='';
-    for(const p of poems.slice(0,20)){
-      const ghazalMeta = _listCache.ghazals ? _listCache.ghazals.find(g=>g.number===(p.number||p.n)) : null;
-      const m1 = hl(ghazalMeta?.first_couplet?.[0] || p.first_couplet&&p.first_couplet[0] || p.m1 || '', kWord);
-      const m2 = ghazalMeta?.first_couplet?.[1] || p.first_couplet&&p.first_couplet[1] || p.m2 || '';
-      ph+=mkGhazalCard(p.number||p.n||'', p.title||p.t||'', m1, kWord);
-    }
-    if(numGhazals > Math.min(poems.length,20)){
-      ph+='<div class="nr2" style="padding:18px 0 4px;font-size:12px">… و '+toFa(numGhazals-Math.min(poems.length,20))+' غزل دیگر</div>';
-    }
-    el.innerHTML = ph;
+    _kwPoems = poems; _kwPoemsWord = kWord; _kwPoemsShown = 0;
+    el.innerHTML = '';
+    renderKwPoemsChunk();
   });
+}
+
+function renderKwPoemsChunk(){
+  const el = document.getElementById('kw-poems-list');
+  if(!el) return;
+  const next = _kwPoems.slice(_kwPoemsShown, _kwPoemsShown+20);
+  let ph='';
+  for(const p of next){
+    const couplet = p.couplet || (p.first_couplet&&p.first_couplet) || ['',''];
+    const m1 = hl(couplet[0]||p.m1||'', _kwPoemsWord);
+    const m2 = hl(couplet[1]||p.m2||'', _kwPoemsWord);
+    ph+=mkGhazalCard(p.number||p.n||'', p.title||p.t||'', '', _kwPoemsWord, '', [m1, m2]);
+  }
+  _kwPoemsShown += next.length;
+  const old = document.getElementById('kw-poems-more');
+  if(old) old.remove();
+  el.insertAdjacentHTML('beforeend', ph);
+  if(_kwPoemsShown < _kwPoems.length){
+    const remaining = _kwPoems.length - _kwPoemsShown;
+    el.insertAdjacentHTML('beforeend', '<div class="nr2 kw-poems-more" id="kw-poems-more" style="padding:18px 0 4px;font-size:12px;cursor:pointer">… و '+toFa(remaining)+' غزل دیگر</div>');
+  }
 }
 
 // ─── BOOKMARKS ───────────────────────────
@@ -1866,60 +1945,92 @@ function showBm(){
   curTab='bm'; curView='bm'; backStack=[];
   setBnActive('bm'); setBack(true); hideSubnavs(); setNavHidden(false);
   updateBmBadge();
-  const ks=Object.keys(_bms);
-  setHeader('نشان‌های من', ks.length?toFa(ks.length)+' بیت ذخیره‌شده':'بیت‌های دلخواه شما');
-  if(!ks.length){ctEl.innerHTML='<div class="nb2"><div class="nbi">★</div>هنوز بیتی نشان نکرده‌اید<br><span style="font-size:12px;color:var(--vf);font-family:Vazirmatn,sans-serif">با ستاره روی هر بیت می‌توانید آن را اینجا ذخیره کنید</span></div>';return}
-  let h='<div class="bst fa">'+toFa(ks.length)+' بیت نشان‌شده</div>';
-  for(const key of ks){
-    const b=_bms[key], nt=_nts[key]||'';
-    const [m1,m2]=b.c||['',''];
-    h+='<div class="bi '+(b.tp==='t'?'tbx':'gbx')+'" data-tp="'+b.tp+'" data-id="'+b.id+'">';
-    h+='<button class="bdl" data-key="'+key+'">✕</button>';
-    h+='<div class="bpt fa">'+(b.tp==='t'?'ترجیع‌بند · ':'غزل · ')+b.ti2+' · بیت '+toFa(b.ci+1)+'</div>';
-    h+='<div class="bm2"><div>'+m1+'</div>'+(m2?'<div class="bm-m2">'+m2+'</div>':'')+'</div>';
-    if(nt) h+='<div class="bnt">📝 '+nt+'</div>';
-    h+='</div>';
+  const bmKs=MOCK_MODE?Object.keys(_bms).reverse():Object.keys(_bms);
+  const ntKs=MOCK_MODE?Object.keys(_nts).reverse():Object.keys(_nts);
+
+  let h='<div class="seg bmseg">';
+  h+='<button data-bmtab="bm" class="'+(bmTab==='bm'?'on':'')+'">نشان‌ها</button>';
+  h+='<button data-bmtab="nt" class="'+(bmTab==='nt'?'on':'')+'">یادداشت‌ها</button>';
+  h+='</div>';
+
+  if(bmTab==='bm'){
+    setHeader('نشان‌های من', bmKs.length?toFa(bmKs.length)+' بیت ذخیره‌شده':'بیت‌های دلخواه شما');
+    if(!bmKs.length){
+      h+='<div class="nb2"><div class="nbi">★</div>هنوز بیتی نشان نکرده‌اید<br><span style="font-size:12px;color:var(--vf);font-family:Vazirmatn,sans-serif">با ستاره روی هر بیت می‌توانید آن را اینجا ذخیره کنید</span></div>';
+    } else {
+      h+='<div class="bst fa">'+toFa(bmKs.length)+' بیت نشان‌شده</div>';
+      for(const key of bmKs){
+        const b=_bms[key], nt=_nts[key]||'';
+        const [m1,m2]=b.c||['',''];
+        h+='<div class="bi '+(b.tp==='t'?'tbx':'gbx')+'" data-tp="'+b.tp+'" data-id="'+b.id+'">';
+        h+='<button class="bdl" data-key="'+key+'">✕</button>';
+        h+='<div class="bpt fa">'+(b.tp==='t'?'ترجیع‌بند · ':'غزل · ')+b.ti2+' · بیت '+toFa(b.ci+1)+'</div>';
+        h+='<div class="bm2"><div>'+m1+'</div>'+(m2?'<div class="bm-m2">'+m2+'</div>':'')+'</div>';
+        if(nt) h+='<div class="bnt">📝 '+nt+'</div>';
+        h+='</div>';
+      }
+    }
+  } else {
+    setHeader('نشان‌های من', ntKs.length?toFa(ntKs.length)+' یادداشت':'یادداشت‌های شما');
+    if(!ntKs.length){
+      h+='<div class="nb2"><div class="nbi">📝</div>هنوز یادداشتی ننوشته‌اید<br><span style="font-size:12px;color:var(--vf);font-family:Vazirmatn,sans-serif">با دکمهٔ یادداشت روی هر بیت می‌توانید برای آن یادداشت بنویسید</span></div>';
+    } else {
+      h+='<div class="bst fa">'+toFa(ntKs.length)+' یادداشت</div>';
+      for(const key of ntKs){
+        const parts=key.split('_');
+        const tp=parts[0], id=parseInt(parts[1]), ci=parseInt(parts[2]);
+        const [m1,m2]=getCouplet(tp,id,ci);
+        const poem=_poemCache[tp+'_'+id];
+        const ti2=tp==='g'?(poem?.title||''):'بند '+id;
+        h+='<div class="bi '+(tp==='t'?'tbx':'gbx')+'" data-tp="'+tp+'" data-id="'+id+'">';
+        h+='<button class="ndl" data-key="'+key+'">✕</button>';
+        h+='<div class="bpt fa">'+(tp==='t'?'ترجیع‌بند · ':'غزل · ')+ti2+' · بیت '+toFa(ci+1)+'</div>';
+        h+='<div class="bm2"><div>'+m1+'</div>'+(m2?'<div class="bm-m2">'+m2+'</div>':'')+'</div>';
+        h+='<div class="bnt">📝 '+_nts[key]+'</div>';
+        h+='</div>';
+      }
+    }
   }
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
 
-const LOADER_HTML = '<div class="book-loader" style="width:20px;height:16px;transform:scale(0.35)"><span></span><span></span><span></span></div>';
-
 async function toggleBm(tp,id,ci){
   if(!isAuthed()){ showAuthModal({type:'bm',tp,id,ci}); return; }
-  // پیدا کردن دکمه بوکمارک از DOM
   const key=bkey(tp,id,ci);
-  const bmBtn=ctEl.querySelector(`.cp[data-key="${key}"] [data-action="bm"]`);
-  if(bmBtn){ bmBtn.disabled=true; bmBtn._prev=bmBtn.innerHTML; bmBtn.innerHTML=LOADER_HTML; }
-  if(MOCK_MODE){
-    const _adding=!_bms[key];
-    if(_bms[key]){ delete _bms[key]; }
-    else{
-      const poem=_poemCache[tp+'_'+id];
-      const c=poem?(poem.couplets[ci]||['','']):['',''];
-      const ti2=tp==='g'?(poem?.title||''):'بند '+id;
-      _bms[key]={tp,id,ci,ti2,c};
+  showLoadOv();
+  try{
+    if(MOCK_MODE){
+      const _adding=!_bms[key];
+      if(_bms[key]){ delete _bms[key]; }
+      else{
+        const poem=_poemCache[tp+'_'+id];
+        const c=poem?(poem.couplets[ci]||['','']):['',''];
+        const ti2=tp==='g'?(poem?.title||''):'بند '+id;
+        _bms[key]={tp,id,ci,ti2,c};
+      }
+      _saveMockBms();
+      updateBmBadge();
+      if(tp==='g') showG(cg); else showT(ct);
+      showToast(_adding?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
+      scrollToCouplet(key);
+      return;
     }
-    _saveMockBms();
-    updateBmBadge();
+    const token=getToken();
+    if(!token){ setToken(null); _saveUser(null); showAuthModal({type:'bm',tp,id,ci}); return; }
+    const _adding=!_bms[key];
+    const resp=await fetch(API_URL+'/bookmarks',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+      body:JSON.stringify({poem_type:tp,poem_id:id,couplet_index:ci})
+    });
+    if(resp.status===401){ setToken(null); _saveUser(null); showAuthModal({type:'bm',tp,id,ci}); return; }
+    await loadUserData();
     if(tp==='g') showG(cg); else showT(ct);
     showToast(_adding?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
     scrollToCouplet(key);
-    return;
+  } finally {
+    hideLoadOv();
   }
-  const token=getToken();
-  if(!token){ setToken(null); _saveUser(null); showAuthModal({type:'bm',tp,id,ci}); return; }
-  const _adding=!_bms[key];
-  const resp=await fetch(API_URL+'/bookmarks',{
-    method:'POST',
-    headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
-    body:JSON.stringify({poem_type:tp,poem_id:id,couplet_index:ci})
-  });
-  if(resp.status===401){ setToken(null); _saveUser(null); showAuthModal({type:'bm',tp,id,ci}); return; }
-  await loadUserData();
-  if(tp==='g') showG(cg); else showT(ct);
-  showToast(_adding?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
-  scrollToCouplet(key);
 }
 
 function _saveMockBms(){
@@ -1999,7 +2110,7 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.20</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.08.15</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -2108,7 +2219,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.06.20</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.08.15</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -2204,23 +2315,39 @@ function showConfirm(){document.getElementById('cf-bg').classList.add('open')}
 function hideConfirm(){document.getElementById('cf-bg').classList.remove('open')}
 
 // ─── SEARCH ──────────────────────────────
+let _lastSrch=null; // {query, html} of the last completed search, restored after back-navigation
 function showSearch(){
   curTab='srch'; curView='srch'; backStack=[];
   setBnActive('srch'); setBack(true); hideSubnavs(); setNavHidden(false);
   setHeader('جستجو در دیوان', 'شماره غزل، یا واژه');
   const suggest = ['دل','آینه','حیرت','گل','شکست','جان'];
+  const hist = getSrchHistory();
   let h = '<div class="search-screen">';
   h += '<div class="search-input-wrap"><span class="search-icon">🔍</span><input type="search" id="srch-input" placeholder="مثلاً: ۲۳۴ یا «حیرت»…" autocomplete="off"></div>';
   h += '<div class="search-hints"><div class="search-hint fa">با عدد فارسی یا انگلیسی به <b>غزل</b> یا <b>بند</b> برو، یا کلمه‌ای را جستجو کن.</div></div>';
-  h += '<div class="search-suggest-h fa">واژه‌های پُربسامد</div>';
-  h += '<div class="search-suggest">';
-  for(const w of suggest) h+='<button class="gkw" data-kwword="'+w+'">'+w+'</button>';
-  h += '</div>';
+  if(hist.length){
+    h += '<div class="search-suggest-h fa" style="display:flex;align-items:center;justify-content:space-between">';
+    h += '<span>تاریخچه جستجو</span><span id="srch-hist-clear" class="fa" style="color:var(--mu);font-size:11px;cursor:pointer">پاک کردن</span></div>';
+    h += '<div class="search-suggest">';
+    for(const q of hist) h+='<button class="gkw" data-histq="'+q.replace(/"/g,'&quot;')+'">'+q+'</button>';
+    h += '</div>';
+  } else {
+    h += '<div class="search-suggest-h fa">واژه‌های پُربسامد</div>';
+    h += '<div class="search-suggest">';
+    for(const w of suggest) h+='<button class="gkw" data-kwword="'+w+'">'+w+'</button>';
+    h += '</div>';
+  }
   h += '<div id="srch-results"></div>';
   h += '</div>';
   ctEl.innerHTML = h; ctEl.scrollTop=0;
   const inp = document.getElementById('srch-input');
-  inp.focus();
+  if(_lastSrch){
+    inp.value = _lastSrch.query;
+    const resultsEl = document.getElementById('srch-results');
+    if(resultsEl) resultsEl.innerHTML = _lastSrch.html;
+  } else {
+    inp.focus();
+  }
   inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doSrch(); } });
 }
 
@@ -2230,6 +2357,7 @@ async function doSrch(){
   const resultsEl = document.getElementById('srch-results');
   if(!resultsEl) return;
   resultsEl.innerHTML = '<div class="nr2">در حال جستجو…</div>';
+  addSrchHistory(raw);
 
   const persianMap={'۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9'};
   const normalized=raw.trim().replace(/[۰-۹]/g,d=>persianMap[d]);
@@ -2238,6 +2366,7 @@ async function doSrch(){
     if(num>=1 && num<=TOT){ navigate('/ghazal/'+num); return; }
     if(num>=1 && num<=TB){ navigate('/terjee/'+num); return; }
     resultsEl.innerHTML='<div class="nr2">شماره '+toFa(num)+' یافت نشد</div>';
+    _lastSrch={query:raw, html:resultsEl.innerHTML};
     return;
   }
 
@@ -2246,21 +2375,25 @@ async function doSrch(){
   const exactKw = allKw.filter(k=>k.word===kw);
   const partialKw = allKw.filter(k=>k.word!==kw && (k.word.indexOf(kw)!==-1 || kw.indexOf(k.word)!==-1));
   const kwMatches = [...exactKw, ...partialKw].slice(0,3);
-  const [rg,rt]=await Promise.all([
+  const [rg,rt,rz]=await Promise.all([
     apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=g'),
     apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=t'),
+    apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=z'),
   ]);
-  const rgX = rg||{results:[]}, rtX = rt||{results:[]};
+  const rgX = rg||{results:[]}, rtX = rt||{results:[]}, rzX = rz||{results:[]};
   const ms=[];
   for(const r of (rgX.results||[])){
     const c=r.matches[0]?.couplet||['',''];
-    ms.push({tp:'g',n:r.number,ti2:r.title,pv:c[0]+(c[1]?' / '+c[1]:'')});
+    ms.push({tp:'g',n:r.number,ti2:r.title,m0:c[0]||'',m1:c[1]||''});
   }
   for(const r of (rtX.results||[])){
     const c=r.matches[0]?.couplet||['',''];
-    ms.push({tp:'t',n:r.number,ti2:'بند '+toFa(r.number),pv:c[0]+(c[1]?' / '+c[1]:'')});
+    ms.push({tp:'t',n:r.number,ti2:'بند '+toFa(r.number),m0:c[0]||'',m1:c[1]||''});
   }
-  if(!ms.length && !kwMatches.length){resultsEl.innerHTML='<div class="nr2">«'+kw+'» یافت نشد</div>';return}
+  for(const r of (rzX.results||[])){
+    ms.push({tp:'z',n:r.number,ti2:r.title,snippet:r.snippet||''});
+  }
+  if(!ms.length && !kwMatches.length){resultsEl.innerHTML='<div class="nr2">«'+kw+'» یافت نشد</div>';_lastSrch={query:raw, html:resultsEl.innerHTML};return}
   let h='<div class="rh fa">'+toFa(ms.length)+' نتیجه برای «'+kw+'»'+(kwMatches.length?' · '+toFa(kwMatches.length)+' واژه':'')+'</div>';
   for(const k of kwMatches){
     const numGh = Math.round((k.count||0)/4.27);
@@ -2272,14 +2405,15 @@ async function doSrch(){
   }
   for(const m of ms){
     if(m.tp==='t'){
-      h+='<div class="ri tr" data-tp="t" data-n="'+m.n+'" data-kw="'+kw+'">';
-      h+='<div class="rt fa">ترجیع‌بند</div>';
-      h+='<div class="rti">'+m.ti2+'</div><div class="rp">'+hl(m.pv,kw)+'</div></div>';
+      h+=mkGhazalCard(m.n, m.ti2, '', kw, '', [hl(m.m0,kw), hl(m.m1,kw)], 't', 'بند');
+    } else if(m.tp==='z'){
+      h+='<div class="ri" data-tp="z" data-n="'+m.n+'"><div class="rt fa">زند بیدل</div><div class="rti">'+m.ti2+'</div><div class="rp">'+hl(m.snippet,kw)+'</div></div>';
     } else {
-      h+=mkGhazalCard(m.n, m.ti2, hl(m.pv,kw), kw);
+      h+=mkGhazalCard(m.n, m.ti2, '', kw, '', [hl(m.m0,kw), hl(m.m1,kw)]);
     }
   }
   resultsEl.innerHTML = h;
+  _lastSrch={query:raw, html:h};
 }
 
 // ─── EVENT DELEGATION ────────────────────
@@ -2293,12 +2427,12 @@ ctEl.addEventListener('click', function(e){
   if(pr){
     const act = pr.dataset.pract;
     if(act==='edit'){ _editingProfile=true; renderProfileLoggedIn(); setTimeout(()=>{const el=document.getElementById('pr-inp-name');if(el)el.focus();},50); return; }
-    if(act==='bms'){ showBm(); return; }
+    if(act==='bms'){ navigate('/bookmarks'); return; }
     if(act==='history'){ showHistory(); return; }
     if(act==='logout'){ showConfirm(); return; }
     if(act==='go-browse'){ navigate('/ghazals'); return; }
     if(act==='go-kw'){ navigate('/keywords'); return; }
-    if(act==='go-search'){ showSearch(); return; }
+    if(act==='go-search'){ navigate('/search'); return; }
     return;
   }
   // Profile edit save/cancel
@@ -2320,7 +2454,7 @@ ctEl.addEventListener('click', function(e){
   if(vod){ navigate('/ghazal/'+parseInt(vod.dataset.n)); return; }
   // Home search bar → open search
   const hs = e.target.closest('#home-search');
-  if(hs){ showSearch(); return; }
+  if(hs){ navigate('/search'); return; }
   // Top keyword strip
   const ksc = e.target.closest('.kw-strip-card');
   if(ksc){ navigate('/keywords/'+encodeURIComponent(ksc.dataset.kwword)); return; }
@@ -2337,6 +2471,12 @@ ctEl.addEventListener('click', function(e){
   // Keyword card
   const kc = e.target.closest('.kw-card');
   if(kc){ navigate('/keywords/'+encodeURIComponent(kc.dataset.kwword)); return; }
+  // Search history chip → fill input & search
+  const hq = e.target.closest('.gkw[data-histq]');
+  if(hq){ const inp=document.getElementById('srch-input'); if(inp){ inp.value=hq.dataset.histq; doSrch(); } return; }
+  // Clear search history
+  const hclr = e.target.closest('#srch-hist-clear');
+  if(hclr){ clearSrchHistory(); showSearch(); return; }
   // Tag inside ghazal/search
   const gtag = e.target.closest('.gkw');
   if(gtag){ navigate('/keywords/'+encodeURIComponent(gtag.dataset.kwword)); return; }
@@ -2346,6 +2486,9 @@ ctEl.addEventListener('click', function(e){
   // Zand section
   const zc = e.target.closest('.zcard');
   if(zc){ navigate('/zand/'+zc.dataset.zid); return; }
+  // Zand prev/next nav
+  const znav = e.target.closest('.zsec-nav-btn');
+  if(znav && !znav.disabled){ navigate('/zand/'+znav.dataset.zid); return; }
   // Khanesh
   const khc = e.target.closest('.kh-card');
   if(khc){ showKhanesh(khc.dataset.slug, 'list'); return; }
@@ -2361,6 +2504,8 @@ ctEl.addEventListener('click', function(e){
     else showT(num);
     return;
   }
+  // Load more ghazals on keyword page
+  if(e.target.closest('#kw-poems-more')){ renderKwPoemsChunk(); return; }
   // Result item
   const hiCard=e.target.closest('.hi-card');
   if(hiCard){ navigate('/ghazal/'+hiCard.dataset.n); return; }
@@ -2369,6 +2514,14 @@ ctEl.addEventListener('click', function(e){
     const kw=ri.dataset.kw||'';
     if(ri.dataset.tp==='g'){ history.pushState({}, '', '/ghazal/'+parseInt(ri.dataset.n)); showG(parseInt(ri.dataset.n),kw); }
     else if(ri.dataset.tp==='t'){ history.pushState({}, '', '/terjee/'+parseInt(ri.dataset.n)); showT(parseInt(ri.dataset.n),kw); }
+    else if(ri.dataset.tp==='z'){ navigate('/zand/'+parseInt(ri.dataset.n)); }
+    return;
+  }
+  // Bookmarks/Notes tab switch
+  const bmtabBtn = e.target.closest('.bmseg button');
+  if(bmtabBtn){
+    bmTab = bmtabBtn.dataset.bmtab;
+    showBm();
     return;
   }
   // Bookmark item
@@ -2383,6 +2536,12 @@ ctEl.addEventListener('click', function(e){
     const k=e.target.closest('.bdl').dataset.key;
     const p2=k.split('_');
     toggleBm(p2[0],parseInt(p2[1]),parseInt(p2[2]));
+    return;
+  }
+  // Delete note (from notes tab)
+  if(e.target.closest('.ndl')){
+    const k=e.target.closest('.ndl').dataset.key;
+    deleteNoteFor(k);
     return;
   }
   // Share whole ghazal/band from poem-meta
@@ -2452,7 +2611,16 @@ function getCouplet(tp,id,ci){
 // ─── SHARE & TOAST ───────────────────────
 const shbg=document.getElementById('shbg');
 let _shData=null;
+let _shNote=null;
 let _tstTimer=null;
+
+function _setShareNote(note){
+  _shNote = note || null;
+  const noteOpt=document.getElementById('sh-note-opt');
+  const noteChk=document.getElementById('sh-note-chk');
+  noteChk.checked=false;
+  noteOpt.style.display = _shNote ? 'flex' : 'none';
+}
 
 function showToast(msg){
   const wrap=document.getElementById('tswrap');
@@ -2482,6 +2650,7 @@ function openShare(tp, id, ci){
   const url = 'https://bideli.ir/'+seg+'/'+id+'#cp-'+key;
   const text = m1 + (m2 ? '\n' + m2 : '') + '\n\n— بیدل دهلوی';
   _shData = {url, text};
+  _setShareNote(_nts[key]);
   document.getElementById('sh-t').textContent = 'اشتراکِ بیت '+toFa(ci+1);
   document.getElementById('sh-v').textContent = m1+(m2?' / '+m2:'');
   document.getElementById('sh-url').textContent = 'bideli.ir/'+seg+'/'+id;
@@ -2494,25 +2663,33 @@ function openShareGhazal(tp, id){
   const title = tp==='g'?(poem?.title||''):'';
   const url = 'https://bideli.ir/'+seg+'/'+id;
   let text = '';
+  let noteBlock = null;
   if(tp==='g'){
     text = (title ? title+'\n' : 'غزل '+toFa(id)+'\n');
     if(poem && poem.couplets){
       poem.couplets.forEach(c=>{
         text += (c[0]||'') + '\n' + (c[1]||'') + '\n';
       });
+      const noteLines=[];
+      poem.couplets.forEach((c,ci)=>{
+        const nt=_nts[bkey('g',id,ci)];
+        if(nt) noteLines.push('بیت '+toFa(ci+1)+': '+nt);
+      });
+      if(noteLines.length) noteBlock=noteLines.join('\n');
     }
     text += '\n— بیدل دهلوی';
   } else {
     text = 'ترجیع‌بند حیرت · بند '+toFa(id)+'\n\n— بیدل دهلوی';
   }
   _shData = {url, text};
+  _setShareNote(noteBlock);
   document.getElementById('sh-t').textContent = tp==='g'?('اشتراکِ غزل '+toFa(id)):('اشتراکِ بند '+toFa(id));
   document.getElementById('sh-v').textContent = tp==='g'?(title||('غزل '+toFa(id))):('ترجیع‌بند حیرت');
   document.getElementById('sh-url').textContent = 'bideli.ir/'+seg+'/'+id;
   shbg.classList.add('open');
 }
 
-function cshare(){ shbg.classList.remove('open'); _shData=null; }
+function cshare(){ shbg.classList.remove('open'); _shData=null; _shNote=null; }
 
 document.getElementById('sh-copy').addEventListener('click',()=>{
   if(_shData) copyTextTo(_shData.url);
@@ -2521,7 +2698,9 @@ document.getElementById('sh-copy').addEventListener('click',()=>{
 });
 document.getElementById('sh-share').addEventListener('click',()=>{
   if(!_shData) return;
-  const shareText = _shData.text + '\n' + _shData.url;
+  const noteChk=document.getElementById('sh-note-chk');
+  const includeNote = _shNote && noteChk && noteChk.checked;
+  const shareText = _shData.text + (includeNote?'\n\nیادداشت من:\n'+_shNote:'') + '\n' + _shData.url;
   if(navigator.share){
     navigator.share({
       title: 'دیوان بیدل دهلوی',
@@ -2547,9 +2726,9 @@ document.querySelector('.bn').addEventListener('click', e=>{
   if(tab==='home') navigate('/');
   else if(tab==='browse') navigate(browseSub==='t'?'/terjee':browseSub==='z'?'/zand':'/ghazals');
   else if(tab==='kw') navigate('/keywords');
-  else if(tab==='bm') showBm();
-  else if(tab==='srch') showSearch();
-  else if(tab==='profile') showProfile();
+  else if(tab==='bm') navigate('/bookmarks');
+  else if(tab==='srch') navigate('/search');
+  else if(tab==='profile') navigate('/profile');
 });
 
 // ─── HEADER BACK ─────────────────────────
@@ -2563,7 +2742,7 @@ btnBack.addEventListener('click', ()=>{
 
 // ─── PROFILE BUTTON ──────────────────────
 document.getElementById('btn-profile').addEventListener('click', ()=>{
-  if(_user){ showProfile(); }
+  if(_user){ navigate('/profile'); }
   else { _authGoScreen('login'); _authSwitchLoginTab('pw'); showAuthModal(); }
 });
 
@@ -2613,26 +2792,50 @@ async function svn(){
   }
   const token=getToken();
   if(!token){showAuthModal({type:'note',tp,id:pid,ci,text:v});return;}
-  // disable دکمه ذخیره و نمایش loader
-  const saveBtn=document.getElementById('btn-msave');
-  if(saveBtn){ saveBtn.disabled=true; saveBtn._prev=saveBtn.innerHTML; saveBtn.innerHTML=LOADER_HTML; }
-  if(v){
-    await fetch(API_URL+'/notes',{method:'POST',headers:authHeaders(),body:JSON.stringify({poem_type:tp,poem_id:pid,couplet_index:ci,text:v})});
-  } else {
-    await fetch(API_URL+'/notes/'+tp+'/'+pid+'/'+ci,{method:'DELETE',headers:authHeaders()});
+  showLoadOv();
+  try{
+    if(v){
+      await fetch(API_URL+'/notes',{method:'POST',headers:authHeaders(),body:JSON.stringify({poem_type:tp,poem_id:pid,couplet_index:ci,text:v})});
+    } else {
+      await fetch(API_URL+'/notes/'+tp+'/'+pid+'/'+ci,{method:'DELETE',headers:authHeaders()});
+    }
+    await loadUserData();
+    cmob();
+    if(curView==='gh') showG(cg);
+    else if(curView==='tr') showT(ct);
+    else if(curView==='bm') showBm();
+    showToast(v?'یادداشت ذخیره شد':'یادداشت حذف شد');
+    scrollToCouplet(bkey(tp,pid,ci));
+  } finally {
+    hideLoadOv();
   }
-  if(saveBtn){ saveBtn.disabled=false; saveBtn.innerHTML=saveBtn._prev||'ذخیره'; }
-  await loadUserData();
-  cmob();
-  if(curView==='gh') showG(cg);
-  else if(curView==='tr') showT(ct);
-  else if(curView==='bm') showBm();
-  showToast(v?'یادداشت ذخیره شد':'یادداشت حذف شد');
-  scrollToCouplet(bkey(tp,pid,ci));
 }
 document.getElementById('btn-mcancel').addEventListener('click', cmob);
 document.getElementById('btn-msave').addEventListener('click', svn);
 mbg.addEventListener('click', e=>{ if(e.target===mbg) cmob(); });
+
+async function deleteNoteFor(key){
+  const parts=key.split('_');
+  const tp=parts[0], pid=parseInt(parts[1]), ci=parseInt(parts[2]);
+  if(MOCK_MODE){
+    delete _nts[key];
+    _saveMockBms();
+    showBm();
+    showToast('یادداشت حذف شد');
+    return;
+  }
+  const token=getToken();
+  if(!token) return;
+  showLoadOv();
+  try{
+    await fetch(API_URL+'/notes/'+tp+'/'+pid+'/'+ci,{method:'DELETE',headers:authHeaders()});
+    await loadUserData();
+    showBm();
+    showToast('یادداشت حذف شد');
+  } finally {
+    hideLoadOv();
+  }
+}
 
 // ─── AUTH ────────────────────────────────
 function _authGoScreen(name){
@@ -2928,6 +3131,40 @@ document.getElementById('mood-sheet-bg').addEventListener('click', e=>{
   }
 });
 
+// ─── MOOD SHEET SWIPE TO CLOSE ────────────
+(function(){
+  const sheet=document.getElementById('mood-sheet');
+  let startY=0, startT=0, dY=0, dragging=false;
+  sheet.addEventListener('touchstart', e=>{
+    startY=e.touches[0].clientY;
+    startT=Date.now();
+    dY=0;
+    dragging=false;
+  }, {passive:true});
+  sheet.addEventListener('touchmove', e=>{
+    if(sheet.scrollTop>0) return;
+    dY=e.touches[0].clientY-startY;
+    if(dY<=0) return;
+    dragging=true;
+    e.preventDefault();
+    sheet.style.transition='none';
+    sheet.style.transform='translateY('+dY+'px)';
+  }, {passive:false});
+  sheet.addEventListener('touchend', ()=>{
+    if(!dragging){ dY=0; return; }
+    const velocity=dY/Math.max(1,Date.now()-startT);
+    sheet.style.transition='';
+    if(dY>90||velocity>0.5){
+      sheet.style.transform='translateY(100%)';
+      setTimeout(()=>{ closeMoodSheet(); sheet.style.transform=''; },220);
+    } else {
+      sheet.style.transform='translateY(0)';
+      sheet.addEventListener('transitionend', ()=>{ sheet.style.transform=''; }, {once:true});
+    }
+    dragging=false; dY=0;
+  });
+})();
+
 // ─── API DATA LOADERS ────────────────────
 async function loadAllKeywords(){
   try{
@@ -2982,6 +3219,9 @@ function handleRoute(path){
     showKeyword(decodeURIComponent(path.slice(10))); return;
   }
   if(path === '/keywords'){ showKeywords(); return; }
+  if(path === '/search'){ showSearch(); return; }
+  if(path === '/bookmarks'){ showBm(); return; }
+  if(path === '/profile'){ showProfile(); return; }
   if(path === '/khanesh'){ showKhaneshList(true); return; }
   const khMatch = path.match(/^\/khanesh\/([^/]+)$/);
   if(khMatch){ showKhanesh(khMatch[1], 'direct', true); return; }

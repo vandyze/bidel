@@ -450,7 +450,7 @@ def get_bookmarks(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
-    bookmarks = db.query(models.Bookmark).filter(models.Bookmark.user_id == current_user.id).all()
+    bookmarks = db.query(models.Bookmark).filter(models.Bookmark.user_id == current_user.id).order_by(models.Bookmark.created_at.desc()).all()
     return [
         BookmarkResponse(
             id=b.id,
@@ -539,7 +539,7 @@ def get_notes(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
-    notes = db.query(models.Note).filter(models.Note.user_id == current_user.id).all()
+    notes = db.query(models.Note).filter(models.Note.user_id == current_user.id).order_by(models.Note.created_at.desc()).all()
     return [
         NoteResponse(
             id=n.id,
@@ -648,7 +648,7 @@ def random_ghazal(db: Session = Depends(get_db)):
     if not count:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="داده‌ای یافت نشد")
     ghazal = db.query(models.Ghazal).offset(random.randint(0, count - 1)).first()
-    return {"number": ghazal.number, "title": ghazal.title, "couplets": ghazal.couplets}
+    return {"number": ghazal.number, "title": ghazal.title, "couplets": ghazal.couplets, "vazn": ghazal.vazn}
 
 
 @app.get("/poems/ghazal/{number}")
@@ -656,7 +656,7 @@ def get_ghazal(number: int, db: Session = Depends(get_db)):
     ghazal = db.query(models.Ghazal).filter(models.Ghazal.number == number).first()
     if not ghazal:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="غزل یافت نشد")
-    return {"number": ghazal.number, "title": ghazal.title, "couplets": ghazal.couplets}
+    return {"number": ghazal.number, "title": ghazal.title, "couplets": ghazal.couplets, "vazn": ghazal.vazn}
 
 
 @app.get("/poems/terjee/{number}")
@@ -670,7 +670,7 @@ def get_terjee(number: int, db: Session = Depends(get_db)):
 @app.get("/poems/search")
 def search_poems(
     q: str = Query(..., min_length=2),
-    type: str = Query("g", pattern="^(g|t)$"),
+    type: str = Query("g", pattern="^(g|t|z)$"),
     db: Session = Depends(get_db),
 ):
     results = []
@@ -689,7 +689,7 @@ def search_poems(
                     "title": ghazal.title,
                     "matches": matched,
                 })
-    else:
+    elif type == "t":
         bands = db.query(models.Terjee).all()
         for band in bands:
             matched = [
@@ -703,6 +703,27 @@ def search_poems(
                     "number": band.number,
                     "matches": matched,
                 })
+    else:
+        sections = db.query(models.Zand).filter(models.Zand.content.isnot(None)).all()
+        for section in sections:
+            content = section.content or ""
+            idx = content.find(q)
+            if idx == -1:
+                continue
+            start = max(0, idx - 40)
+            end = min(len(content), idx + len(q) + 40)
+            snippet = content[start:end].replace("\n", " ")
+            if start > 0:
+                snippet = "…" + snippet
+            if end < len(content):
+                snippet = snippet + "…"
+            results.append({
+                "type": "z",
+                "number": section.number,
+                "title": section.title,
+                "snippet": snippet,
+                "count": content.count(q),
+            })
     return {"query": q, "count": len(results), "results": results}
 
 
@@ -763,7 +784,7 @@ def get_ghazal_html(number: int, request: Request, preview: int = 0, db: Session
 </head>
 <body>
 <h1>غزل {number} — {ghazal.title}</h1>
-<div class="meta">دیوان بیدل دهلوی · {len(ghazal.couplets)} بیت</div>
+<div class="meta">دیوان بیدل دهلوی · {len(ghazal.couplets)} بیت{f' · وزن: {ghazal.vazn}' if ghazal.vazn else ''}</div>
 <main>
 {couplets_html}</main>
 <a class="back" href="https://bideli.ir/ghazal/{number}">مشاهده در سایت بیدلی ←</a>
@@ -912,6 +933,7 @@ def sitemap(db: Session = Depends(get_db)):
     urls.append(url(f"{BASE}/terjee",  "0.8"))
     urls.append(url(f"{BASE}/keywords","0.8"))
     urls.append(url(f"{BASE}/zand",    "0.7"))
+    urls.append(url(f"{BASE}/khanesh", "0.7", "weekly"))
 
     for n in range(1, 2828):
         urls.append(url(f"{BASE}/ghazal/{n}", "0.8"))
@@ -926,6 +948,10 @@ def sitemap(db: Session = Depends(get_db)):
     keywords = db.query(models.Keyword.word).order_by(models.Keyword.word).all()
     for (word,) in keywords:
         urls.append(url(f"{BASE}/keywords/{quote(word, safe='')}", "0.7"))
+
+    khanesh_slugs = db.query(models.Khanesh.slug).order_by(models.Khanesh.slug).all()
+    for (slug,) in khanesh_slugs:
+        urls.append(url(f"{BASE}/khanesh/{quote(slug, safe='')}", "0.7", "monthly"))
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -978,6 +1004,134 @@ def get_keyword_html(word: str, request: Request, preview: int = 0, db: Session 
     return HTMLResponse(content=html)
 
 
+@app.get("/poems/terjee/{number}/html", include_in_schema=False)
+def get_terjee_html(number: int, request: Request, preview: int = 0, db: Session = Depends(get_db)):
+    ua = request.headers.get("user-agent", "").lower()
+    if not preview and not any(b in ua for b in BOT_AGENTS):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    band = db.query(models.Terjee).filter(models.Terjee.number == number).first()
+    if not band:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="بند یافت نشد")
+
+    first = band.couplets[0] if band.couplets else ["", ""]
+    description = " / ".join(p for p in first if p) or f"ترجیع‌بند شماره {number} از دیوان بیدل دهلوی"
+
+    couplets_html = ""
+    for m1, m2 in band.couplets:
+        couplets_html += f'<div class="couplet"><p>{m1}</p>'
+        if m2:
+            couplets_html += f'<p class="m2">{m2}</p>'
+        couplets_html += "</div>\n"
+
+    html = f"""<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>ترجیع‌بند {number} | دیوان بیدل دهلوی</title>
+<meta name="description" content="{description}">
+<link rel="canonical" href="https://bideli.ir/terjee/{number}">
+<style>
+  body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
+  .couplet{{margin-bottom:1.2rem;border-bottom:1px solid #eee;padding-bottom:0.8rem}}
+  .m2{{color:#555}}
+  h1{{font-size:1.4rem;margin-bottom:0.3rem}}
+  .meta{{color:#888;font-size:0.9rem;margin-bottom:2rem}}
+  .back{{display:block;margin-top:2rem;color:#5a7048}}
+</style>
+</head>
+<body>
+<h1>ترجیع‌بند حیرت — بند {number}</h1>
+<div class="meta">دیوان بیدل دهلوی · {len(band.couplets)} بیت</div>
+<main>
+{couplets_html}</main>
+<a class="back" href="https://bideli.ir/terjee/{number}">مشاهده در سایت بیدلی ←</a>
+</body>
+</html>"""
+
+    return HTMLResponse(content=html)
+
+
+@app.get("/poems/zand/{number}/html", include_in_schema=False)
+def get_zand_html(number: int, request: Request, preview: int = 0, db: Session = Depends(get_db)):
+    ua = request.headers.get("user-agent", "").lower()
+    if not preview and not any(b in ua for b in BOT_AGENTS):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    section = db.query(models.Zand).filter(models.Zand.number == number).first()
+    if not section or not section.content:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="بخش یافت نشد")
+
+    description = section.content.strip().replace("\n", " ")[:200]
+
+    html = f"""<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>{section.title} — زند بیدل | دیوان بیدل دهلوی</title>
+<meta name="description" content="{description}">
+<link rel="canonical" href="https://bideli.ir/zand/{number}">
+<style>
+  body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
+  h1{{font-size:1.4rem;margin-bottom:0.3rem}}
+  .meta{{color:#888;font-size:0.9rem;margin-bottom:2rem}}
+  main{{white-space:pre-line}}
+  .back{{display:block;margin-top:2rem;color:#5a7048}}
+</style>
+</head>
+<body>
+<h1>{section.title}</h1>
+<div class="meta">زند بیدل · شرح شروین وکیلی بر دیوان بیدل دهلوی</div>
+<main>{section.content}</main>
+<a class="back" href="https://bideli.ir/zand/{number}">مشاهده در سایت بیدلی ←</a>
+</body>
+</html>"""
+
+    return HTMLResponse(content=html)
+
+
+@app.get("/khanesh/{slug}/html", include_in_schema=False)
+def get_khanesh_html(slug: str, request: Request, preview: int = 0, db: Session = Depends(get_db)):
+    ua = request.headers.get("user-agent", "").lower()
+    if not preview and not any(b in ua for b in BOT_AGENTS):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    k = db.query(models.Khanesh).filter(models.Khanesh.slug == slug).first()
+    if not k:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="خوانش یافت نشد")
+
+    html = f"""<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>{k.title} | خوانش‌های دیوان بیدل دهلوی</title>
+<meta name="description" content="خوانشِ بندِ {k.terjee_number} ترجیع‌بند بیدل، به قلم {k.instructor}">
+<link rel="canonical" href="https://bideli.ir/khanesh/{slug}">
+<style>
+  body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
+  h1{{font-size:1.4rem;margin-bottom:0.3rem}}
+  .meta{{color:#888;font-size:0.9rem;margin-bottom:2rem}}
+  .back{{display:block;margin-top:2rem;color:#5a7048}}
+</style>
+</head>
+<body>
+<h1>{k.title}</h1>
+<div class="meta">ترجیع‌بند · بند {k.terjee_number} · به خوانشِ {k.instructor}</div>
+<main>{k.content}</main>
+<a class="back" href="https://bideli.ir/khanesh/{slug}">مشاهده در سایت بیدلی ←</a>
+</body>
+</html>"""
+
+    return HTMLResponse(content=html)
+
+
+def _find_matching_couplet(couplets, word):
+    for c in couplets:
+        if any(word in hemistich for hemistich in c):
+            return c
+    return couplets[0] if couplets else ["", ""]
+
+
 @app.get("/keywords/{word}")
 def get_keyword(word: str, db: Session = Depends(get_db)):
     kw = db.query(models.Keyword).filter(models.Keyword.word == word).first()
@@ -989,6 +1143,7 @@ def get_keyword(word: str, db: Session = Depends(get_db)):
             "number": gk.ghazal.number,
             "title": gk.ghazal.title,
             "count": gk.count,
+            "couplet": _find_matching_couplet(gk.ghazal.couplets, kw.word),
         }
         for gk in sorted(kw.ghazals, key=lambda x: x.count, reverse=True)
     ]
@@ -996,6 +1151,7 @@ def get_keyword(word: str, db: Session = Depends(get_db)):
         {
             "number": tk.terjee.number,
             "count": tk.count,
+            "couplet": _find_matching_couplet(tk.terjee.couplets, kw.word),
         }
         for tk in sorted(kw.terjees, key=lambda x: x.count, reverse=True)
     ]
