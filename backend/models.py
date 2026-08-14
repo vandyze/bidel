@@ -68,6 +68,7 @@ class Ghazal(Base):
     number = Column(Integer, unique=True, nullable=False, index=True)
     title = Column(String, nullable=True)
     couplets = Column(JSON, nullable=False)
+    vazn = Column(String, nullable=True)
 
     keywords = relationship("GhazalKeyword", back_populates="ghazal", cascade="all, delete-orphan")
     views = relationship("GhazalView", back_populates="ghazal")

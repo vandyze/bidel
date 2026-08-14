@@ -8,6 +8,7 @@ import models
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 GHAZALS_PATH = DATA_DIR / "ghazals.json"
+VAZN_PATH = DATA_DIR / "ganjoor_vazn.json"
 TERJEE_PATH = DATA_DIR / "terjee.json"
 ZAND_PATH = DATA_DIR / "zand.json"
 
@@ -21,8 +22,18 @@ def import_ghazals(db):
     with open(GHAZALS_PATH, encoding="utf-8") as f:
         data = json.load(f)
 
+    vazn_data = {}
+    if VAZN_PATH.exists():
+        with open(VAZN_PATH, encoding="utf-8") as f:
+            vazn_data = json.load(f)
+
     records = [
-        models.Ghazal(number=int(num), title=entry["t"], couplets=entry["c"])
+        models.Ghazal(
+            number=int(num),
+            title=entry["t"],
+            couplets=entry["c"],
+            vazn=(vazn_data.get(num) or {}).get("arkan"),
+        )
         for num, entry in data.items()
     ]
     db.bulk_save_objects(records)
