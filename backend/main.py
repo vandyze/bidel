@@ -2,6 +2,7 @@ import asyncio
 import os
 import random
 import re
+import threading
 from datetime import date, datetime, timedelta
 from typing import List, Optional
 from urllib.parse import quote
@@ -17,12 +18,57 @@ from sqlalchemy.orm import Session
 from database import Base, engine, SessionLocal
 import models
 from auth import hash_password, verify_password, create_access_token, decode_access_token
+from text_utils import normalize, tokenize
+import neighbors_index
+from neighbors_index import build_index, cached_live_neighbors, matched_bayts
 
 Base.metadata.create_all(bind=engine)
 
 ADMIN_USER_ID = 1  # your user id
 
 app = FastAPI()
+
+
+# --- هفت مقام سلوک: نگاشت لاتین ↔ فارسی و رنگ (هماهنگ با MOODS فرانت) ---
+
+MAQAM_COLORS = {
+    "طلب": "#b0823e",
+    "عشق": "#b0566a",
+    "معرفت": "#6a7bb0",
+    "استغنا": "#5d8f7e",
+    "توحید": "#5d8f5d",
+    "حیرت": "#7b6cae",
+    "فنا": "#8a8076",
+}
+MAQAM_IDS = {
+    "طلب": "talab",
+    "عشق": "eshgh",
+    "معرفت": "marefat",
+    "استغنا": "esteghna",
+    "توحید": "towhid",
+    "حیرت": "heyrat",
+    "فنا": "fana",
+}
+MAQAM_BY_ID = {v: k for k, v in MAQAM_IDS.items()}
+MAQAM_NEUTRAL = "#9a9482"
+
+
+# --- ساخت ایندکس همسایه در پس‌زمینه (اپ منتظر نمی‌ماند) ---
+
+def _build_neighbors_index():
+    db = SessionLocal()
+    try:
+        build_index(db)
+        print(f"[neighbors] index ready: {neighbors_index.INDEX.n_bayts} bayts, {len(neighbors_index.INDEX.df)} tokens", flush=True)
+    except Exception as e:
+        print(f"[neighbors] index build failed: {e}", flush=True)
+    finally:
+        db.close()
+
+
+@app.on_event("startup")
+def _startup_build_neighbors_index():
+    threading.Thread(target=_build_neighbors_index, daemon=True).start()
 
 
 # --- Telegram Notification ---
@@ -853,7 +899,198 @@ def verse_of_day(db: Session = Depends(get_db)):
 
 
 # --- Keyword Routes ---
-# NOTE: specific paths (/featured, /categories) must be defined before /keywords/{word}
+# NOTE: specific paths (/featured, /categories, /graph, /graph/{maqam}) must be
+# defined before /keywords/{word}
+
+def _find_keyword_by_norm(db, qnorm: str):
+    if not qnorm:
+        return None
+    kw = db.query(models.Keyword).filter(models.Keyword.word == qnorm).first()
+    if kw:
+        return kw
+    for k in db.query(models.Keyword).all():
+        if normalize(k.word) == qnorm:
+            return k
+    return None
+
+
+def _example_bayt_text(word: str):
+    """متن یک بیتِ نمونه که واژه را دارد (از ایندکس)."""
+    toks = set(tokenize(word))
+    if not toks:
+        return ""
+    plists = [neighbors_index.INDEX.postings.get(t) for t in toks]
+    if any(p is None for p in plists):
+        return ""
+    matched = set.intersection(*plists)
+    if not matched:
+        return ""
+    bid = min(matched)
+    return neighbors_index.INDEX.bayts[bid]
+
+
+# ── همسایه و گراف ────────────────────────────────────────────────────────
+
+@app.get("/poems/neighbors")
+def poems_neighbors(
+    q: str = Query(..., min_length=2),
+    type: str = Query("all", pattern="^(g|tr|all)$"),
+    db: Session = Depends(get_db),
+):
+    if not neighbors_index.INDEX.ready:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="index building")
+
+    qnorm = normalize(q)
+    kw = _find_keyword_by_norm(db, qnorm)
+    matched = matched_bayts(q)
+
+    if kw is not None:
+        rows = (
+            db.query(models.KeywordCooccurrence)
+            .filter(models.KeywordCooccurrence.keyword_a_id == kw.id)
+            .order_by(models.KeywordCooccurrence.score.desc())
+            .limit(5)
+            .all()
+        )
+        neighbors = []
+        for r in rows:
+            other = db.query(models.Keyword).get(r.keyword_b_id)
+            if not other:
+                continue
+            neighbors.append({
+                "word": other.word,
+                "co": r.co_count,
+                "score": r.score,
+                "in_dictionary": True,
+                "maqam": other.maqam,
+                "example": _example_bayt_text(other.word),
+            })
+        return {"query": q, "source": "table", "matched_bayts": matched, "neighbors": neighbors}
+
+    ns = cached_live_neighbors(qnorm, 5)
+    neighbors = []
+    for n in ns:
+        nkw = _find_keyword_by_norm(db, normalize(n["word"]))
+        neighbors.append({
+            "word": n["word"],
+            "co": n["co"],
+            "score": n["score"],
+            "in_dictionary": nkw is not None,
+            "maqam": nkw.maqam if nkw else None,
+            "example": _example_bayt_text(n["word"]),
+        })
+    return {"query": q, "source": "live", "matched_bayts": matched, "neighbors": neighbors}
+
+
+@app.get("/keywords/{word}/neighbors")
+def keyword_neighbors(
+    word: str,
+    limit: int = Query(8, ge=1, le=20),
+    db: Session = Depends(get_db),
+):
+    kw = db.query(models.Keyword).filter(models.Keyword.word == word).first()
+    if not kw:
+        raise HTTPException(status_code=404, detail="کلمه کلیدی یافت نشد")
+
+    rows = (
+        db.query(models.KeywordCooccurrence)
+        .filter(models.KeywordCooccurrence.keyword_a_id == kw.id)
+        .order_by(models.KeywordCooccurrence.score.desc())
+        .limit(limit)
+        .all()
+    )
+    neighbors = []
+    for r in rows:
+        other = db.query(models.Keyword).get(r.keyword_b_id)
+        if not other:
+            continue
+        color = MAQAM_COLORS.get(other.maqam) or MAQAM_NEUTRAL
+        neighbors.append({
+            "word": other.word,
+            "co": r.co_count,
+            "score": r.score,
+            "maqam": other.maqam,
+            "color": color,
+        })
+    return {"word": word, "neighbors": neighbors}
+
+
+@app.get("/keywords/graph")
+def keywords_graph(db: Session = Depends(get_db)):
+    kw_maqam = {}
+    maqam_counts = {}
+    for k in db.query(models.Keyword).all():
+        if k.maqam and k.maqam in MAQAM_IDS:
+            kw_maqam[k.id] = MAQAM_IDS[k.maqam]
+            maqam_counts[k.maqam] = maqam_counts.get(k.maqam, 0) + 1
+
+    nodes = [
+        {"id": mid, "label": persian, "color": MAQAM_COLORS[persian],
+         "size": maqam_counts.get(persian, 0)}
+        for persian, mid in MAQAM_IDS.items()
+    ]
+
+    edges = {}
+    rows = db.query(models.KeywordCooccurrence).filter(
+        models.KeywordCooccurrence.keyword_a_id < models.KeywordCooccurrence.keyword_b_id
+    ).all()
+    for r in rows:
+        ma = kw_maqam.get(r.keyword_a_id)
+        mb = kw_maqam.get(r.keyword_b_id)
+        if not ma or not mb or ma == mb:
+            continue
+        key = (ma, mb) if ma < mb else (mb, ma)
+        edges[key] = edges.get(key, 0) + r.co_count
+
+    edge_list = [
+        {"source": a, "target": b, "weight": w}
+        for (a, b), w in edges.items()
+    ]
+    edge_list.sort(key=lambda e: -e["weight"])
+    return {"nodes": nodes, "edges": edge_list}
+
+
+@app.get("/keywords/graph/{maqam}")
+def keywords_graph_maqam(maqam: str, db: Session = Depends(get_db)):
+    persian = MAQAM_BY_ID.get(maqam)
+    if not persian:
+        raise HTTPException(status_code=404, detail="مقام یافت نشد")
+
+    kws = db.query(models.Keyword).filter(models.Keyword.maqam == persian).all()
+    kws.sort(key=lambda k: -(k.count or 0))
+    top = kws[:10]
+    word_by_id = {k.id: k.word for k in top}
+    ids = {k.id for k in top}
+
+    rows = db.query(models.KeywordCooccurrence).filter(
+        models.KeywordCooccurrence.keyword_a_id < models.KeywordCooccurrence.keyword_b_id,
+        models.KeywordCooccurrence.keyword_a_id.in_(ids),
+        models.KeywordCooccurrence.keyword_b_id.in_(ids),
+    ).all()
+    edges = [
+        {"source": word_by_id[r.keyword_a_id], "target": word_by_id[r.keyword_b_id],
+         "weight": r.co_count}
+        for r in rows
+    ]
+    edges.sort(key=lambda e: -e["weight"])
+
+    deg = {}
+    for e in edges:
+        deg[e["source"]] = deg.get(e["source"], 0) + 1
+        deg[e["target"]] = deg.get(e["target"], 0) + 1
+
+    nodes = [
+        {"word": k.word, "size": k.count or 0, "degree": deg.get(k.word, 0)}
+        for k in top
+    ]
+    return {
+        "maqam": maqam,
+        "label": persian,
+        "color": MAQAM_COLORS[persian],
+        "nodes": nodes,
+        "edges": edges,
+    }
+
 
 @app.get("/keywords/featured")
 def get_featured_keywords(db: Session = Depends(get_db)):

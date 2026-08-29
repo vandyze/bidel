@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON, Boolean
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON, Boolean, Float
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -59,6 +59,19 @@ class Note(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     user = relationship("User", back_populates="notes")
+
+
+class KeywordCooccurrence(Base):
+    __tablename__ = "keyword_cooccurrence"
+
+    id = Column(Integer, primary_key=True, index=True)
+    keyword_a_id = Column(Integer, ForeignKey("keywords.id"), index=True)
+    keyword_b_id = Column(Integer, ForeignKey("keywords.id"), index=True)
+    co_count = Column(Integer, default=0)      # تعداد بیت‌های مشترک
+    score = Column(Float, default=0.0)         # PPMI با تخفیف
+
+    keyword_a = relationship("Keyword", foreign_keys=[keyword_a_id])
+    keyword_b = relationship("Keyword", foreign_keys=[keyword_b_id])
 
 
 class Ghazal(Base):

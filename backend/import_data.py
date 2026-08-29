@@ -61,13 +61,10 @@ def import_terjee(db):
 
 
 def import_zand(db):
-    existing = db.query(models.Zand).count()
-    if existing > 0:
-        print(f"Zand already imported ({existing} records). Skipping.")
-        return
-
     with open(ZAND_PATH, encoding="utf-8") as f:
         data = json.load(f)
+
+    db.query(models.Zand).delete()
 
     records = [
         models.Zand(
@@ -80,7 +77,7 @@ def import_zand(db):
     ]
     db.bulk_save_objects(records)
     db.commit()
-    print(f"Imported {len(records)} zand sections.")
+    print(f"Re-imported {len(records)} zand sections (replaced previous).")
 
 
 if __name__ == "__main__":

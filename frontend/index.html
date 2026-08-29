@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260815_010852">
+<meta name="deploy-version" content="20260830_014303">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -672,6 +672,59 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .kh-beit-meta{font-size:10.5px;color:var(--sa2);font-weight:600;letter-spacing:.03em;margin-bottom:8px;font-family:"IRANYekanX",sans-serif;}
 .kh-beit-m1{font-size:19px;line-height:1.95;color:var(--tx);}
 .kh-beit-m2{font-size:19px;line-height:1.95;color:var(--mu);text-align:left;}
+
+/* ─── همسایه (جستجو) ──────────────────────────── */
+.ct{overflow-anchor:auto}
+.nb{background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--br2);border-radius:14px;padding:11px 13px 12px;margin-bottom:10px;overflow:hidden;transition:height .18s ease,opacity .18s ease,min-height .18s ease,padding .18s ease;opacity:1}
+.nb.gone{min-height:0!important;height:0;padding-top:0;padding-bottom:0;margin-bottom:0;border-width:0;opacity:0}
+.nb-in{min-width:0}
+.nb-h{font-size:12px;font-weight:600;color:var(--mu);font-family:"IRANYekanX",sans-serif;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.nb-h::before{content:'';display:inline-block;width:14px;height:1px;background:var(--sa)}
+.nb-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.nb-row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;background:var(--sf2);border:1px solid var(--br);border-radius:99px;padding:7px 13px;min-height:34px;font-size:14px;font-weight:500;color:var(--tx2);font-family:"IRANYekanX",sans-serif;cursor:pointer;transition:border-color .15s,background .15s;touch-action:manipulation}
+.chip:active{transform:scale(.97)}
+.chip.has-entry{border-color:var(--sa);background:var(--sah);color:var(--sa2)}
+.chip-star{font-size:10px;line-height:1}
+.sk{background:var(--ik);border-radius:99px;animation:pulse 1.5s ease-in-out infinite}
+.sk-h{height:10px;width:120px;margin-bottom:8px}
+.sk-chip{height:34px}
+.sk-row{display:flex;gap:6px}
+
+/* ─── هم‌نشینان (صفحهٔ واژه) ──────────────────── */
+.comp-self{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:8px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:99px;flex-shrink:0}
+.comp{display:flex;flex-wrap:wrap;gap:7px}
+.mchip{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:7px 12px 7px 13px;min-height:36px;font-size:14.5px;font-weight:600;font-family:"IRANYekanX",sans-serif;cursor:pointer;transition:transform .15s;touch-action:manipulation}
+.mchip .dot{width:8px;height:8px}
+.mchip.same{border:1px solid}
+.mchip.other{border:1px dashed}
+.mchip:active{transform:scale(.97)}
+.comp-note{font-size:11px;color:var(--fa);font-family:"IRANYekanX",sans-serif;line-height:1.9;margin-top:8px}
+
+/* ─── گراف شبکهٔ واژگان ───────────────────────── */
+.gcard{background:var(--sf);border:1px solid var(--br2);border-radius:16px;padding:14px 12px 10px;margin-bottom:14px}
+.gcard-h{display:flex;align-items:center;justify-content:space-between;padding:0 4px 4px}
+.gcard-t{font-size:13.5px;font-weight:700;color:var(--gd);display:flex;align-items:center;gap:7px}
+.gcard-t::before{content:'';width:14px;height:1px;background:var(--sa)}
+.gcard-x{font-size:11.5px;color:var(--sa2);background:var(--sah);border:1px solid #e8d5a0;border-radius:99px;padding:3px 11px;cursor:pointer;font-weight:600;display:none}
+.gcard.open .gcard-x{display:inline-block}
+.gcard-hint{font-size:10.5px;color:var(--fa);font-family:"IRANYekanX",sans-serif;text-align:center;margin-top:4px}
+.graph-host{min-height:200px;display:flex;align-items:center;justify-content:center}
+svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:manipulation}
+.edge{fill:none;stroke:var(--br);transition:opacity .24s,stroke-width .24s}
+.mnode{cursor:pointer;transition:transform .24s cubic-bezier(.4,0,.2,1),opacity .24s}
+.mnode circle.body{transition:r .24s cubic-bezier(.4,0,.2,1),opacity .24s}
+.mnode text{font-family:"IRANYekanX",sans-serif;font-weight:700;fill:var(--gd);transition:font-size .24s,opacity .24s}
+.mnode .hit{fill:transparent}
+.mnode:hover circle.body{stroke:var(--gd);stroke-width:1.5}
+.wnode{cursor:pointer;transition:transform .24s cubic-bezier(.4,0,.2,1),opacity .24s}
+.wnode text{font-family:"IRANYekanX",sans-serif;font-size:11px;font-weight:500;fill:var(--tx2)}
+.wnode:hover text{fill:var(--go);font-weight:700}
+.gskel circle{fill:none;stroke:var(--br2)}
+.gskel .p{fill:var(--ik);animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.mnode,.wnode,.edge,.mnode circle.body{transition:none!important}.sk,.gskel .p{animation:none}}
 </style>
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -1848,7 +1901,12 @@ function renderKeywordList(){
   setHeader('واژه‌نامه بیدل', toFa(list.length)+' واژه از ۲۲۲');
   setMeta('واژه‌نامهٔ بیدل', 'کلمات کلیدی و واژگان پربسامد دیوان بیدل دهلوی، به‌همراه معنی و بسامد هر واژه');
   const cats = getCategories();
-  let h = '<div class="kw-filters">';
+  let h = '<div class="gcard" id="kw-graph-card" style="margin-bottom:14px">';
+  h += '<div class="gcard-h"><span class="gcard-t">شبکهٔ واژگان</span><span class="gcard-x" id="kw-graph-x">بازگشت</span></div>';
+  h += '<div class="graph-host" id="kw-graph-host"></div>';
+  h += '<div class="gcard-hint">روی هر مقام بزنید تا واژه‌هایش باز شود</div>';
+  h += '</div>';
+  h += '<div class="kw-filters">';
   for(const c of cats){
     h += '<button class="kw-chip'+(_kwFilter===c.id?' on':'')+'" data-kwfilter="'+c.id+'">'+c.label+'</button>';
   }
@@ -1873,12 +1931,14 @@ function renderKeywordList(){
     }
   }
   ctEl.innerHTML=h; ctEl.scrollTop=0;
+  _graphOpen=null;
+  loadKeywordGraph();
 }
 
 function showKeyword(word){
+  _curKw=word; curView='kwd';
   const k = kwBy(word);
   if(!k){ ctEl.innerHTML='<div class="er">واژه یافت نشد</div>'; return; }
-  _curKw=word; curView='kwd';
   setBack(true); hideSubnavs(); setNavHidden(false);
   const kWord = k.word||word;
   const kCat = k.category||'سایر';
@@ -1903,10 +1963,12 @@ function showKeyword(word){
   h+='<div class="kw-d-stat"><div class="kw-d-stat-val">'+toFa(Number(kPct).toFixed(2))+'٪</div><div class="kw-d-stat-lab fa">از کل اشعار</div></div>';
   h+='<div class="kw-d-stat"><div class="kw-d-stat-val">'+toFa(numGhazals)+'</div><div class="kw-d-stat-lab fa">غزل شامل</div></div>';
   h+='</div></div>';
+  h+='<div id="nb-kw-wrap"></div>';
   h+='<div class="kw-d-poems-head fa">اشعار شامل «<b>'+kWord+'</b>» — '+toFa(numGhazals)+' غزل</div>';
   h+='<div id="kw-poems-list"><div class="nr2" style="font-size:12px">در حال بارگذاری…</div></div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
+  loadKeywordNeighbors(kWord);
   // Load poems async
   apiFetch(API_URL+'/keywords/'+encodeURIComponent(kWord)).then(data=>{
     const el = document.getElementById('kw-poems-list');
@@ -2110,7 +2172,7 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.08.15</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.08.30</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -2219,7 +2281,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.08.15</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.08.30</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -2345,6 +2407,7 @@ function showSearch(){
     inp.value = _lastSrch.query;
     const resultsEl = document.getElementById('srch-results');
     if(resultsEl) resultsEl.innerHTML = _lastSrch.html;
+    if(_lastSrch.query) loadNeighbors(_lastSrch.query, 'g');
   } else {
     inp.focus();
   }
@@ -2414,6 +2477,251 @@ async function doSrch(){
   }
   resultsEl.innerHTML = h;
   _lastSrch={query:raw, html:h};
+  loadNeighbors(kw, 'g');
+}
+
+// ─── همسایه و گراف ───────────────────────────────
+const _nbCache = {};
+const MAQAM_COLOR_BY_FA = { 'طلب':'#b0823e','عشق':'#b0566a','معرفت':'#6a7bb0','استغنا':'#5d8f7e','توحید':'#5d8f5d','حیرت':'#7b6cae','فنا':'#8a8076','سایر':'#9a9482' };
+let _graph = null;
+let _graphOpen = null;
+
+function collapseNb(el){
+  el.classList.add('gone');
+}
+
+function _nbChipsHTML(data){
+  if(!data || !data.neighbors || !data.neighbors.length) return null;
+  let h='<div class="nb-h">بیدل این‌ها را کنار هم می‌آورد</div><div class="nb-row">';
+  for(const n of data.neighbors){
+    h+='<div class="chip'+(n.in_dictionary?' has-entry':'')+'" data-word="'+n.word+'">'+(n.in_dictionary?'<span class="chip-star">✦</span>':'')+n.word+'</div>';
+  }
+  return h+'</div>';
+}
+
+function loadNeighbors(query, type){
+  const resultsEl = document.getElementById('srch-results');
+  if(!resultsEl) return;
+  let sec = document.getElementById('nb-sec');
+  if(sec && sec.dataset.q===query && sec.classList.contains('done')) return;
+  if(!sec){
+    sec=document.createElement('div');
+    sec.id='nb-sec';
+    sec.className='nb';
+    sec.style.minHeight='78px';
+    sec.innerHTML='<div class="nb-in"><div class="sk sk-h"></div><div class="sk-row"><div class="sk sk-chip" style="width:64px"></div><div class="sk sk-chip" style="width:56px"></div><div class="sk sk-chip" style="width:78px"></div><div class="sk sk-chip" style="width:50px"></div></div></div>';
+    const rh=resultsEl.querySelector(':scope > .rh');
+    if(rh){ rh.insertAdjacentElement('afterend', sec); }
+    else { resultsEl.insertBefore(sec, resultsEl.firstChild); }
+  }
+  sec.dataset.q=query;
+  const cached=_nbCache[query];
+  if(cached){
+    sec.classList.add('done');
+    sec.style.minHeight='';
+    sec.innerHTML='<div class="nb-in">'+cached+'</div>';
+    if(_lastSrch && _lastSrch.query===query){ _lastSrch.html=resultsEl.innerHTML; }
+    return;
+  }
+  fetch(API_URL+'/poems/neighbors?q='+encodeURIComponent(query)+'&type='+(type||'g'))
+    .then(r=>{ if(!r.ok) throw 0; return r.json(); })
+    .then(data=>{
+      const inner=_nbChipsHTML(data);
+      _nbCache[query]=inner;
+      const s=document.getElementById('nb-sec');
+      if(!s) return;
+      s.classList.add('done');
+      if(inner){
+        s.style.minHeight='';
+        s.innerHTML='<div class="nb-in">'+inner+'</div>';
+      } else {
+        collapseNb(s);
+      }
+      if(_lastSrch && _lastSrch.query===query){ _lastSrch.html=resultsEl.innerHTML; }
+    })
+    .catch(()=>{ const s=document.getElementById('nb-sec'); if(s) collapseNb(s); });
+}
+
+function _companionHTML(neighbors, selfMood){
+  const same=[], other=[];
+  for(const n of neighbors){
+    const m = n.maqam||null;
+    const color = n.color || MAQAM_COLOR_BY_FA[m] || MAQAM_COLOR_BY_FA['سایر'];
+    (m && selfMood && m===selfMood ? same : other).push({word:n.word, color:color, m:m});
+  }
+  let h='<div class="kw-d-section"><h4>هم‌نشینان</h4>';
+  if(selfMood && selfMood!=='سایر'){
+    h+='<div class="comp-self"><span class="dot" style="background:'+(MAQAM_COLOR_BY_FA[selfMood]||MAQAM_COLOR_BY_FA['سایر'])+'"></span>مقام خودِ واژه: '+selfMood+'</div>';
+  }
+  h+='<div class="comp">';
+  for(const c of [...same, ...other]){
+    h+='<div class="mchip '+(c.m && selfMood && c.m===selfMood?'same':'other')+'" data-word="'+c.word+'" style="color:'+c.color+';border-color:'+c.color+';background:'+_tint(c.color,0.12)+'"><span class="dot" style="background:'+c.color+'"></span>'+c.word+'</div>';
+  }
+  h+='</div>';
+  h+='<div class="comp-note">هم‌نشینانِ هم‌مقام اول می‌آیند و خط دورشان پیوسته است؛ هرچه از مقام دیگری باشد خط‌چین است.</div>';
+  return h+'</div>';
+}
+
+async function loadKeywordNeighbors(word){
+  const wrap=document.getElementById('nb-kw-wrap');
+  if(!wrap) return;
+  wrap.innerHTML='<div class="kw-d-section"><h4>هم‌نشینان</h4><div class="sk-row" style="flex-wrap:wrap"><div class="sk sk-chip" style="width:72px;height:36px"></div><div class="sk sk-chip" style="width:58px;height:36px"></div><div class="sk sk-chip" style="width:84px;height:36px"></div><div class="sk sk-chip" style="width:64px;height:36px"></div></div></div>';
+  try{
+    const r=await fetch(API_URL+'/keywords/'+encodeURIComponent(word)+'/neighbors?limit=8');
+    if(!r.ok) throw 0;
+    const data=await r.json();
+    if(!data || !data.neighbors || !data.neighbors.length){ wrap.remove(); return; }
+    const selfMood=(kwBy(word)||{}).maqam || null;
+    wrap.innerHTML=_companionHTML(data.neighbors, selfMood);
+  }catch(e){ wrap.remove(); }
+}
+
+// ─── گراف SVG ────────────────────────────────────
+const GSVGNS='http://www.w3.org/2000/svg';
+function gEl(t,a){ const e=document.createElementNS(GSVGNS,t); for(const k in (a||{})) e.setAttribute(k,a[k]); return e; }
+
+function _gGraphSkeleton(){
+  let s='<svg class="graph" viewBox="0 0 360 320"><g class="gskel"><circle cx="180" cy="162" r="100" stroke-dasharray="3 7" fill="none"></circle>';
+  for(let i=0;i<7;i++){
+    const a=(-90+i*(360/7))*Math.PI/180;
+    s+='<circle class="p" cx="'+(180+100*Math.cos(a)).toFixed(1)+'" cy="'+(162+100*Math.sin(a)).toFixed(1)+'" r="14" style="animation-delay:'+(i*0.12)+'s"></circle>';
+  }
+  return s+'</g></svg>';
+}
+
+async function loadKeywordGraph(){
+  const host=document.getElementById('kw-graph-host');
+  if(!host) return;
+  if(_graph && _graph.nodes && _graph.nodes.length){ renderGraphClosed(); return; }
+  host.innerHTML=_gGraphSkeleton();
+  try{
+    const r=await fetch(API_URL+'/keywords/graph');
+    if(!r.ok) throw 0;
+    _graph=await r.json();
+    renderGraphClosed();
+  }catch(e){ collapseGraphCard(); }
+}
+
+function collapseGraphCard(){
+  const card=document.getElementById('kw-graph-card');
+  if(card) card.remove();
+  _graphOpen=null;
+}
+
+function collapseGraph(){
+  _graphOpen=null;
+  const card=document.getElementById('kw-graph-card');
+  if(card) card.classList.remove('open');
+  const hint=card && card.querySelector('.gcard-hint');
+  if(hint) hint.textContent='روی هر مقام بزنید تا واژه‌هایش باز شود';
+  renderGraphClosed();
+}
+
+function renderGraphClosed(){
+  const host=document.getElementById('kw-graph-host');
+  if(!host) return;
+  const nodes=(_graph&&_graph.nodes)||[], edges=(_graph&&_graph.edges)||[];
+  if(!nodes.length){ collapseGraphCard(); return; }
+  const N=nodes.length;
+  const pos=nodes.map((n,i)=>{ const a=(-90+i*(360/N))*Math.PI/180; return [180+100*Math.cos(a), 162+100*Math.sin(a)]; });
+  const maxW=Math.max(...edges.map(e=>e.weight),1);
+  const strong=edges.filter(e=>e.weight/maxW>=0.85);
+  const weak=edges.filter(e=>e.weight/maxW>=0.3 && e.weight/maxW<0.85).slice(0,6);
+  const svg=gEl('svg',{viewBox:'0 0 360 320',class:'graph'});
+  const gEdge=gEl('g'), gNode=gEl('g');
+  svg.appendChild(gEdge); svg.appendChild(gNode);
+  for(const e of [...strong, ...weak]){
+    const pi=nodes.findIndex(n=>n.id===e.source), qi=nodes.findIndex(n=>n.id===e.target);
+    if(pi<0||qi<0) continue;
+    const p=pos[pi], q=pos[qi];
+    const mx=(p[0]+q[0])/2, my=(p[1]+q[1])/2;
+    const kx=180+(mx-180)*1.9, ky=162+(my-162)*1.9;
+    const isStrong=strong.includes(e);
+    gEdge.appendChild(gEl('path',{class:'edge', d:'M'+p[0]+' '+p[1]+'Q'+kx.toFixed(1)+' '+ky.toFixed(1)+' '+q[0]+' '+q[1],
+      'stroke-width':isStrong?(1.6+(e.weight/maxW)*1.4).toFixed(1):'1',
+      'stroke-opacity':isStrong?'0.5':'0.22',
+      stroke:isStrong?(nodes.find(n=>n.id===e.source).color):'#c9c1a6','stroke-linecap':'round'}));
+  }
+  nodes.forEach((n,i)=>{
+    const [x,y]=pos[i];
+    const r=12+((n.size||22)-22)/24*12;
+    const g=gEl('g',{class:'mnode','data-id':n.id, transform:'translate('+x.toFixed(1)+','+y.toFixed(1)+')'});
+    g.appendChild(gEl('circle',{class:'body', r:r.toFixed(1), fill:n.color,'fill-opacity':'.85'}));
+    g.appendChild(gEl('circle',{class:'hit', r:24, fill:'transparent'}));
+    const a=(-90+i*(360/N))*Math.PI/180;
+    const dy=Math.sin(a)>0.2?r+16:(Math.sin(a)<-0.2?-(r+9):5);
+    const t=gEl('text',{'text-anchor':'middle','font-size':13, dy:dy.toFixed(1)});
+    t.textContent=n.label;
+    g.appendChild(t);
+    gNode.appendChild(g);
+  });
+  host.innerHTML='';
+  host.appendChild(svg);
+}
+
+async function expandMaqam(maqamId){
+  const host=document.getElementById('kw-graph-host');
+  if(!host) return;
+  const card=host.closest('.gcard');
+  try{
+    const r=await fetch(API_URL+'/keywords/graph/'+maqamId);
+    if(!r.ok) throw 0;
+    const data=await r.json();
+    _graphOpen=maqamId;
+    if(card) card.classList.add('open');
+    const hint=card&&card.querySelector('.gcard-hint');
+    if(hint) hint.textContent='روی واژه بزنید تا صفحه‌اش باز شود';
+    renderGraphOpen(data);
+  }catch(e){}
+}
+
+function renderGraphOpen(data){
+  const host=document.getElementById('kw-graph-host');
+  if(!host) return;
+  const nodes=(_graph&&_graph.nodes)||[];
+  const ws=data.nodes||[], color=data.color, edges=data.edges||[];
+  const svg=gEl('svg',{viewBox:'0 0 360 320',class:'graph'});
+  const gEdge=gEl('g'), gWord=gEl('g'), gNode=gEl('g');
+  svg.appendChild(gEdge); svg.appendChild(gWord); svg.appendChild(gNode);
+  const act=gEl('g',{class:'mnode','data-id':data.maqam, transform:'translate(180,146)'});
+  act.appendChild(gEl('circle',{class:'body', r:26, fill:color,'fill-opacity':'.9'}));
+  const at=gEl('text',{'text-anchor':'middle','font-size':13, dy:5, fill:'#fff'});
+  at.textContent=data.label;
+  act.appendChild(at);
+  gNode.appendChild(act);
+  const pts=ws.map((w,i)=>{ const a=(-90+i*36)*Math.PI/180; return [180+88*Math.cos(a), 146+74*Math.sin(a), Math.cos(a), Math.sin(a)]; });
+  ws.forEach((w,i)=>{ const p=pts[i];
+    gWord.appendChild(gEl('line',{x1:180,y1:146,x2:p[0].toFixed(1),y2:p[1].toFixed(1),stroke:color,'stroke-opacity':'.28','stroke-width':1})); });
+  for(const e of edges){
+    const pi=ws.findIndex(w=>w.word===e.source), qi=ws.findIndex(w=>w.word===e.target);
+    if(pi<0||qi<0) continue;
+    const p=pts[pi], q=pts[qi];
+    gWord.appendChild(gEl('path',{class:'edge', d:'M'+p[0].toFixed(1)+' '+p[1].toFixed(1)+'L'+q[0].toFixed(1)+' '+q[1].toFixed(1), stroke:color,'stroke-opacity':'.16','stroke-width':1}));
+  }
+  ws.forEach((w,i)=>{
+    const [x,y,ca,sa]=pts[i];
+    const g=gEl('g',{class:'wnode','data-word':w.word, transform:'translate('+x.toFixed(1)+','+y.toFixed(1)+')'});
+    g.appendChild(gEl('circle',{r:5.5, fill:color,'fill-opacity':'.9'}));
+    g.appendChild(gEl('circle',{class:'hit', r:22, fill:'transparent'}));
+    const t=gEl('text',{});
+    t.textContent=w.word;
+    if(Math.abs(ca)>0.85){ t.setAttribute('text-anchor','middle'); t.setAttribute('dy', sa>0?'18':'-11'); }
+    else { t.setAttribute('text-anchor', ca>0?'start':'end'); t.setAttribute('x', ca>0?'9':'-9'); t.setAttribute('dy', sa>0.3?'13':(sa<-0.3?'-8':'4')); }
+    g.appendChild(t);
+    gWord.appendChild(g);
+  });
+  const others=nodes.filter(n=>n.id!==data.maqam);
+  others.forEach((n,i)=>{
+    const x=44+i*(272/Math.max(others.length-1,1));
+    const g=gEl('g',{class:'mnode','data-id':n.id, transform:'translate('+x.toFixed(1)+',298)', opacity:'.5'});
+    g.appendChild(gEl('circle',{r:6, fill:n.color,'fill-opacity':'.9'}));
+    const t=gEl('text',{'text-anchor':'middle','font-size':9, dy:17});
+    t.textContent=n.label;
+    g.appendChild(t);
+    gNode.appendChild(g);
+  });
+  host.innerHTML='';
+  host.appendChild(svg);
 }
 
 // ─── EVENT DELEGATION ────────────────────
@@ -2422,6 +2730,37 @@ ctEl.addEventListener('click', function(e){
   const moodEl=e.target.closest('#mood-card [data-mood]');
   if(moodEl){ openMoodSheet(moodEl.dataset.mood); return; }
   if(e.target.closest('#mood-card .mood-title')||e.target.closest('#mood-card .mood-hint')){ openMoodSheet(null); return; }
+  // Neighbors chips (search) — واژه‌نامه‌ای → صفحهٔ واژه، ساده → جستجوی جدید
+  const nbChip = e.target.closest('.nb .chip');
+  if(nbChip){
+    if(nbChip.classList.contains('has-entry')){ navigate('/keywords/'+encodeURIComponent(nbChip.dataset.word)); }
+    else {
+      const inp=document.getElementById('srch-input');
+      if(inp){ inp.value=nbChip.dataset.word; doSrch(); } else { navigate('/search'); }
+    }
+    return;
+  }
+  // Companion chips (صفحهٔ واژه)
+  const mc = e.target.closest('.comp .mchip');
+  if(mc){ navigate('/keywords/'+encodeURIComponent(mc.dataset.word)); return; }
+  // Graph: دکمهٔ بازگشت
+  if(e.target.closest('#kw-graph-x')){ collapseGraph(); return; }
+  // Graph: گرهٔ مقام (تپ → بازکردن یا جابه‌جایی)
+  const gmnode = e.target.closest('#kw-graph-host .mnode');
+  if(gmnode){
+    const id=gmnode.dataset.id;
+    if(_graphOpen){
+      if(id!==_graphOpen) expandMaqam(id);
+    } else {
+      expandMaqam(id);
+    }
+    return;
+  }
+  // Graph: واژه → صفحهٔ واژه
+  const gwnode = e.target.closest('#kw-graph-host .wnode');
+  if(gwnode){ navigate('/keywords/'+encodeURIComponent(gwnode.dataset.word)); return; }
+  // Graph: تپ روی فضای خالی → جمع شدن
+  if(_graphOpen && e.target.closest('#kw-graph-host')){ collapseGraph(); return; }
   // Profile rows
   const pr = e.target.closest('.pr-row');
   if(pr){
@@ -3242,6 +3581,8 @@ loadUserData().then(()=>{
 });
 Promise.all([loadAllKeywords(), loadFeaturedKeywords(), loadVerseOfDay()]).then(()=>{
   if(curView === 'home') showHome();
+  else if(curView === 'kw') renderKeywordList();
+  else if(curView === 'kwd' && _curKw) showKeyword(_curKw);
 });
 handleRoute(location.pathname); // show immediately, will re-render after data loads
 
