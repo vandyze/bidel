@@ -22,6 +22,7 @@ from auth import hash_password, verify_password, create_access_token, decode_acc
 from text_utils import normalize, tokenize
 import neighbors_index
 from neighbors_index import build_index, cached_live_neighbors, matched_bayts
+import soluk
 
 Base.metadata.create_all(bind=engine)
 
@@ -198,6 +199,24 @@ def get_current_user(
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="کاربر یافت نشد")
     return user
+
+
+def touch_activity(db, user_id: int):
+    """ثبت یک ردیف «روز فعال» برای کاربر — بدون race condition (ON CONFLICT DO NOTHING)."""
+    from sqlalchemy.dialects.postgresql import insert as pg_insert
+
+    today = date.today()
+    try:
+        stmt = pg_insert(models.UserActivity).values(user_id=user_id, date=today)
+        stmt = stmt.on_conflict_do_nothing(index_elements=["user_id", "date"])
+        db.execute(stmt)
+        db.commit()
+    except Exception:
+        db.rollback()
+        exists = db.query(models.UserActivity).filter_by(user_id=user_id, date=today).first()
+        if not exists:
+            db.add(models.UserActivity(user_id=user_id, date=today))
+            db.commit()
 
 
 # --- Routes ---
@@ -458,6 +477,7 @@ def toggle_bookmark(
     if existing:
         db.delete(existing)
         db.commit()
+        soluk.invalidate(current_user.id)
         return {"action": "removed"}
 
     bookmark = models.Bookmark(
@@ -469,6 +489,8 @@ def toggle_bookmark(
     db.add(bookmark)
     db.commit()
     db.refresh(bookmark)
+    touch_activity(db, current_user.id)
+    soluk.invalidate(current_user.id)
     return {"action": "added", "id": bookmark.id}
 
 
@@ -490,6 +512,7 @@ def delete_bookmark(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="بوکمارک یافت نشد")
     db.delete(bookmark)
     db.commit()
+    soluk.invalidate(current_user.id)
 
 
 @app.get("/bookmarks", response_model=list[BookmarkResponse])
@@ -546,6 +569,7 @@ def upsert_note(
         existing.text = body.text
         db.commit()
         db.refresh(existing)
+        soluk.invalidate(current_user.id)
         return {"action": "updated", "id": existing.id}
 
     note = models.Note(
@@ -558,6 +582,8 @@ def upsert_note(
     db.add(note)
     db.commit()
     db.refresh(note)
+    touch_activity(db, current_user.id)
+    soluk.invalidate(current_user.id)
     return {"action": "created", "id": note.id}
 
 
@@ -579,6 +605,7 @@ def delete_note(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="یادداشت یافت نشد")
     db.delete(note)
     db.commit()
+    soluk.invalidate(current_user.id)
 
 
 @app.get("/notes", response_model=list[NoteResponse])
@@ -625,6 +652,7 @@ def record_ghazal_view(
         view = models.GhazalView(user_id=current_user.id, ghazal_id=ghazal.id)
         db.add(view)
     db.commit()
+    touch_activity(db, current_user.id)
     return {"view_count": view.view_count, "last_viewed_at": view.last_viewed_at}
 
 
@@ -667,6 +695,28 @@ def get_ghazal_history(
         }
         for view, ghazal in views
     ]
+
+
+# --- Profile / Soluk Routes ---
+
+@app.get("/profile/soluk")
+def get_soluk(db: Session = Depends(get_db),
+              current_user: models.User = Depends(get_current_user)):
+    return soluk.get_profile(db, current_user.id)
+
+
+@app.get("/profile/soluk/maqam/{maqam_id}")
+def get_soluk_maqam(
+    maqam_id: str,
+    limit: int = Query(6, ge=1, le=50),
+    offset: int = Query(0, ge=0),
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    payload = soluk.maqam_couplets(db, current_user.id, maqam_id, limit, offset)
+    if payload is None:
+        raise HTTPException(status_code=404, detail="مقام یافت نشد")
+    return payload
 
 
 # --- Poem Routes ---

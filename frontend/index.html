@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260902_215508">
+<meta name="deploy-version" content="20260903_010258">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -270,8 +270,8 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .kw-d-tag-val{color:var(--gd);font-weight:700}
 .kw-d-tag-val.empty{color:var(--vf);font-weight:400}
 .kw-d-stats{display:flex;background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:12px}
-.kw-d-stat{flex:1;text-align:center;border-left:1px solid var(--br2);padding:0 4px}
-.kw-d-stat:first-child{border-left:none}
+.kw-d-stat{flex:1;text-align:center;border-inline-start:1px solid var(--br2);padding:0 4px}
+.kw-d-stat:first-child{border-inline-start:none}
 .kw-d-stat-val{font-size:22px;color:var(--go);font-weight:700;font-variant-numeric:tabular-nums;font-family:"IRANYekanX",sans-serif;line-height:1.1}
 .kw-d-stat-lab{font-size:10px;color:var(--mu);margin-top:4px;font-family:"IRANYekanX",sans-serif}
 .kw-d-poems-head{font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin:6px 0 10px;text-align:center;padding-bottom:8px;border-bottom:1px solid var(--br2)}
@@ -640,6 +640,11 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .kh-by b{color:var(--tx2);font-weight:700}
 .kh-tags{display:flex;flex-wrap:wrap;gap:6px}
 .kh-tag{font-size:11px;color:var(--gd);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:3px 11px;line-height:1.4}
+/* خوانش‌ها داخل نتایج جست‌وجو */
+.srch-sec-h{font-size:11px;color:var(--sa2);letter-spacing:.1em;font-weight:600;margin:16px 2px 9px;display:flex;align-items:center;gap:6px}
+.srch-sec-h::before{content:'';width:16px;height:1px;background:var(--sa)}
+.srch-kh{margin-bottom:16px}
+.kh-snippet{font-size:12.5px;color:var(--mu);line-height:1.8;margin-bottom:10px}
 .kh-d{animation:fu .25s ease;padding-bottom:10px}
 .kh-d-band{font-size:11px;color:var(--sa2);font-weight:600;letter-spacing:.03em;margin-bottom:11px;display:inline-flex;gap:6px;align-items:center}
 .kh-d-title{font-size:25px;color:var(--gd);font-weight:800;line-height:1.4;margin-bottom:16px;text-wrap:pretty}
@@ -745,6 +750,104 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
    نسخهٔ دسکتاپ — بر پایهٔ «دسکتاپ - طراحی»
    نوار کناره ۲۴۰ · نوار ابزار ۶۰ · ستون محتوا ۷۲۰
    ════════════════════════════════════════════════ */
+/* ─── سلوک من ─────────────────────────────── */
+.soluk{max-width:880px;margin:0 auto}
+.sk-lede{font-size:23px;font-weight:700;color:var(--gd);line-height:1.5;text-wrap:pretty}
+.sk-lede.sm{font-size:17.5px}
+.sk-sub{font-size:13.5px;color:var(--mu);line-height:1.9;padding-top:8px;text-wrap:pretty}
+.sk-sub.sm{font-size:12.5px;padding:6px 0 8px}
+.sk-grid{margin-top:18px}
+.sk-grid .sk-c-a{margin-bottom:6px}
+.sk-grid.two>div{margin-bottom:24px}
+.sk-grid.two>div:last-child{margin-bottom:0}
+.sk-sec{margin-bottom:14px}
+.sk-wide{margin-top:26px}
+.sk-sec-h{font-size:11px;color:var(--sa2);letter-spacing:.14em;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:11px}
+.sk-sec-h::before{content:'';width:18px;height:1px;background:var(--sa)}
+.sk-sec-note{font-size:12px;color:var(--fa);line-height:1.8;margin:-4px 0 10px}
+.soluk-radar .mr-area{fill:#7b6cae;fill-opacity:.13;stroke:#7b6cae}
+.mr.soluk-radar-svg{max-width:320px}
+.mr-faint .mr-grid,.mr-faint .mr-spoke{stroke:var(--br2);opacity:.7}
+.mr-faint .mr-lab{fill:var(--vf);font-weight:500}
+.sk-link{font-size:12.5px;color:var(--go);text-align:center;text-decoration:underline;text-decoration-color:var(--br);text-underline-offset:4px;cursor:pointer;padding:6px 0 2px;display:block}
+.sk-link:hover{color:var(--gd)}
+.vc{background:linear-gradient(135deg,var(--sah),var(--sf));border:1px solid var(--sa);border-radius:16px;padding:17px 16px 15px;position:relative;overflow:hidden}
+.vc::before{content:'۞';position:absolute;top:-14px;right:-8px;font-size:86px;color:var(--sa);opacity:.09;font-family:serif;line-height:1;pointer-events:none}
+.vc-l{font-size:15.5px;color:var(--tx);line-height:2;position:relative}
+.vc-l.s2{text-align:left;color:var(--tx2)}
+.vc-meta{font-size:12px;color:var(--mu);padding:9px 4px 0}
+.lk{color:var(--go);font-weight:700;cursor:pointer}
+.rd-row{display:flex;background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:15px 4px}
+.rd{flex:1;text-align:center;border-inline-start:1px solid var(--br2)}
+.rd:first-child{border-inline-start:none}
+.rd-v{font-size:25px;color:var(--go);font-weight:700;line-height:1.1}
+.rd-l{font-size:11px;color:var(--mu);margin-top:5px}
+.rd-note{font-size:12.5px;color:var(--mu);text-align:center;padding:10px 0 0}
+.jr-card{background:var(--sf);border:1px solid var(--br2);border-radius:16px;padding:10px 6px 4px}
+.jr-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;overflow-y:hidden}
+.jr{display:block;width:620px;max-width:none;height:auto}
+.jr-lane{stroke:var(--br2);stroke-width:1;stroke-dasharray:2 4}
+.jr-lane-lab{font-family:"IRANYekanX",sans-serif;font-size:13px;font-weight:600;fill:var(--tx2)}
+.jr-link{stroke:var(--br);stroke-width:2}
+.jr-link.gap{stroke-dasharray:3 4;stroke:var(--vf)}
+.jr-dot{stroke:var(--sf);stroke-width:2}
+.jr-m{font-family:"IRANYekanX",sans-serif;font-size:11px;fill:var(--mu)}
+.jr-hint{font-size:10.5px;color:var(--fa);text-align:center;padding:2px 0 0}
+.wcloud{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.wchip{font-family:inherit;font-weight:700;border:1px solid;border-radius:99px;padding:5px 14px;cursor:pointer;line-height:1.5;background:transparent}
+.gcards{display:flex;flex-direction:column;gap:8px}
+.gcard{background:var(--sf);border:1px solid var(--br2);border-radius:13px;padding:12px 15px;cursor:pointer;transition:border-color .15s}
+.gcard:hover{border-color:var(--go)}
+.gcard-n{font-size:10.5px;color:var(--fa);letter-spacing:.06em;margin-bottom:4px}
+.gcard-t{font-size:15.5px;color:var(--gd);font-weight:700}
+.gcard-p{font-size:13px;color:var(--mu);line-height:1.8;margin-top:4px}
+.sk-empty{font-size:13px;color:var(--vf)}
+.sk-empty-note{font-size:13px;color:var(--mu);line-height:1.8;padding:6px 2px}
+.sk-foot{text-align:center;color:var(--vf);font-family:serif;font-size:20px;padding:26px 0 10px}
+/* در حال شکل‌گیری */
+.sk-forming{position:relative;padding-top:240px}
+.sk-teaser{position:absolute;inset:0 0 auto;display:flex;justify-content:center;pointer-events:none;opacity:.5}
+.sk-teaser svg{width:330px}
+.sk-fmtx{position:relative}
+.sk-prog{display:flex;align-items:center;gap:8px;margin-top:10px}
+.sk-prog-track{flex:1;height:5px;border-radius:99px;background:var(--ik);overflow:hidden}
+.sk-prog-fill{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gl),var(--go))}
+.sk-prog-n{font-size:12px;color:var(--mu);flex-shrink:0}
+.sk-prog.big{margin:18px 0 16px}
+.sk-prog.big .sk-prog-track{height:6px}
+.sk-prog.big .sk-prog-n{font-size:13px;color:var(--gd);font-weight:700}
+.sk-steps{display:flex;flex-direction:column;gap:8px}
+.sk-step{display:flex;align-items:center;gap:12px;background:var(--sf);border:1px solid var(--br2);border-radius:13px;padding:12px 14px}
+.sk-step-ic{width:32px;height:32px;border-radius:9px;background:var(--gh);color:var(--go);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sk-step-ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
+.sk-step-t{font-size:14.5px;color:var(--gd);font-weight:700}
+.sk-step-s{font-size:11.5px;color:var(--mu);font-weight:400;margin-top:2px}
+/* کارت ورود در حساب */
+.sk-entry{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--br);border-radius:16px;padding:13px 15px;margin-bottom:12px;cursor:pointer;transition:border-color .15s}
+.sk-entry:hover{border-color:var(--go)}
+.sk-entry-tx{flex:1;min-width:0}
+.sk-entry-lab{font-size:10.5px;color:var(--mu);letter-spacing:.14em;font-weight:600;margin-bottom:5px}
+.sk-entry-line{font-size:16px;color:var(--gd);font-weight:700;line-height:1.35}
+.sk-entry-line b{color:#7b6cae}
+.sk-entry-line.dim{font-size:14px;font-weight:500;color:var(--mu)}
+.sk-entry-thumb{flex-shrink:0;width:64px;height:64px}
+.sk-entry-thumb svg{width:64px;height:64px}
+.sk-entry-chev{color:var(--vf);font-size:20px;line-height:1;direction:ltr;unicode-bidi:isolate;flex-shrink:0}
+.sk-entry-prog{display:flex;align-items:center;gap:8px;margin-top:7px}
+.sk-entry-prog .sk-prog-track{height:4px}
+.sk-entry-prog .sk-prog-n{font-size:11px}
+/* شیت سلوک */
+.msgrip{width:38px;height:4px;border-radius:99px;background:var(--br);margin:6px auto 12px}
+.sk-more{width:100%;font-family:inherit;font-size:13.5px;font-weight:700;color:var(--go);background:transparent;border:1px solid var(--br);border-radius:12px;padding:11px;margin-top:12px;cursor:pointer}
+.ms-dot i{width:15px;height:15px;border-radius:99px;display:block}
+.ms-p{font-size:14px;color:var(--tx2);line-height:2;margin-bottom:12px;text-wrap:pretty}
+.ms-p.dim{color:var(--fa);font-size:12.5px}
+.ms-nums{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+.ms-num{display:flex;align-items:center;gap:11px;background:var(--sf2);border:1px solid var(--br2);border-radius:12px;padding:10px 13px}
+.ms-num span{width:24px;height:24px;border-radius:99px;background:var(--gh);color:var(--go);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ms-num b{font-size:14px;color:var(--gd);display:block}
+.ms-num i{font-size:11px;color:var(--mu);font-style:normal}
+
 @media(min-width:1024px){
   /* ── چیدمان کلی: نوار کناره در راست، ستون اصلی در چپ ──
      سند RTL است، پس با row فرزند نخست (.dsb) در سمت راست می‌نشیند */
@@ -940,6 +1043,26 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
   .ms-bg{align-items:center}
   .ms-sheet{width:560px;max-width:560px;border-radius:18px;border-top:none;border:1px solid var(--br);max-height:76vh;padding:16px 24px 24px;transform:scale(.96);transition:transform .2s cubic-bezier(.2,.7,.2,1)}
   .ms-bg.open .ms-sheet{transform:scale(1)}
+
+  /* سلوک من — دسکتاپ */
+  .soluk{max-width:880px}
+  .sk-grid{display:grid;grid-template-columns:400px 1fr;gap:34px;margin-top:22px;align-items:start}
+  .sk-grid .sk-c-a{margin-bottom:0}
+  .sk-grid.two{grid-template-columns:1fr 1fr;gap:40px;margin-top:38px}
+  .sk-grid.two>div{margin-bottom:0}
+  .sk-lede{font-size:34px}
+  .sk-lede.sm{font-size:22px}
+  .sk-sub{font-size:15px}
+  .mr.soluk-radar-svg{max-width:340px}
+  .sk-wide{margin-top:40px}
+  .jr-wrap{overflow:visible}
+  .jr{width:100%}
+  .sk-forming{display:grid;grid-template-columns:400px 1fr;gap:40px;align-items:center;padding-top:0}
+  .sk-teaser{position:static;justify-content:center;opacity:.55}
+  .sk-fmtx{grid-column:2;padding-top:6px}
+  .sk-vc-big .vc-l{font-size:20px}
+  .sk-entry-thumb{width:88px;height:88px}
+  .sk-entry-thumb svg{width:88px;height:88px}
 }
 </style>
 <script>
@@ -1343,7 +1466,7 @@ let _khFrom='list', _khSlug=null;
 let _khaneshCache=null;
 
 function khLoader(msg){
-  return '<div class="book-loader"><span></span><span></span><span></span></div>';
+  return '<div class="book-loading"><div class="book-loader"><span></span><span></span><span></span></div>'+(msg?'<div class="book-loading-msg fa">'+msg+'</div>':'')+'</div>';
 }
 function toFaPubDate(iso){
   if(!iso) return '';
@@ -2253,8 +2376,8 @@ function renderKeywordList(){
   if(TWEAKS.sortBy==='alpha') list.sort((a,b)=>(a.word||'').localeCompare(b.word||'','fa'));
   else list.sort((a,b)=>(b.count||0)-(a.count||0));
   const maxN = Math.max(...all.map(k=>k.count||0), 1);
-  setHeader('واژه‌نامه بیدل', toFa(list.length)+' واژه از ۲۲۲');
-  setMeta('واژه‌نامهٔ بیدل', 'کلمات کلیدی و واژگان پربسامد دیوان بیدل دهلوی، به‌همراه معنی و بسامد هر واژه');
+  setHeader('کلمات کلیدی بیدل', toFa(list.length)+' واژه از ۲۲۲');
+  setMeta('کلمات کلیدی بیدل', 'کلمات کلیدی و واژگان پربسامد دیوان بیدل دهلوی، به‌همراه معنی و بسامد هر واژه');
   const cats = getCategories();
   let h = '<div class="gcard" id="kw-graph-card" style="margin-bottom:14px">';
   h += '<div class="gcard-h"><span class="gcard-t">شبکهٔ واژگان</span><span class="gcard-x" id="kw-graph-x">بازگشت</span></div>';
@@ -2467,6 +2590,264 @@ function _loadMockBms(){
 
 function updateBmBadge(){ /* could decorate bn button — left out for minimalism */ }
 
+// ─── سلوک من ───────────────────────────────
+const SK_THRESHOLD=8;
+let _solukMaqamId=null, _solukMaqamOffset=0, _solukMaqamTotal=0, _solukMaqamLoading=false;
+const _SOLUK_IC_BM='<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>';
+const _SOLUK_IC_NOTE='<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>';
+const _SOLUK_IC_READ='<svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
+
+function _maqamIdOf(pm){ const mp=MAQAM_MOOD[pm]; if(!mp) return null; return Object.keys(mp)[0]; }
+function jalaliMonthName(ym){
+  try{ const p=ym.split('-').map(Number); const d=new Date(Date.UTC(p[0], p[1]-1, 15)); return d.toLocaleDateString('fa-IR',{month:'long',timeZone:'UTC'}); }catch(e){ return ym; }
+}
+function _monthGap(a,b){
+  const pa=a.split('-').map(Number), pb=b.split('-').map(Number);
+  return (pb[0]-pa[0])*12+(pb[1]-pa[1]);
+}
+function renderSolukRadar(items, opts){
+  opts=opts||{};
+  const thumb=!!opts.thumb;
+  const faint=opts.faint||!items;
+  const N=MOODS.length, W=thumb?68:300, H=thumb?68:250, cx=W/2, cy=thumb?34:116, R=thumb?24:70;
+  const step=360/N;
+  const pt=(i,r)=>{ const a=(-90+i*step)*Math.PI/180; return [cx+R*r*Math.cos(a), cy+R*r*Math.sin(a)]; };
+  let s='<svg class="mood-radar soluk-radar-svg'+(faint?' mr-faint':'')+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="نمودار سلوک">';
+  [0.34,0.67,1].forEach(r=>{ const pts=MOODS.map((_,i)=>pt(i,r).map(v=>v.toFixed(1)).join(',')).join(' '); s+='<polygon class="mr-grid" points="'+pts+'"/>'; });
+  MOODS.forEach((_,i)=>{ const [x,y]=pt(i,1); s+='<line class="mr-spoke" x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'"/>'; });
+  const byId={}; (items||[]).forEach(m=>byId[m.id]=m);
+  if(!faint){
+    const dpts=items.map((m,i)=>pt(i,Math.max(0.08,m.value)).map(v=>v.toFixed(1)).join(',')).join(' ');
+    s+='<polygon class="mr-area" points="'+dpts+'"/>';
+  }
+  MOODS.forEach((m,i)=>{
+    const [x,y]=pt(i,1);
+    const mx=byId[m.id];
+    const rv=mx?Math.max(0.08,mx.value):0.08;
+    const [vx,vy]=pt(i,rv);
+    s+='<g class="mood-axis-g" data-skmaqam="'+m.id+'" style="cursor:pointer">';
+    if(!thumb){
+      const a=(-90+i*step)*Math.PI/180, ux=Math.cos(a), uy=Math.sin(a);
+      let anchor,lx; const GAP=8;
+      if(ux>0.30){anchor='end';lx=x+GAP;} else if(ux<-0.30){anchor='start';lx=x-GAP;} else {anchor='middle';lx=x;}
+      let lyN,lyP;
+      if(uy<-0.30){lyN=y-15;lyP=y-3;} else if(uy>0.30){lyN=y+17;lyP=y+29;} else {lyN=y-2;lyP=y+11;}
+      s+='<text class="mr-lab'+(mx&&mx.value>=0.999?' dom':'')+'" x="'+lx.toFixed(1)+'" y="'+lyN.toFixed(1)+'" text-anchor="'+anchor+'">'+m.label+'</text>';
+      if(mx!=null) s+='<text class="mr-lab-pct" x="'+lx.toFixed(1)+'" y="'+lyP.toFixed(1)+'" text-anchor="'+anchor+'">٪'+toFa(Math.round(mx.value*100))+'</text>';
+    }
+    s+='<circle class="mr-hit" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(thumb?11:22)+'"/>';
+    s+='<circle class="mr-vtx" cx="'+vx.toFixed(1)+'" cy="'+vy.toFixed(1)+'" r="'+(mx&&mx.value>=0.999?5:3.5)+'" style="fill:'+m.color+';stroke:var(--sf2)"/>';
+    s+='</g>';
+  });
+  s+='</svg>';
+  return s;
+}
+function renderJourney(tl){
+  const W=620,H=278,maxX=542,minX=20;
+  const laneY={}; let yy=36;
+  MOODS.forEach(m=>{ laneY[m.id]=yy; yy+=32; });
+  let s='<div class="jr-wrap"><svg class="jr" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="سیر سلوک">';
+  MOODS.forEach(m=>{
+    s+='<line class="jr-lane" x1="20" y1="'+laneY[m.id]+'" x2="'+maxX+'" y2="'+laneY[m.id]+'"/>';
+    s+='<text class="jr-lane-lab" x="'+W+'" y="'+(laneY[m.id]+4)+'" text-anchor="end">'+m.label+'</text>';
+  });
+  const X=(i)=> tl.length>1 ? (maxX - i*(maxX-minX)/(tl.length-1)) : maxX;
+  let prev=null;
+  tl.forEach((t,i)=>{
+    const x=X(i);
+    const ly=laneY[t.dominant]||36;
+    if(prev){
+      const gap=_monthGap(prev.month,t.month)>1;
+      s+='<line class="jr-link'+(gap?' gap':'')+'" x1="'+X(i-1)+'" y1="'+(laneY[prev.dominant]||36)+'" x2="'+x+'" y2="'+ly+'"/>';
+    }
+    const mood=MOOD_BY[t.dominant];
+    s+='<circle class="jr-dot" cx="'+x+'" cy="'+ly+'" r="5.5" style="fill:'+(mood?mood.color:'#7b6cae')+'"/>';
+    s+='<text class="jr-m" x="'+x+'" y="'+(H-14)+'" text-anchor="middle">'+jalaliMonthName(t.month)+'</text>';
+    prev=t;
+  });
+  s+='</svg></div>';
+  return s;
+}
+function _skSubText(bmC,ntC){ return toFa(bmC)+' نشان و '+toFa(ntC)+' یادداشت'; }
+async function showSoluk(){
+  curView='soluk'; curTab='profile';
+  setBack(true); hideSubnavs(); setNavHidden(false); setBnActive('profile');
+  setHeader('سلوک من', _skSubText(Object.keys(_bms).length, Object.keys(_nts).length));
+  setMeta('سلوک من', 'پروفایل هفت وادی سلوک بر پایهٔ نشانها، یادداشتها و خوانشهای تو در دیوان بیدل');
+  ctEl.innerHTML='<div class="book-loading"><div class="book-loader"><span></span><span></span><span></span></div><div class="bl-tx">در حساب کردنِ سلوکت…</div></div>';
+  ctEl.scrollTop=0;
+  const token=getToken();
+  if(!token){ ctEl.innerHTML='<div class="er-box"><div class="er">ابتدا وارد شوید</div><button class="retry" id="sk-retry">تلاش دوباره</button></div>'; return; }
+  let data=null;
+  try{
+    const resp=await fetch(API_URL+'/profile/soluk',{headers:{'Authorization':'Bearer '+token}});
+    if(!resp.ok) throw 0;
+    data=await resp.json();
+  }catch(e){ data=null; }
+  if(data===null){ ctEl.innerHTML='<div class="er-box"><div class="er">خطا در محاسبهٔ سلوک</div><button class="retry" id="sk-retry">تلاش دوباره</button></div>'; return; }
+  if(!data.ready){ renderSolukForming(data); } else { renderSolukFull(data); }
+}
+function renderSolukForming(data){
+  const pct=Math.min(100, Math.round((data.signals_count||0)/SK_THRESHOLD*100));
+  let h='<div class="soluk"><div class="sk-forming">';
+  h+='<div class="sk-teaser">'+renderSolukRadar(null,{faint:true})+'</div>';
+  h+='<div class="sk-fmtx">';
+  h+='<div class="sk-lede">سلوکت هنوز شکل نگرفته</div>';
+  h+='<div class="sk-sub">هر بیتی که نشان میکنی، یک نشانه است. با هشت نشانه میتوانیم وادیِ غالبت را بگوییم.</div>';
+  h+='<div class="sk-prog big"><span class="sk-prog-track"><span class="sk-prog-fill" style="width:'+pct+'%"></span></span><span class="sk-prog-n">'+toFa(data.signals_count||0)+' از ۸</span></div>';
+  h+='<div class="sk-steps">';
+  h+='<div class="sk-step"><span class="sk-step-ic">'+_SOLUK_IC_BM+'</span><div><div class="sk-step-t">بیت نشان کن</div><div class="sk-step-s">هر بیتی که نگهت داشت</div></div></div>';
+  h+='<div class="sk-step"><span class="sk-step-ic">'+_SOLUK_IC_NOTE+'</span><div><div class="sk-step-t">یادداشت بنویس</div><div class="sk-step-s">حتی یک جمله</div></div></div>';
+  h+='<div class="sk-step"><span class="sk-step-ic">'+_SOLUK_IC_READ+'</span><div><div class="sk-step-t">غزل بخوان</div><div class="sk-step-s">هر روز یکی</div></div></div>';
+  h+='</div></div></div></div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+function renderSolukFull(data){
+  const domM=MOOD_BY[data.dominant.id]||MOODS[0];
+  const leastM=MOOD_BY[data.least_maqam.id]||MOODS[MOODS.length-1];
+  let h='<div class="soluk">';
+  h+='<div class="sk-head"><div class="sk-lede">بیشتر در وادی <b style="color:'+domM.color+'">'+domM.label+'</b> بوده‌ای'+(data.dominant.tied_with&&MOOD_BY[data.dominant.tied_with]?'، گاه هم در '+MOOD_BY[data.dominant.tied_with].label:'')+'</div>';
+  h+='<div class="sk-sub">'+domM.desc+'</div></div>';
+  h+='<div class="sk-grid">';
+  h+='<div class="sk-c-a"><div class="mood-card soluk-radar">'+renderSolukRadar(data.radar)+'<div class="mood-hint">روی هر رأس بزنید تا بیتهایت در آن وادی را ببینید</div><div class="sk-link" data-skexplain>این نمودار چطور ساخته شده؟</div></div></div>';
+  h+='<div class="sk-c-b">';
+  if(data.highlight){
+    h+='<div class="sk-sec"><div class="sk-sec-h">بیتِ شاخص</div><div class="vc"><div class="vc-l">'+(data.highlight.couplet[0]||'')+'</div><div class="vc-l s2">'+(data.highlight.couplet[1]||'')+'</div></div><div class="vc-meta">'+(data.highlight.poem_type==='g'?'غزل ':'بند ')+toFa(data.highlight.poem_id)+' · <span class="lk clk-go" data-tp="'+data.highlight.poem_type+'" data-id="'+data.highlight.poem_id+'">رفتن به غزل</span></div></div>';
+  }
+  h+='<div class="sk-sec"><div class="sk-sec-h">خواندن</div><div class="rd-row">';
+  h+='<div class="rd"><div class="rd-v">'+toFa(data.reading.ghazals_read)+'</div><div class="rd-l">غزل خوانده</div></div>';
+  h+='<div class="rd"><div class="rd-v">'+toFa(data.reading.active_days)+'</div><div class="rd-l">روزِ همراهی</div></div>';
+  h+='<div class="rd"><div class="rd-v">'+toFa(data.reading.longest_streak)+'</div><div class="rd-l">پیوستهترین دوره</div></div>';
+  h+='</div>';
+  if(data.reading.current_streak>0) h+='<div class="rd-note">'+toFa(data.reading.current_streak)+' روز است که هر روز آمدهای.</div>';
+  h+='</div>';
+  h+='</div>';
+  h+='</div>';
+  h+='<div class="sk-wide"><div class="sk-sec-h">سیرِ سلوک</div><div class="sk-sec-note">ماههایی که به دیوان نیامدهای، خالی ماندهاند — شکاف، نه صفر.</div>';
+  h+= data.timeline.length ? ('<div class="jr-card">'+renderJourney(data.timeline)+'</div>') : '<div class="sk-empty-note">برای دیدن سیر سلوکت، دستکم دو ماهِ خوانش لازم است.</div>';
+  h+='</div>';
+  h+='<div class="sk-grid two">';
+  h+='<div><div class="sk-sec-h">واژههای من</div><div class="sk-sec-note">پربسامدترین واژهها در بیتهایی که نشان کرده یا یادداشت کردهای</div>';
+  if(data.top_words.length){
+    const maxC=Math.max.apply(null, data.top_words.map(w=>w.count))||1;
+    h+='<div class="wcloud">';
+    data.top_words.forEach(w=>{
+      const mid=_maqamIdOf(w.maqam); const col=mid?MOOD_BY[mid].color:'#8a8076';
+      const fs=Math.round(12 + (w.count/maxC)*13);
+      h+='<button class="wchip" data-ww="'+encodeURIComponent(w.word)+'" style="font-size:'+fs+'px;color:'+col+';border-color:'+col+'55;background:'+col+'12">'+w.word+'</button>';
+    });
+    h+='</div>';
+  } else h+='<div class="sk-empty">هنوز واژهای برای گفتن نیست.</div>';
+  h+='</div>';
+  h+='<div><div class="sk-sec-h">وادیِ نرفته</div><div class="sk-lede sm">کمتر به <b style="color:'+leastM.color+'">'+leastM.label+'</b> سر زدهای</div><div class="sk-sub sm">'+(data.suggestions.length?'سه غزل از این وادی که هنوز نخواندهای:':'هنوز غزلی از این وادی نخواندهای.')+'</div>';
+  if(data.suggestions.length){
+    h+='<div class="gcards">';
+    data.suggestions.forEach(s=>{ h+='<div class="gcard clk-go" data-tp="g" data-id="'+s.number+'"><div class="gcard-n">غزل '+toFa(s.number)+'</div><div class="gcard-t">'+s.title+'</div></div>'; });
+    h+='</div>';
+  }
+  h+='</div>';
+  h+='</div>';
+  h+='<div class="sk-foot">۞</div>';
+  h+='</div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+function solukCardHtml(d){
+  let line, dim=false;
+  if(d && d.ready){
+    const mm=MOOD_BY[d.dominant.id]||MOODS[0];
+    line='بیشتر در وادی <b>'+mm.label+'</b>';
+  } else {
+    line='سلوکت در حال شکلگیری است';
+    dim=true;
+  }
+  let prog='';
+  if(!(d&&d.ready)){
+    const cnt=(d&&d.signals_count)||0;
+    const pct=Math.min(100, Math.round(cnt/SK_THRESHOLD*100));
+    prog='<div class="sk-entry-prog"><span class="sk-prog-track"><span class="sk-prog-fill" style="width:'+pct+'%"></span></span><span class="sk-prog-n">'+toFa(cnt)+' از ۸</span></div>';
+  } else {
+    prog='<div class="sk-entry-prog"><span class="sk-prog-n" style="color:var(--mu);font-weight:400">'+_skSubText(Object.keys(_bms).length,Object.keys(_nts).length)+'</span></div>';
+  }
+  return '<div class="sk-entry" data-soluk>'+
+    '<div class="sk-entry-tx"><div class="sk-entry-lab">سلوک من</div><div class="sk-entry-line'+(dim?' dim':'')+'">'+line+'</div>'+prog+'</div>'+
+    '<div class="sk-entry-thumb">'+renderSolukRadar((d&&d.ready)?d.radar:null,{thumb:true,faint:!(d&&d.ready)})+'</div>'+
+    '<span class="sk-entry-chev">‹</span></div>';
+}
+async function loadSolukCard(){
+  const slot=document.getElementById('soluk-card-slot');
+  const token=getToken();
+  if(!slot||!token) return;
+  slot.innerHTML='<div class="sk-entry"><div class="sk-entry-tx"><div class="sk-entry-lab">سلوک من</div><div class="sk-entry-line dim">در حال محاسبه…</div></div></div>';
+  try{
+    const resp=await fetch(API_URL+'/profile/soluk',{headers:{'Authorization':'Bearer '+token}});
+    if(!resp.ok) throw 0;
+    const d=await resp.json();
+    slot.innerHTML=solukCardHtml(d);
+  }catch(e){ slot.innerHTML=''; }
+}
+function openSolukRadarSheet(moodId){
+  const mood=MOOD_BY[moodId]; if(!mood) return;
+  _solukMaqamId=moodId; _solukMaqamOffset=0; _solukMaqamTotal=0;
+  const sheet=document.getElementById('mood-sheet');
+  const body=document.getElementById('mood-sheet-body');
+  body.innerHTML='<div class="msgrip"></div><div class="ms-h"><span class="ms-dot" style="background:'+mood.color+'22"><i style="background:'+mood.color+'"></i></span><div class="ms-h-tx"><div class="ms-h-name">بیتهای من در '+mood.label+'</div><div class="ms-h-sub">در حال بارگذاری…</div></div></div>';
+  sheet.scrollTop=0;
+  document.getElementById('mood-sheet-bg').classList.add('open');
+  loadSolukMaqam();
+}
+async function loadSolukMaqam(){
+  if(!_solukMaqamId||_solukMaqamLoading) return;
+  if(_solukMaqamOffset>0 && _solukMaqamOffset>=_solukMaqamTotal) return;
+  _solukMaqamLoading=true;
+  const token=getToken();
+  const body=document.getElementById('mood-sheet-body');
+  try{
+    const resp=await fetch(API_URL+'/profile/soluk/maqam/'+_solukMaqamId+'?limit=6&offset='+_solukMaqamOffset,{headers:{'Authorization':'Bearer '+token}});
+    if(!resp.ok) throw 0;
+    const d=await resp.json();
+    _solukMaqamTotal=d.total;
+    const mood=MOOD_BY[_solukMaqamId];
+    let html='';
+    if(_solukMaqamOffset===0){
+      html+='<div class="msgrip"></div><div class="ms-h"><span class="ms-dot" style="background:'+mood.color+'22"><i style="background:'+mood.color+'"></i></span><div class="ms-h-tx"><div class="ms-h-name">'+mood.label+'</div><div class="ms-h-sub">'+toFa(d.total)+' بیت از نشانهایت</div></div></div>';
+      if(!d.items.length) html+='<div class="ms-empty">هنوز بیتی در این وادی نشان نکردهای.</div>';
+    }
+    d.items.forEach(it=>{
+      html+='<div class="ms-cp secp" data-tp="'+it.poem_type+'" data-id="'+it.poem_id+'" data-ci="'+it.couplet_index+'"><div class="ms-cp1">'+(it.couplet[0]||'')+'</div>'+(it.couplet[1]?'<div class="ms-cp2">'+it.couplet[1]+'</div>':'')+'<div class="ms-cp-n">'+(it.poem_type==='g'?'غزل ':'بند ')+toFa(it.poem_id)+' · بیت '+toFa((it.couplet_index||0)+1)+'</div></div>';
+    });
+    _solukMaqamOffset+=d.items.length;
+    if(_solukMaqamOffset<d.total) html+='<button class="sk-more" id="sk-more-btn">'+toFa(d.total-_solukMaqamOffset)+' بیتِ دیگر</button>';
+    if(_solukMaqamOffset===0){ body.innerHTML=html; } else { body.insertAdjacentHTML('beforeend',html); }
+  }catch(e){
+    if(_solukMaqamOffset===0) body.innerHTML='<div class="er">خطا در بارگذاری</div>';
+  }
+  _solukMaqamLoading=false;
+}
+function openSolukExplain(){
+  const body=document.getElementById('mood-sheet-body');
+  body.innerHTML='<div class="msgrip"></div><div class="ms-h"><span class="ms-dot" style="background:#7b6cae22"><i style="background:#7b6cae"></i></span><div class="ms-h-tx"><div class="ms-h-name">این نمودار چطور ساخته شده؟</div></div></div>'+
+    '<div class="ms-p">هفت وادی سلوک بر پایهٔ نشانها، یادداشتها و خوانشهای تو، نسبت به کل دیوان سنجیده میشود:</div>'+
+    '<div class="ms-nums">'+
+    '<div class="ms-num"><span>۱</span><div><b>نشان و یادداشت</b><i>هر بیت نشانشده یا یادداشتشده یک سیگنال است</i></div></div>'+
+    '<div class="ms-num"><span>۲</span><div><b>واژههای کلیدی</b><i>واژههای دیوان در متنِ خودِ بیت جستوجو میشوند</i></div></div>'+
+    '<div class="ms-num"><span>۳</span><div><b>نسبت به دیوان</b><i>توزیع مقامهای تو با توزیع کل دیوان مقایسه میشود</i></div></div>'+
+    '</div>'+
+    '<div class="ms-p dim">با هشت سیگنال، پروفایل تو شکل میگیرد.</div>';
+  const sheet=document.getElementById('mood-sheet');
+  sheet.scrollTop=0;
+  document.getElementById('mood-sheet-bg').classList.add('open');
+}
+function _gotoCouplet(tp,id,ci){
+  const scroll=()=>{
+    requestAnimationFrame(()=>{
+      const el=ctEl.querySelector('.cp[data-key="'+bkey(tp,id,ci)+'"]')||document.getElementById('cp-'+tp+'_'+id+'_'+ci);
+      if(el){ ctEl.scrollTo({top:Math.max(0,el.offsetTop-14),behavior:'smooth'}); el.classList.add('cp-flash'); setTimeout(()=>el.classList.remove('cp-flash'),1400); }
+    });
+  };
+  if(tp==='g'){ history.pushState({},'','/ghazal/'+id); const p=showG(id); (p&&p.then)?p.then(scroll):setTimeout(scroll,500); }
+  else { history.pushState({},'','/terjee/'+id); const p=showT(id); (p&&p.then)?p.then(scroll):setTimeout(scroll,500); }
+}
+
 // ─── PROFILE ─────────────────────────────
 function showProfile(){
   curView='profile'; curTab='profile';
@@ -2496,6 +2877,8 @@ function renderProfileLoggedIn(){
   h+='<div class="pr-name">'+(_user.username||'کاربر')+'</div>';
   h+='<div class="pr-email">'+(_toFa(_user.phone||''))+'</div>';
   h+='</div>';
+
+  h+='<div id="soluk-card-slot"></div>';
 
   h+='<div class="pr-stats" id="pr-stats-block">';
   h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa(bmCount)+'</div><div class="pr-stat-lab">نشان</div></div>';
@@ -2529,10 +2912,11 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.02</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.03</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
   _loadReadStat();
+  loadSolukCard();
 }
 
 // لود تعداد غزل‌های خوانده‌شده
@@ -2641,7 +3025,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.02</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.03</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -2857,14 +3241,12 @@ async function doSrch(){
     h += '<div class="rti-row"><span class="rti">'+hl(k.word||'',kw)+'</span><span class="rti-count fa">'+toFa(k.count||0)+' بار · '+toFa(numGh)+' غزل</span></div>';
     h += '<div class="rp">'+meanShort+'</div></div>';
   }
-  // خوانش‌های مرتبط — همان کارت صفحهٔ خوانش‌ها، پس کلیکش با هندلر موجود کار می‌کند
+  // خوانش‌های مرتبط — کارت با عنوان بند، نه عنوان مقاله
   if(khs.length){
-    h += '<div class="srch-sec-h fa">خوانش‌های مرتبط</div>';
     h += '<div class="kh-list srch-kh">';
     for(const k of khs){
       h += '<div class="kh-card" data-slug="'+k.slug+'">';
-      h += '<div class="kh-card-top"><span class="kh-band fa">ترجیع‌بند · بند '+toFa(k.terjee_number)+'</span><span class="kh-date fa">'+toFaPubDate(k.published_at)+'</span></div>';
-      h += '<div class="kh-title">'+hl(k.title||'',kw)+'</div>';
+      h += '<div class="kh-title">خوانش ترجیع بند — بند '+toFa(k.terjee_number)+'</div>';
       h += '<div class="kh-by">'+IC_PEN+'<span>به خوانشِ <b>'+(k.instructor||'')+'</b></span></div>';
       if(k.snippet) h += '<div class="kh-snippet fa">'+hl(k.snippet,kw)+'</div>';
       if(k.tags&&k.tags.length) h += '<div class="kh-tags">'+k.tags.map(t=>'<span class="kh-tag">'+hl(t,kw)+'</span>').join('')+'</div>';
@@ -3184,6 +3566,20 @@ ctEl.addEventListener('click', function(e){
     if(act==='go-search'){ navigate('/search'); return; }
     return;
   }
+  // سلوک — کارت ورود، رأس رادار، واژه‌ها، پیشنهاد و پیوندها
+  if(e.target.closest('[data-soluk]')){ navigate('/soluk'); return; }
+  if(e.target.closest('[data-skexplain]')){ openSolukExplain(); return; }
+  const skraf=e.target.closest('[data-skmaqam]');
+  if(skraf){ openSolukRadarSheet(skraf.dataset.skmaqam); return; }
+  const wchip=e.target.closest('.wchip');
+  if(wchip){ navigate('/keywords/'+wchip.dataset.ww); return; }
+  const clkgo=e.target.closest('.clk-go');
+  if(clkgo){
+    const tp=clkgo.dataset.tp, id=parseInt(clkgo.dataset.id);
+    navigate(tp==='g'?'/ghazal/'+id:'/terjee/'+id);
+    return;
+  }
+  if(e.target.closest('#sk-retry')){ showSoluk(); return; }
   // Profile edit save/cancel
   if(e.target.closest('#pr-save-edit')){ saveProfileEdit(); return; }
   if(e.target.closest('#pr-cancel-edit')){ _editingProfile=false; showProfile(); return; }
@@ -3875,6 +4271,14 @@ try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
 // ─── MOOD SHEET EVENTS ───────────────────
 document.getElementById('mood-sheet-bg').addEventListener('click', e=>{
   if(e.target.id==='mood-sheet-bg'){ closeMoodSheet(); return; }
+  const secp=e.target.closest('.secp');
+  if(secp){
+    const tp=secp.dataset.tp, id=parseInt(secp.dataset.id), ci=parseInt(secp.dataset.ci);
+    closeMoodSheet();
+    setTimeout(()=>_gotoCouplet(tp,id,ci),230);
+    return;
+  }
+  if(e.target.closest('#sk-more-btn')){ loadSolukMaqam(); return; }
   const kw=e.target.closest('.gkw');
   if(kw){ closeMoodSheet(); navigate('/keywords/'+encodeURIComponent(kw.dataset.kwword)); return; }
   const ov=e.target.closest('.ms-ov-row');
@@ -3983,6 +4387,7 @@ function handleRoute(path, restore){
   if(path === '/search'){ showSearch(restore); return; }
   if(path === '/bookmarks'){ showBm(); return; }
   if(path === '/profile'){ showProfile(); return; }
+  if(path === '/soluk'){ showSoluk(); return; }
   if(path === '/khanesh'){ showKhaneshList(true); return; }
   const khMatch = path.match(/^\/khanesh\/([^/]+)$/);
   if(khMatch){ showKhanesh(khMatch[1], 'direct', true); return; }

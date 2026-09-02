@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON, Boolean, Float
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON, Boolean, Float, Date
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -172,3 +172,13 @@ class Khanesh(Base):
     tags = Column(JSON, default=list)
     published_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class UserActivity(Base):
+    __tablename__ = "user_activity"
+
+    user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
+    date = Column(Date, primary_key=True, index=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    user = relationship("User")
