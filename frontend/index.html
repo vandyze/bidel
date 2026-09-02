@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260830_014303">
+<meta name="deploy-version" content="20260902_215508">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -59,6 +59,9 @@
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYekanX",sans-serif;overflow:hidden;font-feature-settings:"locl" 1}
 .fa{font-family:"IRANYekanX",sans-serif}
 .app{display:flex;flex-direction:column;height:100vh;max-width:500px;margin:0 auto;background:var(--bg);position:relative}
+/* ستون اصلی (هدر + زیرناو + محتوا) — روی موبایل کل ارتفاع را می‌گیرد */
+.pane{flex:1;min-height:0;display:flex;flex-direction:column}
+.dsb{display:none}
 
 /* ─── HEADER ───────────────────────────────── */
 .hd{flex-shrink:0;background:var(--bg);padding:14px 16px 10px;border-bottom:1px solid var(--br2);display:flex;align-items:center;gap:10px;min-height:54px}
@@ -193,6 +196,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .ptitle{font-size:21px;color:var(--gd);font-weight:700;line-height:1.2}
 .psub{font-size:12px;color:var(--mu);margin-top:3px;font-family:"IRANYekanX",sans-serif}
 .pvazn{font-size:11px;color:var(--sa2);margin-top:5px;font-family:"IRANYekanX",sans-serif;background:var(--sah);display:inline-block;padding:2px 10px;border-radius:99px}
+.pnav{display:none}   /* پیمایش قبلی/بعدی فقط روی دسکتاپ؛ موبایل نوار subnav دارد */
 .pview{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif}
 .pview-badge{display:inline-flex;align-items:center;gap:5px;background:var(--sah);color:var(--sa2);border:1px solid #e8d5a0;border-radius:99px;padding:3px 10px;font-size:12px;font-family:"IRANYekanX",sans-serif;font-weight:600}
 .pview-badge.first{background:var(--gh);color:var(--go);border-color:#c5d9a8}
@@ -281,6 +285,10 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .search-input-wrap input{flex:1;background:transparent;border:none;outline:none;color:var(--tx);font-family:"IRANYekanX",sans-serif;font-size:18px;padding:14px 0;text-align:right}
 .search-input-wrap input::placeholder{color:var(--vf);font-size:15px}
 .search-input-wrap input::-webkit-search-cancel-button{-webkit-appearance:none}
+/* ضربدر پاک‌کردن — فقط وقتی چیزی نوشته شده باشد. در RTL انتهای ردیف سمت چپ است. */
+.search-clear{display:none;align-items:center;background:transparent;border:none;color:var(--vf);font-size:17px;line-height:1;cursor:pointer;padding:6px;margin-inline-start:6px;border-radius:99px}
+.search-clear.show{display:flex}
+.search-clear:hover{color:var(--mu);background:var(--ik)}
 .search-hints{margin-bottom:8px;padding:8px 4px 12px;border-bottom:1px dashed var(--br2)}
 .search-hint{font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;line-height:1.9}
 .search-hint b{color:var(--gd);font-family:"IRANYekanX",sans-serif;font-weight:700;font-size:14px}
@@ -379,8 +387,10 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .pr-guest-msg{font-size:14px;color:var(--mu);line-height:1.9;margin-top:6px;padding:0 8px;position:relative}
 
 .pr-stats{display:flex;background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:14px 6px;margin-bottom:14px}
-.pr-stat{flex:1;text-align:center;border-left:1px solid var(--br2);padding:0 4px}
-.pr-stat:first-child{border-left:none}
+/* خط جداکننده باید بین ستون‌ها بیفتد، نه لبهٔ بیرونی. در RTL فرزند نخست سمت راست است،
+   پس border باید inline-start (یعنی راستِ هر ستون) باشد تا با ستون قبلی‌اش مرز بسازد. */
+.pr-stat{flex:1;text-align:center;border-inline-start:1px solid var(--br2);padding:0 4px}
+.pr-stat:first-child{border-inline-start:none}
 .pr-stat-val{font-size:24px;color:var(--go);font-weight:700;font-variant-numeric:tabular-nums;font-family:"IRANYekanX",sans-serif;line-height:1.1}
 .pr-stat-lab{font-size:11px;color:var(--mu);margin-top:4px;font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em}
 
@@ -399,7 +409,9 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .pr-row-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .pr-row-t1{font-size:15px;color:var(--gd);font-weight:700;line-height:1.2;display:block}
 .pr-row-t2{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;display:block}
-.pr-row-chev{color:var(--vf);font-size:18px;line-height:1}
+/* SVG به‌جای «‹» — آن نویسه Bidi_Mirrored است و در سند RTL برعکس (رو به راست) رندر می‌شد */
+.pr-row-chev{color:var(--vf);display:flex;align-items:center;flex-shrink:0}
+.pr-row-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 .pr-edit-form{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:14px 14px 12px;margin-bottom:14px}
 .pr-edit-field{margin-bottom:10px}
@@ -494,6 +506,9 @@ mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
 .auth-forgot-row{display:flex;justify-content:flex-end;margin-top:-2px}
 .auth-forgot-btn{background:transparent;border:none;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:13px;cursor:pointer;padding:2px 0;direction:rtl}
 .auth-forgot-btn:hover{color:var(--go)}
+/* عناصری که فقط در چیدمان دسکتاپ دیده می‌شوند (ظاهر موبایل دست‌نخورده می‌ماند) */
+.dsk-only{display:none !important}
+.auth-otp-wrap{position:relative}
 .auth-info-box{background:var(--ik);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;direction:rtl;line-height:1.7;display:flex;align-items:flex-start;gap:8px}
 .auth-info-box svg{width:16px;height:16px;flex-shrink:0;stroke:var(--mu);fill:none;stroke-width:1.8;margin-top:2px}
 
@@ -725,6 +740,207 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
 .gskel .p{fill:var(--ik);animation:pulse 1.5s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
 @media(prefers-reduced-motion:reduce){.mnode,.wnode,.edge,.mnode circle.body{transition:none!important}.sk,.gskel .p{animation:none}}
+
+/* ════════════════════════════════════════════════
+   نسخهٔ دسکتاپ — بر پایهٔ «دسکتاپ - طراحی»
+   نوار کناره ۲۴۰ · نوار ابزار ۶۰ · ستون محتوا ۷۲۰
+   ════════════════════════════════════════════════ */
+@media(min-width:1024px){
+  /* ── چیدمان کلی: نوار کناره در راست، ستون اصلی در چپ ──
+     سند RTL است، پس با row فرزند نخست (.dsb) در سمت راست می‌نشیند */
+  .app{flex-direction:row;max-width:none;height:100vh}
+  .bn{display:none!important}
+  .pane{flex:1;min-width:0}
+
+  /* ── نوار کناره ── */
+  .dsb{display:flex;flex-direction:column;width:240px;flex-shrink:0;background:var(--sf2);border-left:1px solid var(--br);padding:18px 14px 14px;overflow-y:auto}
+  .dsb-brand{display:flex;align-items:center;gap:10px;padding:0 6px 18px;cursor:pointer}
+  /* همان لوگوی نسخهٔ موبایل (.hd-logo)، فقط کمی بزرگ‌تر */
+  .dsb-logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--gd),var(--go));object-fit:cover;overflow:hidden;box-shadow:0 1px 2px rgba(58,72,48,.15);flex-shrink:0}
+  .dsb-name{font-size:20px;font-weight:700;color:var(--gd);line-height:1.1}
+  .dsb-sub{font-size:10.5px;color:var(--mu);letter-spacing:.06em;margin-top:2px}
+  .dsb-search{display:flex;align-items:center;gap:8px;background:var(--sf);border:1px solid var(--br);border-radius:12px;padding:10px 12px;margin-bottom:16px;cursor:text;transition:border-color .15s}
+  .dsb-search:hover{border-color:var(--go)}
+  .dsb-search svg{width:17px;height:17px;stroke:var(--mu);fill:none;stroke-width:1.8;flex-shrink:0}
+  .dsb-search span{font-size:14px;color:var(--vf);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .dsb-search.has-q{border-color:var(--go);background:var(--sf2)}
+  .dsb-search.has-q span{color:var(--gd)}
+  .dsb-group{font-size:10px;color:var(--fa);letter-spacing:.14em;font-weight:600;padding:0 8px 8px}
+  .dsb-nav{display:flex;flex-direction:column;gap:3px;margin-bottom:20px}
+  .dsb-nav.hide{display:none}
+  .dsb-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;color:var(--mu);font-size:15px;cursor:pointer;transition:background .15s,color .15s}
+  .dsb-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.6;flex-shrink:0}
+  .dsb-item:hover{background:var(--ik);color:var(--gd)}
+  .dsb-item.on{background:var(--gh);color:var(--go);font-weight:700}
+  .dsb-item .n{margin-inline-start:auto;font-size:12px;color:var(--fa);font-variant-numeric:tabular-nums}
+  /* پانویس نوار کناره خودش لینک «حساب کاربری» است (آیتم جدا حذف شده) */
+  .dsb-foot{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px 10px;border-top:1px solid var(--br2);border-radius:11px;cursor:pointer}
+  .dsb-foot:hover{background:var(--ik)}
+  .dsb-foot.on{background:var(--gh)}
+  .dsb-foot.on .dsb-foot-t1{color:var(--go)}
+  .dsb-foot-chev{margin-inline-start:auto;color:var(--vf);font-size:18px}
+  .dsb-foot.guest{flex-direction:column;align-items:stretch;gap:8px;padding-top:14px;cursor:default}
+  .dsb-foot.guest:hover{background:transparent}
+  .dsb-av{width:32px;height:32px;border-radius:99px;background:var(--go);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+  .dsb-foot-t1{font-size:13.5px;color:var(--gd);font-weight:700;line-height:1.2}
+  .dsb-foot-t2{font-size:10.5px;color:var(--mu);margin-top:2px}
+  .dsb-foot-msg{font-size:11.5px;color:var(--mu);line-height:1.7}
+  .dsb-login{width:100%;background:var(--go);color:#fff;border:none;border-radius:11px;padding:11px;font-family:"IRANYekanX",sans-serif;font-size:14.5px;font-weight:700;cursor:pointer}
+  .dsb-login:hover{background:var(--gd)}
+
+  /* ── نوار ابزار (هدر موبایل در نقش toolbar) ── */
+  .hd{height:60px;min-height:60px;padding:0 28px;gap:12px;border-bottom:1px solid var(--br2)}
+  .hd-logo,.hd-avatar{display:none!important}
+  .hd-back{display:none;width:32px;height:32px;border-radius:9px;border:1px solid var(--br);background:var(--sf);color:var(--gd);align-items:center;justify-content:center;font-size:17px;padding:0;flex-shrink:0}
+  .hd-back.show{display:inline-flex}
+  .hd-title{flex:0 1 auto}
+  .hd-t1{font-size:16.5px}
+  .hd-t2{font-size:11px}
+  .hd-icon{margin-inline-start:auto;width:34px;height:34px;border-radius:10px;border:1px solid transparent;display:flex;align-items:center;justify-content:center;padding:0;flex-shrink:0}
+  .hd-icon:hover{border-color:var(--br);background:var(--sf)}
+  /* پیمایش غزل به داخل .pmeta منتقل شده است */
+  .subnav{display:none!important}
+
+  /* ── ستون محتوا: شبکهٔ تک‌ستونی ۷۲۰ در وسط ── */
+  .ct{display:grid;grid-template-columns:minmax(0,720px);justify-content:center;align-content:start;padding:26px 24px 56px}
+  .ct::-webkit-scrollbar{width:9px}
+
+  /* ── خانه ──
+     «بیدلی» فقط از نوار ابزار برداشته می‌شود (در نوار کناره هست)؛ بلوک خوش‌آمد
+     مثل طراحی می‌ماند: «شب بخیر» ریز بالا، «دیوان بیدل» درشت زیرش. */
+  .home-search{display:none}
+  .app[data-view="home"] .hd-title{display:none}
+  .home-greet{padding:0 2px 18px}
+  .home-day{font-size:26px}
+  .section-h{margin:6px 2px 11px}
+  .verse-card{padding:22px 24px 18px;margin-bottom:22px}
+  .verse-card .verse-text{font-size:20px}
+  /* دو مصرع کنار هم — برچسب و پانویس تمام‌عرض می‌مانند */
+  .verse-card:has(.verse-text-2){display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+  .verse-card:has(.verse-text-2)>.verse-tag,
+  .verse-card:has(.verse-text-2)>.verse-from{grid-column:1/-1}
+  .qg{grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+  .qc{min-height:128px;padding:16px 15px}
+  .kw-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:0;padding:0;overflow:visible}
+  .kw-strip-card{width:auto}
+
+  /* ── فهرست‌ها و نتایج: مصرع‌ها دو ستونی ── */
+  .ri{padding:12px 16px;margin-bottom:8px}
+  .gc-body:has(.gc-line.s2){display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+  .gc-line{font-size:14px}
+  .gc-line.s2{text-align:left}
+  .rh{margin-bottom:12px}
+
+  /* ── خوانش غزل ── */
+  /* جا برای «قبلی» در راست و «اشتراک + بعدی» در چپ */
+  .pmeta{padding:0 130px 14px;margin-bottom:14px}
+  .ptitle{font-size:24px}
+  .pshare{top:2px;transform:none;width:34px;height:34px;border-radius:9px}
+  .pshare:active{transform:scale(.94)}
+  .pnav{position:absolute;top:2px;display:flex;gap:6px}
+  .pnav.r{right:0}
+  .pnav.l{left:42px}
+  .pnav button{border:1px solid var(--br);background:var(--sf);color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:13px;border-radius:9px;padding:7px 13px;cursor:pointer}
+  .pnav button:hover:not(:disabled){border-color:var(--go);color:var(--gd)}
+  .pnav button:disabled{opacity:.35;cursor:default}
+  /* بیت: دو مصرع در یک ردیف، شمارهٔ بیت در راست، کنش‌ها در حاشیهٔ چپ و محو تا هاور.
+     چهار کنش در شبکهٔ ۲×۲ می‌نشینند تا در بیت‌های کوتاه از کادر بیرون نزنند. */
+  .cp{padding:15px 34px 15px 62px}
+  .cp .cpb{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+  .cp .ms.s2{margin-top:0}
+  .cn{top:20px;right:6px;left:auto}
+  .cp .acts{position:absolute;left:2px;top:12px;max-height:none;opacity:.28;overflow:visible;margin-top:0;transition:opacity .15s}
+  .cp:hover .acts,.cp.open .acts{opacity:1;margin-top:0}
+  .cp .ca{display:grid;grid-template-columns:26px 26px;gap:3px;border-top:none}
+  .cp .ca button{flex:none;width:26px;height:26px;padding:0;border-inline-start:none;border-radius:8px}
+  .cp .ca button .cal{display:none}
+  .cp .ca button:hover{background:var(--ik);color:var(--gd)}
+  .cp .nd{margin-inline-end:0}
+  .mood-radar{max-width:340px}
+
+  /* ── کلمات کلیدی ── */
+  .kw-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start}
+  .kw-grid .kw-card{margin-bottom:0}
+  /* viewBox نمودار «۳۶۰×۳۲۰» است؛ بدون سقف، در ستون ۷۲۰ دو برابر بزرگ می‌شد.
+     با max-width برابر عرض viewBox، مقیاس ۱:۱ و همان ظاهر موبایل را می‌گیرد. */
+  svg.graph{max-width:360px}
+  /* طبق طراحی، فیلترها و شمارش بالای نمودار می‌آیند. چون .ct روی دسکتاپ گرید است
+     با order جابه‌جا می‌شوند و ترتیب DOM (و نسخهٔ موبایل) دست‌نخورده می‌ماند. */
+  .kw-filters{order:-2}
+  .kw-count-hint{order:-1}
+  /* روی موبایل این ردیف یک اسکرولر افقی با حاشیهٔ منفی است. داخل ستون ۷۲۰ دسکتاپ
+     هم ۲۸ پیکسل سرریز می‌کرد و هم چون overflow-x:auto مقدار overflow-y را به auto
+     تبدیل می‌کند، ارتفاعش جمع می‌شد و چیپ‌ها بریده می‌شدند. مثل طراحی، ردیف
+     ساده و wrap-شونده می‌شود. */
+  .kw-filters{display:flex;flex-wrap:wrap;gap:7px;overflow:visible;margin:0;padding:0 0 14px}
+
+  /* ── نشان‌ها ── */
+  .bi{padding:12px 16px}
+  .bm2:has(.bm-m2){display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+
+  /* ── حساب ── */
+  .pr-card{padding:24px}
+  .pr-av{width:78px;height:78px;font-size:31px}
+  .pr-name{font-size:22px}
+  .pr-stat-val{font-size:25px}
+
+  /* ── مودال‌ها: به‌جای شیت پایینی، مرکز صفحه ── */
+  /* ── ورود / ثبت‌نام: از صفحهٔ تمام‌قد موبایل به مودال مرکزی ۴۲۴ ── */
+  .auth-bg{background:rgba(26,34,24,.55);backdrop-filter:blur(3px);max-width:none;
+    flex-direction:row;align-items:center;justify-content:center;padding:24px}
+  .auth-screen,.auth-modal{position:relative;flex:0 0 auto;width:424px;max-height:88vh;background:var(--bg);
+    border:1px solid var(--br);border-radius:22px;padding:26px 32px 24px;
+    box-shadow:0 24px 60px rgba(26,34,24,.34)}
+  .dsk-only{display:block !important}
+  .auth-tabs.dsk-only,.auth-otp-cells.dsk-only{display:flex !important}
+  /* سربرگ لوگودار */
+  .auth-head{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:20px}
+  .auth-head-logo{width:66px;height:66px;border-radius:19px;object-fit:cover;
+    box-shadow:0 8px 22px -6px rgba(58,72,48,.28);margin-bottom:14px}
+  .auth-head-title{font-size:23px;font-weight:800;color:var(--gd);letter-spacing:-.01em}
+  .auth-head-sub{font-size:13.5px;color:var(--mu);line-height:1.75;margin-top:7px;max-width:280px}
+  /* در دسکتاپ سربرگ لوگودار جای نوار عنوان را می‌گیرد؛ فقط دکمهٔ بازگشت می‌ماند */
+  #auth-screen-login .auth-topbar{position:absolute;margin:0}
+  #auth-screen-login .auth-topbar-title{display:none}
+  .auth-topbar-back{width:32px;height:32px;border-radius:99px;justify-content:center}
+  .auth-topbar-back:hover{background:var(--ik)}
+  .auth-tabs{border-radius:14px;padding:4px;margin-bottom:20px}
+  .auth-tabs button{padding:11px;border-radius:11px;font-size:14.5px;font-weight:600}
+  .auth-tabs button.on{background:var(--bg)}
+  .auth-form{gap:0;margin-top:0;flex:0 0 auto}
+  .auth-field-label{font-size:13px;color:var(--tx2);margin:0 0 7px;padding-right:2px}
+  .auth-form input{background:var(--sf);border:1.5px solid var(--br);border-radius:14px;
+    padding:14px 15px;font-size:16px;margin-bottom:14px}
+  .auth-form input:focus{border-color:var(--go);background:var(--sf2)}
+  .auth-pw-wrap{margin-bottom:0}
+  .auth-pw-wrap input{margin-bottom:0;padding-left:44px !important}
+  .auth-pw-eye{left:12px}
+  .auth-pw-eye svg{width:21px;height:21px}
+  .auth-forgot-row{justify-content:flex-start;margin:6px 0 12px}
+  .auth-forgot-btn{color:var(--go);font-size:13.5px;font-weight:600}
+  .auth-submit{width:100%;border-radius:14px;padding:15px;font-size:16.5px;min-height:52px}
+  .auth-submit:hover{background:var(--gd)}
+  .auth-ghost{width:100%;background:transparent;color:var(--gd);border:1.5px solid var(--br);
+    border-radius:14px;padding:15px;font-family:"IRANYekanX",sans-serif;font-size:16.5px;
+    font-weight:700;cursor:pointer;min-height:52px;margin-top:10px}
+  .auth-ghost:hover{background:var(--ik)}
+  .auth-err{text-align:right;padding-right:2px}
+  .auth-grow{display:none}
+  /* پنج خانهٔ کد روی input شفاف */
+  .auth-otp-wrap{margin:2px 0 6px}
+  .auth-otp-wrap input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
+  .auth-otp-cells{justify-content:center;gap:11px;direction:ltr;pointer-events:none}
+  .auth-otp-cell{width:56px;height:66px;display:flex;align-items:center;justify-content:center;
+    font-size:28px;font-weight:700;color:var(--tx);background:var(--ik);
+    border:1.5px solid var(--br);border-radius:14px}
+  .auth-otp-cell.active{border-color:var(--go);background:var(--sf2);box-shadow:0 0 0 3px var(--gh)}
+  .auth-timer{margin-top:16px}
+  .auth-welcome-foot,.auth-note{margin-top:16px}
+
+  .ms-bg{align-items:center}
+  .ms-sheet{width:560px;max-width:560px;border-radius:18px;border-top:none;border:1px solid var(--br);max-height:76vh;padding:16px 24px 24px;transform:scale(.96);transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+  .ms-bg.open .ms-sheet{transform:scale(1)}
+}
 </style>
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -738,28 +954,55 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
 <body>
 
 <div class="app">
-  <header class="hd">
-    <button class="hd-back" id="btn-back" aria-label="بازگشت">→</button>
-    <img class="hd-logo" src="/icons/icon-192.png" alt="بیدل" aria-hidden="true">
-    <div class="hd-title">
-      <div class="hd-t1" id="hd-t1">بیدلی</div>
-      <div class="hd-t2 fa" id="hd-t2" style="display:none"></div>
+  <!-- نوار کنارهٔ دسکتاپ — زیر ۱۰۲۴ پیکسل پنهان است و ناوبری با نوار پایین انجام می‌شود -->
+  <aside class="dsb" id="dsb">
+    <div class="dsb-brand" data-dnav="home">
+      <img class="dsb-logo" src="/icons/icon-192.png" alt="بیدل" aria-hidden="true">
+      <div><div class="dsb-name">بیدلی</div><div class="dsb-sub">دیوان بیدل دهلوی</div></div>
     </div>
-    <button class="hd-icon" id="btn-rand" aria-label="غزل تصادفی" title="غزل تصادفی">🎲</button>
-    <button class="hd-avatar guest" id="btn-profile" aria-label="حساب کاربری" title="حساب کاربری">م</button>
-  </header>
+    <div class="dsb-search" id="dsb-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>
+      <span id="dsb-search-tx">جست‌وجو در دیوان…</span>
+    </div>
+    <div class="dsb-nav" id="dsb-nav-user">
+      <div class="dsb-item" data-dnav="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2z"/></svg>خانه</div>
+      <div class="dsb-item" data-dnav="bm"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>نشان‌ها<span class="n fa" id="dsb-n-bm"></span></div>
+    </div>
+    <div class="dsb-group">کاوش</div>
+    <div class="dsb-nav">
+      <div class="dsb-item" data-dnav="ghazals"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg>غزلیات<span class="n fa" id="dsb-n-gh"></span></div>
+      <div class="dsb-item" data-dnav="terjee"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>ترجیع‌بند<span class="n fa" id="dsb-n-tr"></span></div>
+      <div class="dsb-item" data-dnav="zand"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>زَند بیدل</div>
+      <div class="dsb-item" data-dnav="khanesh"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>خوانش‌ها</div>
+      <div class="dsb-item" data-dnav="keywords"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>کلمات کلیدی<span class="n fa" id="dsb-n-kw"></span></div>
+    </div>
+    <div class="dsb-foot" id="dsb-foot"></div>
+  </aside>
 
-  <div class="subnav hide" id="subnav-g">
-    <button id="gp">→ قبلی</button>
-    <button id="gn">بعدی ←</button>
-  </div>
-  <div class="subnav hide" id="subnav-t">
-    <button id="tp">→ قبلی</button>
-    <button id="tallbands">همه بندها</button>
-    <button id="tn">بعدی ←</button>
-  </div>
+  <div class="pane">
+    <header class="hd">
+      <button class="hd-back" id="btn-back" aria-label="بازگشت">→</button>
+      <img class="hd-logo" src="/icons/icon-192.png" alt="بیدل" aria-hidden="true">
+      <div class="hd-title">
+        <div class="hd-t1" id="hd-t1">بیدلی</div>
+        <div class="hd-t2 fa" id="hd-t2" style="display:none"></div>
+      </div>
+      <button class="hd-icon" id="btn-rand" aria-label="غزل تصادفی" title="غزل تصادفی">🎲</button>
+      <button class="hd-avatar guest" id="btn-profile" aria-label="حساب کاربری" title="حساب کاربری">م</button>
+    </header>
 
-  <main class="ct" id="ct"></main>
+    <div class="subnav hide" id="subnav-g">
+      <button id="gp">→ قبلی</button>
+      <button id="gn">بعدی ←</button>
+    </div>
+    <div class="subnav hide" id="subnav-t">
+      <button id="tp">→ قبلی</button>
+      <button id="tallbands">همه بندها</button>
+      <button id="tn">بعدی ←</button>
+    </div>
+
+    <main class="ct" id="ct"></main>
+  </div>
 
   <nav class="bn">
     <button class="bn-item on" data-tab="home">
@@ -850,6 +1093,12 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
       </button>
       <span class="auth-topbar-title">ورود</span>
     </div>
+    <!-- سربرگ لوگودار طراحی دسکتاپ؛ روی موبایل پنهان است -->
+    <div class="auth-head dsk-only">
+      <img class="auth-head-logo" src="/icons/icon-192.png" alt="بیدل" aria-hidden="true">
+      <div class="auth-head-title">ورود</div>
+      <div class="auth-head-sub">برای ذخیرهٔ نشان‌ها و یادداشت‌ها وارد شوید.</div>
+    </div>
     <div class="auth-tabs">
       <button id="auth-tab-pw" class="on">رمز عبور</button>
       <button id="auth-tab-otp">کد یکبارمصرف</button>
@@ -870,6 +1119,8 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
       </div>
       <div class="auth-err" id="auth-login-err"></div>
       <button class="auth-submit" id="auth-login-btn">ورود</button>
+      <!-- جایگزین صفحهٔ خوش‌آمد روی دسکتاپ -->
+      <button class="auth-ghost dsk-only" id="auth-goto-register-2">ساخت حساب کاربری</button>
     </div>
     <!-- تب OTP ورود -->
     <div id="auth-login-otp-form" class="auth-form" style="display:none">
@@ -881,6 +1132,7 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
       <input type="tel" id="auth-login-phone" placeholder="09xxxxxxxxx" dir="rtl" inputmode="numeric">
       <div class="auth-err" id="auth-login-otp-err"></div>
       <button class="auth-submit" id="auth-login-otp-btn">ارسال کد</button>
+      <button class="auth-ghost dsk-only" id="auth-goto-register-3">ساخت حساب کاربری</button>
     </div>
   </div>
 
@@ -956,7 +1208,13 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
     </div>
     <div class="auth-sub fa" id="auth-otp-desc" style="text-align:center;font-size:14px;line-height:1.7;margin-bottom:16px"></div>
     <div class="auth-form">
-      <input type="text" id="auth-otp-input" placeholder="·····" dir="ltr" inputmode="numeric" maxlength="5" autocomplete="one-time-code">
+      <!-- روی دسکتاپ پنج خانه روی همین input می‌نشیند؛ منطق فرم دست‌نخورده می‌ماند -->
+      <div class="auth-otp-wrap">
+        <input type="text" id="auth-otp-input" placeholder="·····" dir="ltr" inputmode="numeric" maxlength="5" autocomplete="one-time-code">
+        <div class="auth-otp-cells dsk-only" id="auth-otp-cells" aria-hidden="true">
+          <span class="auth-otp-cell"></span><span class="auth-otp-cell"></span><span class="auth-otp-cell"></span><span class="auth-otp-cell"></span><span class="auth-otp-cell"></span>
+        </div>
+      </div>
       <div class="auth-err" id="auth-otp-err"></div>
       <div id="auth-otp-timer" class="auth-timer"></div>
       <div style="text-align:center">
@@ -1249,11 +1507,18 @@ let _authOtpCtx = { purpose: 'register', phone: '' };
 let _authOtpToken = null;
 let _authTimerInterval = null;
 let _authTimerLeft = 120;
+let _authPaintOtpCells = null;   // در بخش رویدادها مقداردهی می‌شود
 
-function showAuthModal(pending) {
+// روی دسکتاپ مودال مستقیم روی فرم ورود باز می‌شود (طراحی دسکتاپ صفحهٔ خوش‌آمد ندارد)؛
+// روی موبایل مثل قبل از صفحهٔ خوش‌آمد شروع می‌کند.
+function _isDesktop(){ return window.matchMedia('(min-width:1024px)').matches; }
+// screen: صفحهٔ آغازین دلخواه. اگر داده نشود، دسکتاپ روی «ورود» و موبایل روی «خوش‌آمد» باز می‌شود.
+function showAuthModal(pending, screen) {
   if (pending) _pendingAction = pending;
   document.getElementById('auth-modal-bg').classList.add('open');
-  _authGoScreen('welcome');
+  const target = screen || (_isDesktop() ? 'login' : 'welcome');
+  _authGoScreen(target);
+  if (target === 'login') _authSwitchLoginTab('pw');
 }
 function hideAuthModal() {
   document.getElementById('auth-modal-bg').classList.remove('open');
@@ -1283,8 +1548,25 @@ async function _loadUser() {
   } catch(e) {}
   await loadUserData();
 }
+// پس از ورود موفق: ذخیره توکن، خواندن پروفایل، بارگیری نشان‌ها و یادداشت‌ها
+async function _authFinish(accessToken) {
+  setToken(accessToken);
+  try {
+    const meR = await fetch(API_URL + '/auth/me', { headers: { 'Authorization': 'Bearer ' + accessToken } });
+    if (meR.ok) { const u = await meR.json(); _saveUser({username:u.username, email:u.email||'', phone:u.phone||''}); }
+  } catch(e) {}
+  hideAuthModal();
+  await loadUserData();
+  const a = _pendingAction; _pendingAction = null;
+  handlePendingAction(a);
+}
 function handlePendingAction(a) {
-  if (!a) { if (curView === 'profile') showProfile(); return; }
+  if (!a) {
+    if (curView === 'profile') showProfile();
+    else if (curView === 'gh') showG(cg);
+    else if (curView === 'tr') showT(ct);
+    return;
+  }
   if (a.type === 'bm') { toggleBm(a.tp, a.id, a.ci); return; }
   if (a.type === 'note') {
     const k = bkey(a.tp, a.id, a.ci);
@@ -1312,6 +1594,7 @@ function setNavHidden(hidden){
 }
 function refreshNav(){
   document.querySelector('.bn').classList.toggle('hide', !_user);
+  syncSidebar();
 }
 
 async function loadUserData(){
@@ -1380,6 +1663,7 @@ function setHeader(t1, t2){
   hdT1.textContent = t1;
   hdT2.textContent = t2 || '';
   hdT2.style.display = t2 ? 'block' : 'none';
+  syncSidebar();   // برخی نماها (مثل showG) setBnActive صدا نمی‌زنند
 }
 function setBack(show){ btnBack.classList.toggle('show', !!show); }
 function hideSubnavs(){ subnavG.classList.add('hide'); subnavT.classList.add('hide'); }
@@ -1388,7 +1672,72 @@ function setBnActive(tab){
   document.querySelectorAll('.bn-item').forEach(b=>{
     b.classList.toggle('on', b.dataset.tab===tab);
   });
+  syncSidebar();
 }
+
+// ─── DESKTOP SIDEBAR ─────────────────────
+// نوار کناره فقط بالای ۱۰۲۴ پیکسل دیده می‌شود؛ همان مسیرهای نوار پایین را می‌زند.
+const DSB_ROUTES={home:'/',bm:'/bookmarks',profile:'/profile',ghazals:'/ghazals',terjee:'/terjee',zand:'/zand',khanesh:'/khanesh',keywords:'/keywords'};
+// کدام آیتم نوار کناره برای نمای فعلی روشن باشد
+function _dsbActiveKey(){
+  switch(curView){
+    case 'home': return 'home';
+    case 'bm': return 'bm';
+    case 'profile': case 'history': return 'profile';
+    case 'gh': return 'ghazals';
+    case 'tr': return 'terjee';
+    case 'zsec': return 'zand';
+    case 'kw': case 'kwd': return 'keywords';
+    case 'khlist': case 'khd': return 'khanesh';
+    case 'browse': return browseSub==='t'?'terjee':browseSub==='z'?'zand':'ghazals';
+    default: return null;   // جست‌وجو: هیچ آیتمی روشن نیست، کادر جست‌وجو نشان داده می‌شود
+  }
+}
+function syncSidebar(){
+  const active=_dsbActiveKey();
+  // نمای فعلی روی .app تا CSS بتواند به صفحه‌ها واکنش نشان دهد (مثلاً پنهان‌کردن عنوان تکراری در خانه)
+  document.querySelector('.app').dataset.view=curView;
+  document.querySelectorAll('.dsb-item').forEach(el=>{
+    el.classList.toggle('on', el.dataset.dnav===active);
+  });
+  // آیتم‌های نیازمند ورود در حالت مهمان پنهان می‌شوند
+  document.getElementById('dsb-nav-user').classList.toggle('hide', !_user);
+  const q=_lastSrch&&_lastSrch.query;
+  const searchEl=document.getElementById('dsb-search');
+  searchEl.classList.toggle('has-q', !!(q&&curView==='srch'));
+  document.getElementById('dsb-search-tx').textContent=(q&&curView==='srch')?q:'جست‌وجو در دیوان…';
+  document.getElementById('dsb-n-bm').textContent=_user?toFa(Object.keys(_bms).length):'';
+  document.getElementById('dsb-n-gh').textContent=toFa(TOT);
+  document.getElementById('dsb-n-tr').textContent=toFa(TB);
+  document.getElementById('dsb-n-kw').textContent=_allKeywords.length?toFa(_allKeywords.length):'';
+  // پانویس فقط وقتی کاربر عوض شده بازسازی می‌شود (syncSidebar در هر ناوبری صدا زده می‌شود)
+  const foot=document.getElementById('dsb-foot');
+  const stamp=_user?('u:'+(_user.username||_user.phone||'')):'guest';
+  if(foot.dataset.stamp!==stamp){
+    foot.dataset.stamp=stamp;
+    if(_user){
+      foot.className='dsb-foot';
+      const initial=(_user.username||_user.phone||'?').trim().charAt(0).toUpperCase();
+      foot.innerHTML='<div class="dsb-av">'+initial+'</div><div><div class="dsb-foot-t1">'
+        +(_user.username||'کاربر')+'</div><div class="dsb-foot-t2">حساب کاربری</div></div>'
+        +'<span class="dsb-foot-chev">›</span>';
+      foot.dataset.dnav='profile';
+    } else {
+      delete foot.dataset.dnav;
+      foot.className='dsb-foot guest';
+      foot.innerHTML='<div class="dsb-foot-msg">برای ذخیرهٔ نشان‌ها و یادداشت‌ها وارد شوید.</div>'
+        +'<button class="dsb-login" id="dsb-login">ورود / ثبت‌نام</button>';
+    }
+  }
+  // حالت فعال پانویس بیرون از گارد بالاست، چون به نمای جاری بستگی دارد نه به کاربر
+  foot.classList.toggle('on', !!_user && active==='profile');
+}
+document.getElementById('dsb').addEventListener('click', e=>{
+  if(e.target.closest('#dsb-login')){ showAuthModal(null,'login'); return; }
+  if(e.target.closest('#dsb-search')){ navigate('/search'); return; }
+  const item=e.target.closest('[data-dnav]');
+  if(item) navigate(DSB_ROUTES[item.dataset.dnav]);
+});
 
 // ─── HIGHLIGHT ───────────────────────────
 function hl(txt,kw){
@@ -1755,6 +2104,12 @@ function mkCp(m1,m2,key,isBm,note,type,kw,ci){
   return h;
 }
 
+// دکمه‌های قبلی/بعدی داخل .pmeta — فقط روی دسکتاپ دیده می‌شوند (روی موبایل نوار subnav این کار را می‌کند)
+function _pnavHTML(base, n, total){
+  return '<div class="pnav r"><button data-pnav="'+base+(n-1)+'"'+(n<=1?' disabled':'')+'>→ قبلی</button></div>'
+       + '<div class="pnav l"><button data-pnav="'+base+(n+1)+'"'+(n>=total?' disabled':'')+'>بعدی ←</button></div>';
+}
+
 // ─── GHAZAL ──────────────────────────────
 async function showG(n,kw){
   cg=n;
@@ -1772,7 +2127,7 @@ async function showG(n,kw){
   setMeta('غزل '+toPersianNum(n)+' — '+((_c0[0]||'').slice(0,30)), (_c0[0]||'')+(_c0[1]?'\n'+_c0[1]:''));
   const IC_SHARE_BTN='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
   let h='<div class="pm">';
-  h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل">'+IC_SHARE_BTN+'</button><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div>'+(p.vazn?'<div class="pvazn fa">وزن: '+p.vazn+'</div>':'')+'<div class="pview" id="ghazal-view-info"></div></div>';
+  h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل">'+IC_SHARE_BTN+'</button>'+_pnavHTML('/ghazal/',n,TOT)+'<div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div>'+(p.vazn?'<div class="pvazn fa">وزن: '+p.vazn+'</div>':'')+'<div class="pview" id="ghazal-view-info"></div></div>';
   h+='<div class="ghazal-kw-row" id="ghazal-keywords"><span class="gkw-lab fa">واژگان کلیدی</span></div>';
   const ghazalKwWords=resolveGhazalKeywords(n,p);
   const ghazalKwObjs=ghazalKwWords.map(w=>kwBy(w)).filter(Boolean);
@@ -1844,7 +2199,7 @@ async function showT(n,kw){
   setHeader('بند '+toFa(n), 'ترجیع‌بند حیرت · '+toFa(band.couplets.length)+' بیت');
   setMeta('ترجیع‌بند '+toPersianNum(n), 'ترجیع‌بند شماره '+toPersianNum(n)+' از دیوان بیدل دهلوی');
   const IC_SHARE_BTN2='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
-  let h='<div class="pm"><div class="pmeta"><button class="pshare" data-pshare="t_'+n+'" aria-label="اشتراکِ بند">'+IC_SHARE_BTN2+'</button><div class="pnum fa">ترجیع‌بند حیرت</div><div class="ptitle">بند '+toFa(n)+'</div><div class="psub fa">از '+toFa(TB)+' بند</div></div>';
+  let h='<div class="pm"><div class="pmeta"><button class="pshare" data-pshare="t_'+n+'" aria-label="اشتراکِ بند">'+IC_SHARE_BTN2+'</button>'+_pnavHTML('/terjee/',n,TB)+'<div class="pnum fa">ترجیع‌بند حیرت</div><div class="ptitle">بند '+toFa(n)+'</div><div class="psub fa">از '+toFa(TB)+' بند</div></div>';
   band.couplets.forEach(([m1,m2],ci)=>{
     const key=bkey('t',n,ci);
     h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','t',kw||'',ci);
@@ -1915,6 +2270,7 @@ function renderKeywordList(){
   if(!list.length){
     h += '<div class="nr2">در این دسته واژه‌ای نیست</div>';
   } else {
+    h += '<div class="kw-grid">';   // روی دسکتاپ دو ستونی می‌شود
     for(const k of list){
       const word = k.word||'';
       const cnt = k.count||0;
@@ -1929,6 +2285,7 @@ function renderKeywordList(){
       }
       h += '</div>';
     }
+    h += '</div>';
   }
   ctEl.innerHTML=h; ctEl.scrollTop=0;
   _graphOpen=null;
@@ -2172,20 +2529,23 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.08.30</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.02</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
+  _loadReadStat();
 }
+
 // لود تعداد غزل‌های خوانده‌شده
+function _loadReadStat(){
   const token=getToken();
-  if(token){
-    fetch(API_URL+'/history/ghazals',{headers:{'Authorization':'Bearer '+token}})
-      .then(r=>r.ok?r.json():null)
-      .then(data=>{
-        const el=document.getElementById('pr-stat-read');
-        if(el&&data) el.querySelector('.pr-stat-val').textContent=toFa(data.length);
-      }).catch(()=>{});
-  }
+  if(!token) return;
+  fetch(API_URL+'/history/ghazals',{headers:{'Authorization':'Bearer '+token}})
+    .then(r=>r.ok?r.json():null)
+    .then(data=>{
+      const el=document.getElementById('pr-stat-read');
+      if(el&&data) el.querySelector('.pr-stat-val').textContent=toFa(data.length);
+    }).catch(()=>{});
+}
 
 async function showHistory(){
   curView='history'; setBack(true); hideSubnavs(); setNavHidden(false);
@@ -2281,7 +2641,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.08.30</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.02</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -2325,7 +2685,7 @@ function _prRow(act,t1,t2,svg,extra){
   return '<button class="pr-row" data-pract="'+act+'">'
     +'<span class="pr-row-ic '+(extra||'')+'">'+svg+'</span>'
     +'<span class="pr-row-tx"><span class="pr-row-t1">'+t1+'</span><span class="pr-row-t2 fa">'+t2+'</span></span>'
-    +'<span class="pr-row-chev">‹</span>'
+    +'<span class="pr-row-chev"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span>'
     +'</button>';
 }
 
@@ -2377,15 +2737,19 @@ function showConfirm(){document.getElementById('cf-bg').classList.add('open')}
 function hideConfirm(){document.getElementById('cf-bg').classList.remove('open')}
 
 // ─── SEARCH ──────────────────────────────
-let _lastSrch=null; // {query, html} of the last completed search, restored after back-navigation
-function showSearch(){
+let _lastSrch=null; // {query, html, scroll} of the last completed search, restored after back-navigation
+// موقعیت اسکرول نتایج را نگه می‌داریم تا هنگام بازگشت به همان نقطه برگردیم
+ctEl.addEventListener('scroll', ()=>{
+  if(curView==='srch' && _lastSrch) _lastSrch.scroll = ctEl.scrollTop;
+}, {passive:true});
+function showSearch(restore){
   curTab='srch'; curView='srch'; backStack=[];
   setBnActive('srch'); setBack(true); hideSubnavs(); setNavHidden(false);
   setHeader('جستجو در دیوان', 'شماره غزل، یا واژه');
   const suggest = ['دل','آینه','حیرت','گل','شکست','جان'];
   const hist = getSrchHistory();
   let h = '<div class="search-screen">';
-  h += '<div class="search-input-wrap"><span class="search-icon">🔍</span><input type="search" id="srch-input" placeholder="مثلاً: ۲۳۴ یا «حیرت»…" autocomplete="off"></div>';
+  h += '<div class="search-input-wrap"><span class="search-icon">🔍</span><input type="search" id="srch-input" placeholder="مثلاً: ۲۳۴ یا «حیرت»…" autocomplete="off"><button type="button" class="search-clear" id="srch-clear" aria-label="پاک کردن جست‌وجو">✕</button></div>';
   h += '<div class="search-hints"><div class="search-hint fa">با عدد فارسی یا انگلیسی به <b>غزل</b> یا <b>بند</b> برو، یا کلمه‌ای را جستجو کن.</div></div>';
   if(hist.length){
     h += '<div class="search-suggest-h fa" style="display:flex;align-items:center;justify-content:space-between">';
@@ -2408,10 +2772,33 @@ function showSearch(){
     const resultsEl = document.getElementById('srch-results');
     if(resultsEl) resultsEl.innerHTML = _lastSrch.html;
     if(_lastSrch.query) loadNeighbors(_lastSrch.query, 'g');
+    // بعد از جاگذاری نتایج و بخش همسایه‌ها، به موقعیت قبلی برمی‌گردیم
+    // (scroll-behavior موقتاً auto می‌شود تا به‌جای انیمیشن، بلافاصله بپرد)
+    if(restore && _lastSrch.scroll){
+      const y = _lastSrch.scroll;
+      ctEl.style.scrollBehavior = 'auto';
+      ctEl.scrollTop = y;
+      requestAnimationFrame(()=>{ ctEl.style.scrollBehavior = ''; });
+    }
   } else {
     inp.focus();
   }
   inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doSrch(); } });
+
+  // ضربدر پاک‌کردن: با نوشتن ظاهر و با خالی‌شدن پنهان می‌شود
+  const clearBtn = document.getElementById('srch-clear');
+  const syncClear = ()=>clearBtn.classList.toggle('show', !!inp.value);
+  inp.addEventListener('input', syncClear);
+  clearBtn.addEventListener('click', ()=>{
+    inp.value = '';
+    syncClear();
+    const resultsEl = document.getElementById('srch-results');
+    if(resultsEl) resultsEl.innerHTML = '';
+    _lastSrch = null;          // نتیجه و موقعیت اسکرول ذخیره‌شده هم آزاد می‌شود
+    syncSidebar();             // کادر جست‌وجوی نوار کناره به حالت پیش‌فرض برگردد
+    inp.focus();
+  });
+  syncClear();                 // هنگام بازگشت به جست‌وجوی قبلی، ضربدر باید از همان اول باشد
 }
 
 async function doSrch(){
@@ -2438,12 +2825,14 @@ async function doSrch(){
   const exactKw = allKw.filter(k=>k.word===kw);
   const partialKw = allKw.filter(k=>k.word!==kw && (k.word.indexOf(kw)!==-1 || kw.indexOf(k.word)!==-1));
   const kwMatches = [...exactKw, ...partialKw].slice(0,3);
-  const [rg,rt,rz]=await Promise.all([
+  const [rg,rt,rz,rkh]=await Promise.all([
     apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=g'),
     apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=t'),
     apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=z'),
+    apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=kh'),
   ]);
   const rgX = rg||{results:[]}, rtX = rt||{results:[]}, rzX = rz||{results:[]};
+  const khs = (rkh&&rkh.results)||[];   // اگر بک‌اند قدیمی باشد، خالی می‌ماند
   const ms=[];
   for(const r of (rgX.results||[])){
     const c=r.matches[0]?.couplet||['',''];
@@ -2456,8 +2845,10 @@ async function doSrch(){
   for(const r of (rzX.results||[])){
     ms.push({tp:'z',n:r.number,ti2:r.title,snippet:r.snippet||''});
   }
-  if(!ms.length && !kwMatches.length){resultsEl.innerHTML='<div class="nr2">«'+kw+'» یافت نشد</div>';_lastSrch={query:raw, html:resultsEl.innerHTML};return}
-  let h='<div class="rh fa">'+toFa(ms.length)+' نتیجه برای «'+kw+'»'+(kwMatches.length?' · '+toFa(kwMatches.length)+' واژه':'')+'</div>';
+  if(!ms.length && !kwMatches.length && !khs.length){resultsEl.innerHTML='<div class="nr2">«'+kw+'» یافت نشد</div>';_lastSrch={query:raw, html:resultsEl.innerHTML};return}
+  let h='<div class="rh fa">'+toFa(ms.length)+' نتیجه برای «'+kw+'»'
+    +(kwMatches.length?' · '+toFa(kwMatches.length)+' واژه':'')
+    +(khs.length?' · '+toFa(khs.length)+' خوانش':'')+'</div>';
   for(const k of kwMatches){
     const numGh = Math.round((k.count||0)/4.27);
     const meanShort = (k.meaning||'').length>70 ? (k.meaning||'').slice(0,70)+'…' : (k.meaning||'');
@@ -2465,6 +2856,21 @@ async function doSrch(){
     h += '<div class="rt fa">واژه · '+getCategoryLabel(k.category||'سایر')+'</div>';
     h += '<div class="rti-row"><span class="rti">'+hl(k.word||'',kw)+'</span><span class="rti-count fa">'+toFa(k.count||0)+' بار · '+toFa(numGh)+' غزل</span></div>';
     h += '<div class="rp">'+meanShort+'</div></div>';
+  }
+  // خوانش‌های مرتبط — همان کارت صفحهٔ خوانش‌ها، پس کلیکش با هندلر موجود کار می‌کند
+  if(khs.length){
+    h += '<div class="srch-sec-h fa">خوانش‌های مرتبط</div>';
+    h += '<div class="kh-list srch-kh">';
+    for(const k of khs){
+      h += '<div class="kh-card" data-slug="'+k.slug+'">';
+      h += '<div class="kh-card-top"><span class="kh-band fa">ترجیع‌بند · بند '+toFa(k.terjee_number)+'</span><span class="kh-date fa">'+toFaPubDate(k.published_at)+'</span></div>';
+      h += '<div class="kh-title">'+hl(k.title||'',kw)+'</div>';
+      h += '<div class="kh-by">'+IC_PEN+'<span>به خوانشِ <b>'+(k.instructor||'')+'</b></span></div>';
+      if(k.snippet) h += '<div class="kh-snippet fa">'+hl(k.snippet,kw)+'</div>';
+      if(k.tags&&k.tags.length) h += '<div class="kh-tags">'+k.tags.map(t=>'<span class="kh-tag">'+hl(t,kw)+'</span>').join('')+'</div>';
+      h += '</div>';
+    }
+    h += '</div>';
   }
   for(const m of ms){
     if(m.tp==='t'){
@@ -2477,6 +2883,7 @@ async function doSrch(){
   }
   resultsEl.innerHTML = h;
   _lastSrch={query:raw, html:h};
+  syncSidebar();   // کادر جست‌وجوی نوار کناره عبارت فعلی را نشان دهد
   loadNeighbors(kw, 'g');
 }
 
@@ -2726,6 +3133,9 @@ function renderGraphOpen(data){
 
 // ─── EVENT DELEGATION ────────────────────
 ctEl.addEventListener('click', function(e){
+  // قبلی/بعدی دسکتاپ داخل سربرگ شعر
+  const pnavBtn=e.target.closest('[data-pnav]');
+  if(pnavBtn){ if(!pnavBtn.disabled) navigate(pnavBtn.dataset.pnav); return; }
   // Mood card: axis labels, bar rows, dominant chip → open sheet
   const moodEl=e.target.closest('#mood-card [data-mood]');
   if(moodEl){ openMoodSheet(moodEl.dataset.mood); return; }
@@ -3082,7 +3492,7 @@ btnBack.addEventListener('click', ()=>{
 // ─── PROFILE BUTTON ──────────────────────
 document.getElementById('btn-profile').addEventListener('click', ()=>{
   if(_user){ navigate('/profile'); }
-  else { _authGoScreen('login'); _authSwitchLoginTab('pw'); showAuthModal(); }
+  else { showAuthModal(null,'login'); }
 });
 
 // ─── LOGOUT CONFIRM ──────────────────────
@@ -3218,6 +3628,7 @@ function _authShowOtpScreen(purpose,phone){
   prog.style.display=(purpose==='register'||purpose==='reset')?'flex':'none';
   document.getElementById('auth-otp-desc').textContent='کد ۵ رقمی به شمارهٔ '+_toFa(phone)+' پیامک شد.';
   document.getElementById('auth-otp-input').value='';
+  if(_authPaintOtpCells) _authPaintOtpCells();
   _authGoScreen('otp');
   _authStartTimer(120);
 }
@@ -3233,10 +3644,32 @@ async function _authSendOtp(purpose,phone){
 // ── Auth modal events ──
 document.getElementById('auth-goto-login').addEventListener('click',()=>{_authGoScreen('login');_authSwitchLoginTab('pw');});
 document.getElementById('auth-goto-register').addEventListener('click',()=>_authGoScreen('register'));
+document.getElementById('auth-goto-register-2').addEventListener('click',()=>_authGoScreen('register'));
+document.getElementById('auth-goto-register-3').addEventListener('click',()=>_authGoScreen('register'));
+// بازتاب رقم‌های کد در پنج خانهٔ دسکتاپ
+(function(){
+  const inp=document.getElementById('auth-otp-input');
+  const cells=[...document.querySelectorAll('#auth-otp-cells .auth-otp-cell')];
+  const paint=()=>{
+    const v=(inp.value||'').replace(/\D/g,'');
+    cells.forEach((c,i)=>{
+      c.textContent=v[i]||'';
+      c.classList.toggle('active', i===Math.min(v.length,4) && document.activeElement===inp);
+    });
+  };
+  inp.addEventListener('input',paint);
+  inp.addEventListener('focus',paint);
+  inp.addEventListener('blur',paint);
+  document.getElementById('auth-otp-cells').addEventListener('click',()=>inp.focus());
+  _authPaintOtpCells=paint;
+})();
 document.getElementById('auth-tab-pw').addEventListener('click',()=>_authSwitchLoginTab('pw'));
 document.getElementById('auth-tab-otp').addEventListener('click',()=>_authSwitchLoginTab('otp'));
 document.getElementById('auth-goto-forgot').addEventListener('click',()=>_authGoScreen('forgot'));
-document.getElementById('auth-back-login').addEventListener('click',()=>_authGoScreen('welcome'));
+// روی دسکتاپ صفحهٔ خوش‌آمد وجود ندارد، پس بازگشت از فرم ورود یعنی بستن مودال
+document.getElementById('auth-back-login').addEventListener('click',()=>{
+  if(_isDesktop()) hideAuthModal(); else _authGoScreen('welcome');
+});
 document.getElementById('auth-login-pw-eye').addEventListener('click',()=>{
   const inp=document.getElementById('auth-login-password');
   const icon=document.getElementById('auth-login-pw-icon');
@@ -3248,7 +3681,10 @@ document.getElementById('auth-login-pw-eye').addEventListener('click',()=>{
     icon.innerHTML='<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>';
   }
 });
-document.getElementById('auth-back-register').addEventListener('click',()=>_authGoScreen('welcome'));
+document.getElementById('auth-back-register').addEventListener('click',()=>{
+  if(_isDesktop()){ _authGoScreen('login'); _authSwitchLoginTab('pw'); }
+  else _authGoScreen('welcome');
+});
 document.getElementById('auth-reg-pw-eye').addEventListener('click',()=>{
   const inp=document.getElementById('auth-reg-password');
   const icon=document.getElementById('auth-reg-pw-icon');
@@ -3297,11 +3733,7 @@ document.getElementById('auth-login-btn').addEventListener('click',async()=>{
     const resp=await fetch(API_URL+'/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({login_id:loginId,password})});
     const d=await resp.json().catch(()=>({}));
     if(!resp.ok){errEl.textContent=d.detail||'خطا در ورود';return;}
-    setToken(d.access_token);
-    const meR=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+d.access_token}});
-    if(meR.ok){const u=await meR.json();_saveUser({username:u.username,email:u.email||'',phone:u.phone||''});}
-    hideAuthModal();
-    if(_pendingAction){const a=_pendingAction;_pendingAction=null;handlePendingAction(a);}
+    await _authFinish(d.access_token);
   }catch{errEl.textContent='خطای شبکه';}
   finally{btn.disabled=false;btn.textContent='ورود';}
 });
@@ -3361,11 +3793,7 @@ document.getElementById('auth-otp-btn').addEventListener('click',async()=>{
       const resp=await fetch(API_URL+'/auth/login-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:_authOtpCtx.phone,code,purpose:'login'})});
       const d=await resp.json().catch(()=>({}));
       if(!resp.ok){errEl.textContent=d.detail||'کد اشتباه است';return;}
-      setToken(d.access_token);
-      const meR=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+d.access_token}});
-      if(meR.ok){const u=await meR.json();_saveUser({username:u.username,email:u.email||'',phone:u.phone||''});}
-      hideAuthModal();
-      if(_pendingAction){const a=_pendingAction;_pendingAction=null;handlePendingAction(a);}
+      await _authFinish(d.access_token);
       return;
     }
     const resp=await fetch(API_URL+'/auth/verify-otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:_authOtpCtx.phone,code,purpose:_authOtpCtx.purpose})});
@@ -3380,11 +3808,7 @@ document.getElementById('auth-otp-btn').addEventListener('click',async()=>{
       const r2=await fetch(API_URL+'/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,username:name,phone:_authOtpCtx.phone,password,otp_token:_authOtpToken})});
       const d2=await r2.json().catch(()=>({}));
       if(!r2.ok){errEl.textContent=d2.detail||'خطا در ثبت‌نام';return;}
-      setToken(d2.access_token);
-      const meR=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+d2.access_token}});
-      if(meR.ok){const u=await meR.json();_saveUser({username:u.username,email:u.email||'',phone:u.phone||''});}
-      hideAuthModal();
-      if(_pendingAction){const a=_pendingAction;_pendingAction=null;handlePendingAction(a);}
+      await _authFinish(d2.access_token);
     }
   }catch{errEl.textContent='خطای شبکه';}
   finally{btn.disabled=false;btn.textContent='تأیید';}
@@ -3412,18 +3836,15 @@ document.getElementById('auth-reset-btn').addEventListener('click',async()=>{
     const resp=await fetch(API_URL+'/auth/reset-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:_authOtpCtx.phone,new_password:pw1,otp_token:_authOtpToken})});
     const d=await resp.json().catch(()=>({}));
     if(!resp.ok){errEl.textContent=d.detail||'خطا';return;}
-    setToken(d.access_token);
-    const meR=await fetch(API_URL+'/auth/me',{headers:{'Authorization':'Bearer '+d.access_token}});
-    if(meR.ok){const u=await meR.json();_saveUser({username:u.username,email:u.email||'',phone:u.phone||''});}
-    hideAuthModal();
+    await _authFinish(d.access_token);
   }catch{errEl.textContent='خطای شبکه';}
   finally{btn.disabled=false;btn.textContent='ثبت رمز و ورود';}
 });
 
 // guest buttons در پروفایل
 document.addEventListener('click',e=>{
-  if(e.target.closest('#pr-guest-login')){_authGoScreen('login');_authSwitchLoginTab('pw');showAuthModal();return;}
-  if(e.target.closest('#pr-guest-reg')){_authGoScreen('register');showAuthModal();return;}
+  if(e.target.closest('#pr-guest-login')){showAuthModal(null,'login');return;}
+  if(e.target.closest('#pr-guest-reg')){showAuthModal(null,'register');return;}
 });
 
 // ─── TWEAKS PANEL ────────────────────────
@@ -3544,7 +3965,8 @@ function navigate(path){
   history.pushState({}, '', path);
   handleRoute(path);
 }
-function handleRoute(path){
+// restore=true یعنی این پیمایش با دکمهٔ بازگشت انجام شده و باید وضعیت قبلی نما بازیابی شود
+function handleRoute(path, restore){
   const mg = path.match(/^\/ghazal\/(\d+)$/);
   if(mg){ showG(parseInt(mg[1])); return; }
   const mt = path.match(/^\/terjee\/(\d+)$/);
@@ -3558,7 +3980,7 @@ function handleRoute(path){
     showKeyword(decodeURIComponent(path.slice(10))); return;
   }
   if(path === '/keywords'){ showKeywords(); return; }
-  if(path === '/search'){ showSearch(); return; }
+  if(path === '/search'){ showSearch(restore); return; }
   if(path === '/bookmarks'){ showBm(); return; }
   if(path === '/profile'){ showProfile(); return; }
   if(path === '/khanesh'){ showKhaneshList(true); return; }
@@ -3570,7 +3992,7 @@ window.addEventListener('popstate', e=>{
   const st = e.state || {};
   if(st.view==='khlist'){ showKhaneshList(true); return; }
   if(st.view==='khd' && st.slug){ showKhanesh(st.slug, st.from||'list', true); return; }
-  handleRoute(location.pathname);
+  handleRoute(location.pathname, true);
 });
 
 // ─── BOOT ────────────────────────────────

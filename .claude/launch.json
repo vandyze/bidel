@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "frontend",
+      "autoPort": true,
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "exec python3 -m http.server \"$PORT\" --bind 127.0.0.1 --directory frontend"]
+    },
+    {
+      "name": "backend",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd backend && exec venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000"],
+      "port": 8000
+    }
+  ]
+}

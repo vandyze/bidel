@@ -1,4 +1,5 @@
 import asyncio
+import html as html_lib
 import os
 import random
 import re
@@ -713,10 +714,31 @@ def get_terjee(number: int, db: Session = Depends(get_db)):
     return {"number": band.number, "couplets": band.couplets}
 
 
+_HTML_TAG_RE = re.compile(r"<[^>]+>")
+
+
+def _plain_text(source: str) -> str:
+    """متن خالص از محتوای HTML خوانش‌ها، برای جست‌وجو و ساخت snippet."""
+    text = _HTML_TAG_RE.sub(" ", source or "")
+    text = html_lib.unescape(text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _snippet_around(text: str, q: str, idx: int, pad: int = 40) -> str:
+    start = max(0, idx - pad)
+    end = min(len(text), idx + len(q) + pad)
+    out = text[start:end]
+    if start > 0:
+        out = "…" + out
+    if end < len(text):
+        out = out + "…"
+    return out
+
+
 @app.get("/poems/search")
 def search_poems(
     q: str = Query(..., min_length=2),
-    type: str = Query("g", pattern="^(g|t|z)$"),
+    type: str = Query("g", pattern="^(g|t|z|kh)$"),
     db: Session = Depends(get_db),
 ):
     results = []
@@ -749,6 +771,37 @@ def search_poems(
                     "number": band.number,
                     "matches": matched,
                 })
+    elif type == "kh":
+        # خوانش‌ها: عنوان، برچسب‌ها و متن مقاله. محتوا HTML است، پس روی متن خالص جست‌وجو می‌شود.
+        items = (
+            db.query(models.Khanesh)
+            .order_by(models.Khanesh.published_at.desc().nullslast(), models.Khanesh.created_at.desc())
+            .all()
+        )
+        for k in items:
+            plain = _plain_text(k.content)
+            title = k.title or ""
+            tags = k.tags or []
+            idx = plain.find(q)
+            in_title = q in title
+            in_tags = any(q in str(t) for t in tags)
+            if idx == -1 and not in_title and not in_tags:
+                continue
+            if idx != -1:
+                snippet = _snippet_around(plain, q, idx)
+            else:
+                snippet = plain[:90] + ("…" if len(plain) > 90 else "")
+            results.append({
+                "type": "kh",
+                "slug": k.slug,
+                "title": title,
+                "terjee_number": k.terjee_number,
+                "instructor": k.instructor,
+                "tags": tags,
+                "snippet": snippet,
+                "count": plain.count(q),
+                "published_at": k.published_at.isoformat() if k.published_at else None,
+            })
     else:
         sections = db.query(models.Zand).filter(models.Zand.content.isnot(None)).all()
         for section in sections:
