@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BACKEND_PORT=8000
-FRONTEND_PORT=3000
+FRONTEND_PORT=3001
 
 # پیدا کردن IP محلی
 LOCAL_IP=$(hostname -I | awk '{print $1}')

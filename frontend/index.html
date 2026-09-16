@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260903_010258">
+<meta name="deploy-version" content="20260917_022903">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -872,6 +872,7 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
   .dsb-nav{display:flex;flex-direction:column;gap:3px;margin-bottom:20px}
   .dsb-nav.hide{display:none}
   .dsb-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;color:var(--mu);font-size:15px;cursor:pointer;transition:background .15s,color .15s}
+  .dsb-item.hide{display:none}
   .dsb-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.6;flex-shrink:0}
   .dsb-item:hover{background:var(--ik);color:var(--gd)}
   .dsb-item.on{background:var(--gh);color:var(--go);font-weight:700}
@@ -1064,6 +1065,62 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
   .sk-entry-thumb{width:88px;height:88px}
   .sk-entry-thumb svg{width:88px;height:88px}
 }
+
+/* ─── VERSE FOCUS MODE ─────────────────────── */
+.vfm-scrim{position:fixed;inset:0;z-index:90;background:rgba(240,235,222,.965);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .18s}
+.vfm-scrim.show{opacity:1;pointer-events:auto}
+.vfm-card{position:fixed;inset:0;z-index:91;display:flex;flex-direction:column;opacity:0;pointer-events:none}
+.vfm-card.show{opacity:1;pointer-events:auto}
+.vfm-top{flex-shrink:0;display:flex;align-items:flex-start;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 12px) 14px 0;min-height:56px;opacity:0;transition:opacity .18s}
+.vfm-card.settled .vfm-top{opacity:1;transition-delay:.08s}
+.vfm-src{margin:4px 0 0;display:inline-flex;align-items:center;gap:7px;background:var(--sf2);border:1px solid var(--br2);border-radius:99px;padding:7px 13px;font-size:12.5px;font-weight:700;color:var(--gd);font-family:inherit;cursor:pointer}
+.vfm-src em{font-style:normal;color:var(--mu);font-weight:500}
+.vfm-x{width:44px;height:44px;border-radius:13px;background:var(--sf2);border:1px solid var(--br);color:var(--gd);display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer}
+.vfm-x svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2}
+.vfm-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 20px;min-height:0;overflow:hidden}
+.vfm-m{font-size:22px;line-height:2.05;color:var(--tx);font-weight:500}
+.vfm-m2{font-size:22px;line-height:2.05;color:var(--tx2);text-align:left;font-weight:400;margin-top:6px}
+.vfm-body.sm .vfm-m,.vfm-body.sm .vfm-m2{text-align:center;text-wrap:balance;max-width:29ch;margin-inline:auto}
+.vfm-body.sm .vfm-m2{margin-top:14px}
+.vfm-rule{height:1px;background:linear-gradient(90deg,transparent,var(--br),transparent);margin:22px 0}
+.vfm-idx{text-align:center;font-size:11.5px;color:var(--fa);font-weight:700;letter-spacing:.06em;direction:ltr}
+.vfm-idx.err{color:var(--sa2);letter-spacing:0;direction:rtl;font-weight:500;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.vfm-retry-inline{font-family:inherit;font-size:11.5px;font-weight:700;color:var(--gd);background:var(--sf2);border:1px solid var(--br);border-radius:99px;padding:4px 11px;cursor:pointer}
+.vfm-note{flex-shrink:0;margin:0 14px 10px;display:flex;gap:8px;align-items:flex-start;font-size:13px;line-height:1.85;color:var(--gd);background:var(--gh);border:1px solid var(--br2);border-radius:12px;padding:10px 12px}
+.vfm-note svg{width:15px;height:15px;flex-shrink:0;margin-top:4px;stroke:currentColor;fill:none;stroke-width:1.7}
+.vfm-bar{flex-shrink:0;display:flex;flex-direction:column}
+.vfm-nav{display:flex;align-items:center;gap:10px;padding:0 14px 10px}
+.vfm-nv{flex:1;min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;border:1px solid var(--br);background:var(--sf2);color:var(--gd);font-size:14.5px;font-weight:700;font-family:inherit;cursor:pointer}
+.vfm-nv svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
+.vfm-nv:disabled{background:transparent;border-color:var(--br2);border-style:dashed;color:var(--vf);cursor:default}
+.vfm-acts{display:flex;gap:8px;padding:12px 14px calc(env(safe-area-inset-bottom) + 16px);border-top:1px solid var(--br2)}
+.vfm-act{flex:1;min-height:52px;border-radius:14px;border:1px solid var(--br2);background:var(--sf);color:var(--gd);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:600;font-family:inherit;white-space:nowrap;cursor:pointer}
+.vfm-act svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
+.vfm-act.on{background:var(--sah);border-color:var(--sa);color:var(--sa2)}
+.vfm-act.on svg{fill:var(--sa);stroke:var(--sa)}
+.vfm-act:disabled{opacity:.45;border-style:dashed;cursor:default}
+.vfm-card.settled .vfm-bar{opacity:1;transition-delay:.08s}
+.vfm-bar{opacity:0;transition:opacity .18s}
+
+.cp,.ri.gc[data-fc]{position:relative}
+.kh-verse-fc{cursor:pointer}
+
+@media(min-width:1024px){
+  .vfm-card{inset:0;margin:auto;width:720px;max-width:calc(100vw - 48px);height:fit-content;max-height:88vh;border-radius:22px;background:var(--sf2);border:1px solid var(--br);box-shadow:0 26px 60px -22px rgba(40,44,32,.38);padding:22px 26px 20px;display:block;overflow:auto}
+  .vfm-top{padding:0 0 16px;min-height:0}
+  .vfm-src{margin:0}
+  .vfm-body{padding:0;display:block;overflow:visible}
+  .vfm-m,.vfm-body.sm .vfm-m{font-size:34px;line-height:2;text-align:right;max-width:none;text-wrap:initial;margin-inline:0}
+  .vfm-m2,.vfm-body.sm .vfm-m2{font-size:34px;line-height:2;margin-top:4px;text-align:left;max-width:none;text-wrap:initial;margin-inline:0}
+  .vfm-rule,.vfm-idx{display:none}
+  .vfm-note{margin:18px 0 0;padding:10px 12px}
+  .vfm-bar{flex-direction:row;align-items:center;gap:10px;margin-top:22px;padding-top:16px;border-top:1px solid var(--br2)}
+  .vfm-nav{padding:0;gap:10px}
+  .vfm-nv{flex:0 0 auto;min-height:50px;padding:0 18px}
+  .vfm-acts{padding:0;border-top:none;margin-inline-start:auto}
+  .vfm-act{flex:0 0 auto;width:88px;min-height:56px}
+  .cp{cursor:pointer}
+}
 </style>
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -1095,8 +1152,8 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
     <div class="dsb-nav">
       <div class="dsb-item" data-dnav="ghazals"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg>غزلیات<span class="n fa" id="dsb-n-gh"></span></div>
       <div class="dsb-item" data-dnav="terjee"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>ترجیع‌بند<span class="n fa" id="dsb-n-tr"></span></div>
-      <div class="dsb-item" data-dnav="zand"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>زَند بیدل</div>
-      <div class="dsb-item" data-dnav="khanesh"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>خوانش‌ها</div>
+      <div class="dsb-item" id="dsb-item-zand" data-dnav="zand"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>زَند بیدل</div>
+      <div class="dsb-item" id="dsb-item-khanesh" data-dnav="khanesh"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>خوانش‌ها</div>
       <div class="dsb-item" data-dnav="keywords"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>کلمات کلیدی<span class="n fa" id="dsb-n-kw"></span></div>
     </div>
     <div class="dsb-foot" id="dsb-foot"></div>
@@ -1394,6 +1451,9 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
 </div>
 <div class="ts-wrap" id="tswrap"></div>
 
+<div class="vfm-scrim" id="vfm-scrim"></div>
+<div class="vfm-card" id="vfm-card"></div>
+
 <script>
 (async function(){
 const TOT=2827, TB=34;
@@ -1405,11 +1465,13 @@ let mkey=null;
 let _poemCache={}, _listCache={};
 let _kwFilter='all', _curKw=null;
 let _kwPoems=[], _kwPoemsWord='', _kwPoemsShown=0;
+let _kwFocusList=[]; // {tp,n,ti2,m0,m1,ci} برای ناوبری حالت فوکوس بیت بین بیت‌های لیست کلیدواژه (مثل جستجو)
 let _bms={}, _nts={};
 let bmTab='bm';
 let _user=null;          // {username, email} if logged in
 let _editingProfile=false;
 let _pendingAction=null; // action to retry after login
+let _gateResume=null; // path to return to after logging in from a login-gate page
 let backStack=[];
 let _allKeywords=[];     // همه ۲۲۲ واژه از API
 let _featuredKw=[];      // ۴ واژه برجسته برای صفحه اصلی
@@ -1454,7 +1516,8 @@ function formatJalali(isoStr){
 const API_URL = (
   window.location.protocol === 'file:' ||
   window.location.hostname === 'localhost' ||
-  window.location.port === '3000'
+  window.location.port === '3000' ||
+  window.location.port === '3001'
 ) ? 'http://' + window.location.hostname + ':8000'
   : 'https://' + window.location.hostname + '/api';
 
@@ -1501,6 +1564,7 @@ function khBandSection(terjeeNum){
 async function showKhaneshList(instant){
   curView='khlist'; backStack=[];
   if(!instant) history.pushState({view:'khlist'}, '', '/khanesh');
+  if(!isAuthed()){ renderLoginGate('خوانش‌ها','تفسیر و شرحِ ترجیع‌بند','/khanesh'); return; }
   setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
   setHeader('خوانش‌ها','تفسیر و شرحِ ترجیع‌بند');
   setMeta('خوانش‌ها', 'خوانش‌ها — مقاله‌های تفسیری بر بندهای ترجیع‌بند حیرت بیدل دهلوی');
@@ -1525,6 +1589,7 @@ async function showKhanesh(slug, from, instant){
   if(from) _khFrom=from;
   curView='khd'; _khSlug=slug;
   if(!instant) history.pushState({view:'khd', slug:slug, from:_khFrom}, '', '/khanesh/'+slug);
+  if(!isAuthed()){ renderLoginGate('خوانش','تفسیر و شرحِ ترجیع‌بند','/khanesh/'+slug); return; }
   setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
   if(!instant){ ctEl.innerHTML=khLoader(''); ctEl.scrollTop=0; await new Promise(r=>setTimeout(r,360)); }
   let k;
@@ -1543,6 +1608,7 @@ async function showKhanesh(slug, from, instant){
   h+='<div class="kh-backband" data-band="'+k.terjee_number+'"><div class="kh-bb-ic">'+IC_TERJEE+'</div><div class="kh-bb-tx"><div class="kh-bb-lab fa">بازگشت به متنِ شعر</div><div class="kh-bb-t">ترجیع‌بند · بند '+toFa(k.terjee_number)+'</div></div><span class="kh-bb-chev"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
+  _vfmHydrateKhVerses(k.terjee_number);
 }
 
 let MOCK_MODE = false;
@@ -1688,8 +1754,10 @@ function handlePendingAction(a) {
     if (curView === 'profile') showProfile();
     else if (curView === 'gh') showG(cg);
     else if (curView === 'tr') showT(ct);
+    else if (curView === 'home') showHome();
     return;
   }
+  if (a.type === 'nav') { navigate(a.path); return; }
   if (a.type === 'bm') { toggleBm(a.tp, a.id, a.ci); return; }
   if (a.type === 'note') {
     const k = bkey(a.tp, a.id, a.ci);
@@ -1825,6 +1893,8 @@ function syncSidebar(){
   });
   // آیتم‌های نیازمند ورود در حالت مهمان پنهان می‌شوند
   document.getElementById('dsb-nav-user').classList.toggle('hide', !_user);
+  document.getElementById('dsb-item-zand').classList.toggle('hide', !_user);
+  document.getElementById('dsb-item-khanesh').classList.toggle('hide', !_user);
   const q=_lastSrch&&_lastSrch.query;
   const searchEl=document.getElementById('dsb-search');
   searchEl.classList.toggle('has-q', !!(q&&curView==='srch'));
@@ -2109,10 +2179,10 @@ function showHome(){
   h += '<div class="qg">';
   h += '<div class="qc" data-go="browse-g"><div class="qc-ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg></div><div><div class="qc-title">غزلیات</div><div class="qc-sub fa">۲۸۲۷ غزل</div></div></div>';
   h += '<div class="qc" data-go="browse-t"><div class="qc-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div><div><div class="qc-title">ترجیع‌بند</div><div class="qc-sub fa">۳۴ بند · حیرت</div></div></div>';
-  h += '<div class="qc" data-go="browse-z"><div class="qc-ic"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg></div><div><div class="qc-title">زند بیدل</div><div class="qc-sub fa">شرح وکیلی</div></div></div>';
+  if(isAuthed()) h += '<div class="qc" data-go="browse-z"><div class="qc-ic"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg></div><div><div class="qc-title">زند بیدل</div><div class="qc-sub fa">شرح وکیلی</div></div></div>';
   h += '<div class="qc" data-go="kw"><div class="qc-ic sa"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg></div><div><div class="qc-title">کلمات کلیدی</div><div class="qc-sub fa">۲۲۲ واژه</div></div></div>';
   h += '</div>';  // close the .qg grid BEFORE adding khanesh card
-  h += '<div class="qc qc-kh" data-go="khanesh"><div class="qc-ic sa">'+IC_KH+'</div><div class="qc-kh-tx"><div class="qc-title">خوانش‌ها <span class="qc-kh-new">تازه</span></div><div class="qc-sub fa">تفسیر و شرح بندهای ترجیع‌بند</div></div><span class="qc-kh-chev"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  if(isAuthed()) h += '<div class="qc qc-kh" data-go="khanesh"><div class="qc-ic sa">'+IC_KH+'</div><div class="qc-kh-tx"><div class="qc-title">خوانش‌ها <span class="qc-kh-new">تازه</span></div><div class="qc-sub fa">تفسیر و شرح بندهای ترجیع‌بند</div></div><span class="qc-kh-chev"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
 
   // Keyword strip
   h += '<div class="section-h fa">واژه‌های پُربسامد</div>';
@@ -2134,11 +2204,26 @@ function showHome(){
 
 }
 
+// ─── LOGIN GATE (برای بخش‌های ویژهٔ کاربران واردشده) ────
+function renderLoginGate(title, subtitle, resumePath){
+  _gateResume = resumePath || null;
+  setHeader(title, subtitle);
+  setBack(true); setNavHidden(true); hideSubnavs();
+  let h='<div class="pr"><div class="pr-card">';
+  h+='<div class="pr-av guest">م</div><div class="pr-name">مهمان</div>';
+  h+='<div class="pr-guest-msg fa">این بخش ویژهٔ کاربرانِ واردشده است. برای مشاهده باید وارد حساب کاربری خود شوید.</div>';
+  h+='</div><div class="pr-guest-bts">';
+  h+='<button class="pr-login" id="gate-login">ورود</button><button class="pr-reg" id="gate-reg">ثبت‌نام</button>';
+  h+='</div></div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
 // ─── BROWSE (ghazals / terjees / zand) ────
 async function showBrowse(sub){
   curTab='browse'; curView='browse'; backStack=[]; setBack(true);
   setBnActive('browse'); hideSubnavs(); setNavHidden(false);
   browseSub = sub || browseSub || 'g';
+  if(browseSub==='z' && !isAuthed()){ renderLoginGate('زند بیدل','شرح شروین وکیلی','/zand'); return; }
   const titles = {g:'غزلیات', t:'ترجیع‌بند', z:'زند بیدل'};
   const subs = {g:'۲۸۲۷ غزل', t:'۳۴ بند · حیرت', z:'شرح شروین وکیلی'};
   const metaDesc = {
@@ -2332,7 +2417,7 @@ async function showT(n,kw){
   tp2.disabled=(n<=1); tn2.disabled=(n>=TB);
   if(kw) setTimeout(()=>{const el=ctEl.querySelector('mark');if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},100);
   // Preload khanesh list for related section
-  fetchKhaneshList().then(()=>{
+  if(isAuthed()) fetchKhaneshList().then(()=>{
     const relHtml = khBandSection(n);
     const existing = ctEl.querySelector('.kh-rel-sec');
     if(existing) existing.remove();
@@ -2342,6 +2427,7 @@ async function showT(n,kw){
 }
 
 async function showZand(id){
+  if(!isAuthed()){ renderLoginGate('زند بیدل','شرح شروین وکیلی','/zand/'+id); return; }
   curView='zsec'; setBack(true); hideSubnavs(); setNavHidden(false);
   showLoading('در حال بارگذاری…');
   if(!_listCache.zand) _listCache.zand=await apiFetch(API_URL+'/poems/zand');
@@ -2455,7 +2541,7 @@ function showKeyword(word){
     if(!el) return;
     const poems = (data && (data.ghazals||data.poems||[])) || [];
     if(!poems.length){ el.innerHTML='<div class="nr2" style="font-size:12px">غزلی یافت نشد</div>'; return; }
-    _kwPoems = poems; _kwPoemsWord = kWord; _kwPoemsShown = 0;
+    _kwPoems = poems; _kwPoemsWord = kWord; _kwPoemsShown = 0; _kwFocusList = [];
     el.innerHTML = '';
     renderKwPoemsChunk();
   });
@@ -2468,9 +2554,12 @@ function renderKwPoemsChunk(){
   let ph='';
   for(const p of next){
     const couplet = p.couplet || (p.first_couplet&&p.first_couplet) || ['',''];
-    const m1 = hl(couplet[0]||p.m1||'', _kwPoemsWord);
-    const m2 = hl(couplet[1]||p.m2||'', _kwPoemsWord);
-    ph+=mkGhazalCard(p.number||p.n||'', p.title||p.t||'', '', _kwPoemsWord, '', [m1, m2]);
+    const m0raw = couplet[0]||p.m1||'', m1raw = couplet[1]||p.m2||'';
+    const m1 = hl(m0raw, _kwPoemsWord);
+    const m2 = hl(m1raw, _kwPoemsWord);
+    const ridx=_kwFocusList.length;
+    _kwFocusList.push({tp:'g', n:p.number||p.n||0, ti2:p.title||p.t||'', m0:m0raw, m1:m1raw, ci:null, word:_kwPoemsWord});
+    ph+=mkGhazalCard(p.number||p.n||'', p.title||p.t||'', '', _kwPoemsWord, ' data-fc="kw" data-ridx="'+ridx+'"', [m1, m2]);
   }
   _kwPoemsShown += next.length;
   const old = document.getElementById('kw-poems-more');
@@ -2552,6 +2641,7 @@ async function toggleBm(tp,id,ci){
       }
       _saveMockBms();
       updateBmBadge();
+      vfmSyncIfOpen(tp,id,ci);
       if(tp==='g') showG(cg); else showT(ct);
       showToast(_adding?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
       scrollToCouplet(key);
@@ -2567,6 +2657,7 @@ async function toggleBm(tp,id,ci){
     });
     if(resp.status===401){ setToken(null); _saveUser(null); showAuthModal({type:'bm',tp,id,ci}); return; }
     await loadUserData();
+    vfmSyncIfOpen(tp,id,ci);
     if(tp==='g') showG(cg); else showT(ct);
     showToast(_adding?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
     scrollToCouplet(key);
@@ -2912,7 +3003,7 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.03</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.17</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
   _loadReadStat();
@@ -3025,7 +3116,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.03</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.17</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -3122,6 +3213,7 @@ function hideConfirm(){document.getElementById('cf-bg').classList.remove('open')
 
 // ─── SEARCH ──────────────────────────────
 let _lastSrch=null; // {query, html, scroll} of the last completed search, restored after back-navigation
+let _srchFocusList=[]; // couplet-level matches (g/t only) از نتایج جستجوی جاری — برای ناوبری حالت فوکوس بیت
 // موقعیت اسکرول نتایج را نگه می‌داریم تا هنگام بازگشت به همان نقطه برگردیم
 ctEl.addEventListener('scroll', ()=>{
   if(curView==='srch' && _lastSrch) _lastSrch.scroll = ctEl.scrollTop;
@@ -3155,6 +3247,7 @@ function showSearch(restore){
     inp.value = _lastSrch.query;
     const resultsEl = document.getElementById('srch-results');
     if(resultsEl) resultsEl.innerHTML = _lastSrch.html;
+    _srchFocusList = _lastSrch.list || [];
     if(_lastSrch.query) loadNeighbors(_lastSrch.query, 'g');
     // بعد از جاگذاری نتایج و بخش همسایه‌ها، به موقعیت قبلی برمی‌گردیم
     // (scroll-behavior موقتاً auto می‌شود تا به‌جای انیمیشن، بلافاصله بپرد)
@@ -3179,6 +3272,7 @@ function showSearch(restore){
     const resultsEl = document.getElementById('srch-results');
     if(resultsEl) resultsEl.innerHTML = '';
     _lastSrch = null;          // نتیجه و موقعیت اسکرول ذخیره‌شده هم آزاد می‌شود
+    _srchFocusList = [];
     syncSidebar();             // کادر جست‌وجوی نوار کناره به حالت پیش‌فرض برگردد
     inp.focus();
   });
@@ -3200,6 +3294,7 @@ async function doSrch(){
     if(num>=1 && num<=TOT){ navigate('/ghazal/'+num); return; }
     if(num>=1 && num<=TB){ navigate('/terjee/'+num); return; }
     resultsEl.innerHTML='<div class="nr2">شماره '+toFa(num)+' یافت نشد</div>';
+    _srchFocusList=[];
     _lastSrch={query:raw, html:resultsEl.innerHTML};
     return;
   }
@@ -3212,24 +3307,24 @@ async function doSrch(){
   const [rg,rt,rz,rkh]=await Promise.all([
     apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=g'),
     apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=t'),
-    apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=z'),
-    apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=kh'),
+    isAuthed() ? apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=z') : null,
+    isAuthed() ? apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=kh') : null,
   ]);
   const rgX = rg||{results:[]}, rtX = rt||{results:[]}, rzX = rz||{results:[]};
   const khs = (rkh&&rkh.results)||[];   // اگر بک‌اند قدیمی باشد، خالی می‌ماند
   const ms=[];
   for(const r of (rgX.results||[])){
     const c=r.matches[0]?.couplet||['',''];
-    ms.push({tp:'g',n:r.number,ti2:r.title,m0:c[0]||'',m1:c[1]||''});
+    ms.push({tp:'g',n:r.number,ti2:r.title,m0:c[0]||'',m1:c[1]||'',ci:r.matches[0]?.couplet_index});
   }
   for(const r of (rtX.results||[])){
     const c=r.matches[0]?.couplet||['',''];
-    ms.push({tp:'t',n:r.number,ti2:'بند '+toFa(r.number),m0:c[0]||'',m1:c[1]||''});
+    ms.push({tp:'t',n:r.number,ti2:'بند '+toFa(r.number),m0:c[0]||'',m1:c[1]||'',ci:r.matches[0]?.couplet_index});
   }
   for(const r of (rzX.results||[])){
     ms.push({tp:'z',n:r.number,ti2:r.title,snippet:r.snippet||''});
   }
-  if(!ms.length && !kwMatches.length && !khs.length){resultsEl.innerHTML='<div class="nr2">«'+kw+'» یافت نشد</div>';_lastSrch={query:raw, html:resultsEl.innerHTML};return}
+  if(!ms.length && !kwMatches.length && !khs.length){resultsEl.innerHTML='<div class="nr2">«'+kw+'» یافت نشد</div>';_srchFocusList=[];_lastSrch={query:raw, html:resultsEl.innerHTML};return}
   let h='<div class="rh fa">'+toFa(ms.length)+' نتیجه برای «'+kw+'»'
     +(kwMatches.length?' · '+toFa(kwMatches.length)+' واژه':'')
     +(khs.length?' · '+toFa(khs.length)+' خوانش':'')+'</div>';
@@ -3254,17 +3349,21 @@ async function doSrch(){
     }
     h += '</div>';
   }
+  _srchFocusList=[];
   for(const m of ms){
     if(m.tp==='t'){
-      h+=mkGhazalCard(m.n, m.ti2, '', kw, '', [hl(m.m0,kw), hl(m.m1,kw)], 't', 'بند');
+      const ridx=_srchFocusList.length; _srchFocusList.push(m);
+      h+=mkGhazalCard(m.n, m.ti2, '', kw, ' data-fc="srch" data-ridx="'+ridx+'"', [hl(m.m0,kw), hl(m.m1,kw)], 't', 'بند');
     } else if(m.tp==='z'){
       h+='<div class="ri" data-tp="z" data-n="'+m.n+'"><div class="rt fa">زند بیدل</div><div class="rti">'+m.ti2+'</div><div class="rp">'+hl(m.snippet,kw)+'</div></div>';
     } else {
-      h+=mkGhazalCard(m.n, m.ti2, '', kw, '', [hl(m.m0,kw), hl(m.m1,kw)]);
+      const ridx=_srchFocusList.length; _srchFocusList.push(m);
+      h+=mkGhazalCard(m.n, m.ti2, '', kw, ' data-fc="srch" data-ridx="'+ridx+'"', [hl(m.m0,kw), hl(m.m1,kw)]);
     }
   }
+  _srchFocusList.forEach(m=>{ if(m.ci!=null) _vfmEnsurePoemStub(m.tp, m.n, m.ci, m.m0, m.m1, m.ti2); });
   resultsEl.innerHTML = h;
-  _lastSrch={query:raw, html:h};
+  _lastSrch={query:raw, html:h, list:_srchFocusList};
   syncSidebar();   // کادر جست‌وجوی نوار کناره عبارت فعلی را نشان دهد
   loadNeighbors(kw, 'g');
 }
@@ -3753,6 +3852,527 @@ function getCouplet(tp,id,ci){
   return poem?(poem.couplets[ci]||['','']):['',''];
 }
 
+// ─── VERSE FOCUS MODE ────────────────────
+// حالت تمام‌صفحهٔ «کارت بیت»: pinch-out/دابل‌کلیک روی کارت باز می‌شود، بستن با
+// pinch-in/×/لمس بیرون. منطق UI (این بخش) از منطق داده (providerها) جدا است؛
+// هر context (غزل/ترجیع، جستجو، کلیدواژه، خوانش) یک provider جدا می‌سازد.
+const VFM_IC_X='<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const VFM_IC_PREV='<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>';
+const VFM_IC_NEXT='<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>';
+const VFM_IC_BM='<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>';
+const VFM_IC_NOTE='<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>';
+const VFM_IC_COPY='<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>';
+const VFM_IC_SHARE='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+
+const VFM={scrimEl:null, cardEl:null, provider:null, originEl:null, open:false};
+
+// stub جزئی در _poemCache برای بیتی که هنوز کل شعرش لود نشده (جستجو) — تا getVerse/getCouplet/toggleBm کار کنند
+function _vfmEnsurePoemStub(tp,id,ci,m0,m1,title){
+  const key=tp+'_'+id;
+  if(_poemCache[key] && !_poemCache[key]._vfmStub) return;
+  const couplets=[]; couplets[ci]=[m0||'', m1||''];
+  _poemCache[key]={couplets, title:title||'', _vfmStub:true};
+}
+async function _vfmFetchPoem(tp,id){
+  const key=tp+'_'+id;
+  const existing=_poemCache[key];
+  if(existing && existing.couplets && !existing._vfmStub) return existing;
+  const url=tp==='g'?(API_URL+'/poems/ghazal/'+id):(API_URL+'/poems/terjee/'+id);
+  const p=await apiFetch(url);
+  if(!p) throw new Error('poem fetch failed');
+  _poemCache[key]=p;
+  return p;
+}
+
+// ─ providers ─
+function makePoemProvider(tp,id,ci){
+  const poem=_poemCache[tp+'_'+id];
+  const total=poem?poem.couplets.length:0;
+  const navLabels = tp==='g'
+    ? {prev:'بیت قبل',next:'بیت بعد',prevEnd:'اول غزل',nextEnd:'آخر غزل'}
+    : {prev:'بیت قبل',next:'بیت بعد',prevEnd:'اول بند',nextEnd:'آخر بند'};
+  return {
+    isLoading:()=>false,
+    hasError:()=>false,
+    getText:()=>getCouplet(tp,id,ci),
+    getSourceLabel:()=>null,
+    getIndexLabel:()=>{
+      let s=toFa(ci+1)+' / '+toFa(total);
+      if(tp==='g'){ if(ci===0) s+=' · مطلع'; else if(ci===total-1) s+=' · مقطع'; }
+      return s;
+    },
+    getNote:()=>_nts[bkey(tp,id,ci)]||'',
+    isBookmarked:()=>!!_bms[bkey(tp,id,ci)],
+    hasPrev:()=>ci>0,
+    hasNext:()=>ci<total-1,
+    prev:async()=>{ if(ci>0) ci--; },
+    next:async()=>{ if(ci<total-1) ci++; },
+    navLabels:()=>navLabels,
+    gotoSource:()=>null,
+    getTpIdCi:()=>[tp,id,ci],
+    retry:null,
+  };
+}
+
+function makeSearchProvider(ridx){
+  let idx=ridx;
+  const cur=()=>_srchFocusList[idx];
+  return {
+    isLoading:()=>false,
+    hasError:()=>false,
+    getText:()=>{ const m=cur(); return [m.m0, m.m1]; },
+    getSourceLabel:()=>{
+      const m=cur();
+      const label=m.tp==='g'?('غزل '+toFa(m.n)):('ترجیع‌بند '+toFa(m.n));
+      return label+(m.ci!=null?('<em>· بیت '+toFa(m.ci+1)+'</em>'):'');
+    },
+    getIndexLabel:()=>'نتیجهٔ '+toFa(idx+1)+' از '+toFa(_srchFocusList.length),
+    getNote:()=>{ const m=cur(); return m.ci!=null?(_nts[bkey(m.tp,m.n,m.ci)]||''):''; },
+    isBookmarked:()=>{ const m=cur(); return m.ci!=null && !!_bms[bkey(m.tp,m.n,m.ci)]; },
+    hasPrev:()=>idx>0,
+    hasNext:()=>idx<_srchFocusList.length-1,
+    prev:async()=>{ if(idx>0) idx--; },
+    next:async()=>{ if(idx<_srchFocusList.length-1) idx++; },
+    navLabels:()=>({prev:'نتیجهٔ قبل',next:'نتیجهٔ بعد',prevEnd:'اول نتایج',nextEnd:'آخر نتایج'}),
+    gotoSource:()=>{ const m=cur(); return [m.tp,m.n]; },
+    getTpIdCi:()=>{ const m=cur(); return [m.tp,m.n,m.ci]; },
+    retry:null,
+  };
+}
+
+// کلیدواژه: مثل جستجو، بین بیت‌های لیست همان کلیدواژه ناوبری می‌کند (نه بین ابیات هم‌شعر).
+// ایندکس دقیق بیت (couplet_index) را بک‌اند برنمی‌گرداند، پس هر آیتم اولین بار که باز/ناوبری
+// می‌شود با لود کل شعر و تطبیق واژه lazy resolve و روی خودِ آیتم کش می‌شود (بار بعد رایگان است).
+function makeKeywordProvider(ridx){
+  let idx=ridx;
+  let loading=false, errored=false;
+  const list=()=>_kwFocusList;
+  const cur=()=>list()[idx];
+  const providerObj={
+    isLoading:()=>loading,
+    hasError:()=>errored,
+    getText:()=>{ const m=cur(); return [m.m0, m.m1]; },
+    getSourceLabel:()=>{
+      const m=cur();
+      const label=m.tp==='g'?('غزل '+toFa(m.n)):('ترجیع‌بند '+toFa(m.n));
+      return (!loading && m.ci!=null)?(label+'<em>· بیت '+toFa(m.ci+1)+'</em>'):label;
+    },
+    getIndexLabel:()=>loading?'در حال بارگذاری…':('نتیجهٔ '+toFa(idx+1)+' از '+toFa(list().length)),
+    getNote:()=>{ const m=cur(); return m.ci!=null?(_nts[bkey(m.tp,m.n,m.ci)]||''):''; },
+    isBookmarked:()=>{ const m=cur(); return m.ci!=null && !!_bms[bkey(m.tp,m.n,m.ci)]; },
+    hasPrev:()=>idx>0,
+    hasNext:()=>idx<list().length-1,
+    prev:async()=>{ if(idx>0){ idx--; await resolveCurrent(); } },
+    next:async()=>{ if(idx<list().length-1){ idx++; await resolveCurrent(); } },
+    navLabels:()=>({prev:'نتیجهٔ قبل',next:'نتیجهٔ بعد',prevEnd:'اول نتایج',nextEnd:'آخر نتایج'}),
+    gotoSource:()=>{ const m=cur(); return [m.tp,m.n]; },
+    getTpIdCi:()=>{ const m=cur(); return [m.tp,m.n,m.ci]; },
+    retry:()=>resolveCurrent(),
+  };
+  async function resolveCurrent(){
+    const m=cur();
+    if(m.ci!=null){ errored=false; return; }
+    loading=true; errored=false;
+    if(VFM.open && VFM.provider===providerObj) vfmRender();
+    try{
+      const poem=await _vfmFetchPoem(m.tp,m.n);
+      const found=poem.couplets.findIndex(c=>c.some(h=>h && h.includes(m.word)));
+      if(found<0) errored=true;
+      else m.ci=found;
+    }catch(e){ errored=true; }
+    loading=false;
+    if(VFM.open && VFM.provider===providerObj) vfmRender();
+  }
+  resolveCurrent();
+  return providerObj;
+}
+
+// خوانش: بیت اولیه از قبل شناخته‌شده (متن کامل)، ولی ایندکس دقیق و ناوبری نیاز به لود کل شعر دارد
+function makeLazyPoemProvider(tp,id,m1,m2){
+  let loading=true, errored=false, ci=-1, total=0;
+  const navLabels = tp==='g'
+    ? {prev:'بیت قبل',next:'بیت بعد',prevEnd:'اول غزل',nextEnd:'آخر غزل'}
+    : {prev:'بیت قبل',next:'بیت بعد',prevEnd:'اول بند',nextEnd:'آخر بند'};
+  function resolveIndex(poem){
+    const norm=s=>(s||'').replace(/[\s‌]+/g,' ').trim();
+    const t1=norm(m1);
+    const idx=poem.couplets.findIndex(c=>norm(c[0])===t1);
+    if(idx<0){ errored=true; return; }
+    ci=idx; total=poem.couplets.length;
+  }
+  const providerObj={
+    isLoading:()=>loading,
+    hasError:()=>errored,
+    getText:()=>(!loading && !errored)?getCouplet(tp,id,ci):[m1||'',m2||''],
+    getSourceLabel:()=>{
+      const label=tp==='g'?('غزل '+toFa(id)):('ترجیع‌بند '+toFa(id));
+      return (!loading && !errored)?(label+'<em>· بیت '+toFa(ci+1)+'</em>'):label;
+    },
+    getIndexLabel:()=>{
+      if(loading) return 'در حال بارگذاری…';
+      if(errored) return '';
+      let s=toFa(ci+1)+' / '+toFa(total);
+      if(tp==='g'){ if(ci===0) s+=' · مطلع'; else if(ci===total-1) s+=' · مقطع'; }
+      return s;
+    },
+    getNote:()=>(!loading && !errored)?(_nts[bkey(tp,id,ci)]||''):'',
+    isBookmarked:()=>(!loading && !errored) && !!_bms[bkey(tp,id,ci)],
+    hasPrev:()=>!loading && !errored && ci>0,
+    hasNext:()=>!loading && !errored && ci<total-1,
+    prev:async()=>{ if(ci>0) ci--; },
+    next:async()=>{ if(ci<total-1) ci++; },
+    navLabels:()=>navLabels,
+    gotoSource:()=>[tp,id],
+    getTpIdCi:()=>[tp,id,ci],
+    retry:()=>load(),
+  };
+  async function load(){
+    loading=true; errored=false;
+    if(VFM.open && VFM.provider===providerObj) vfmRender();
+    try{
+      const poem=await _vfmFetchPoem(tp,id);
+      resolveIndex(poem);
+    }catch(e){ errored=true; }
+    loading=false;
+    if(VFM.open && VFM.provider===providerObj) vfmRender();
+  }
+  load();
+  return providerObj;
+}
+
+// ─ render ─
+function vfmRender(){
+  const p=VFM.provider;
+  if(!p) return;
+  const loading=p.isLoading(), errored=p.hasError();
+  const [m1,m2]=p.getText();
+  const longVerse = Math.max((m1||'').length,(m2||'').length) > 34;
+  const srcLabel = p.getSourceLabel();
+  let h='<div class="vfm-top">';
+  h += srcLabel ? ('<button type="button" class="vfm-src" data-vfm-goto="1">'+srcLabel+'</button>') : '<span></span>';
+  h += '<button type="button" class="vfm-x" data-vfm-close="1" aria-label="بستن">'+VFM_IC_X+'</button>';
+  h += '</div>';
+
+  h += '<div class="vfm-body'+(longVerse?' sm':'')+'">';
+  h += '<div class="vfm-m">'+(m1||'')+'</div>';
+  if(m2) h += '<div class="vfm-m2">'+m2+'</div>';
+  h += '<div class="vfm-rule"></div>';
+  if(errored){
+    h += '<div class="vfm-idx err">ناوبری در دسترس نیست<button type="button" class="vfm-retry-inline" data-vfm-retry="1">تلاش مجدد</button></div>';
+  } else {
+    h += '<div class="vfm-idx">'+(loading?'در حال بارگذاری ابیات…':p.getIndexLabel())+'</div>';
+  }
+  h += '</div>';
+
+  const noteTxt = (!loading && !errored) ? p.getNote() : '';
+  if(noteTxt) h += '<div class="vfm-note">'+VFM_IC_NOTE+'<span>'+noteTxt+'</span></div>';
+
+  const canPrev=!loading && !errored && p.hasPrev();
+  const canNext=!loading && !errored && p.hasNext();
+  const nl=p.navLabels();
+  h += '<div class="vfm-bar">';
+  h += '<div class="vfm-nav">';
+  h += '<button type="button" class="vfm-nv" data-vfm-nav="prev"'+(canPrev?'':' disabled')+'>'+VFM_IC_PREV+(canPrev?nl.prev:nl.prevEnd)+'</button>';
+  h += '<button type="button" class="vfm-nv" data-vfm-nav="next"'+(canNext?'':' disabled')+'>'+(canNext?nl.next:nl.nextEnd)+VFM_IC_NEXT+'</button>';
+  h += '</div>';
+  const actDisabled = loading || errored;
+  const isBm = !actDisabled && p.isBookmarked();
+  h += '<div class="vfm-acts">';
+  h += '<button type="button" class="vfm-act'+(isBm?' on':'')+'" data-vfm-act="bm"'+(actDisabled?' disabled':'')+'>'+VFM_IC_BM+'<span>'+(isBm?'نشان‌شده':'نشان')+'</span></button>';
+  h += '<button type="button" class="vfm-act" data-vfm-act="note"'+(actDisabled?' disabled':'')+'>'+VFM_IC_NOTE+'<span>یادداشت</span></button>';
+  h += '<button type="button" class="vfm-act" data-vfm-act="share"'+(actDisabled?' disabled':'')+'>'+VFM_IC_SHARE+'<span>اشتراک</span></button>';
+  h += '<button type="button" class="vfm-act" data-vfm-act="copy">'+VFM_IC_COPY+'<span>کپی</span></button>';
+  h += '</div>';
+  h += '</div>';
+
+  VFM.cardEl.innerHTML=h;
+}
+
+function vfmSyncIfOpen(tp,id,ci){
+  if(!VFM.open || !VFM.provider) return;
+  const cur=VFM.provider.getTpIdCi();
+  if(cur[0]===tp && cur[1]===id && cur[2]===ci) vfmRender();
+}
+
+// ─ FLIP animation ─
+function _vfmReduceMotion(){ return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+function _vfmFlipFrom(rect){
+  const card=VFM.cardEl;
+  card.classList.remove('settled');
+  card.style.transition='none';
+  card.classList.add('show');
+  VFM.scrimEl.classList.add('show');
+  if(_vfmReduceMotion() || !rect){
+    card.style.transform=''; card.style.opacity='0';
+    requestAnimationFrame(()=>{
+      card.style.transition='opacity .12s';
+      card.style.opacity='1';
+      card.classList.add('settled');
+    });
+    return;
+  }
+  const last=card.getBoundingClientRect();
+  const dx=(rect.left+rect.width/2)-(last.left+last.width/2);
+  const dy=(rect.top+rect.height/2)-(last.top+last.height/2);
+  const sx=Math.max(rect.width/last.width,0.05);
+  const sy=Math.max(rect.height/last.height,0.05);
+  card.style.transform='translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')';
+  card.style.opacity='0.7';
+  void card.offsetWidth; // reflow
+  requestAnimationFrame(()=>{
+    card.style.transition='transform .26s cubic-bezier(.2,.9,.2,1), opacity .18s';
+    card.style.transform='translate(0,0) scale(1,1)';
+    card.style.opacity='1';
+    card.classList.add('settled');
+  });
+}
+function _vfmFlipTo(rect, done){
+  const card=VFM.cardEl;
+  card.classList.remove('settled');
+  VFM.scrimEl.classList.remove('show');
+  if(_vfmReduceMotion() || !rect){
+    card.style.transition='opacity .12s';
+    card.style.opacity='0';
+    setTimeout(done,120);
+    return;
+  }
+  const cur=card.getBoundingClientRect();
+  const dx=(rect.left+rect.width/2)-(cur.left+cur.width/2);
+  const dy=(rect.top+rect.height/2)-(cur.top+cur.height/2);
+  const sx=Math.max(rect.width/cur.width,0.05);
+  const sy=Math.max(rect.height/cur.height,0.05);
+  card.style.transition='transform .2s cubic-bezier(.2,.9,.2,1), opacity .2s';
+  card.style.transform='translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')';
+  card.style.opacity='0';
+  setTimeout(done,200);
+}
+
+// ─ open/close ─
+function vfmOpen(originEl, provider){
+  if(VFM.open) return;
+  VFM.open=true;
+  VFM.provider=provider;
+  VFM.originEl=originEl;
+  const rect=originEl.getBoundingClientRect();
+  vfmRender();
+  _vfmFlipFrom(rect);
+}
+function vfmClose(){
+  if(!VFM.open) return;
+  VFM.open=false;
+  const originEl=VFM.originEl;
+  const rect=(originEl && document.body.contains(originEl)) ? originEl.getBoundingClientRect() : null;
+  _vfmFlipTo(rect, ()=>{
+    VFM.cardEl.classList.remove('show');
+    VFM.cardEl.style.transition='';
+    VFM.cardEl.style.transform='';
+    VFM.cardEl.style.opacity='';
+    VFM.cardEl.innerHTML='';
+    VFM.provider=null;
+    VFM.originEl=null;
+  });
+}
+function vfmNav(dir){
+  const p=VFM.provider; if(!p) return;
+  const can = dir==='prev'?p.hasPrev():p.hasNext();
+  if(!can) return;
+  (dir==='prev'?p.prev():p.next()).then(vfmRender);
+}
+
+// ─ card-level delegation (نشان/یادداشت/کپی/ناوبری/×/منبع) ─
+function _vfmCardClick(e){
+  if(e.target.closest('[data-vfm-close]')){ vfmClose(); return; }
+  if(e.target.closest('[data-vfm-goto]')){
+    const p=VFM.provider; if(!p) return;
+    const src=p.gotoSource(); if(!src) return;
+    const [tp,id]=src;
+    vfmClose();
+    navigate(tp==='g'?'/ghazal/'+id:'/terjee/'+id);
+    return;
+  }
+  if(e.target.closest('[data-vfm-retry]')){
+    const p=VFM.provider; if(p && p.retry) p.retry();
+    return;
+  }
+  const navBtn=e.target.closest('[data-vfm-nav]');
+  if(navBtn){ if(!navBtn.disabled) vfmNav(navBtn.dataset.vfmNav); return; }
+  const actBtn=e.target.closest('[data-vfm-act]');
+  if(actBtn && !actBtn.disabled){
+    const p=VFM.provider; if(!p) return;
+    const [tp,id,ci]=p.getTpIdCi();
+    const action=actBtn.dataset.vfmAct;
+    if(action==='copy'){
+      const [m1,m2]=p.getText();
+      copyTextTo(m1+(m2?'\n'+m2:''));
+      showToast('بیت کپی شد');
+      const lab=actBtn.querySelector('span');
+      if(lab){ const o=lab.textContent; lab.textContent='کپی شد ✓'; setTimeout(()=>{lab.textContent=o;},1000); }
+      return;
+    }
+    if(ci==null || ci<0) return;
+    if(action==='bm'){ toggleBm(tp,id,ci); return; }
+    if(action==='note'){ openModal(bkey(tp,id,ci), getVerse(tp,id,ci)); return; }
+    if(action==='share'){ openShare(tp,id,ci); return; }
+  }
+}
+
+// ─ pinch-to-close + سوایپ افقی برای بیت قبل/بعد (موبایل) ─
+function _vfmTouchDist(t){ const dx=t[0].clientX-t[1].clientX, dy=t[0].clientY-t[1].clientY; return Math.hypot(dx,dy); }
+function _vfmAttachCardGestures(el){
+  let pinchStart=null;
+  let swipe=null;
+  el.addEventListener('touchstart', e=>{
+    if(e.touches.length===2){
+      pinchStart=_vfmTouchDist(e.touches);
+      swipe=null;
+    } else if(e.touches.length===1){
+      pinchStart=null;
+      const t=e.touches[0];
+      swipe={x0:t.clientX, y0:t.clientY, t0:Date.now()};
+    } else {
+      pinchStart=null; swipe=null;
+    }
+  }, {passive:true});
+  el.addEventListener('touchmove', e=>{
+    if(pinchStart && e.touches.length===2){
+      e.preventDefault();
+      if(_vfmTouchDist(e.touches)/pinchStart <= 0.75){ pinchStart=null; vfmClose(); }
+      return;
+    }
+    if(swipe && e.touches.length===1){
+      const t=e.touches[0];
+      const dx=t.clientX-swipe.x0, dy=t.clientY-swipe.y0;
+      if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>10) e.preventDefault(); // جلوگیری از اسکرول عمودی صفحهٔ زیرین حین سوایپ افقی
+    }
+  }, {passive:false});
+  el.addEventListener('touchend', e=>{
+    if(swipe){
+      const t=e.changedTouches[0];
+      const dx=t.clientX-swipe.x0, dy=t.clientY-swipe.y0;
+      const dt=Date.now()-swipe.t0;
+      // سوایپ به راست (dx مثبت) = بیت بعد، سوایپ به چپ (dx منفی) = بیت قبل
+      if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5 && dt<600) vfmNav(dx>0?'next':'prev');
+    }
+    pinchStart=null; swipe=null;
+  });
+  el.addEventListener('touchcancel', ()=>{ pinchStart=null; swipe=null; });
+}
+
+function vfmInit(){
+  VFM.scrimEl=document.getElementById('vfm-scrim');
+  VFM.cardEl=document.getElementById('vfm-card');
+  VFM.scrimEl.addEventListener('click', ()=>vfmClose());
+  VFM.cardEl.addEventListener('click', _vfmCardClick);
+  _vfmAttachCardGestures(VFM.cardEl);
+  document.addEventListener('keydown', e=>{
+    if(!VFM.open) return;
+    if(e.key==='Escape'){ vfmClose(); return; }
+    if(e.key==='ArrowRight'){ vfmNav('prev'); return; }
+    if(e.key==='ArrowLeft'){ vfmNav('next'); return; }
+  });
+}
+
+// ─ ورود از کارت‌های موجود (pinch-out موبایل / دابل‌کلیک دسکتاپ) ─
+function _vfmFocusableCard(el){
+  return el.closest('.cp, .ri.gc[data-fc], .kh-verse-fc');
+}
+function _vfmOpenFromCard(card){
+  if(VFM.open) return;
+  if(card.classList.contains('cp')){
+    const parts=card.dataset.key.split('_');
+    const tp=parts[0], id=parseInt(parts[1]), ci=parseInt(parts[2]);
+    vfmOpen(card, makePoemProvider(tp,id,ci));
+    return;
+  }
+  if(card.classList.contains('kh-verse-fc')){
+    const band=parseInt(card.dataset.band);
+    vfmOpen(card, makeLazyPoemProvider('t', band, card.dataset.m1||'', card.dataset.m2||''));
+    return;
+  }
+  // .ri.gc[data-fc]
+  if(card.dataset.fc==='srch'){
+    vfmOpen(card, makeSearchProvider(parseInt(card.dataset.ridx)));
+    return;
+  }
+  if(card.dataset.fc==='kw'){
+    vfmOpen(card, makeKeywordProvider(parseInt(card.dataset.ridx)));
+    return;
+  }
+}
+
+ctEl.addEventListener('dblclick', e=>{
+  if(e.target.closest('button,.ca,.nd,[data-action]')) return;
+  const card=_vfmFocusableCard(e.target);
+  if(!card) return;
+  e.preventDefault();
+  _vfmOpenFromCard(card);
+});
+
+// روی کارت‌های .ri.gc تک‌کلیک از قبل به صفحهٔ غزل ناوبری می‌کند (رفتار موجود سایت)، پس
+// کلیک اول کارت را از DOM حذف می‌کند و dblclick بومی هرگز به کلیک دوم نمی‌رسد. فقط روی
+// دسکتاپ (جایی که دابل‌کلیک راه ورود مستند است) کلیک اول را کمی به تعویق می‌اندازیم تا
+// اگر کلیک دوم در بازهٔ کوتاه برسد، به‌جای ناوبری، فوکوس بیت باز شود؛ در غیر این صورت
+// همان کلیک با replay به delegation اصلی می‌رسد و ناوبری طبق قبل انجام می‌شود. روی موبایل
+// این تأخیر اعمال نمی‌شود چون ورود به فوکوس آن‌جا با pinch (جدا از رویداد click) است.
+let _vfmClickTimer=null, _vfmPendingCard=null, _vfmReplaying=false;
+ctEl.addEventListener('click', e=>{
+  if(_vfmReplaying || !_isDesktop()) return;
+  const card=e.target.closest('.ri.gc[data-fc]');
+  if(!card) return;
+  if(e.target.closest('button')) return;
+  if(_vfmClickTimer && _vfmPendingCard===card){
+    clearTimeout(_vfmClickTimer);
+    _vfmClickTimer=null; _vfmPendingCard=null;
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    _vfmOpenFromCard(card);
+    return;
+  }
+  e.stopImmediatePropagation();
+  e.preventDefault();
+  _vfmPendingCard=card;
+  _vfmClickTimer=setTimeout(()=>{
+    _vfmClickTimer=null; _vfmPendingCard=null;
+    _vfmReplaying=true;
+    card.click();
+    _vfmReplaying=false;
+  }, 280);
+}, true);
+
+let _vfmPinchOpen=null;
+ctEl.addEventListener('touchstart', e=>{
+  if(VFM.open || e.touches.length!==2){ _vfmPinchOpen=null; return; }
+  const card=_vfmFocusableCard(e.target);
+  if(!card){ _vfmPinchOpen=null; return; }
+  _vfmPinchOpen={card, startDist:_vfmTouchDist(e.touches)};
+}, {passive:true});
+ctEl.addEventListener('touchmove', e=>{
+  if(!_vfmPinchOpen || e.touches.length!==2) return;
+  e.preventDefault();
+  if(_vfmTouchDist(e.touches)/_vfmPinchOpen.startDist >= 1.25){
+    const card=_vfmPinchOpen.card;
+    _vfmPinchOpen=null;
+    _vfmOpenFromCard(card);
+  }
+}, {passive:false});
+function _vfmPinchOpenEnd(){ _vfmPinchOpen=null; }
+ctEl.addEventListener('touchend', _vfmPinchOpenEnd);
+ctEl.addEventListener('touchcancel', _vfmPinchOpenEnd);
+
+// خوانش: تبدیل نقل‌قول‌های استاتیک <blockquote class="kh-verse"> به کارت بیتِ قابل‌فوکوس
+function _vfmHydrateKhVerses(terjeeNumber){
+  ctEl.querySelectorAll('.kh-content .kh-verse').forEach(bq=>{
+    const m2El=bq.querySelector('.m2');
+    const full=bq.textContent||'';
+    const m2=m2El?m2El.textContent:'';
+    const m1=m2El?full.slice(0, full.length-m2.length):full;
+    bq.classList.add('kh-verse-fc');
+    bq.dataset.band=terjeeNumber;
+    bq.dataset.m1=m1.trim();
+    bq.dataset.m2=m2.trim();
+  });
+}
+
 // ─── SHARE & TOAST ───────────────────────
 const shbg=document.getElementById('shbg');
 let _shData=null;
@@ -3928,6 +4548,7 @@ async function svn(){
     else delete _nts[bkey(tp,pid,ci)];
     _saveMockBms();
     cmob();
+    vfmSyncIfOpen(tp,pid,ci);
     if(curView==='gh') showG(cg);
     else if(curView==='tr') showT(ct);
     else if(curView==='bm') showBm();
@@ -3946,6 +4567,7 @@ async function svn(){
     }
     await loadUserData();
     cmob();
+    vfmSyncIfOpen(tp,pid,ci);
     if(curView==='gh') showG(cg);
     else if(curView==='tr') showT(ct);
     else if(curView==='bm') showBm();
@@ -4241,6 +4863,8 @@ document.getElementById('auth-reset-btn').addEventListener('click',async()=>{
 document.addEventListener('click',e=>{
   if(e.target.closest('#pr-guest-login')){showAuthModal(null,'login');return;}
   if(e.target.closest('#pr-guest-reg')){showAuthModal(null,'register');return;}
+  if(e.target.closest('#gate-login')){showAuthModal(_gateResume?{type:'nav',path:_gateResume}:null,'login');return;}
+  if(e.target.closest('#gate-reg')){showAuthModal(_gateResume?{type:'nav',path:_gateResume}:null,'register');return;}
 });
 
 // ─── TWEAKS PANEL ────────────────────────
@@ -4401,6 +5025,7 @@ window.addEventListener('popstate', e=>{
 });
 
 // ─── BOOT ────────────────────────────────
+vfmInit();
 _loadMockBms();
 loadUserData().then(()=>{
   if(curView === 'bm') showBm();

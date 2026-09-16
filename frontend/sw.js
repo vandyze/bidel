@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bidel-v20260903_010258';
+const CACHE_NAME = 'bidel-v20260917_022903';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
@@ -15,7 +15,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   // index.html و API هیچ‌وقت cache نمی‌شن
-  if (url.pathname === '/' || url.pathname === '/index.html' || url.pathname.startsWith('/api/')) {
+  // (در توسعهٔ لوکال، API روی origin دیگری مثل :8000 صدا زده می‌شود، پس هر درخواست cross-origin هم از cache رد می‌شود)
+  if (url.pathname === '/' || url.pathname === '/index.html' || url.pathname.startsWith('/api/') || url.origin !== self.location.origin) {
     return; // API و HTML را pass-through کن بدون interceptدرخواست
   }
   // فونت‌ها و آیکون‌ها cache می‌شن
