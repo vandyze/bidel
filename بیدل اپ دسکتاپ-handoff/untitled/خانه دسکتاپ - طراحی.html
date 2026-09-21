@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>بیدلی — خانهٔ دسکتاپ</title>
+<meta name="design_doc_mode" content="canvas">
+<style>
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Light.ttf") format("truetype");font-weight:300;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-DemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Bold.ttf") format("truetype");font-weight:700;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Black.ttf") format("truetype");font-weight:900;font-display:swap}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f0ebde;--sf:#f7f3e6;--sf2:#fbf8ee;--br:#c9c1a6;--br2:#dcd5be;--ik:#e8e2d0;--tx:#1a2218;--tx2:#3a4830;--mu:#6a7a5a;--fa:#a8a48c;--vf:#b8b09a;--go:#5a7048;--gl:#7a9060;--gd:#3a4830;--gh:#e9eedb;--sa:#c89030;--sa2:#a87420;--sah:#f4ebd0}
+body{font-family:"IRANYekanX",sans-serif;color:var(--tx);font-feature-settings:"locl" 1;background:#e4dfd2}
+a{color:var(--go)}a:hover{color:var(--gl)}
+.frame{position:absolute}
+.flabel{font-size:13px;color:var(--gd);font-weight:700;margin-bottom:10px}
+.flabel span{font-weight:400;color:var(--mu);font-size:11.5px;margin-inline-start:8px}
+.win{width:1440px;height:900px;display:flex;background:var(--bg);border:1px solid var(--br);border-radius:12px;overflow:hidden;box-shadow:0 10px 40px -20px rgba(58,72,48,.5)}
+
+/* sidebar */
+.sb{width:240px;flex-shrink:0;background:var(--sf2);border-inline-end:1px solid var(--br);display:flex;flex-direction:column;padding:16px 12px;order:1}
+.sb-brand{display:flex;align-items:center;gap:10px;padding:4px 6px 16px}
+.sb-logo{width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.sb-logo img{width:100%;height:100%;object-fit:contain;display:block}
+.sb-name{font-size:15px;font-weight:700;color:var(--gd)}
+.sb-sub{font-size:10.5px;color:var(--mu);margin-top:2px}
+.sb-search{display:flex;align-items:center;gap:8px;background:var(--ik);border:1px solid var(--br2);border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--vf);margin-bottom:14px}
+.sb-search svg{width:15px;height:15px;stroke:var(--mu);fill:none;stroke-width:1.8}
+.sb-nav{display:flex;flex-direction:column;gap:2px}
+.sb-item{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:10px;font-size:13px;color:var(--tx2);cursor:pointer}
+.sb-item svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.sb-item:hover{background:var(--gh)}
+.sb-item.on{background:var(--gh);color:var(--go);font-weight:700}
+.sb-item .n{margin-inline-start:auto;font-size:10.5px;color:var(--fa)}
+.sb-group{font-size:10px;letter-spacing:.14em;color:var(--fa);font-weight:600;padding:16px 11px 7px}
+.sb-foot{margin-top:auto;display:flex;align-items:center;gap:9px;border-top:1px solid var(--br2);padding:13px 8px 2px;cursor:pointer}
+.sb-av{width:30px;height:30px;border-radius:50%;background:var(--gh);border:1px solid var(--br2);color:var(--go);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.sb-foot-t1{font-size:12.5px;font-weight:600;color:var(--gd)}
+.sb-foot-t2{font-size:10.5px;color:var(--mu)}
+.sb-foot-chev{margin-inline-start:auto;color:var(--vf);font-size:16px}
+.sb-av.on{background:var(--go);border-color:var(--go);color:#fbf8ee}
+.acc{order:2;width:250px;background:var(--sf2);border:1px solid var(--br);border-radius:14px;box-shadow:0 14px 40px -18px rgba(58,72,48,.55);padding:8px;align-self:flex-end;margin:0 0 42px 18px}
+.acc-hd{display:flex;align-items:center;gap:9px;padding:8px 8px 12px;border-bottom:1px solid var(--br2)}
+.acc-nm{font-size:13px;font-weight:700;color:var(--gd)}
+.acc-em{font-size:10.5px;color:var(--mu);margin-top:2px}
+.pr-stats{display:flex;background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:12px 4px;margin:10px 4px}
+.pr-stat{flex:1;text-align:center;border-left:1px solid var(--br2);padding:0 4px}
+.pr-stat:first-child{border-left:none}
+.pr-stat-val{font-size:22px;color:var(--go);font-weight:700;line-height:1.1}
+.pr-stat-lab{font-size:10.5px;color:var(--mu);margin-top:4px;letter-spacing:.04em}
+.pr-section-h{font-size:10px;letter-spacing:.14em;color:var(--fa);font-weight:600;padding:8px 9px 6px}
+.pr-row{display:flex;align-items:center;gap:10px;width:100%;background:transparent;border:none;text-align:right;font-family:inherit;padding:8px 9px;border-radius:10px;cursor:pointer}
+.pr-row:hover{background:var(--gh)}
+.pr-row-ic{width:30px;height:30px;flex-shrink:0;border-radius:9px;background:var(--gh);border:1px solid var(--br2);color:var(--go);display:flex;align-items:center;justify-content:center}
+.pr-row-ic.sa{background:var(--sah);border-color:var(--sa);color:var(--sa2)}
+.pr-row-ic.er{background:#f3e0da;border-color:#d9a894;color:#9a4a30}
+.pr-row-ic svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pr-row-t1{display:block;font-size:12.5px;font-weight:600;color:var(--gd)}
+.pr-row-t2{display:block;font-size:10.5px;color:var(--mu);margin-top:2px}
+.pr-row-chev{margin-inline-start:auto;color:var(--vf);font-size:15px}
+
+/* main pane */
+.pane{flex:1;min-width:0;display:flex;flex-direction:column;order:2}
+.tb{flex-shrink:0;height:56px;display:flex;align-items:center;gap:10px;padding:0 28px;border-bottom:1px solid var(--br2)}
+.tb-h{font-size:14px;font-weight:700;color:var(--gd)}
+.tb-s{font-size:11.5px;color:var(--mu)}
+.tb-sp{flex:1}
+.tb-btn{display:flex;align-items:center;gap:7px;height:34px;padding:0 14px;border-radius:99px;border:1px solid var(--br);background:var(--sf2);color:var(--gd);font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.tb-btn:hover{border-color:var(--go);color:var(--go)}
+.tb-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.body{flex:1;overflow:hidden;padding:14px 28px 14px;display:flex;flex-direction:column;gap:11px}
+.body>*{flex-shrink:0}
+
+/* hero */
+.hero{position:relative;display:grid;grid-template-columns:1fr 400px;align-items:center;gap:24px;background:linear-gradient(135deg,var(--gh),var(--sf2));border:1px solid var(--br);border-radius:20px;padding:18px 28px;overflow:hidden}
+.hero-eye{font-size:10px;letter-spacing:.18em;color:var(--sa2);font-weight:600;margin-bottom:12px}
+.hero-t{font-size:24px;line-height:1.5;font-weight:800;color:var(--gd);text-wrap:pretty;max-width:24ch}
+.hero-s{font-size:13.5px;line-height:1.85;color:var(--mu);margin-top:8px;max-width:54ch;text-wrap:pretty}
+.hero-cta{margin-top:14px;display:inline-flex;align-items:center;gap:9px;background:var(--go);color:#fff;border:none;border-radius:13px;padding:0 24px;height:44px;font-family:inherit;font-size:14.5px;font-weight:700;cursor:pointer}
+.hero-cta:hover{background:var(--gl)}
+.hero-cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.hero-net{width:100%;height:150px;display:block}
+.hero-net .nl{stroke:var(--go);stroke-width:1;fill:none;opacity:.3}
+.hero-net .nd{fill:var(--go);opacity:.28}
+.hero-net .nd.sa{fill:var(--sa);opacity:.34}
+.hero-net .nt{fill:var(--gd);opacity:.2;font-weight:700;text-anchor:middle}
+
+/* cycle */
+.sec-h{display:flex;align-items:baseline;gap:10px}
+.sec-t{font-size:16px;font-weight:700;color:var(--gd)}
+.sec-s{font-size:12.5px;color:var(--mu)}
+.cyc{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.st{display:flex;gap:11px;background:var(--sf);border:1px solid var(--br2);border-radius:16px;padding:14px 14px 13px;cursor:pointer;transition:border-color .16s,transform .16s}
+.st:hover{border-color:var(--go);transform:translateY(-1px)}
+.st-n{width:28px;height:28px;flex-shrink:0;border-radius:99px;border:1px solid var(--br);background:var(--sf2);color:var(--mu);font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.st-t{font-size:14.5px;font-weight:700;color:var(--gd);line-height:1.6}
+.st-s{font-size:12.5px;color:var(--mu);line-height:1.85;margin-top:4px;text-wrap:pretty}
+.st.feat{position:relative;grid-column:span 2;background:linear-gradient(135deg,var(--sah),var(--sf2));border-color:var(--sa);overflow:hidden}
+.st.feat::before{content:'۞';position:absolute;top:-18px;left:-14px;font-size:132px;color:var(--sa);opacity:.08;font-family:serif;line-height:1;pointer-events:none}
+.st.feat>div{position:relative}
+.st.feat .st-n{border-color:var(--go);color:var(--go);background:var(--gh);box-shadow:0 0 0 4px var(--gh)}
+.st-verse{position:relative;margin-top:11px;padding-top:11px;border-top:1px solid var(--sa)}
+.st-tag{position:relative;font-size:10px;letter-spacing:.16em;color:var(--sa2);font-weight:600;margin-bottom:11px}
+.st-m1{position:relative;font-size:20px;color:var(--tx);line-height:2.1}
+.st-m2{position:relative;font-size:20px;color:var(--mu);line-height:2.1;text-align:left}
+.st-from{position:relative;font-size:11.5px;color:var(--mu);margin-top:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+.chips span{font-size:12px;color:var(--gd);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:3px 11px}
+.chips .more{color:var(--go);background:transparent;border:1px dashed var(--go);font-weight:600}
+
+/* soluk card (logged in) */
+.sk-card{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--br);border-radius:20px;padding:18px 22px;cursor:pointer}
+.sk-card:hover{border-color:var(--go)}
+.sk-card-tx{flex:1;min-width:0}
+.sk-card-lab{font-size:10.5px;color:var(--mu);letter-spacing:.14em;font-weight:600;margin-bottom:6px}
+.sk-card-line{font-size:20px;color:var(--gd);font-weight:700;line-height:1.35}
+.sk-card-line.dim{font-size:17px;font-weight:500;color:var(--mu)}
+.sk-card-thumb{flex-shrink:0;width:64px;height:64px}
+.sk-card-thumb svg{width:64px;height:64px}
+.sk-card-chev{color:var(--vf);font-size:20px;line-height:1;direction:ltr;unicode-bidi:isolate}
+.sk-prog{display:flex;align-items:center;gap:10px;margin-top:11px;max-width:420px}
+.sk-prog-track{flex:1;height:5px;border-radius:99px;background:var(--ik);overflow:hidden}
+.sk-prog-fill{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gl),var(--go))}
+.sk-prog-n{font-size:11.5px;color:var(--mu);flex-shrink:0}
+.mr{width:100%;height:auto;display:block;overflow:visible}
+.mr-grid{fill:none;stroke:var(--br2);stroke-width:1}
+.mr-spoke{stroke:var(--br2);stroke-width:1}
+.mr-faint .mr-grid,.mr-faint .mr-spoke{stroke:var(--br2);opacity:.7}
+
+/* turn + cta */
+.turn{display:flex;align-items:center;gap:14px;background:var(--sah);border:1px solid var(--br2);border-radius:16px;padding:10px 18px}
+.turn-ic{width:32px;height:32px;flex-shrink:0;border-radius:99px;border:1px solid var(--sa);color:var(--sa2);display:flex;align-items:center;justify-content:center;font-size:17px}
+.turn-tx{font-size:13px;color:var(--tx2);line-height:1.8}
+.turn-tx b{color:var(--gd);font-weight:700}
+.turn-cta{margin-inline-start:auto;display:inline-flex;align-items:center;gap:9px;background:var(--go);color:#fff;border:none;border-radius:12px;padding:0 22px;height:42px;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.turn-cta:hover{background:var(--gl)}
+.turn-cta svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+
+/* bottom two columns */
+.dual{display:grid;grid-template-columns:1fr 470px;gap:20px;align-items:start}
+.kw-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:10px}
+.kwc{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:9px 12px;cursor:pointer}
+.kwc:hover{border-color:var(--go)}
+.kwc-tag{font-size:9px;letter-spacing:.12em;color:var(--fa);font-weight:600}
+.kwc-w{font-size:17px;font-weight:700;color:var(--gd);margin-top:7px}
+.kwc-n{font-size:10.5px;color:var(--mu);margin-top:4px}
+.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px}
+.qa-c{display:flex;align-items:center;gap:8px;background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:9px 12px;font-size:12.5px;color:var(--tx2);cursor:pointer}
+.qa-c:hover{border-color:var(--go);color:var(--go)}
+.qa-c svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<div class="frame" style="left:0;top:46px" data-screen-label="خانه — دسکتاپ">
+<div class="flabel">خانهٔ جدید — دسکتاپ <span>۱۴۴۰×۹۰۰ · نوار کنارهٔ راست ۲۴۰ · همان محتوای خانهٔ موبایل در چیدمان سه‌ستونی</span></div>
+<div class="win">
+  <main class="pane">
+    <div class="tb">
+      <div class="tb-sp"></div>
+      <button class="tb-btn"><svg viewBox="0 0 24 24"><path d="M16 4h4v4"/><path d="M20 4L4 20"/><path d="M16 20h4v-4"/><path d="M4 4l5 5"/><path d="M15 15l5 5"/></svg>غزل تصادفی</button>
+    </div>
+    <div class="body">
+
+      <div class="hero">
+        <div>
+          <h1 class="hero-t">بیدلی؛ سفر تو در دنیای بیدل از همین‌جا شروع می‌شه.</h1>
+          <div class="hero-s">هر کلمه در شعر بیدل معنای دقیق خودش را دارد. بیدلی کمک می‌کند این معناها را پیدا کنی.</div>
+          <button class="hero-cta"><span>شروع کن</span><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></button>
+        </div>
+        <svg class="hero-net" viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <path class="nl" d="M90 58 L250 42 M90 58 L160 100 M160 100 L230 110 M230 110 L300 120 M250 42 L230 110 M160 100 L190 180 M190 180 L300 120 M90 58 L60 150 M60 150 L120 195 M120 195 L190 180 M20 95 L60 150 M20 95 L90 58"/>
+          <circle class="nd sa" cx="90" cy="58" r="6"/><circle class="nd" cx="250" cy="42" r="4"/><circle class="nd sa" cx="300" cy="120" r="6.5"/><circle class="nd" cx="60" cy="150" r="4.5"/><circle class="nd" cx="190" cy="180" r="5"/><circle class="nd" cx="160" cy="100" r="2.5"/><circle class="nd" cx="230" cy="110" r="3"/><circle class="nd" cx="120" cy="195" r="2.6"/><circle class="nd" cx="20" cy="95" r="2.2"/>
+          <text class="nt" x="90" y="44" font-size="15">دل</text><text class="nt" x="250" y="29" font-size="13">آیینه</text><text class="nt" x="300" y="106" font-size="15">حیرت</text><text class="nt" x="60" y="137" font-size="13">رنگ</text><text class="nt" x="190" y="167" font-size="14">نفس</text>
+        </svg>
+      </div>
+
+      <div>
+        <div class="sec-h"><span class="sec-t">هفت گام</span><span class="sec-s">این یک دور است، نه یک خط.</span></div>
+        <div class="cyc" style="margin-top:12px">
+          <div class="st feat">
+            <span class="st-n">۱</span>
+            <div>
+              <div class="st-t">از یک غزل شروع کن</div>
+              <div class="st-s">بیت امروز، و غزلی که از آن آمده.</div>
+              <div class="st-verse">
+                <div class="st-tag">✦ بیت امروز</div>
+                <div class="st-m1">هر چه جستیم در این آینه، صورت ما بود</div>
+                <div class="st-m2">از تماشای جهان دل به جنونی دادیم</div>
+                <div class="st-from">از غزل ۱۴۲۶ · برای خواندنِ همهٔ غزل بزنید</div>
+              </div>
+            </div>
+          </div>
+          <div class="st"><span class="st-n">۲</span><div><div class="st-t">غزل را در جای خودش ببین</div><div class="st-s">جایگاه معنایی غزل در مقامات سلوک.</div></div></div>
+          <div class="st"><span class="st-n">۳</span><div><div class="st-t">یک کلمه را در غزل انتخاب کن</div><div class="st-s">کلیدواژه‌های همان غزل؛ معناش رو از خود بیدل استخراج کن.</div><div class="chips"><span>آینه</span><span>دل</span><span>جنون</span><span>غبار</span><span>نفس</span><span>حیرت</span><span class="more">همه (۳۴)</span></div></div></div>
+          <div class="st"><span class="st-n">۴</span><div><div class="st-t">کلمه را در بافتار شعرهای دیگر ببین</div><div class="st-s">همان کلمه، در بیت‌هایی که درشان آمده.</div></div></div>
+          <div class="st"><span class="st-n">۵</span><div><div class="st-t">دنبالش را بگیر</div><div class="st-s">کلماتی که معمولاً با این کلمه به کار می‌روند رو دنبال کن.</div></div></div>
+          <div class="st"><span class="st-n">۶</span><div><div class="st-t">مسیر سلوکت را نگه دار</div><div class="st-s">نشان، یادداشت، تاریخچه و وضع سلوک شخصی.</div></div></div>
+          <div class="st"><span class="st-n">۷</span><div><div class="st-t">به متن کامل برگرد</div><div class="st-s">غزلیات، ترجیع‌بند، زند بیدل و خوانش‌ها.</div></div></div>
+        </div>
+      </div>
+
+      <div class="turn">
+        <span class="turn-ic">↻</span>
+        <span class="turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند. هر گام هر وقت خواستی جداگانه هم در دسترس است.</span>
+        <button class="turn-cta"><span>دور امروز را شروع کن</span><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></button>
+      </div>
+
+      <div class="dual">
+        <div>
+          <div class="sec-h"><span class="sec-t">کلمات کلیدی امروز</span></div>
+          <div class="kw-row">
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">آینه</div><div class="kwc-n">۴۱۲ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">دل</div><div class="kwc-n">۳۸۷ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">جنون</div><div class="kwc-n">۲۹۶ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">غبار</div><div class="kwc-n">۲۴۱ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">نفس</div><div class="kwc-n">۲۰۸ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">حیرت</div><div class="kwc-n">۱۷۳ بار</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="sec-h"><span class="sec-t">دسترسی سریع</span></div>
+          <div class="qa">
+            <div class="qa-c"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg><span>غزلیات</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><span>ترجیع‌بند</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="13" r="2.4"/><circle cx="7" cy="19" r="2.4"/><path d="M7.8 8.4 10.5 11.6M14 12.2 16.4 8M11 14.8 8.2 17.2"/></svg><span>کلمات کلیدی</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>خوانش‌ها</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>زند بیدل</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg><span>جستجو</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <aside class="sb">
+    <div class="sb-brand"><div class="sb-logo" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div><div><div class="sb-name">بیدلی</div><div class="sb-sub">دیوان بیدل دهلوی</div></div></div>
+    <div class="sb-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg><span>جست‌وجو در دیوان…</span></div>
+    <div class="sb-nav">
+      <div class="sb-item on"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2z"/></svg>خانه</div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>نشان‌ها<span class="n">۲۴</span></div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>کلمات کلیدی<span class="n">۳۱۴</span></div>
+    </div>
+    <div class="sb-group">کتابخانه</div>
+    <div class="sb-nav">
+      <div class="sb-item"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg>غزلیات<span class="n">۲۸۲۷</span></div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>ترجیع‌بند<span class="n">۱۱</span></div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>زَند بیدل</div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>خوانش‌ها</div>
+      
+    </div>
+    <div class="sb-foot"><div class="sb-av">م</div><div><div class="sb-foot-t1">مهمان</div><div class="sb-foot-t2">ورود / ثبت‌نام</div></div><span class="sb-foot-chev">›</span></div>
+  </aside>
+</div>
+</div>
+
+<div class="frame" style="left:0;top:1010px" data-screen-label="خانه — دسکتاپ (ورودکرده)">
+<div class="flabel">خانه — حالت ورودکرده <span>مبنا: index · جای کارت هیرو، کارت «سلوک من» می‌آید</span></div>
+<div class="win">
+  <main class="pane">
+    <div class="tb">
+      <div class="tb-sp"></div>
+      <button class="tb-btn"><svg viewBox="0 0 24 24"><path d="M16 4h4v4"/><path d="M20 4L4 20"/><path d="M16 20h4v-4"/><path d="M4 4l5 5"/><path d="M15 15l5 5"/></svg>غزل تصادفی</button>
+    </div>
+    <div class="body">
+
+      <div class="sk-card">
+        <div class="sk-card-tx">
+          <div class="sk-card-lab">سلوک من</div>
+          <div class="sk-card-line dim">سلوکت در حال شکل‌گیری است</div>
+          <div class="sk-prog"><span class="sk-prog-track"><span class="sk-prog-fill" style="width:75%"></span></span><span class="sk-prog-n">۶ از ۸</span></div>
+        </div>
+        <div class="sk-card-thumb"><svg class="mr mr-faint" viewBox="0 0 68 68" aria-hidden="true"><polygon class="mr-grid" points="34.0,25.4 40.7,28.7 42.4,35.9 37.7,41.7 30.3,41.7 25.6,35.9 27.3,28.7"/><polygon class="mr-grid" points="34.0,16.8 47.4,23.3 50.7,37.8 41.4,49.5 26.6,49.5 17.3,37.8 20.6,23.3"/><polygon class="mr-grid" points="34.0,8.0 54.3,17.8 59.3,39.8 45.3,57.4 22.7,57.4 8.7,39.8 13.7,17.8"/><line class="mr-spoke" x1="34" y1="34" x2="34.0" y2="8.0"/><line class="mr-spoke" x1="34" y1="34" x2="54.3" y2="17.8"/><line class="mr-spoke" x1="34" y1="34" x2="59.3" y2="39.8"/><line class="mr-spoke" x1="34" y1="34" x2="45.3" y2="57.4"/><line class="mr-spoke" x1="34" y1="34" x2="22.7" y2="57.4"/><line class="mr-spoke" x1="34" y1="34" x2="8.7" y2="39.8"/><line class="mr-spoke" x1="34" y1="34" x2="13.7" y2="17.8"/></svg></div><span class="sk-card-chev">‹</span>
+      </div>
+
+      <div>
+        <div class="sec-h"><span class="sec-t">هفت گام</span><span class="sec-s">این یک دور است، نه یک خط.</span></div>
+        <div class="cyc" style="margin-top:12px">
+          <div class="st feat">
+            <span class="st-n">۱</span>
+            <div>
+              <div class="st-t">از یک غزل شروع کن</div>
+              <div class="st-s">بیت امروز، و غزلی که از آن آمده.</div>
+              <div class="st-verse">
+                <div class="st-tag">✦ بیت امروز</div>
+                <div class="st-m1">هر چه جستیم در این آینه، صورت ما بود</div>
+                <div class="st-m2">از تماشای جهان دل به جنونی دادیم</div>
+                <div class="st-from">از غزل ۱۴۲۶ · برای خواندنِ همهٔ غزل بزنید</div>
+              </div>
+            </div>
+          </div>
+          <div class="st"><span class="st-n">۲</span><div><div class="st-t">غزل را در جای خودش ببین</div><div class="st-s">جایگاه معنایی غزل در مقامات سلوک.</div></div></div>
+          <div class="st"><span class="st-n">۳</span><div><div class="st-t">یک کلمه را در غزل انتخاب کن</div><div class="st-s">کلیدواژه‌های همان غزل؛ معناش رو از خود بیدل استخراج کن.</div><div class="chips"><span>آینه</span><span>دل</span><span>جنون</span><span>غبار</span><span>نفس</span><span>حیرت</span><span class="more">همه (۳۴)</span></div></div></div>
+          <div class="st"><span class="st-n">۴</span><div><div class="st-t">کلمه را در بافتار شعرهای دیگر ببین</div><div class="st-s">همان کلمه، در بیت‌هایی که درشان آمده.</div></div></div>
+          <div class="st"><span class="st-n">۵</span><div><div class="st-t">دنبالش را بگیر</div><div class="st-s">کلماتی که معمولاً با این کلمه به کار می‌روند رو دنبال کن.</div></div></div>
+          <div class="st"><span class="st-n">۶</span><div><div class="st-t">مسیر سلوکت را نگه دار</div><div class="st-s">نشان، یادداشت، تاریخچه و وضع سلوک شخصی.</div></div></div>
+          <div class="st"><span class="st-n">۷</span><div><div class="st-t">به متن کامل برگرد</div><div class="st-s">غزلیات، ترجیع‌بند، زند بیدل و خوانش‌ها.</div></div></div>
+        </div>
+      </div>
+
+      <div class="turn">
+        <span class="turn-ic">↻</span>
+        <span class="turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند. هر گام هر وقت خواستی جداگانه هم در دسترس است.</span>
+        <button class="turn-cta"><span>دور امروز را شروع کن</span><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></button>
+      </div>
+
+      <div class="dual">
+        <div>
+          <div class="sec-h"><span class="sec-t">کلمات کلیدی امروز</span></div>
+          <div class="kw-row">
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">آینه</div><div class="kwc-n">۴۱۲ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">دل</div><div class="kwc-n">۳۸۷ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">جنون</div><div class="kwc-n">۲۹۶ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">غبار</div><div class="kwc-n">۲۴۱ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">نفس</div><div class="kwc-n">۲۰۸ بار</div></div>
+            <div class="kwc"><div class="kwc-tag">کلمه</div><div class="kwc-w">حیرت</div><div class="kwc-n">۱۷۳ بار</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="sec-h"><span class="sec-t">دسترسی سریع</span></div>
+          <div class="qa">
+            <div class="qa-c"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg><span>غزلیات</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><span>ترجیع‌بند</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="13" r="2.4"/><circle cx="7" cy="19" r="2.4"/><path d="M7.8 8.4 10.5 11.6M14 12.2 16.4 8M11 14.8 8.2 17.2"/></svg><span>کلمات کلیدی</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>خوانش‌ها</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>زند بیدل</span></div>
+            <div class="qa-c"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg><span>جستجو</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <aside class="sb">
+    <div class="sb-brand"><div class="sb-logo" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div><div><div class="sb-name">بیدلی</div><div class="sb-sub">دیوان بیدل دهلوی</div></div></div>
+    <div class="sb-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg><span>جست‌وجو در دیوان…</span></div>
+    <div class="sb-nav">
+      <div class="sb-item on"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2z"/></svg>خانه</div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>نشان‌ها<span class="n">۲۴</span></div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>کلمات کلیدی<span class="n">۳۱۴</span></div>
+    </div>
+    <div class="sb-group">کتابخانه</div>
+    <div class="sb-nav">
+      <div class="sb-item"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg>غزلیات<span class="n">۲۸۲۷</span></div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>ترجیع‌بند<span class="n">۱۱</span></div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>زَند بیدل</div>
+      <div class="sb-item"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>خوانش‌ها</div>
+      
+    </div>
+    <div class="sb-foot"><div class="sb-av on">ن</div><div><div class="sb-foot-t1">نجیب‌الله</div><div class="sb-foot-t2">حساب کاربری</div></div><span class="sb-foot-chev">›</span></div>
+  </aside>
+</div>
+</div>
+
+
+</body>
+</html>

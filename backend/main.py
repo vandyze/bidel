@@ -1204,7 +1204,7 @@ def get_featured_keywords(db: Session = Depends(get_db)):
     today = date.today()
     seed = today.year * 10000 + today.month * 100 + today.day
     rng = random.Random(seed)
-    selected = rng.sample(keywords, min(4, len(keywords)))
+    selected = rng.sample(keywords, min(6, len(keywords)))
 
     return [
         {

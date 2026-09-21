@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260917_022903">
+<meta name="deploy-version" content="20260921_235409">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -74,6 +74,9 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .hd-t2{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em;margin-top:1px}
 .hd-icon{background:transparent;border:none;color:var(--mu);font-size:18px;cursor:pointer;padding:6px 8px;line-height:1}
 .hd-icon:active{color:var(--go)}
+#btn-rand{display:inline-flex;align-items:center;gap:7px}
+#btn-rand svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hd-rand-lab{display:none}
 
 /* poem prev/next sub-bar */
 .subnav{flex-shrink:0;display:flex;gap:5px;padding:8px 14px 10px;background:var(--bg);border-bottom:1px solid var(--br2)}
@@ -150,6 +153,75 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .kw-strip-tag::before{content:'✦';color:var(--sa);font-size:10px}
 .kw-strip-word{font-size:20px;color:var(--gd);font-weight:700;margin-bottom:3px;line-height:1.1}
 .kw-strip-n{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-variant-numeric:tabular-nums}
+
+/* ─── HOME: هیرو / سلوک من ─── */
+.hero{position:relative;padding:24px 18px 20px;margin:2px 0 18px;border-radius:20px;background:linear-gradient(170deg,var(--gh),var(--sf2) 60%,var(--sf));border:1px solid var(--br2);overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 90% 6%,rgba(200,144,48,.14),rgba(0,0,0,0) 44%);pointer-events:none}
+.hero-eye{position:relative;font-size:10px;letter-spacing:.18em;color:var(--sa2);font-weight:600;margin-bottom:12px}
+.hero-t{position:relative;font-size:25px;line-height:1.6;font-weight:800;color:var(--gd);text-wrap:pretty}
+.hero-s{position:relative;font-size:14px;line-height:2;color:var(--mu);margin-top:12px;text-wrap:pretty}
+.hero-cta{position:relative;margin-top:20px;white-space:nowrap;display:inline-flex;align-items:center;gap:9px;background:var(--go);color:#fff;border:none;border-radius:14px;padding:0 26px;min-height:50px;font-family:"IRANYekanX",sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .15s,transform .12s}
+.hero-cta:hover{background:var(--gl)}
+.hero-cta:active{transform:scale(.98)}
+.hero-cta svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}
+.hero{padding-bottom:26px}
+.hero-net{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.85}
+.hero-net .nl{stroke:var(--br);stroke-width:.7;fill:none;opacity:.55}
+.hero-net .nd{fill:var(--go);opacity:.28}
+.hero-net .nd.sa{fill:var(--sa);opacity:.34}
+.hero-net .nt{fill:var(--gd);opacity:.16;font-family:"IRANYekanX",sans-serif;font-weight:700;text-anchor:middle}
+.hero-net .drift{animation:netdrift 34s ease-in-out infinite alternate}
+.hero-net .drift2{animation:netdrift2 42s ease-in-out infinite alternate}
+@keyframes netdrift{from{transform:translate(0,0)}to{transform:translate(6px,-5px)}}
+@keyframes netdrift2{from{transform:translate(0,0)}to{transform:translate(-5px,4px)}}
+@media (prefers-reduced-motion:reduce){.hero-net .drift,.hero-net .drift2{animation:none}}
+.hero-t,.hero-s,.hero-cta,.hero-eye{position:relative;z-index:1}
+.home .sk-entry{border-radius:18px;padding:16px;margin:2px 0 18px}
+.home .sk-entry-line{font-size:17px}
+.home .sk-entry-line.dim{font-size:15px}
+
+/* ─── HOME: هفت گام (تایم‌لاین موبایل) ─── */
+.cyc-kick{font-size:12.5px;color:var(--mu);letter-spacing:.02em;margin:2px 4px 14px;line-height:1.8}
+.cyc{display:flex;flex-direction:column}
+.cyc-step{position:relative;display:flex;gap:13px;align-items:flex-start;padding:0 2px 16px;cursor:pointer}
+.cyc-step.on{padding-bottom:20px}
+.cyc-step.on .cyc-ar{align-self:flex-start;margin-top:6px}
+.cyc-step:last-of-type{padding-bottom:6px}
+.cyc-step::before{content:'';position:absolute;top:30px;bottom:0;inset-inline-start:14.5px;width:1px;background:var(--br2)}
+.cyc-step:last-of-type::before{display:none}
+.cyc-num{position:relative;width:30px;height:30px;border-radius:99px;border:1px solid var(--br);background:var(--sf2);color:var(--mu);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-variant-numeric:tabular-nums}
+.cyc-step.on .cyc-num{border-color:var(--go);color:var(--go);background:var(--gh);box-shadow:0 0 0 4px var(--gh)}
+.cyc-bd{flex:1;min-width:0;padding-top:2px}
+.cyc-t{font-size:16px;font-weight:700;color:var(--gd);line-height:1.5}
+.cyc-s{font-size:13px;color:var(--mu);line-height:1.9;margin-top:3px;text-wrap:pretty}
+.cyc-ar{align-self:center;flex-shrink:0;color:var(--vf);display:flex}
+.cyc-ar svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.cyc-words{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+.cyc-words span{font-size:12.5px;color:var(--gd);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:3px 11px}
+.cyc-words-more{font-family:"IRANYekanX",sans-serif;font-size:12.5px;font-weight:600;color:var(--go);background:transparent;border:1px dashed var(--go);border-radius:99px;padding:0 16px;min-height:44px;cursor:pointer;line-height:1.7;display:inline-flex;align-items:center}
+.cyc-words-more:hover{background:var(--gh)}
+.cyc-verse{position:relative;background:linear-gradient(135deg,var(--sah),var(--sf));border:1px solid var(--sa);border-radius:18px;padding:22px 20px 18px;margin:14px -43px 0 0;overflow:hidden}
+.cyc-verse::before{content:'۞';position:absolute;top:-10px;right:-10px;font-size:100px;color:var(--sa);opacity:.09;font-family:serif;line-height:1}
+.cyc-verse-tag{position:relative;font-size:10px;color:var(--sa2);letter-spacing:.16em;font-weight:600;margin-bottom:13px}
+.cyc-verse-m1{position:relative;font-size:20px;color:var(--tx);line-height:2.1}
+.cyc-verse-m2{position:relative;font-size:20px;color:var(--mu);line-height:2.1;text-align:left}
+.cyc-verse-from{position:relative;font-size:11.5px;color:var(--mu);margin-top:13px}
+.cyc-turn{display:flex;align-items:center;gap:11px;background:var(--sah);border:1px solid var(--br2);border-radius:14px;padding:12px 14px;margin:6px 0 14px}
+.cyc-turn-ic{width:30px;height:30px;border-radius:99px;border:1px solid var(--sa);color:var(--sa2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;line-height:1}
+.cyc-turn-tx{font-size:12.5px;color:var(--tx2);line-height:1.85;text-wrap:pretty}
+.cyc-turn-tx b{color:var(--gd);font-weight:700}
+.cyc-cta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;background:var(--go);color:#fff;border:none;border-radius:14px;min-height:52px;font-family:"IRANYekanX",sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .15s,transform .12s}
+.cyc-cta:hover{background:var(--gl)}
+.cyc-cta:active{transform:scale(.99)}
+.cyc-cta svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}
+.cyc-note{font-size:11.5px;color:var(--fa);text-align:center;margin:9px 0 22px;line-height:1.8}
+
+/* ─── HOME: دسترسی سریع ─── */
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.qa-c{display:flex;align-items:center;gap:9px;background:var(--sf2);border:1px solid var(--br2);border-radius:13px;padding:0 14px;min-height:50px;cursor:pointer;font-size:14px;font-weight:600;color:var(--tx2);transition:border-color .15s,background .15s}
+.qa-c:hover{border-color:var(--go);background:var(--sf)}
+.qa-c:active{transform:scale(.985)}
+.qa-c svg{width:18px;height:18px;stroke:var(--go);fill:none;stroke-width:1.7;flex-shrink:0}
 
 /* ─── BROWSE (segmented tabs) ─────────────── */
 .seg{display:flex;background:var(--ik);border-radius:11px;padding:3px;gap:2px;margin-bottom:14px}
@@ -909,24 +981,80 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
   .ct{display:grid;grid-template-columns:minmax(0,720px);justify-content:center;align-content:start;padding:26px 24px 56px}
   .ct::-webkit-scrollbar{width:9px}
 
-  /* ── خانه ──
-     «بیدلی» فقط از نوار ابزار برداشته می‌شود (در نوار کناره هست)؛ بلوک خوش‌آمد
-     مثل طراحی می‌ماند: «شب بخیر» ریز بالا، «دیوان بیدل» درشت زیرش. */
-  .home-search{display:none}
+  /* ── خانه (دسکتاپ) ──
+     فقط روی ریشهٔ .home-desk اعمال می‌شود تا اگر چیدمان موبایل رندر شده باشد،
+     هیچ استایلی از نسخهٔ دسکتاپ روی آن نیفتد (و برعکس). */
   .app[data-view="home"] .hd-title{display:none}
-  .home-greet{padding:0 2px 18px}
-  .home-day{font-size:26px}
+  .app[data-view="home"] .ct{display:block;padding:14px 28px 24px}
+  .home-desk{display:flex;flex-direction:column;gap:11px;padding:0}
+  .home-desk>*{flex-shrink:0}
   .section-h{margin:6px 2px 11px}
-  .verse-card{padding:22px 24px 18px;margin-bottom:22px}
-  .verse-card .verse-text{font-size:20px}
-  /* دو مصرع کنار هم — برچسب و پانویس تمام‌عرض می‌مانند */
-  .verse-card:has(.verse-text-2){display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
-  .verse-card:has(.verse-text-2)>.verse-tag,
-  .verse-card:has(.verse-text-2)>.verse-from{grid-column:1/-1}
-  .qg{grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-  .qc{min-height:128px;padding:16px 15px}
-  .kw-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:0;padding:0;overflow:visible}
-  .kw-strip-card{width:auto}
+
+  /* نوار ابزار: دکمهٔ «غزل تصادفی» */
+  #btn-rand{width:auto;min-width:0;height:34px;padding:0 14px;border-radius:99px;border:1px solid var(--br);background:var(--sf2);color:var(--gd);gap:7px;display:inline-flex;align-items:center;font-family:"IRANYekanX",sans-serif;font-size:12.5px;font-weight:600;cursor:pointer}
+  #btn-rand:hover{border-color:var(--go);color:var(--go);background:var(--sf2)}
+  #btn-rand svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .hd-rand-lab{display:inline}
+
+  /* هیرو (مهمان) — متن راست، شبکهٔ معنایی چپ */
+  .home-desk .hero{display:grid;grid-template-columns:1fr 400px;align-items:center;gap:24px;background:linear-gradient(135deg,var(--gh),var(--sf2));border:1px solid var(--br);border-radius:20px;padding:18px 28px;margin:0;overflow:hidden}
+  .home-desk .hero::before{display:none}
+  .home-desk .hero-t{font-size:24px;line-height:1.5;max-width:24ch}
+  .home-desk .hero-s{font-size:13.5px;line-height:1.85;margin-top:8px;max-width:54ch}
+  .home-desk .hero-cta{margin-top:14px;border-radius:13px;padding:0 24px;height:44px;min-height:0;font-size:14.5px}
+  .home-desk .hero-net{position:static;inset:auto;width:100%;height:150px;display:block;opacity:1}
+  .home-desk .hero-net .nl{stroke:var(--go);stroke-width:1;opacity:.3}
+  .home-desk .hero-net .drift,.home-desk .hero-net .drift2{animation:none}
+
+  /* کارت سلوک من (ورودکرده) */
+  .home-desk .sk-entry{gap:14px;background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--br);border-radius:20px;padding:18px 22px;margin:0}
+  .home-desk .sk-entry-line{font-size:20px}
+  .home-desk .sk-entry-line.dim{font-size:17px;font-weight:500}
+
+  /* هفت گام — گرید ۴ستونه، کارت نخست ویژه و دوستونه */
+  .home-desk .sec-h{display:flex;align-items:baseline;gap:10px}
+  .home-desk .sec-t{font-size:16px;font-weight:700;color:var(--gd)}
+  .home-desk .sec-s{font-size:12.5px;color:var(--mu)}
+  .home-desk .cyc-kick{display:none}
+  .home-desk .cyc{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+  .home-desk .cyc-step{display:flex;gap:11px;align-items:flex-start;background:var(--sf);border:1px solid var(--br2);border-radius:16px;padding:14px 14px 13px;cursor:pointer;transition:border-color .16s,transform .16s;position:static}
+  .home-desk .cyc-step::before{display:none}
+  .home-desk .cyc-step:hover{border-color:var(--go);transform:translateY(-1px)}
+  .home-desk .cyc-num{width:28px;height:28px;border:1px solid var(--br);background:var(--sf2);color:var(--mu);font-size:12.5px}
+  .home-desk .cyc-step.on{grid-column:span 2;position:relative;background:linear-gradient(135deg,var(--sah),var(--sf2));border-color:var(--sa);overflow:hidden;padding-bottom:13px}
+  .home-desk .cyc-step.on::after{content:'۞';position:absolute;top:-18px;left:-14px;font-size:132px;color:var(--sa);opacity:.08;font-family:serif;line-height:1;pointer-events:none}
+  .home-desk .cyc-step.on>div{position:relative}
+  .home-desk .cyc-step.on .cyc-num{border-color:var(--go);color:var(--go);background:var(--gh);box-shadow:0 0 0 4px var(--gh)}
+  .home-desk .cyc-t{font-size:14.5px;line-height:1.6}
+  .home-desk .cyc-s{font-size:12.5px;line-height:1.85;margin-top:4px}
+  .home-desk .cyc-ar{display:none}
+  .home-desk .cyc-verse{margin:11px 0 0;padding:11px 0 0;background:transparent;border:none;border-top:1px solid var(--sa);border-radius:0;overflow:visible}
+  .home-desk .cyc-verse::before{display:none}
+  .home-desk .cyc-verse-tag{margin-bottom:11px}
+  .home-desk .cyc-verse-m1,.home-desk .cyc-verse-m2{font-size:20px;line-height:2.1}
+  .home-desk .cyc-verse-from{margin-top:13px}
+  .home-desk .cyc-note{display:none}
+
+  /* بنر دور */
+  .home-desk .cyc-turn.turn{gap:14px;background:var(--sah);border:1px solid var(--br2);border-radius:16px;padding:10px 18px;margin:0}
+  .home-desk .turn-ic{width:32px;height:32px;border-radius:99px;border:1px solid var(--sa);color:var(--sa2);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;line-height:1}
+  .home-desk .turn-tx{font-size:13px;color:var(--tx2);line-height:1.8}
+  .home-desk .turn-tx b{color:var(--gd);font-weight:700}
+  .home-desk .turn-cta{margin-inline-start:auto;display:inline-flex;align-items:center;gap:9px;background:var(--go);color:#fff;border:none;border-radius:12px;padding:0 22px;height:42px;font-family:"IRANYekanX",sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .home-desk .turn-cta:hover{background:var(--gl)}
+  .home-desk .turn-cta svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+
+  /* دو ستون پایین */
+  .home-desk .dual{display:grid;grid-template-columns:1fr 470px;gap:20px;align-items:start}
+  .home-desk .kw-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:10px}
+  .home-desk .kwc{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:9px 12px;cursor:pointer;transition:border-color .15s}
+  .home-desk .kwc:hover{border-color:var(--go)}
+  .home-desk .kwc-tag{font-size:9px;letter-spacing:.12em;color:var(--fa);font-weight:600}
+  .home-desk .kwc-w{font-size:17px;font-weight:700;color:var(--gd);margin-top:7px}
+  .home-desk .kwc-n{font-size:10.5px;color:var(--mu);margin-top:4px}
+  .home-desk .qa{grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px}
+  .home-desk .qa-c{min-height:0;padding:9px 12px;font-size:12.5px;background:var(--sf)}
+  .home-desk .qa-c svg{width:17px;height:17px}
 
   /* ── فهرست‌ها و نتایج: مصرع‌ها دو ستونی ── */
   .ri{padding:12px 16px;margin-bottom:8px}
@@ -1146,15 +1274,15 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
     </div>
     <div class="dsb-nav" id="dsb-nav-user">
       <div class="dsb-item" data-dnav="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2z"/></svg>خانه</div>
-      <div class="dsb-item" data-dnav="bm"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>نشان‌ها<span class="n fa" id="dsb-n-bm"></span></div>
+      <div class="dsb-item" id="dsb-item-bm" data-dnav="bm"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>نشان‌ها<span class="n fa" id="dsb-n-bm"></span></div>
+      <div class="dsb-item" data-dnav="keywords"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>کلمات کلیدی<span class="n fa" id="dsb-n-kw"></span></div>
     </div>
-    <div class="dsb-group">کاوش</div>
+    <div class="dsb-group">کتابخانه</div>
     <div class="dsb-nav">
       <div class="dsb-item" data-dnav="ghazals"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg>غزلیات<span class="n fa" id="dsb-n-gh"></span></div>
       <div class="dsb-item" data-dnav="terjee"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>ترجیع‌بند<span class="n fa" id="dsb-n-tr"></span></div>
       <div class="dsb-item" id="dsb-item-zand" data-dnav="zand"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>زَند بیدل</div>
       <div class="dsb-item" id="dsb-item-khanesh" data-dnav="khanesh"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>خوانش‌ها</div>
-      <div class="dsb-item" data-dnav="keywords"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>کلمات کلیدی<span class="n fa" id="dsb-n-kw"></span></div>
     </div>
     <div class="dsb-foot" id="dsb-foot"></div>
   </aside>
@@ -1167,7 +1295,7 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
         <div class="hd-t1" id="hd-t1">بیدلی</div>
         <div class="hd-t2 fa" id="hd-t2" style="display:none"></div>
       </div>
-      <button class="hd-icon" id="btn-rand" aria-label="غزل تصادفی" title="غزل تصادفی">🎲</button>
+      <button class="hd-icon" id="btn-rand" aria-label="غزل تصادفی" title="غزل تصادفی"><svg viewBox="0 0 24 24"><path d="M16 4h4v4"/><path d="M20 4L4 20"/><path d="M16 20h4v-4"/><path d="M4 4l5 5"/><path d="M15 15l5 5"/></svg><span class="hd-rand-lab">غزل تصادفی</span></button>
       <button class="hd-avatar guest" id="btn-profile" aria-label="حساب کاربری" title="حساب کاربری">م</button>
     </header>
 
@@ -1892,7 +2020,7 @@ function syncSidebar(){
     el.classList.toggle('on', el.dataset.dnav===active);
   });
   // آیتم‌های نیازمند ورود در حالت مهمان پنهان می‌شوند
-  document.getElementById('dsb-nav-user').classList.toggle('hide', !_user);
+  document.getElementById('dsb-item-bm').classList.toggle('hide', !_user);
   document.getElementById('dsb-item-zand').classList.toggle('hide', !_user);
   document.getElementById('dsb-item-khanesh').classList.toggle('hide', !_user);
   const q=_lastSrch&&_lastSrch.query;
@@ -2143,65 +2271,172 @@ function renderMoodDetail(moodId){
 }
 
 // ─── HOME ─────────────────────────────────
+function _homeTopKw(){
+  const out=[], seen={};
+  const push=function(k){
+    const w=k.word||k.w||''; if(!w||seen[w]) return;
+    seen[w]=1; out.push({word:w, count:k.count||k.n||0});
+  };
+  (_featuredKw||[]).forEach(push);
+  if(out.length<6) (_allKeywords||[]).slice().sort((a,b)=>(b.count||0)-(a.count||0)).forEach(push);
+  return out.slice(0,6);
+}
+function renderHomeChips(words, total){
+  const box=document.getElementById('cyc-gk'); if(!box) return;
+  const vis=parseInt(box.dataset.vis||'6',10)||6;
+  box.dataset.exp='';
+  box.innerHTML=(words||[]).map(function(w,i){
+    return '<span data-kwword="'+w+'"'+(i>=vis?' style="display:none"':'')+'>'+w+'</span>';
+  }).join('')+'<button class="cyc-words-more" id="cyc-gk-more">همه ('+toFa(total||(words||[]).length)+')</button>';
+}
+function loadHomeGhazalKw(n){
+  if(!n) return;
+  apiFetch(API_URL+'/poems/ghazal/'+n+'/keywords').then(function(list){
+    if(curView!=='home' || !Array.isArray(list) || !list.length) return;
+    const words=list.map(function(k){return k.word}).filter(Boolean);
+    if(words.length>=4) renderHomeChips(words, words.length);
+  }).catch(function(){});
+}
+function _homeNetSvg(desktop){
+  if(desktop){
+    return '<svg class="hero-net" viewBox="0 0 360 210" preserveAspectRatio="xMidYMid meet" aria-hidden="true">'
+      +'<path class="nl" d="M90 58 L250 42 M90 58 L160 100 M160 100 L230 110 M230 110 L300 120 M250 42 L230 110 M160 100 L190 180 M190 180 L300 120 M90 58 L60 150 M60 150 L120 195 M120 195 L190 180 M20 95 L60 150 M20 95 L90 58"/>'
+      +'<circle class="nd sa" cx="90" cy="58" r="6"/><circle class="nd" cx="250" cy="42" r="4"/><circle class="nd sa" cx="300" cy="120" r="6.5"/><circle class="nd" cx="60" cy="150" r="4.5"/><circle class="nd" cx="190" cy="180" r="5"/><circle class="nd" cx="160" cy="100" r="2.5"/><circle class="nd" cx="230" cy="110" r="3"/><circle class="nd" cx="120" cy="195" r="2.6"/><circle class="nd" cx="20" cy="95" r="2.2"/>'
+      +'<text class="nt" x="90" y="44" font-size="15">دل</text><text class="nt" x="250" y="29" font-size="13">آیینه</text><text class="nt" x="300" y="106" font-size="15">حیرت</text><text class="nt" x="60" y="137" font-size="13">رنگ</text><text class="nt" x="190" y="167" font-size="14">نفس</text></svg>';
+  }
+  return '<svg class="hero-net" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'
+    +'<g class="drift"><path class="nl" d="M90 58 L250 42 M90 58 L160 100 M160 100 L230 110 M230 110 L300 120 M250 42 L230 110 M160 100 L190 180 M190 180 L300 120 M90 58 L60 150 M60 150 L120 205 M120 205 L190 180 M20 95 L60 150 M300 120 L330 190 M330 190 L190 180 M20 95 L90 58"/></g>'
+    +'<g class="drift2"><circle class="nd sa" cx="90" cy="58" r="6"/><circle class="nd" cx="250" cy="42" r="4"/><circle class="nd sa" cx="300" cy="120" r="6.5"/><circle class="nd" cx="60" cy="150" r="4.5"/><circle class="nd" cx="190" cy="180" r="5"/><circle class="nd" cx="160" cy="100" r="2.5"/><circle class="nd" cx="230" cy="110" r="3"/><circle class="nd" cx="330" cy="190" r="2.2"/><circle class="nd" cx="120" cy="205" r="2.6"/><circle class="nd" cx="20" cy="95" r="2.2"/>'
+    +'<text class="nt" x="90" y="44" font-size="15">دل</text><text class="nt" x="250" y="29" font-size="13">آیینه</text><text class="nt" x="300" y="106" font-size="15">حیرت</text><text class="nt" x="60" y="137" font-size="13">رنگ</text><text class="nt" x="190" y="167" font-size="14">نفس</text></g></svg>';
+}
+async function loadHomeSoluk(){
+  const slot=document.getElementById('home-soluk-slot');
+  const token=getToken();
+  if(!slot||!token) return;
+  try{
+    const resp=await fetch(API_URL+'/profile/soluk',{headers:{'Authorization':'Bearer '+token}});
+    if(!resp.ok) throw 0;
+    slot.innerHTML=solukCardHtml(await resp.json());
+  }catch(e){}
+}
 function showHome(){
   curTab='home'; curView='home'; backStack=[];
   setBnActive('home'); setBack(false); hideSubnavs(); setNavHidden(false);
   setHeader('بیدلی','');
   setMeta('دیوان کامل بیدل دهلوی', 'دیوان کامل بیدل دهلوی شامل ۲۸۲۷ غزل، ترجیع‌بند، زند بیدل و خوانش‌های تفسیری، به‌همراه واژه‌نامهٔ کلمات کلیدی');
-  const greeting = (()=>{ const h=new Date().getHours(); return h<5?'شب بخیر':h<12?'صبح بخیر':h<17?'ظهر بخیر':h<20?'عصر بخیر':'شب بخیر' })();
-  // Pick a "verse of the day" deterministically
+  const desktop=_isDesktop();
   const dayNum = Math.floor(Date.now()/86400000) % TOT + 1;
   const vod = _verseOfDay;
   const vodText1 = vod ? (vod.text1||vod.couplet_text1||'') : '';
   const vodText2 = vod ? (vod.text2||vod.couplet_text2||'') : '';
   const vodNum = vod ? (vod.ghazal_number||vod.poem_id||dayNum) : dayNum;
-  // Top keywords for strip
-  const topKw = _featuredKw.slice(0,6);
+  const topKw = _homeTopKw();
 
-  let h = '<div class="home">';
-  h += '<div class="home-search" id="home-search"><span class="home-search-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg></span><span class="home-search-tx">جستجو در غزل‌ها، واژه‌ها…</span><span class="home-search-hint fa">شماره یا واژه</span></div>';
-  h += '<div class="home-greet"><div class="home-hello fa">'+greeting+'</div><div class="home-day">دیوان بیدل</div></div>';
+  // کلیدواژه‌های غزلِ امروز (برای گام ۳)
+  const _kwWords=(_allKeywords||[]).map(k=>k.word).filter(Boolean);
+  let ghKw=[];
+  if(_kwWords.length){
+    for(let i=0;i<_kwWords.length&&ghKw.length<34;i++){ if((i*7+dayNum)%3!==0) ghKw.push(_kwWords[(i*11+dayNum)%_kwWords.length]); }
+    ghKw=ghKw.filter((w,i,a)=>a.indexOf(w)===i);
+  }
+  if(!ghKw.length) ghKw=['آینه','دل','جنون','غبار','نفس','حیرت'];
 
-  // Verse of the day
-  h += '<div class="verse-card" id="verse-of-day" data-n="'+vodNum+'">';
-  h += '<div class="verse-tag fa">✦ بیت امروز</div>';
-  if(vodText1){
-    h += '<div class="verse-text">'+vodText1+'</div>';
-    if(vodText2) h += '<div class="verse-text verse-text-2">'+vodText2+'</div>';
+  const arrow='<svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg>';
+  const chipsBox='<div class="cyc-words" id="cyc-gk" data-vis="6"></div>';
+
+  const STEPS=[
+    {go:'ghazal',n:dayNum,feat:true,t:'از یک غزل شروع کن',s:'بیت امروز، و غزلی که از آن آمده.'},
+    {go:'explore',n:dayNum,t:'غزل را در جای خودش ببین',s:'جایگاه معنایی غزل در مقامات سلوک.'},
+    {go:'kw',chips:true,t:'یک کلمه را در غزل انتخاب کن',s:'کلیدواژه‌های همان غزل؛ معناش رو از خود بیدل استخراج کن.'},
+    {go:'kw',t:'کلمه را در بافتار شعرهای دیگر ببین',s:'همان کلمه، در بیت‌هایی که درشان آمده.'},
+    {go:'search',t:'دنبالش را بگیر',s:'کلماتی که معمولاً با این کلمه به کار می‌روند رو دنبال کن.'},
+    {go:isAuthed()?'bm':'profile',t:'مسیر سلوکت را نگه دار',s:'نشان، یادداشت، تاریخچه و وضع سلوک شخصی.'},
+    {go:'library',t:'به متن کامل برگرد',s:'غزلیات، ترجیع‌بند، زند بیدل و خوانش‌ها.'}
+  ];
+  let steps='';
+  STEPS.forEach(function(st,i){
+    let body='<div class="cyc-bd"><div class="cyc-t">'+st.t+'</div><div class="cyc-s">'+st.s+'</div>';
+    if(st.feat){
+      body+='<div class="cyc-verse"><div class="cyc-verse-tag fa">✦ بیت امروز</div>'
+        +'<div class="cyc-verse-m1">'+(vodText1||'در حال بارگذاری…')+'</div>'
+        +(vodText2?'<div class="cyc-verse-m2">'+vodText2+'</div>':'')
+        +'<div class="cyc-verse-from fa">از غزل '+toFa(vodNum)+' · برای خواندنِ همهٔ غزل بزنید</div></div>';
+    }
+    if(st.chips) body+=chipsBox;
+    body+='</div>';
+    steps+='<div class="cyc-step'+(st.feat?' on':'')+'" data-go="'+st.go+'"'+(st.n!=null?' data-n="'+st.n+'"':'')+'>'
+      +'<span class="cyc-num fa">'+toFa(i+1)+'</span>'+body+'<span class="cyc-ar">'+arrow+'</span></div>';
+  });
+
+  const kwCards=(tag)=>topKw.map(function(k){
+    return '<div class="kwc" data-kwword="'+k.word+'"><div class="kwc-tag">'+tag+'</div><div class="kwc-w">'+k.word+'</div><div class="kwc-n">'+toFa(k.count)+' بار</div></div>';
+  }).join('');
+  const kwStrip=topKw.map(function(k){
+    return '<div class="kw-strip-card" data-kwword="'+k.word+'"><div class="kw-strip-tag">کلمه</div><div class="kw-strip-word">'+k.word+'</div><div class="kw-strip-n">'+toFa(k.count)+' بار</div></div>';
+  }).join('');
+
+  let h = '<div class="home '+(desktop?'home-desk':'home-mob')+'">';
+
+  // هیرو (مهمان) / سلوک من (ورودکرده)
+  if(isAuthed()){
+    h += '<div id="home-soluk-slot">'+solukCardHtml(null)+'</div>';
   } else {
-    h += '<div class="verse-text" style="color:var(--vf);font-size:14px">در حال بارگذاری…</div>';
+    h += '<div class="hero"><div class="hero-tx">'
+      +'<h1 class="hero-t">بیدلی؛ سفر تو در دنیای بیدل از همین‌جا شروع می‌شه.</h1>'
+      +'<div class="hero-s">هر کلمه در شعر بیدل معنای دقیق خودش را دارد. بیدلی کمک می‌کند این معناها را پیدا کنی.</div>'
+      +'<button class="hero-cta" data-go="register"><span>شروع کن</span>'+arrow+'</button>'
+      +'</div>'+_homeNetSvg(desktop)+'</div>';
   }
-  h += '<div class="verse-from fa">از غزل '+toFa(vodNum)+'</div>';
-  h += '</div>';
 
-  // Quick navigation grid
-  h += '<div class="section-h fa">کاوش</div>';
-  h += '<div class="qg">';
-  h += '<div class="qc" data-go="browse-g"><div class="qc-ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg></div><div><div class="qc-title">غزلیات</div><div class="qc-sub fa">۲۸۲۷ غزل</div></div></div>';
-  h += '<div class="qc" data-go="browse-t"><div class="qc-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></div><div><div class="qc-title">ترجیع‌بند</div><div class="qc-sub fa">۳۴ بند · حیرت</div></div></div>';
-  if(isAuthed()) h += '<div class="qc" data-go="browse-z"><div class="qc-ic"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg></div><div><div class="qc-title">زند بیدل</div><div class="qc-sub fa">شرح وکیلی</div></div></div>';
-  h += '<div class="qc" data-go="kw"><div class="qc-ic sa"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg></div><div><div class="qc-title">کلمات کلیدی</div><div class="qc-sub fa">۲۲۲ واژه</div></div></div>';
-  h += '</div>';  // close the .qg grid BEFORE adding khanesh card
-  if(isAuthed()) h += '<div class="qc qc-kh" data-go="khanesh"><div class="qc-ic sa">'+IC_KH+'</div><div class="qc-kh-tx"><div class="qc-title">خوانش‌ها <span class="qc-kh-new">تازه</span></div><div class="qc-sub fa">تفسیر و شرح بندهای ترجیع‌بند</div></div><span class="qc-kh-chev"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
-
-  // Keyword strip
-  h += '<div class="section-h fa">واژه‌های پُربسامد</div>';
-  h += '<div class="kw-strip">';
-  for(const k of topKw){
-    const word = k.word||k.w||'';
-    const cnt = k.count||k.n||0;
-    h += '<div class="kw-strip-card" data-kwword="'+word+'">';
-    h += '<div class="kw-strip-tag">واژه</div>';
-    h += '<div class="kw-strip-word">'+word+'</div>';
-    h += '<div class="kw-strip-n">'+toFa(cnt)+' بار</div>';
+  if(desktop){
+    // هفت گام — گرید
+    h += '<div><div class="sec-h"><span class="sec-t">هفت گام</span><span class="sec-s">این یک دور است، نه یک خط.</span></div>'
+      +'<div class="cyc">'+steps+'</div></div>';
+    // بنر دور
+    h += '<div class="cyc-turn turn"><span class="turn-ic">↻</span><span class="turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند. هر گام هر وقت خواستی جداگانه هم در دسترس است.</span>'
+      +'<button class="turn-cta" data-go="ghazal" data-n="'+dayNum+'"><span>دور امروز را شروع کن</span>'+arrow+'</button></div>';
+    // دو ستون پایین
+    h += '<div class="dual">';
+    h += '<div><div class="sec-h"><span class="sec-t">کلمات کلیدی امروز</span></div><div class="kw-row">'+kwCards('کلمه')+'</div></div>';
+    h += '<div><div class="sec-h"><span class="sec-t">دسترسی سریع</span></div><div class="qa">'
+      +'<div class="qa-c" data-go="browse-g"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg><span>غزلیات</span></div>'
+      +'<div class="qa-c" data-go="browse-t"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><span>ترجیع‌بند</span></div>'
+      +'<div class="qa-c" data-go="kw"><svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="13" r="2.4"/><circle cx="7" cy="19" r="2.4"/><path d="M7.8 8.4 10.5 11.6M14 12.2 16.4 8M11 14.8 8.2 17.2"/></svg><span>کلمات کلیدی</span></div>'
+      +'<div class="qa-c" data-go="khanesh"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>خوانش‌ها</span></div>'
+      +'<div class="qa-c" data-go="browse-z"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>زند بیدل</span></div>'
+      +'<div class="qa-c" data-go="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg><span>جستجو</span></div>'
+      +'</div></div>';
     h += '</div>';
+  } else {
+    // هفت گام — تایم‌لاین
+    h += '<div class="cyc-kick fa">هفت گام؛ این یک دور است، نه یک خط.</div>';
+    h += '<div class="cyc">'+steps+'</div>';
+    // بنر دور + CTA
+    h += '<div class="cyc-turn"><span class="cyc-turn-ic">↻</span><span class="cyc-turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند.</span></div>';
+    h += '<button class="cyc-cta" data-go="ghazal" data-n="'+dayNum+'"><span>دور امروز را شروع کن</span>'+arrow+'</button>';
+    h += '<div class="cyc-note fa">هر گام هر وقت خواستی جداگانه هم در دسترس است.</div>';
+    // کلمات کلیدی امروز
+    h += '<div class="section-h fa">کلمات کلیدی امروز</div>';
+    h += '<div class="kw-strip">'+kwStrip+'</div>';
+    // دسترسی سریع
+    h += '<div class="section-h fa">دسترسی سریع</div>';
+    h += '<div class="qa">'
+      +'<div class="qa-c" data-go="random"><svg viewBox="0 0 24 24"><path d="M16 4h4v4"/><path d="M20 4L4 20"/><path d="M16 20h4v-4"/><path d="M4 4l5 5"/><path d="M15 15l5 5"/></svg><span>غزل تصادفی</span></div>'
+      +'<div class="qa-c" data-go="browse-g"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg><span>غزلیات</span></div>'
+      +'<div class="qa-c" data-go="kw"><svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="13" r="2.4"/><circle cx="7" cy="19" r="2.4"/><path d="M7.8 8.4 10.5 11.6M14 12.2 16.4 8M11 14.8 8.2 17.2"/></svg><span>کلمات کلیدی</span></div>'
+      +'<div class="qa-c" data-go="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg><span>جستجو</span></div>'
+      +'<div class="qa-c" data-go="browse-t"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><span>ترجیع‌بند</span></div>'
+      +'<div class="qa-c" data-go="khanesh"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>خوانش‌ها</span></div>'
+      +'<div class="qa-c" data-go="browse-z"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>زند بیدل</span></div>'
+      +'</div>';
   }
-  h += '</div>';
 
   h += '</div>';
   ctEl.innerHTML = h;
   ctEl.scrollTop = 0;
-
+  renderHomeChips(ghKw, ghKw.length);
+  loadHomeGhazalKw(vodNum);
+  if(isAuthed()) loadHomeSoluk();
 }
 
 // ─── LOGIN GATE (برای بخش‌های ویژهٔ کاربران واردشده) ────
@@ -3003,7 +3238,7 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.17</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.21</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
   _loadReadStat();
@@ -3116,7 +3351,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.17</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.21</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -3682,6 +3917,26 @@ ctEl.addEventListener('click', function(e){
   // Profile edit save/cancel
   if(e.target.closest('#pr-save-edit')){ saveProfileEdit(); return; }
   if(e.target.closest('#pr-cancel-edit')){ _editingProfile=false; showProfile(); return; }
+  // گام ۳ خانه — باز/بستن کلیدواژه‌ها
+  const gkMore = e.target.closest('#cyc-gk-more');
+  if(gkMore){
+    const box=document.getElementById('cyc-gk');
+    if(box){
+      const vis=parseInt(box.dataset.vis||'6',10)||6;
+      const exp=box.dataset.exp==='1';
+      box.dataset.exp=exp?'':'1';
+      box.classList.toggle('all', !exp);
+      box.querySelectorAll('span').forEach((s,i)=>{ s.style.display=(exp&&i>=vis)?'none':''; });
+      gkMore.textContent=exp?('همه ('+toFa(box.querySelectorAll('span').length)+')'):'کمتر';
+    }
+    return;
+  }
+  // واژهٔ گام ۳ خانه — رفتن به صفحهٔ همان واژه
+  const cycKw = e.target.closest('.cyc-words [data-kwword]');
+  if(cycKw){ navigate('/keywords/'+encodeURIComponent(cycKw.dataset.kwword)); return; }
+  // کارت واژهٔ خانهٔ دسکتاپ
+  const kwc = e.target.closest('.kwc');
+  if(kwc){ navigate('/keywords/'+encodeURIComponent(kwc.dataset.kwword)); return; }
   // Home quick cards
   const qc = e.target.closest('.qc');
   if(qc){
@@ -3691,6 +3946,22 @@ ctEl.addEventListener('click', function(e){
     else if(dest==='browse-z'){ navigate('/zand'); }
     else if(dest==='kw'){ navigate('/keywords'); }
     else if(dest==='khanesh'){ showKhaneshList(); }
+    return;
+  }
+  // خانه — هیرو، هفت گام و دسترسی سریع
+  const goEl = e.target.closest('[data-go]');
+  if(goEl){
+    const dest = goEl.dataset.go, n = parseInt(goEl.dataset.n);
+    if(dest==='register'){ showAuthModal(null,'register'); }
+    else if(dest==='ghazal'){ navigate('/ghazal/'+n); }
+    else if(dest==='explore'){ history.pushState({},'', '/ghazal/'+n); showG(n).then(()=>openMoodSheet(null)); }
+    else if(dest==='kw'){ navigate('/keywords'); }
+    else if(dest==='search'){ navigate('/search'); }
+    else if(dest==='bm'){ navigate('/bookmarks'); }
+    else if(dest==='profile'||dest==='soluk'){ navigate('/profile'); }
+    else if(dest==='library'){ navigate('/ghazals'); }
+    else if(dest==='khanesh'){ showKhaneshList(); }
+    else if(dest==='random'){ (async()=>{ const g=await apiFetch(API_URL+'/poems/ghazal/random'); if(g) navigate('/ghazal/'+g.number); })(); }
     return;
   }
   // Verse of day → open ghazal
@@ -5059,6 +5330,14 @@ if(window.location.hash){
     }
   }
 }
+
+// با عبور از مرز دسکتاپ/موبایل، خانه دوباره رندر می‌شود تا مارک‌آپ و استایل هم‌خوان بمانند
+(function(){
+  const mq=window.matchMedia('(min-width:1024px)');
+  const on=function(){ if(curView==='home') showHome(); };
+  if(mq.addEventListener) mq.addEventListener('change', on);
+  else if(mq.addListener) mq.addListener(on);
+})();
 
 })();
 </script>

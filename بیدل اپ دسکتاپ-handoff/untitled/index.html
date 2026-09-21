@@ -1,0 +1,2680 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>بیدلی</title>
+<meta name="theme-color" content="#f0ebde">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="بیدل">
+<link rel="preload" href="fonts/IRANYekanX-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="fonts/IRANYekanX-Bold.ttf" as="font" type="font/ttf" crossorigin>
+<style>
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Light.ttf") format("truetype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-DemiBold.ttf") format("truetype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Bold.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"IRANYekanX";src:url("fonts/IRANYekanX-Black.ttf") format("truetype");font-weight:900;font-style:normal;font-display:swap}
+/* ─── KHANESH (readings) ─────────────────── */
+/* list */
+.kh-lead{font-size:13px;color:var(--mu);line-height:1.9;margin:0 2px 16px;text-wrap:pretty}
+.kh-list{display:flex;flex-direction:column;gap:9px}
+.kh-card{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:14px 16px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
+.kh-card::before{content:"";position:absolute;top:14px;bottom:14px;inset-inline-start:0;width:3px;border-radius:99px;background:var(--sa);opacity:0;transition:opacity .15s}
+.kh-card:hover{border-color:var(--sa);background:var(--sf2)}
+.kh-card:hover::before{opacity:.6}
+.kh-card:active{transform:scale(.99)}
+.kh-card-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.kh-band{font-size:10.5px;color:var(--sa2);font-weight:600;letter-spacing:.03em;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.kh-band::before{content:'✦';color:var(--sa);font-size:11px}
+.kh-date{font-size:11px;color:var(--fa);margin-inline-start:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kh-title{font-size:17px;color:var(--gd);font-weight:700;line-height:1.5;margin-bottom:8px;text-wrap:pretty}
+.kh-by{font-size:12.5px;color:var(--mu);display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.kh-by svg{width:14px;height:14px;stroke:var(--mu);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.kh-by b{color:var(--tx2);font-weight:700}
+.kh-tags{display:flex;flex-wrap:wrap;gap:6px}
+.kh-tags.hide{display:none}
+.kh-tag{font-size:11px;color:var(--gd);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:3px 11px;line-height:1.4}
+
+/* detail */
+.kh-d{animation:fu .25s ease;padding-bottom:10px}
+.kh-d-band{font-size:11px;color:var(--sa2);font-weight:600;letter-spacing:.03em;margin-bottom:11px;display:inline-flex;gap:6px;align-items:center}
+.kh-d-band::before{content:'✦';color:var(--sa);font-size:12px}
+.kh-d-title{font-size:25px;color:var(--gd);font-weight:800;line-height:1.4;margin-bottom:16px;text-wrap:pretty}
+.kh-d-meta{display:flex;align-items:center;gap:11px;padding-bottom:15px;border-bottom:1px solid var(--br2);flex-wrap:wrap}
+.kh-d-av{width:38px;height:38px;border-radius:99px;background:var(--gh);color:var(--go);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
+.kh-d-who{display:flex;flex-direction:column;gap:1px}
+.kh-d-name{font-size:14.5px;color:var(--tx2);font-weight:700;line-height:1.3}
+.kh-d-role{font-size:11px;color:var(--mu)}
+.kh-d-date{font-size:12px;color:var(--fa);margin-inline-start:auto;font-variant-numeric:tabular-nums;align-self:flex-start;padding-top:3px}
+.kh-d-tags{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+
+.kh-content{font-size:16px;line-height:2.05;color:var(--tx);padding-top:10px}
+.kh-content.lg{font-size:18px;line-height:2.15}
+.kh-content p{margin:0 0 17px}
+.kh-content p:last-child{margin-bottom:0}
+.kh-content h3{font-size:18px;color:var(--gd);font-weight:700;line-height:1.5;margin:26px 0 11px}
+.kh-content.lg h3{font-size:20px}
+.kh-content em{font-style:normal;font-weight:700;color:var(--tx2)}
+.kh-content .kh-verse{background:linear-gradient(90deg,var(--sah),transparent 78%);border-inline-start:3px solid var(--sa);border-radius:0 11px 11px 0;padding:14px 18px;margin:20px 0;color:var(--tx2);font-size:17px;line-height:2;font-weight:500}
+.kh-content.lg .kh-verse{font-size:19px}
+.kh-content .kh-verse .m2{color:var(--mu);text-align:start;display:block}
+
+.kh-backband{display:flex;align-items:center;gap:12px;background:var(--sf);border:1px solid var(--br);border-radius:13px;padding:13px 15px;margin-top:26px;cursor:pointer;transition:all .15s}
+.kh-backband:hover{border-color:var(--sa);background:var(--sah)}
+.kh-backband:active{transform:scale(.99)}
+.kh-bb-ic{width:40px;height:40px;border-radius:11px;background:var(--sah);color:var(--sa2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kh-bb-ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7}
+.kh-bb-tx{flex:1;min-width:0}
+.kh-bb-lab{font-size:11px;color:var(--mu);margin-bottom:2px}
+.kh-bb-t{font-size:15px;color:var(--gd);font-weight:700}
+.kh-bb-chev{color:var(--sa2);flex-shrink:0;display:flex;align-items:center}
+.kh-bb-chev svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* related-in-band section (inside terjee) */
+.kh-rel-sec{margin-top:24px;padding-top:18px;border-top:1px solid var(--br2)}
+.kh-rel-h{font-size:13px;color:var(--gd);font-weight:700;letter-spacing:.02em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.kh-rel-h svg{width:17px;height:17px;stroke:var(--sa2);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.kh-rel-h .cnt{font-size:11px;color:var(--sa2);background:var(--sah);border-radius:99px;padding:1px 9px;font-weight:600;margin-inline-start:2px}
+.kh-rel-card{display:flex;align-items:center;gap:11px;background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all .15s;margin-bottom:8px}
+.kh-rel-card:hover{border-color:var(--sa);background:var(--sah)}
+.kh-rel-card:active{transform:scale(.99)}
+.kh-rel-ic{width:36px;height:36px;border-radius:10px;background:var(--gh);color:var(--go);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kh-rel-ic svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7}
+.kh-rel-body{flex:1;min-width:0}
+.kh-rel-title{font-size:14.5px;color:var(--gd);font-weight:700;line-height:1.45}
+.kh-rel-by{font-size:11.5px;color:var(--mu);margin-top:2px}
+.kh-rel-chev{color:var(--vf);flex-shrink:0;display:flex;align-items:center}
+.kh-rel-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kh-empty{font-size:13px;color:var(--mu);text-align:center;line-height:1.9;padding:18px 16px;background:var(--sf);border:1px dashed var(--br);border-radius:12px}
+</style>
+<script src="keywords-data.js"></script>
+<script src="auth-flow.js" defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  /* Sage Garden palette */
+  --bg:#f0ebde;        /* ivory base */
+  --sf:#f7f3e6;        /* card surface */
+  --sf2:#fbf8ee;       /* lifted surface */
+  --br:#c9c1a6;        /* border */
+  --br2:#dcd5be;       /* soft border */
+  --ik:#e8e2d0;        /* input bg */
+  --tx:#1a2218;        /* primary text */
+  --tx2:#3a4830;       /* deep sage text */
+  --mu:#6a7a5a;        /* sage muted */
+  --fa:#a8a48c;        /* faint */
+  --vf:#b8b09a;        /* very faint */
+  --go:#5a7048;        /* primary sage */
+  --gl:#7a9060;        /* sage hover */
+  --gd:#3a4830;        /* deep sage */
+  --gh:#e9eedb;        /* sage tint bg */
+  --sa:#c89030;        /* saffron accent */
+  --sa2:#a87420;       /* deep saffron */
+  --sah:#f4ebd0;       /* saffron tint */
+  --er:#a04030;
+}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYekanX",sans-serif;overflow:hidden;font-feature-settings:"locl" 1}
+.fa{font-family:"IRANYekanX",sans-serif}
+.app{display:flex;flex-direction:column;height:100vh;max-width:500px;margin:0 auto;background:var(--bg);position:relative}
+
+/* ─── HEADER ───────────────────────────────── */
+.hd{flex-shrink:0;background:var(--bg);padding:14px 16px 10px;border-bottom:1px solid var(--br2);display:flex;align-items:center;gap:10px;min-height:54px}
+.hd-back{background:transparent;border:none;color:var(--gd);font-size:22px;cursor:pointer;padding:4px 6px;line-height:1;display:none}
+.hd-back.show{display:inline-flex}
+.hd-logo{width:34px;height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
+.hd-logo img{width:100%;height:100%;object-fit:contain;display:block}
+
+.hd-title{flex:1;min-width:0}
+.hd-t1{font-size:19px;font-weight:700;color:var(--gd);line-height:1.2;font-family:"IRANYekanX",sans-serif}
+.hd-t2{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em;margin-top:1px}
+.hd-icon{background:transparent;border:none;color:var(--mu);font-size:18px;cursor:pointer;padding:6px 8px;line-height:1;display:flex;align-items:center}
+.hd-icon svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.hd-icon:active{color:var(--go)}
+
+/* poem prev/next sub-bar */
+.subnav{flex-shrink:0;display:flex;gap:5px;padding:8px 14px 10px;background:var(--bg);border-bottom:1px solid var(--br2)}
+.subnav.hide{display:none}
+.subnav button{flex:1;background:transparent;border:1px solid var(--br);border-radius:9px;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:14px;padding:5px 0;cursor:pointer;transition:all .15s}
+.subnav button:hover:not(:disabled){border-color:var(--go);color:var(--gd)}
+.subnav button:disabled{opacity:.3}
+
+/* ─── MAIN CONTENT ─────────────────────────── */
+.ct{flex:1;overflow-y:auto;padding:16px 14px 16px;scroll-behavior:smooth}
+.ct::-webkit-scrollbar{width:4px}
+.ct::-webkit-scrollbar-thumb{background:var(--vf);border-radius:99px}
+.ct::-webkit-scrollbar-track{background:transparent}
+
+/* ─── BOTTOM NAV ───────────────────────────── */
+.bn{flex-shrink:0;background:var(--sf2);border-top:1px solid var(--br);display:flex;padding:4px 4px calc(4px + env(safe-area-inset-bottom));gap:2px;box-shadow:0 -1px 0 var(--br2)}
+.bn-item{flex:1;background:transparent;border:none;cursor:pointer;padding:7px 0 5px;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--mu);font-family:"IRANYekanX",sans-serif;border-radius:10px;transition:background .15s}
+.bn-ic{width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:1}
+.bn-ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6}
+.bn-lab{font-size:10.5px;letter-spacing:0.02em;font-weight:500}
+.bn-item.on{color:var(--go)}
+.bn-item.on .bn-lab{font-weight:700}
+.bn-item.on .bn-ic{background:var(--gh);border-radius:99px;padding:0;width:48px;height:24px;color:var(--go)}
+.bn-fab{flex:0 0 62px;display:flex;justify-content:center;align-items:flex-start}
+.bn-c{flex:0 0 auto!important;padding:7px 0 5px!important;gap:3px!important}
+.bn-c .bn-ic{width:52px;height:52px;margin:-33px 0 5px;border-radius:50%;border:3px solid var(--sf2);background:var(--sa);color:#fff;box-shadow:0 5px 14px -5px rgba(168,116,32,.7);transition:background .2s,transform .12s}
+.bn-c .bn-ic svg{width:23px;height:23px;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bn-c .bn-lab{color:var(--gd);font-weight:700}
+.bn-c:active .bn-ic{transform:scale(.95)}
+.bn-c.on .bn-ic{background:var(--sa2);border-radius:50%;padding:0;width:52px;height:52px;color:#fff}
+.bn-c.on{color:var(--gd)}
+
+/* ─── HOME ─────────────────────────────────── */
+.home{padding:4px 4px}
+.home-search{display:flex;align-items:center;gap:8px;background:var(--sf);border:1px solid var(--br);border-radius:14px;padding:11px 14px;margin:0 0 14px;cursor:text;transition:border-color .15s}
+.home-search:hover{border-color:var(--go)}
+.home-search:active{background:var(--sf2)}
+.home-search-ic{color:var(--mu);font-size:16px;display:flex}
+.home-search-ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.home-search-tx{flex:1;color:var(--vf);font-family:"IRANYekanX",sans-serif;font-size:15px}
+.home-search-hint{font-size:10px;color:var(--fa);font-family:"IRANYekanX",sans-serif;letter-spacing:0.06em;flex-shrink:0;white-space:nowrap}
+.home-greet{padding:6px 4px 16px}
+.home-hello{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.08em;margin-bottom:3px}
+.home-day{font-size:24px;color:var(--gd);font-weight:700;line-height:1.2}
+/* hero */
+.hero{position:relative;padding:24px 18px 20px;margin:2px 0 18px;border-radius:20px;background:linear-gradient(170deg,var(--gh),var(--sf2) 60%,var(--sf));border:1px solid var(--br2);overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 90% 6%,rgba(200,144,48,.14),rgba(0,0,0,0) 44%);pointer-events:none}
+.hero-eye{position:relative;font-size:10px;letter-spacing:.18em;color:var(--sa2);font-weight:600;margin-bottom:12px}
+.hero-t{position:relative;font-size:25px;line-height:1.6;font-weight:800;color:var(--gd);text-wrap:pretty}
+.hero-s{position:relative;font-size:14px;line-height:2;color:var(--mu);margin-top:12px;text-wrap:pretty}
+.hero-cta{position:relative;margin-top:20px;white-space:nowrap;display:inline-flex;align-items:center;gap:9px;background:var(--go);color:#fff;border:none;border-radius:14px;padding:0 26px;min-height:50px;font-family:"IRANYekanX",sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .15s,transform .12s}
+.hero-cta:hover{background:var(--gl)}
+.hero-cta:active{transform:scale(.98)}
+.hero-cta svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}
+/* hero semantic-network backdrop */
+.hero{padding-bottom:26px}
+.hero-net{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.85}
+.hero-net .nl{stroke:var(--br);stroke-width:.7;fill:none;opacity:.55}
+.hero-net .nd{fill:var(--go);opacity:.28}
+.hero-net .nd.sa{fill:var(--sa);opacity:.34}
+.hero-net .nt{fill:var(--gd);opacity:.16;font-family:"IRANYekanX",sans-serif;font-weight:700;text-anchor:middle}
+.hero-net .drift{animation:netdrift 34s ease-in-out infinite alternate}
+.hero-net .drift2{animation:netdrift2 42s ease-in-out infinite alternate}
+@keyframes netdrift{from{transform:translate(0,0)}to{transform:translate(6px,-5px)}}
+@keyframes netdrift2{from{transform:translate(0,0)}to{transform:translate(-5px,4px)}}
+@media (prefers-reduced-motion:reduce){.hero-net .drift,.hero-net .drift2{animation:none}}
+.hero-t,.hero-s,.hero-cta,.hero-eye{position:relative;z-index:1}
+/* soluk card (home, logged in) */
+.sk-card{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--sf2),var(--sf));border:1px solid var(--br);border-radius:18px;padding:16px;margin:2px 0 18px;cursor:pointer;position:relative}
+.sk-card:hover{border-color:var(--go)}
+.sk-card-tx{flex:1;min-width:0}
+.sk-card-lab{font-size:10.5px;color:var(--mu);letter-spacing:.14em;font-weight:600;margin-bottom:5px}
+.sk-card-line{font-size:17px;color:var(--gd);font-weight:700;line-height:1.35}
+.sk-card-line b{color:#7b6cae}
+.sk-card-line.dim{font-size:15px;font-weight:500;color:var(--mu)}
+.sk-card-thumb{flex-shrink:0;width:64px;height:64px;display:flex;align-items:center;justify-content:center}
+.sk-card-thumb svg{width:64px;height:64px}
+.sk-card-chev{color:var(--vf);font-size:20px;line-height:1;direction:ltr;unicode-bidi:isolate}
+.sk-prog{display:flex;align-items:center;gap:8px;margin-top:9px}
+.sk-prog-track{flex:1;height:4px;border-radius:99px;background:var(--ik);overflow:hidden}
+.sk-prog-fill{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gl),var(--go))}
+.sk-prog-n{font-size:11px;color:var(--mu);flex-shrink:0}
+.mr{width:100%;height:auto;display:block;overflow:visible}
+.mr-grid{fill:none;stroke:var(--br2);stroke-width:1}
+.mr-spoke{stroke:var(--br2);stroke-width:1}
+.mr-faint .mr-grid,.mr-faint .mr-spoke{stroke:var(--br2);opacity:.7}
+/* feature cards */
+.feat-lead{position:relative;display:block;width:100%;text-align:start;background:linear-gradient(165deg,var(--gh),var(--sf2) 70%);border:1px solid var(--go);border-radius:18px;padding:18px 17px 16px;margin-bottom:10px;cursor:pointer;overflow:hidden;transition:border-color .15s,background .15s}
+.feat-lead:hover{background:linear-gradient(165deg,var(--gh),var(--sf))}
+.feat-lead:active{transform:scale(.995)}
+.feat-lead-top{display:flex;align-items:center;gap:12px}
+.feat-lead-ic{width:46px;height:46px;border-radius:14px;background:var(--go);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-lead-ic svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.6}
+.feat-lead-t{flex:1;min-width:0;font-size:19px;font-weight:800;color:var(--gd);line-height:1.35}
+.feat-lead-n{flex-shrink:0;font-size:26px;font-weight:800;color:var(--sa2);font-variant-numeric:tabular-nums;line-height:1}
+.feat-lead-s{font-size:13.5px;color:var(--tx2);line-height:1.95;margin-top:12px;text-wrap:pretty}
+.feat-lead-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
+.feat-lead-tags span{font-size:11.5px;color:var(--gd);background:var(--sf2);border:1px solid var(--br2);border-radius:99px;padding:4px 11px;line-height:1.4}
+/* seven-step cycle */
+.cyc-kick{font-size:12.5px;color:var(--mu);letter-spacing:.02em;margin:2px 4px 14px;line-height:1.8}
+.cyc{display:flex;flex-direction:column}
+.cyc-step{position:relative;display:flex;gap:13px;align-items:flex-start;padding:0 2px 16px;cursor:pointer}
+.cyc-step.on{padding-bottom:20px}
+.cyc-step.on .cyc-ar{align-self:flex-start;margin-top:6px}
+.cyc-step:last-of-type{padding-bottom:6px}
+.cyc-step::before{content:'';position:absolute;top:30px;bottom:0;inset-inline-start:14.5px;width:1px;background:var(--br2)}
+.cyc-step:last-of-type::before{display:none}
+.cyc-num{position:relative;width:30px;height:30px;border-radius:99px;border:1px solid var(--br);background:var(--sf2);color:var(--mu);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-variant-numeric:tabular-nums}
+.cyc-step.on .cyc-num{border-color:var(--go);color:var(--go);background:var(--gh);box-shadow:0 0 0 4px var(--gh)}
+.cyc-bd{flex:1;min-width:0;padding-top:2px}
+.cyc-t{font-size:16px;font-weight:700;color:var(--gd);line-height:1.5}
+.cyc-s{font-size:13px;color:var(--mu);line-height:1.9;margin-top:3px;text-wrap:pretty}
+.cyc-ar{align-self:center;flex-shrink:0;color:var(--vf);display:flex}
+.cyc-ar svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.cyc-words{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center}
+.cyc-words span{font-size:12.5px;color:var(--gd);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:3px 11px}
+.cyc-words i{font-style:normal;font-size:11.5px;color:var(--fa)}
+.cyc-words-more{font-family:"IRANYekanX",sans-serif;font-size:12.5px;font-weight:600;color:var(--go);background:transparent;border:1px dashed var(--go);border-radius:99px;padding:0 16px;min-height:44px;cursor:pointer;line-height:1.7;display:inline-flex;align-items:center}
+.cyc-words-more:hover{background:var(--gh)}
+.cyc-verse{position:relative;background:linear-gradient(135deg,var(--sah),var(--sf));border:1px solid var(--sa);border-radius:18px;padding:22px 20px 18px;margin:14px -43px 0 0;overflow:hidden}
+.cyc-verse::before{content:'۞';position:absolute;top:-10px;right:-10px;font-size:100px;color:var(--sa);opacity:.09;font-family:serif;line-height:1}
+.cyc-verse-tag{position:relative;font-size:10px;color:var(--sa2);letter-spacing:.16em;font-weight:600;margin-bottom:13px}
+.cyc-verse-m1{position:relative;font-size:20px;color:var(--tx);line-height:2.1}
+.cyc-verse-m2{position:relative;font-size:20px;color:var(--mu);line-height:2.1;text-align:left}
+.cyc-verse-from{position:relative;font-size:11.5px;color:var(--mu);margin-top:13px}
+.cyc-turn{display:flex;align-items:center;gap:11px;background:var(--sah);border:1px solid var(--br2);border-radius:14px;padding:12px 14px;margin:6px 0 14px}
+.cyc-turn-ic{width:30px;height:30px;border-radius:99px;border:1px solid var(--sa);color:var(--sa2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;line-height:1}
+.cyc-turn-tx{font-size:12.5px;color:var(--tx2);line-height:1.85;text-wrap:pretty}
+.cyc-turn-tx b{color:var(--gd);font-weight:700}
+.cyc-cta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;background:var(--go);color:#fff;border:none;border-radius:14px;min-height:52px;font-family:"IRANYekanX",sans-serif;font-size:15.5px;font-weight:700;cursor:pointer;transition:background .15s,transform .12s}
+.cyc-cta:hover{background:var(--gl)}
+.cyc-cta:active{transform:scale(.99)}
+.cyc-cta svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2}
+.cyc-note{font-size:11.5px;color:var(--fa);text-align:center;margin:9px 0 22px;line-height:1.8}
+/* trio */
+.trio{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.tri{display:flex;align-items:center;gap:13px;background:var(--sf);border:1px solid var(--br2);border-radius:16px;padding:15px;cursor:pointer;transition:border-color .15s,background .15s}
+.tri:hover{border-color:var(--go);background:var(--sf2)}
+.tri:active{transform:scale(.995)}
+.tri-ic{width:42px;height:42px;border-radius:13px;background:var(--gh);color:var(--go);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tri-ic.sa{background:var(--sah);color:var(--sa2)}
+.tri-ic svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.6}
+.tri-tx{flex:1;min-width:0}
+.tri-t{font-size:15.5px;font-weight:700;color:var(--tx2);line-height:1.4}
+.tri-s{font-size:12.5px;color:var(--mu);line-height:1.75;margin-top:2px}
+.tri-ar{color:var(--vf);flex-shrink:0;display:flex}
+.tri-ar svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+/* quick access */
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.qa-c{display:flex;align-items:center;gap:9px;background:var(--sf2);border:1px solid var(--br2);border-radius:13px;padding:0 14px;min-height:50px;cursor:pointer;font-size:14px;font-weight:600;color:var(--tx2);transition:border-color .15s,background .15s}
+.qa-c:hover{border-color:var(--go);background:var(--sf)}
+.qa-c:active{transform:scale(.985)}
+.qa-c svg{width:18px;height:18px;stroke:var(--go);fill:none;stroke-width:1.7;flex-shrink:0}
+/* verse of the day, promoted */
+.verse-card.big{padding:24px 20px 18px;margin-bottom:22px;border-radius:20px}
+.verse-card.big::before{font-size:120px;opacity:.09}
+.verse-card.big .verse-tag{font-size:10px;margin-bottom:14px}
+.verse-card.big .verse-text{font-size:20.5px;line-height:2.1}
+.verse-card.big .verse-from{margin-top:14px}
+
+.continue{background:var(--sf);border:1px solid var(--br2);border-radius:16px;padding:14px 16px;margin-bottom:14px;cursor:pointer;position:relative;overflow:hidden;transition:border-color .15s}
+.continue:hover{border-color:var(--go)}
+.continue:active{transform:scale(.99)}
+.continue-tag{font-size:10px;color:var(--mu);letter-spacing:0.12em;font-family:"IRANYekanX",sans-serif;margin-bottom:6px}
+.continue-title{font-size:16px;color:var(--gd);font-weight:700;margin-bottom:3px}
+.continue-sub{font-size:13px;color:var(--mu);line-height:1.7}
+.continue-bar{margin-top:10px;height:3px;background:var(--ik);border-radius:99px;overflow:hidden}
+.continue-bar-fill{height:100%;background:linear-gradient(90deg,var(--gl),var(--go));border-radius:99px}
+
+.verse-card{background:linear-gradient(135deg,var(--sah),var(--sf));border:1px solid var(--sa);border-radius:16px;padding:18px 18px 14px;margin-bottom:18px;position:relative;overflow:hidden;cursor:pointer}
+.verse-card::before{content:'۞';position:absolute;top:-10px;right:-10px;font-size:90px;color:var(--sa);opacity:0.08;font-family:serif;line-height:1}
+.verse-tag{font-size:9px;color:var(--sa2);letter-spacing:0.16em;font-family:"IRANYekanX",sans-serif;margin-bottom:10px;font-weight:600;position:relative}
+.verse-text{font-size:18px;color:var(--tx);line-height:1.9;position:relative}
+.verse-text-2{color:var(--mu);text-align:left}
+.verse-from{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-top:10px;position:relative}
+
+.section-h{font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.08em;margin:6px 4px 10px;font-weight:600}
+
+.qg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.qc{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:16px 14px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;min-height:122px;position:relative;overflow:hidden}
+.qc:hover{border-color:var(--go);background:var(--sf2)}
+.qc:active{transform:scale(.98)}
+.qc-ic{width:36px;height:36px;border-radius:10px;background:var(--gh);display:flex;align-items:center;justify-content:center;color:var(--go);align-self:flex-start;flex-shrink:0}
+.qc-ic svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
+.qc-ic.sa{background:var(--sah);color:var(--sa2)}
+.qc-ic.sa svg{stroke:var(--sa2)}
+.qc-text-wrap{display:flex;flex-direction:column;gap:4px;margin-top:auto;padding-top:14px}
+.qc-title{font-size:16px;color:var(--gd);font-weight:700;line-height:1.2}
+.qc-sub{font-size:11.5px;color:var(--mu);letter-spacing:0.02em;line-height:1.35;font-weight:400}
+.qc-num{font-size:11.5px;color:var(--sa2);font-weight:600;font-variant-numeric:tabular-nums}
+
+.kw-strip{display:flex;gap:8px;overflow-x:auto;padding:0 0 4px;scrollbar-width:none;margin:0 -14px;padding:0 14px 4px}
+.kw-strip::-webkit-scrollbar{display:none}
+.kw-strip-card{flex-shrink:0;width:118px;background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:12px 12px;cursor:pointer;transition:all .15s}
+.kw-strip-card:hover{border-color:var(--go)}
+.kw-strip-tag{font-size:9px;color:var(--mu);letter-spacing:0.12em;font-family:"IRANYekanX",sans-serif;margin-bottom:5px;display:flex;align-items:center;gap:4px}
+.kw-strip-tag::before{content:'✦';color:var(--sa);font-size:10px}
+.kw-strip-word{font-size:20px;color:var(--gd);font-weight:700;margin-bottom:3px;line-height:1.1}
+.kw-strip-n{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-variant-numeric:tabular-nums}
+
+/* ─── BROWSE (segmented tabs) ─────────────── */
+.seg{display:flex;background:var(--ik);border-radius:11px;padding:3px;gap:2px;margin-bottom:14px}
+.seg button{flex:1;background:transparent;border:none;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:14px;font-weight:400;padding:7px 0;border-radius:9px;cursor:pointer;transition:all .15s}
+.seg button.on{background:var(--go);color:#fff;font-weight:700}
+
+.rh{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:10px;text-align:center;letter-spacing:0.04em}
+
+.ri{background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:11px 14px;margin-bottom:7px;cursor:pointer;transition:all .15s}
+.ri:hover{border-color:var(--go);background:var(--sf2)}
+.ri:active{transform:scale(.99)}
+.ri.tr{border-color:var(--br2)}
+.ri.tr:hover{border-color:var(--sa)}
+.rt{font-size:10px;color:var(--sa2);font-family:"IRANYekanX",sans-serif;margin-bottom:3px;letter-spacing:0.04em}
+.ri.tr .rt{color:var(--sa2)}
+.rti{font-size:15px;color:var(--gd);font-weight:700;margin-bottom:3px}
+.rp{font-size:14px;color:var(--mu);line-height:1.75}
+
+.zcard{background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:12px 14px;margin-bottom:7px;cursor:pointer;transition:all .15s}
+.zcard:hover{border-color:var(--go);background:var(--sf2)}
+.zcard.bakhsh{border-color:var(--sa);background:var(--sah)}
+.zcard-title{font-size:15px;color:var(--gd);font-weight:700;line-height:1.3}
+.zcard.bakhsh .zcard-title{font-size:16px;color:var(--sa2)}
+.zsec{padding:8px 0}
+.zsec-title{font-size:20px;color:var(--gd);font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--br2)}
+.zsec-body{font-size:15px;line-height:2.1;color:var(--tx);direction:rtl;white-space:pre-wrap}
+
+/* ─── POEM (ghazal/terjee reading) ──────── */
+.pm{animation:fu .25s ease}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.pmeta{position:relative;text-align:center;margin-bottom:12px;padding:0 46px 10px;border-bottom:1px solid var(--br2)}
+.pnum{font-size:10px;letter-spacing:0.12em;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:3px}
+.ptitle{font-size:21px;color:var(--gd);font-weight:700;line-height:1.2}
+.psub{font-size:12px;color:var(--mu);margin-top:3px;font-family:"IRANYekanX",sans-serif}
+.pshare{position:absolute;left:0;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:11px;background:var(--sf);border:1px solid var(--br);color:var(--gd);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:border-color .15s,background .15s}
+.pshare:hover{border-color:var(--go);background:var(--sf2)}
+.pshare:active{transform:translateY(-50%) scale(.94)}
+.pshare svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.ghazal-kw-row{display:flex;flex-wrap:wrap;gap:5px;padding:8px 2px 12px;margin-bottom:10px;border-bottom:1px solid var(--br2);align-items:center}
+.gkw-lab{font-size:10px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.08em;margin-left:3px}
+.gkw{background:var(--gh);border:1px solid var(--gl);border-radius:99px;color:var(--gd);font-family:"IRANYekanX",sans-serif;font-size:14px;padding:2px 11px;cursor:pointer;transition:all .15s}
+.gkw:hover{background:var(--go);color:#fff;border-color:var(--go)}
+
+.cp{position:relative;background:transparent;border:none;border-radius:14px;padding:16px 16px 16px 36px;cursor:pointer;transition:background .18s}
+.cp+.cp{border-top:1px solid var(--br2)}
+.cp.open{background:var(--sf)}
+.cp.gbm,.cp.tbm{background:linear-gradient(90deg,var(--sah),transparent 70%)}
+.cp.gbm::before,.cp.tbm::before{content:"";position:absolute;top:14px;bottom:14px;right:0;width:3px;border-radius:99px;background:var(--sa)}
+.cp.open{background:var(--sf)}
+.cn{position:absolute;top:17px;left:14px;font-size:11px;color:var(--vf);font-weight:700;font-variant-numeric:tabular-nums}
+.cpb{padding:0}
+.ms{font-size:19px;line-height:1.95;color:var(--tx)}
+.ms.s2{margin-top:2px;color:var(--mu);text-align:left}
+mark{background:var(--sa);color:#fff;border-radius:3px;padding:0 4px}
+.acts{max-height:0;opacity:0;overflow:hidden;margin-top:0;transition:max-height .3s ease,opacity .22s,margin-top .3s}
+.cp.open .acts{max-height:120px;opacity:1;margin-top:12px}
+.ca{display:flex;border-top:1px solid var(--br2)}
+.cp.gbm .ca,.cp.tbm .ca{border-top-color:var(--vf)}
+.ca button{flex:1;background:transparent;border:none;border-inline-start:1px solid var(--br2);padding:11px 0;cursor:pointer;color:var(--mu);display:flex;align-items:center;justify-content:center;gap:7px;font-family:"IRANYekanX",sans-serif;font-size:13px;font-weight:600;transition:background .15s}
+.cp.gbm .ca button,.cp.tbm .ca button{border-inline-start-color:var(--vf)}
+.ca button:first-child{border-inline-start:none}
+.ca button:hover{background:var(--ik)}
+.ca button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ca button.gon,.ca button.ton{color:var(--sa2)}
+.ca button.gon svg,.ca button.ton svg{fill:var(--sa);stroke:var(--sa2)}
+.nd{font-size:13px;color:var(--gd);margin-top:11px;padding:9px 12px;border:1px solid var(--br2);border-radius:11px;background:var(--gh);line-height:1.7;cursor:pointer;display:flex;gap:8px;align-items:flex-start}
+.nd svg{width:15px;height:15px;flex-shrink:0;margin-top:3px;stroke:var(--gd);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cp.gbm .nd,.cp.tbm .nd{background:rgba(200,144,48,0.10);border-color:var(--br)}
+.pf{text-align:center;font-size:11px;color:var(--fa);margin-top:8px;font-family:"IRANYekanX",sans-serif;letter-spacing:0.06em}
+
+/* ─── KEYWORDS ─────────────────────────────── */
+.kw-filters{display:flex;gap:6px;overflow-x:auto;padding:0 0 10px;scrollbar-width:none;margin:0 -14px;padding:0 14px 12px}
+.kw-filters::-webkit-scrollbar{display:none}
+.kw-chip{flex:0 0 auto;padding:6px 14px;border-radius:99px;border:1px solid var(--br);background:transparent;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:14px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.kw-chip:hover{border-color:var(--go);color:var(--gd)}
+.kw-chip.on{background:var(--go);border-color:var(--go);color:#fff;font-weight:700}
+.kw-count-hint{font-size:11px;color:var(--fa);text-align:center;margin-bottom:10px;font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em}
+.kw-card{background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:11px 14px;margin-bottom:7px;cursor:pointer;transition:all .15s}
+.kw-card:hover{border-color:var(--go);background:var(--sf2)}
+.kw-card-tag{font-size:10px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:4px;letter-spacing:0.04em;display:flex;align-items:center;gap:5px}
+.kw-card-tag::before{content:'✦';color:var(--sa);font-size:11px}
+.kw-card-title{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px}
+.kw-card-word{font-size:18px;color:var(--gd);font-weight:700;line-height:1.2}
+.kw-card-count{font-size:13px;color:var(--sa2);font-variant-numeric:tabular-nums;font-family:"IRANYekanX",sans-serif;flex-shrink:0}
+.kw-card-preview{font-size:12px;color:var(--mu);line-height:1.75;font-family:"IRANYekanX",sans-serif;display:flex;align-items:center;gap:6px}
+.kw-card-preview .sep{color:var(--vf)}
+.kw-card-bar{flex:0 1 60px;height:3px;background:var(--ik);border-radius:99px;overflow:hidden;position:relative}
+.kw-card-bar-fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--gl),var(--go));border-radius:99px}
+
+/* Keyword detail */
+.kw-detail{padding-top:2px}
+.kw-d-head{text-align:center;padding:12px 0 18px;border-bottom:1px solid var(--br2);margin-bottom:16px}
+.kw-d-word{font-size:46px;color:var(--gd);font-weight:700;line-height:1;margin-bottom:8px}
+.kw-d-cat{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em}
+.kw-d-section{margin-bottom:18px}
+.kw-d-section h4{font-size:11px;color:var(--sa2);font-family:"IRANYekanX",sans-serif;letter-spacing:0.12em;margin-bottom:7px;font-weight:600;display:flex;align-items:center;gap:6px}
+.kw-d-section h4::before{content:'';display:inline-block;width:16px;height:1px;background:var(--sa)}
+.kw-d-meaning{font-size:16px;color:var(--tx);line-height:1.95;text-align:justify;text-justify:inter-word}
+.kw-d-tags{display:flex;flex-wrap:wrap;gap:6px}
+.kw-d-tag{background:var(--sf);border:1px solid var(--br2);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--tx);font-family:"IRANYekanX",sans-serif;line-height:1.5;display:flex;flex-direction:column;gap:2px;flex:1;min-width:30%}
+.kw-d-tag-label{font-size:9px;color:var(--mu);letter-spacing:0.08em;font-family:"IRANYekanX",sans-serif}
+.kw-d-tag-val{color:var(--gd);font-weight:700}
+.kw-d-tag-val.empty{color:var(--vf);font-weight:400}
+.kw-d-stats{display:flex;background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:12px}
+.kw-d-stat{flex:1;text-align:center;border-left:1px solid var(--br2);padding:0 4px}
+.kw-d-stat:first-child{border-left:none}
+.kw-d-stat-val{font-size:22px;color:var(--go);font-weight:700;font-variant-numeric:tabular-nums;font-family:"IRANYekanX",sans-serif;line-height:1.1}
+.kw-d-stat-lab{font-size:10px;color:var(--mu);margin-top:4px;font-family:"IRANYekanX",sans-serif}
+.kw-d-poems-head{font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin:6px 0 10px;text-align:center;padding-bottom:8px;border-bottom:1px solid var(--br2)}
+.kw-d-poems-head b{color:var(--gd);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ─── SEARCH SCREEN ──────────────────────── */
+.search-screen{padding:6px 4px}
+.search-input-wrap{background:var(--sf);border:1px solid var(--br);border-radius:14px;display:flex;align-items:center;padding:0 14px;margin-bottom:14px;transition:border-color .15s}
+.search-input-wrap:focus-within{border-color:var(--go);background:var(--sf2)}
+.search-icon{color:var(--mu);font-size:18px;margin-left:8px}
+.search-input-wrap input{flex:1;background:transparent;border:none;outline:none;color:var(--tx);font-family:"IRANYekanX",sans-serif;font-size:18px;padding:14px 0;text-align:right}
+.search-input-wrap input::placeholder{color:var(--vf);font-size:15px}
+.search-input-wrap input::-webkit-search-cancel-button{-webkit-appearance:none}
+.search-hints{margin-bottom:8px;padding:8px 4px 12px;border-bottom:1px dashed var(--br2)}
+.search-hint{font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;line-height:1.9}
+.search-hint b{color:var(--gd);font-family:"IRANYekanX",sans-serif;font-weight:700;font-size:14px}
+.search-suggest-h{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.06em;margin:4px 4px 8px;font-weight:600}
+.search-suggest{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.search-suggest .gkw{font-size:13px;padding:4px 12px}
+
+.ri.kw .rt::before{content:'✦ ';color:var(--sa)}
+.ri.kw .rti-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:4px}
+.ri.kw .rti-row .rti{margin-bottom:0}
+.ri.kw .rti-count{font-size:13px;color:var(--sa2);font-variant-numeric:tabular-nums;font-family:"IRANYekanX",sans-serif;flex-shrink:0}
+
+/* ─── BOOKMARKS ─────────────────────────── */
+.bst{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--br2);text-align:center;letter-spacing:0.04em}
+.bi{background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:11px 14px;margin-bottom:7px;cursor:pointer;position:relative;transition:all .15s}
+.bi:hover{border-color:var(--go)}
+.bi.gbx{border-color:var(--sa);background:var(--sah)}
+.bi.tbx{border-color:var(--sa);background:var(--sah)}
+.bpt{font-size:11px;color:var(--sa2);margin-bottom:4px;font-weight:700;font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em}
+.bm2{font-size:16px;color:var(--tx);line-height:1.85}
+.bm2 .bm-m2{text-align:left;color:var(--mu)}
+.bnt{font-size:13px;color:var(--gd);margin-top:6px;padding-top:6px;border-top:1px solid var(--vf);line-height:1.6}
+.bdl{position:absolute;top:8px;left:10px;background:transparent;border:none;color:var(--vf);font-size:14px;cursor:pointer;padding:2px 6px}
+.bdl:hover{color:var(--er)}
+
+/* empty / messages */
+.nb2,.nr2{text-align:center;padding:36px 18px;color:var(--mu);font-size:14px;line-height:2;font-family:"IRANYekanX",sans-serif}
+.nb2 .nbi{font-size:48px;color:var(--vf);margin-bottom:14px}
+.er{text-align:center;padding:24px;color:var(--er);font-size:14px;line-height:2;font-family:"IRANYekanX",sans-serif}
+
+/* ─── BOOK LOADER ────────────────────────── */
+.book-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 16px;gap:16px}
+.book-loader{position:relative;width:60px;height:46px;perspective:480px;flex-shrink:0}
+.book-loader::before{content:'';position:absolute;inset:0;background:var(--sf2);border:1.5px solid var(--gd);border-radius:3px 5px 5px 3px;box-shadow:0 2px 6px rgba(58,72,48,0.12),inset 0 0 0 1px var(--sf)}
+.book-loader::after{content:'';position:absolute;left:50%;top:2px;bottom:2px;width:1px;background:var(--gd);transform:translateX(-0.5px);z-index:2}
+.book-loader span{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);background:var(--sf);transform-origin:right center;animation:bookFlip 2.1s infinite ease-in-out;backface-visibility:hidden;border-radius:1px 0 0 1px;box-shadow:-1px 0 2px rgba(58,72,48,0.06)}
+.book-loader span::before{content:'';position:absolute;top:7px;right:4px;left:5px;border-top:1px solid var(--br2)}
+.book-loader span::after{content:'';position:absolute;top:13px;right:4px;left:5px;border-top:1px solid var(--br2);box-shadow:0 6px 0 -0.5px var(--br2),0 12px 0 -0.5px var(--br2)}
+.book-loader span:nth-child(1){animation-delay:-0s;z-index:5}
+.book-loader span:nth-child(2){animation-delay:-0.5s;z-index:4}
+.book-loader span:nth-child(3){animation-delay:-1.0s;z-index:3}
+@keyframes bookFlip{
+  0%, 30%{transform:rotateY(0deg)}
+  60%, 100%{transform:rotateY(-180deg)}
+}
+.book-loading-msg{font-size:12.5px;color:var(--mu);letter-spacing:0.06em;font-family:"IRANYekanX",sans-serif;animation:loadingFade 1.4s infinite ease-in-out}
+@keyframes loadingFade{
+  0%,100%{opacity:0.55}
+  50%{opacity:1}
+}
+
+/* ─── NOTE MODAL ─────────────────────────── */
+.mbg{position:fixed;inset:0;background:rgba(26,34,24,0.5);display:flex;align-items:flex-end;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
+.mbg.open{opacity:1;pointer-events:all}
+.mo{background:var(--sf);border-radius:18px 18px 0 0;border-top:1px solid var(--br);width:100%;max-width:500px;padding:16px 16px 28px;transform:translateY(100%);transition:transform .25s}
+.mbg.open .mo{transform:translateY(0)}
+.mt2{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-bottom:10px;text-align:center;letter-spacing:0.04em}
+.mv{font-size:18px;color:var(--gd);line-height:1.9;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--br2);text-align:center}
+.mta{width:100%;background:var(--bg);border:1px solid var(--br);border-radius:12px;padding:11px 14px;color:var(--tx);font-family:"IRANYekanX",sans-serif;font-size:16px;line-height:1.7;resize:none;height:110px;outline:none;direction:rtl}
+.mta:focus{border-color:var(--go)}
+.mbs{display:flex;gap:8px;margin-top:12px}
+.mbs button{flex:1;padding:11px;border-radius:11px;border:1px solid var(--br);font-family:"IRANYekanX",sans-serif;font-size:15px;cursor:pointer;font-weight:700}
+.msv{background:var(--go);color:#fff;border-color:var(--go)}
+.msv:active{background:var(--gd)}
+.mcl{background:transparent;color:var(--mu)}
+
+/* ─── SHARE LINK SHEET ───────────────────── */
+.shbg{position:fixed;inset:0;background:rgba(26,34,24,0.5);display:flex;align-items:flex-end;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
+.shbg.open{opacity:1;pointer-events:all}
+.sho{background:var(--sf);border-radius:18px 18px 0 0;border-top:1px solid var(--br);width:100%;max-width:500px;padding:16px 16px 28px;transform:translateY(100%);transition:transform .25s}
+.shbg.open .sho{transform:translateY(0)}
+.sh-t{font-size:15px;font-weight:800;color:var(--gd);text-align:center;margin-bottom:5px}
+.sh-v{font-size:13px;color:var(--mu);text-align:center;line-height:1.8;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--br2)}
+.sh-row{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--br);border-radius:12px;padding:6px 8px 6px 14px;margin-bottom:10px}
+.sh-url{flex:1;font-size:13px;color:var(--gd);font-weight:600;direction:ltr;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:ui-monospace,"SF Mono",monospace}
+.sh-copy{flex-shrink:0;border:none;background:var(--gd);color:#f3efe2;border-radius:9px;padding:10px 15px;font-family:"IRANYekanX",sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+.sh-copy:active{background:#2a3322}
+.sh-share{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--br);background:transparent;color:var(--gd);border-radius:12px;padding:13px;font-family:"IRANYekanX",sans-serif;font-size:14px;font-weight:700;cursor:pointer}
+.sh-share:hover{background:var(--ik);border-color:var(--go)}
+.sh-share svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ─── TOP TOAST ──────────────────────────── */
+.ts-wrap{position:fixed;top:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;padding:calc(env(safe-area-inset-top) + 12px) 12px 0;z-index:300;pointer-events:none}
+.tst{max-width:460px;width:calc(100% - 24px);background:var(--gd);color:#f3efe2;border-radius:14px;padding:11px 15px;box-shadow:0 12px 28px -8px rgba(26,34,24,.45);display:flex;align-items:center;gap:9px;font-family:"IRANYekanX",sans-serif;font-size:13.5px;font-weight:700;transform:translateY(-140%);opacity:0}
+.tst.show{animation:tstIn .34s cubic-bezier(.2,.9,.2,1) forwards}
+.tst.hide{animation:tstOut .26s ease forwards}
+@keyframes tstIn{from{transform:translateY(-140%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes tstOut{from{transform:translateY(0);opacity:1}to{transform:translateY(-140%);opacity:0}}
+.tst .chk{width:20px;height:20px;border-radius:99px;background:var(--sa);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tst .chk svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ─── PROFILE ────────────────────────────── */
+.hd-icon.with-avatar{position:relative}
+.hd-avatar{width:30px;height:30px;border-radius:99px;background:var(--go);color:#fff;display:flex;align-items:center;justify-content:center;font-family:"IRANYekanX",sans-serif;font-size:13px;font-weight:700;border:none;cursor:pointer;padding:0;transition:background .15s,padding .15s}
+.hd-avatar.guest{width:auto;height:30px;border-radius:99px;padding:0 14px;background:var(--go);color:#fff;border:none;font-size:12px;font-weight:700;font-family:"IRANYekanX",sans-serif;letter-spacing:0.02em;white-space:nowrap}
+.hd-avatar.guest:active{background:var(--gd)}
+.hd-avatar:active{transform:scale(.95)}
+.bn.hide{display:none}
+
+.pr{padding:4px 4px 8px;animation:fu .25s ease}
+.pr-card{background:var(--sf);border:1px solid var(--br2);border-radius:18px;padding:22px 18px;text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
+.pr-card::before{content:'';position:absolute;top:-40px;left:-40px;right:-40px;height:90px;background:linear-gradient(135deg,var(--gh) 0%,var(--sah) 100%);opacity:.6}
+.pr-av{width:74px;height:74px;border-radius:99px;background:var(--go);color:#fff;display:flex;align-items:center;justify-content:center;font-family:"IRANYekanX",sans-serif;font-size:30px;font-weight:700;margin:0 auto 12px;position:relative;box-shadow:0 2px 8px rgba(58,72,48,0.15);border:3px solid var(--sf)}
+.pr-av.guest{background:var(--ik);color:var(--mu);border-color:var(--sf)}
+.pr-name{font-size:22px;color:var(--gd);font-weight:700;line-height:1.2;position:relative}
+.pr-email{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-top:4px;direction:ltr;position:relative}
+.pr-guest-msg{font-size:14px;color:var(--mu);line-height:1.9;margin-top:6px;padding:0 8px;position:relative}
+
+.pr-stats{display:flex;background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:14px 6px;margin-bottom:14px}
+.pr-stat{flex:1;text-align:center;border-left:1px solid var(--br2);padding:0 4px}
+.pr-stat:first-child{border-left:none}
+.pr-stat-val{font-size:24px;color:var(--go);font-weight:700;font-variant-numeric:tabular-nums;font-family:"IRANYekanX",sans-serif;line-height:1.1}
+.pr-stat-lab{font-size:11px;color:var(--mu);margin-top:4px;font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em}
+
+.pr-section{margin-bottom:16px}
+.pr-section-h{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.12em;margin:0 4px 8px;font-weight:600;text-transform:uppercase}
+.pr-list{background:var(--sf);border:1px solid var(--br2);border-radius:14px;overflow:hidden}
+.pr-row{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;border-bottom:1px solid var(--br2);transition:background .15s;background:transparent;width:100%;border-left:none;border-right:none;border-top:none;font-family:"IRANYekanX",sans-serif;text-align:right}
+.pr-row:last-child{border-bottom:none}
+.pr-row:hover{background:var(--sf2)}
+.pr-row:active{background:var(--ik)}
+.pr-row-ic{width:32px;height:32px;border-radius:9px;background:var(--gh);color:var(--go);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pr-row-ic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
+.pr-row-ic.sa{background:var(--sah);color:var(--sa2)}
+.pr-row-ic.er{background:#f4dcd4;color:var(--er)}
+.pr-row-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pr-row-t1{font-size:15px;color:var(--gd);font-weight:700;line-height:1.2;display:block}
+.pr-row-t2{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;display:block}
+.pr-row-chev{color:var(--vf);font-size:18px;line-height:1}
+
+.pr-edit-form{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:14px 14px 12px;margin-bottom:14px}
+.pr-edit-field{margin-bottom:10px}
+.pr-edit-field:last-of-type{margin-bottom:14px}
+.pr-edit-lab{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em;margin-bottom:5px;display:block}
+.pr-edit-inp{width:100%;background:var(--bg);border:1px solid var(--br);border-radius:11px;padding:11px 14px;color:var(--tx);font-family:"IRANYekanX",sans-serif;font-size:15px;outline:none;direction:ltr;transition:border-color .15s}
+.pr-edit-inp:focus{border-color:var(--go);background:var(--sf2)}
+.pr-edit-inp[dir="rtl"]{direction:rtl;font-family:"IRANYekanX",sans-serif;font-size:16px}
+.pr-edit-bts{display:flex;gap:8px;margin-top:4px}
+.pr-edit-bts button{flex:1;padding:11px;border-radius:11px;border:1px solid var(--br);font-family:"IRANYekanX",sans-serif;font-size:15px;cursor:pointer;font-weight:700}
+.pr-edit-save{background:var(--go);color:#fff;border-color:var(--go)}
+.pr-edit-save:active{background:var(--gd)}
+.pr-edit-cancel{background:transparent;color:var(--mu)}
+.pr-edit-msg{font-size:12px;text-align:center;padding:8px 0 4px;font-family:"IRANYekanX",sans-serif;min-height:24px}
+.pr-edit-msg.ok{color:var(--go)}
+.pr-edit-msg.er{color:var(--er)}
+
+.pr-guest-bts{display:flex;gap:8px;margin-bottom:14px}
+.pr-guest-bts button{flex:1;padding:13px;border-radius:12px;font-family:"IRANYekanX",sans-serif;font-size:16px;cursor:pointer;font-weight:700;border:1px solid var(--br)}
+.pr-guest-bts .pr-login{background:var(--go);color:#fff;border-color:var(--go)}
+.pr-guest-bts .pr-login:active{background:var(--gd)}
+.pr-guest-bts .pr-reg{background:transparent;color:var(--gd)}
+.pr-guest-bts .pr-reg:active{background:var(--ik)}
+
+.pr-foot{text-align:center;font-size:11px;color:var(--fa);font-family:"IRANYekanX",sans-serif;letter-spacing:0.06em;padding:14px 0 4px}
+
+/* logout confirm */
+.cf-bg{position:fixed;inset:0;background:rgba(26,34,24,0.5);display:flex;align-items:center;justify-content:center;z-index:150;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
+.cf-bg.open{opacity:1;pointer-events:all}
+.cf-box{background:var(--sf);border:1px solid var(--br);border-radius:16px;padding:20px 18px;width:min(320px,90vw);text-align:center}
+.cf-t{font-size:17px;color:var(--gd);font-weight:700;margin-bottom:6px}
+.cf-sub{font-size:13px;color:var(--mu);font-family:"IRANYekanX",sans-serif;line-height:1.7;margin-bottom:16px}
+.cf-bts{display:flex;gap:8px}
+.cf-bts button{flex:1;padding:11px;border-radius:11px;font-family:"IRANYekanX",sans-serif;font-size:15px;cursor:pointer;font-weight:700;border:1px solid var(--br)}
+.cf-cancel{background:transparent;color:var(--mu)}
+.cf-confirm{background:var(--er);color:#fff;border-color:var(--er)}
+
+/* ─── AUTH SCREEN (OTP flow) ──────────────── */
+.auth-screen{position:fixed;inset:0;max-width:500px;margin:0 auto;z-index:200;background:var(--bg);display:none;overflow:hidden}
+.auth-screen.open{display:block}
+.auth-body{position:absolute;inset:0;overflow:hidden}
+#auth-body .a-screen{position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 24px 26px;overflow-y:auto}
+#auth-body .a-screen::-webkit-scrollbar{width:0}
+#auth-body .scr-enter{animation:aslidein .34s cubic-bezier(.22,.9,.32,1)}
+#auth-body .scr-back{animation:aslideback .34s cubic-bezier(.22,.9,.32,1)}
+@keyframes aslidein{from{transform:translateX(-22px)}to{transform:translateX(0)}}
+@keyframes aslideback{from{transform:translateX(22px)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){#auth-body .scr-enter,#auth-body .scr-back{animation:none}}
+#auth-body .topbar{display:flex;align-items:center;gap:6px;min-height:40px;margin-bottom:6px}
+#auth-body .back{width:38px;height:38px;border:none;background:transparent;color:var(--gd);cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;margin-right:-8px}
+#auth-body .back:active{background:var(--ik)}
+#auth-body .back svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#auth-body .top-title{font-size:16px;font-weight:700;color:var(--gd);flex:1}
+#auth-body .step-pill{font-size:12px;color:var(--mu);font-weight:600;background:var(--gh);padding:4px 11px;border-radius:99px}
+#auth-body .prog{display:flex;gap:6px;margin:2px 0 22px}
+#auth-body .prog span{flex:1;height:4px;border-radius:99px;background:var(--br2);transition:background .3s}
+#auth-body .prog span.on{background:var(--go)}
+#auth-body .a-hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+#auth-body .a-logo{width:96px;height:96px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+#auth-body .a-logo img{width:100%;height:100%;object-fit:contain}
+#auth-body .h-title{font-size:27px;font-weight:800;color:var(--gd);line-height:1.3;margin-top:10px}
+#auth-body .h-sub{font-size:14px;color:var(--mu);line-height:1.85;margin-top:8px;text-wrap:pretty;max-width:270px}
+#auth-body .a-lead{max-width:none;margin:0 0 20px}
+#auth-body .field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+#auth-body .field label{font-size:13px;font-weight:600;color:var(--tx2);padding-right:2px}
+#auth-body .inwrap{position:relative;display:flex;align-items:center}
+#auth-body .inwrap input{width:100%;background:var(--sf);border:1.5px solid var(--br);border-radius:14px;padding:14px 15px;color:var(--tx);font-family:"IRANYekanX",sans-serif;font-size:16px;outline:none;transition:border-color .15s,background .15s}
+#auth-body .inwrap input::placeholder{color:var(--vf)}
+#auth-body .inwrap input:focus{border-color:var(--go);background:var(--sf2)}
+#auth-body .inwrap input.ltr{direction:ltr;text-align:right}
+#auth-body .inwrap.err input{border-color:var(--er);background:#f7ece6}
+#auth-body .in-eye{position:absolute;left:12px;background:transparent;border:none;color:var(--mu);cursor:pointer;padding:5px;display:flex}
+#auth-body .in-eye svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#auth-body .field-msg{font-size:12.5px;line-height:1.6;padding-right:2px;display:flex;align-items:center;gap:5px}
+#auth-body .field-msg.err{color:var(--er)}
+#auth-body .field-msg.hint{color:var(--mu)}
+#auth-body .field-msg svg{width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2}
+#auth-body .a-center{justify-content:center;margin-top:12px}
+#auth-body .btn{width:100%;border:none;border-radius:14px;padding:15px;font-family:"IRANYekanX",sans-serif;font-size:16.5px;font-weight:700;cursor:pointer;transition:background .15s,transform .1s,opacity .15s;display:flex;align-items:center;justify-content:center;gap:9px;min-height:52px;white-space:nowrap}
+#auth-body .btn:active{transform:scale(.985)}
+#auth-body .btn-pr{background:var(--go);color:#fff}
+#auth-body .btn-pr:active{background:var(--gd)}
+#auth-body .btn-pr:disabled{background:var(--br);color:var(--sf);cursor:default;transform:none}
+#auth-body .btn-gh{background:transparent;color:var(--gd);border:1.5px solid var(--br)}
+#auth-body .btn-gh:active{background:var(--ik)}
+#auth-body .btn-txt{background:transparent;color:var(--go);font-size:14px;font-weight:600;padding:11px;min-height:auto}
+#auth-body .btn-txt:active{opacity:.6}
+#auth-body .btn-txt:disabled{color:var(--vf);cursor:default}
+#auth-body .a-actions{display:flex;flex-direction:column;gap:11px}
+#auth-body .a-forgot{text-align:left;margin:-4px 0 8px}
+#auth-body .a-forgot .btn-txt{width:auto;padding:4px 2px}
+#auth-body .a-gap{height:6px}
+#auth-body .a-gap-lg{height:28px}
+#auth-body .spin{width:20px;height:20px;border:2.4px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:aspin .7s linear infinite}
+@keyframes aspin{to{transform:rotate(360deg)}}
+#auth-body .tabs{display:flex;gap:4px;background:var(--ik);border-radius:14px;padding:4px;margin-bottom:22px}
+#auth-body .tabs button{flex:1;padding:11px;border-radius:11px;border:none;background:transparent;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:14.5px;font-weight:600;cursor:pointer;transition:all .18s}
+#auth-body .tabs button.on{background:var(--bg);color:var(--gd);font-weight:700;box-shadow:0 1px 4px rgba(58,72,48,.12)}
+#auth-body .note{display:flex;gap:9px;align-items:flex-start;background:var(--sah);border:1px solid #e6d6a8;border-radius:13px;padding:11px 13px;font-size:12.5px;color:var(--sa2);line-height:1.7;margin-bottom:18px}
+#auth-body .note svg{width:17px;height:17px;flex-shrink:0;stroke:var(--sa2);fill:none;stroke-width:1.8;margin-top:2px}
+#auth-body .a-shield{display:flex;justify-content:center;margin:8px 0 16px}
+#auth-body .a-shield svg{width:28px;height:28px;padding:14px;box-sizing:content-box;border-radius:16px;background:var(--gh);color:var(--go);stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#auth-body .otp{margin:6px 0 4px}
+#auth-body .otp-single{display:flex;justify-content:center}
+#auth-body .otp-single input{width:230px;height:70px;background:var(--ik);border:1.5px solid var(--br);border-radius:16px;text-align:center;direction:ltr;font-size:32px;font-weight:700;color:var(--tx);letter-spacing:18px;text-indent:18px;outline:none;font-family:"IRANYekanX",sans-serif;transition:border-color .15s}
+#auth-body .otp-single input:focus{border-color:var(--go);background:var(--sf2)}
+#auth-body .otp-single input::placeholder{color:var(--vf);letter-spacing:14px;text-indent:14px;font-weight:500}
+#auth-body .otp.shake{animation:ashake .4s}
+@keyframes ashake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+#auth-body .otp-sent{font-size:13.5px;color:var(--mu);line-height:1.8;margin-bottom:18px;text-wrap:pretty;text-align:center}
+#auth-body .otp-sent b{color:var(--gd);direction:ltr;display:inline-block;unicode-bidi:embed}
+#auth-body .change-num{display:block;width:fit-content;padding:3px 10px;margin:8px auto 0;font-size:13px;font-weight:700;border-radius:8px}
+#auth-body .timer{display:flex;align-items:center;justify-content:center;gap:7px;font-size:14px;color:var(--mu);margin:16px 0 4px}
+#auth-body .timer.exp{color:var(--er)}
+#auth-body .timer .clock{font-weight:700;font-variant-numeric:tabular-nums;color:var(--tx2)}
+#auth-body .timer.exp .clock{color:var(--er)}
+#auth-body .timer svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9}
+#auth-body .resend-row{text-align:center;margin-bottom:8px}
+#auth-body .success{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px}
+#auth-body .check-ring{width:112px;height:112px;margin-bottom:22px;animation:apop .5s cubic-bezier(.2,1.25,.4,1)}
+#auth-body .check-ring circle.disc{fill:var(--gh);stroke:none}
+#auth-body .check-ring circle.ring{fill:none;stroke:var(--go);stroke-width:5}
+#auth-body .check-ring path{fill:none;stroke:var(--go);stroke-width:6.5;stroke-linecap:round;stroke-linejoin:round}
+@keyframes apop{from{transform:scale(.55)}to{transform:scale(1)}}
+#auth-body .success .s-title{font-size:24px;font-weight:800;color:var(--gd);line-height:1.45;margin-bottom:4px}
+#auth-body .success .s-sub{font-size:14.5px;color:var(--mu);line-height:1.8;max-width:260px;text-wrap:pretty}
+#auth-body .success .a-actions{width:100%}
+#auth-body .grow{flex:1;min-height:14px}
+#auth-body .welcome-foot{font-size:12.5px;color:var(--fa);text-align:center;line-height:1.7;margin-top:12px}
+#auth-body .demo-fab{position:absolute;bottom:14px;left:14px;z-index:20;background:rgba(29,36,24,.9);color:#ece7d6;border:none;border-radius:99px;padding:8px 15px;font-family:"IRANYekanX",sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
+#auth-body .demo-fab svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+#auth-body .demo-card{position:absolute;bottom:58px;left:18px;right:18px;z-index:21;background:#1d2418;color:#ece7d6;border-radius:16px;padding:15px 17px;font-size:12.5px;line-height:1.95;cursor:pointer}
+#auth-body .demo-card h4{font-size:13px;font-weight:700;margin-bottom:7px;color:#fff}
+#auth-body .demo-card code{direction:ltr;display:inline-block;background:rgba(255,255,255,.13);padding:1px 7px;border-radius:6px;font-family:monospace;font-weight:700;color:#f4d77a}
+#auth-body .demo-card .dim{color:#a7b096}
+#auth-body .demo-card .sp{margin-top:6px}
+
+.pr .sk-card{margin:0 0 14px}
+
+/* ─── LIBRARY ─────────────────────────────── */
+.lib{display:flex;flex-direction:column;gap:11px;padding:16px}
+.lib-card{display:flex;align-items:center;gap:12px;background:var(--sf2);border:1px solid var(--br);border-radius:16px;padding:18px 17px;cursor:pointer;transition:border-color .15s,background .15s}
+.lib-card:hover{border-color:var(--go);background:var(--gh)}
+.lib-card:active{transform:scale(.995)}
+.lib-bd{flex:1;min-width:0}
+.lib-t{font-size:19px;font-weight:800;color:var(--gd);line-height:1.4}
+.lib-d{font-size:13px;color:var(--mu);line-height:1.9;margin-top:5px;text-wrap:pretty}
+.lib-s{font-size:11.5px;color:var(--sa2);margin-top:9px}
+.lib-ar{flex-shrink:0;color:var(--vf);display:flex}
+.lib-ar svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+/* ─── TWEAKS PANEL ───────────────────────── */
+.tw-panel{position:fixed;bottom:80px;right:14px;background:var(--sf);border:1px solid var(--go);border-radius:14px;padding:14px 16px;width:min(300px,calc(100vw - 28px));z-index:300;box-shadow:0 10px 30px rgba(58,72,48,0.2);display:none;font-family:"IRANYekanX",sans-serif}
+.tw-panel.open{display:block}
+.tw-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--br2)}
+.tw-title{font-size:13px;color:var(--gd);font-weight:700;letter-spacing:0.08em}
+.tw-close{background:transparent;border:none;color:var(--mu);font-size:18px;cursor:pointer;line-height:1}
+.tw-row{margin-bottom:10px}
+.tw-row:last-child{margin-bottom:0}
+.tw-label{font-size:11px;color:var(--mu);margin-bottom:5px;letter-spacing:0.04em}
+.tw-seg{display:flex;background:var(--ik);border-radius:9px;padding:3px;gap:2px}
+.tw-seg button{flex:1;background:transparent;border:none;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-size:12px;padding:6px 0;border-radius:7px;cursor:pointer;transition:all .15s}
+.tw-seg button.on{background:var(--go);color:#fff;font-weight:700}
+
+/* ─── MOOD / حال و هوا ─────────────────────── */
+.mood-card{background:linear-gradient(180deg,var(--sf2),var(--sf));border:1px solid var(--br2);border-radius:16px;padding:14px 14px 12px;margin-bottom:14px;position:relative;overflow:hidden}
+.mood-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
+.mood-title{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.1em;font-weight:600;display:flex;align-items:center;gap:6px;cursor:pointer}
+.mood-title::before{content:'';width:14px;height:14px;border-radius:99px;background:radial-gradient(circle at 35% 35%,var(--sa),var(--sa2));flex-shrink:0;box-shadow:0 0 0 3px var(--sah)}
+.mood-dom{font-size:11px;color:var(--sa2);font-family:"IRANYekanX",sans-serif;font-weight:700;background:var(--sah);border-radius:99px;padding:3px 10px;flex-shrink:0;white-space:nowrap}
+.mood-hint{font-size:10px;color:var(--fa);font-family:"IRANYekanX",sans-serif;letter-spacing:0.04em;text-align:center;margin-top:2px;cursor:pointer}
+
+/* radar */
+.mood-radar-wrap{display:flex;justify-content:center;padding:4px 0 2px}
+.mood-radar{width:100%;max-width:300px;height:auto;overflow:visible;touch-action:manipulation}
+.mr-grid{fill:none;stroke:var(--br2);stroke-width:1}
+.mr-spoke{stroke:var(--br2);stroke-width:1}
+.mr-area{fill:var(--go);fill-opacity:0.14;stroke:var(--go);stroke-width:2;stroke-linejoin:round}
+.mr-vtx{fill:var(--sf2);stroke:var(--go);stroke-width:2;cursor:pointer;transition:r .12s,fill .12s}
+.mr-vtx:hover{fill:var(--sa);stroke:var(--sa2)}
+.mr-hit{fill:transparent;cursor:pointer}
+.mr-lab{font-family:"IRANYekanX",sans-serif;font-size:12.5px;font-weight:700;fill:var(--tx2);cursor:pointer;user-select:none}
+.mr-lab.dom{fill:var(--sa2)}
+.mr-lab-pct{font-family:"IRANYekanX",sans-serif;font-size:9.5px;fill:var(--mu);cursor:pointer;user-select:none}
+.mood-axis-g:hover .mr-lab{fill:var(--go)}
+.mr-center-n{font-family:"IRANYekanX",sans-serif;font-size:20px;font-weight:700;fill:var(--gd);font-variant-numeric:tabular-nums}
+.mr-center-lab{font-family:"IRANYekanX",sans-serif;font-size:8.5px;fill:var(--mu);letter-spacing:0.04em}
+
+/* bars variant */
+.mood-bars{display:flex;flex-direction:column;gap:8px;padding:6px 2px 2px}
+.mood-bars-count{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;text-align:center;padding:6px 0 2px}
+.mood-bars-count b{color:var(--gd);font-weight:700;font-variant-numeric:tabular-nums}
+.mood-bar-row{display:flex;align-items:center;gap:10px;cursor:pointer;padding:2px 0}
+.mood-bar-row:hover .mbar-name{color:var(--go)}
+.mbar-name{font-size:14px;color:var(--tx2);font-family:"IRANYekanX",sans-serif;font-weight:700;width:46px;flex-shrink:0;text-align:right}
+.mbar-track{flex:1;height:9px;background:var(--ik);border-radius:99px;overflow:hidden;position:relative}
+.mbar-fill{position:absolute;inset:0 0 0 auto;height:100%;border-radius:99px;background:linear-gradient(270deg,var(--gl),var(--go))}
+.mbar-row-dom .mbar-fill{background:linear-gradient(270deg,var(--sa),var(--sa2))}
+.mbar-pct{font-size:11px;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-variant-numeric:tabular-nums;width:30px;flex-shrink:0}
+
+/* merged keyword chips inside card */
+.mood-kw{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:12px;padding-top:11px;border-top:1px solid var(--br2)}
+.mood-kw-lab{font-size:10px;color:var(--mu);font-family:"IRANYekanX",sans-serif;letter-spacing:0.06em;margin-left:2px}
+
+/* mood bottom sheet */
+.ms-bg{position:fixed;inset:0;background:rgba(26,34,24,0.5);display:flex;align-items:flex-end;justify-content:center;z-index:120;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
+.ms-bg.open{opacity:1;pointer-events:all}
+.ms-sheet{background:var(--sf);border-radius:18px 18px 0 0;border-top:1px solid var(--br);width:100%;max-width:500px;max-height:82vh;overflow-y:auto;padding:8px 16px 28px;transform:translateY(100%);transition:transform .26s cubic-bezier(.2,.7,.2,1)}
+.ms-bg.open .ms-sheet{transform:translateY(0)}
+.ms-grip{width:38px;height:4px;border-radius:99px;background:var(--br);margin:6px auto 12px}
+.ms-h{display:flex;align-items:center;gap:11px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--br2)}
+.ms-dot{width:34px;height:34px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.ms-h-tx{flex:1;min-width:0}
+.ms-h-name{font-size:21px;color:var(--gd);font-weight:700;line-height:1.15}
+.ms-h-sub{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;margin-top:2px}
+.ms-meter{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.ms-meter-track{flex:1;height:7px;border-radius:99px;background:var(--ik);overflow:hidden;position:relative}
+.ms-meter-fill{position:absolute;inset:0 0 0 auto;height:100%;border-radius:99px}
+.ms-meter-val{font-size:13px;font-weight:700;font-family:"IRANYekanX",sans-serif;font-variant-numeric:tabular-nums;flex-shrink:0;width:38px;text-align:left;direction:ltr}
+.ms-desc{font-size:15px;color:var(--tx);line-height:1.95;text-align:justify;text-justify:inter-word;margin-bottom:16px}
+.ms-sec-h{font-size:11px;color:var(--sa2);font-family:"IRANYekanX",sans-serif;letter-spacing:0.1em;margin-bottom:9px;font-weight:600;display:flex;align-items:center;gap:6px}
+.ms-sec-h::before{content:'';width:16px;height:1px;background:var(--sa)}
+.ms-sec{margin-bottom:18px}
+.ms-sec:last-child{margin-bottom:0}
+.ms-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ms-empty{font-size:13px;color:var(--vf);font-family:"IRANYekanX",sans-serif;padding:2px 0}
+.ms-cp{background:var(--sf2);border:1px solid var(--br2);border-radius:12px;padding:10px 13px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
+.ms-cp:hover{border-color:var(--go)}
+.ms-cp .ms-cp1{font-size:16px;color:var(--tx);line-height:1.85}
+.ms-cp .ms-cp2{font-size:16px;color:var(--mu);line-height:1.85;text-align:left}
+.ms-cp .ms-cp-n{font-size:10px;color:var(--fa);font-family:"IRANYekanX",sans-serif;margin-top:5px;letter-spacing:0.04em}
+/* overview list */
+.ms-ov-row{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--br2);cursor:pointer}
+.ms-ov-row:last-child{border-bottom:none}
+.ms-ov-row:hover .ms-ov-name{color:var(--go)}
+.ms-ov-dot{width:11px;height:11px;border-radius:99px;flex-shrink:0}
+.ms-ov-name{font-size:15px;color:var(--gd);font-weight:700;width:48px;flex-shrink:0}
+.ms-ov-track{flex:1;height:7px;border-radius:99px;background:var(--ik);overflow:hidden;position:relative}
+.ms-ov-fill{position:absolute;inset:0 0 0 auto;height:100%;border-radius:99px}
+.ms-ov-pct{font-size:12px;color:var(--mu);font-family:"IRANYekanX",sans-serif;font-variant-numeric:tabular-nums;width:34px;text-align:left;direction:ltr;flex-shrink:0}
+.ms-ov-chev{color:var(--vf);font-size:16px;flex-shrink:0}
+.cp-flash{animation:cpFlash 1.4s ease}
+@keyframes cpFlash{0%,100%{box-shadow:0 0 0 0 rgba(200,144,48,0)}25%{box-shadow:0 0 0 2px var(--sa)}}
+/* ─── KHANESH (readings) ─────────────────── */
+/* list */
+.kh-lead{font-size:13px;color:var(--mu);line-height:1.9;margin:0 2px 16px;text-wrap:pretty}
+.kh-list{display:flex;flex-direction:column;gap:9px}
+.kh-card{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:14px 16px;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
+.kh-card::before{content:"";position:absolute;top:14px;bottom:14px;inset-inline-start:0;width:3px;border-radius:99px;background:var(--sa);opacity:0;transition:opacity .15s}
+.kh-card:hover{border-color:var(--sa);background:var(--sf2)}
+.kh-card:hover::before{opacity:.6}
+.kh-card:active{transform:scale(.99)}
+.kh-card-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.kh-band{font-size:10.5px;color:var(--sa2);font-weight:600;letter-spacing:.03em;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.kh-band::before{content:'✦';color:var(--sa);font-size:11px}
+.kh-date{font-size:11px;color:var(--fa);margin-inline-start:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kh-title{font-size:17px;color:var(--gd);font-weight:700;line-height:1.5;margin-bottom:8px;text-wrap:pretty}
+.kh-by{font-size:12.5px;color:var(--mu);display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.kh-by svg{width:14px;height:14px;stroke:var(--mu);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.kh-by b{color:var(--tx2);font-weight:700}
+.kh-tags{display:flex;flex-wrap:wrap;gap:6px}
+.kh-tags.hide{display:none}
+.kh-tag{font-size:11px;color:var(--gd);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:3px 11px;line-height:1.4}
+
+/* detail */
+.kh-d{animation:fu .25s ease;padding-bottom:10px}
+.kh-d-band{font-size:11px;color:var(--sa2);font-weight:600;letter-spacing:.03em;margin-bottom:11px;display:inline-flex;gap:6px;align-items:center}
+.kh-d-band::before{content:'✦';color:var(--sa);font-size:12px}
+.kh-d-title{font-size:25px;color:var(--gd);font-weight:800;line-height:1.4;margin-bottom:16px;text-wrap:pretty}
+.kh-d-meta{display:flex;align-items:center;gap:11px;padding-bottom:15px;border-bottom:1px solid var(--br2);flex-wrap:wrap}
+.kh-d-av{width:38px;height:38px;border-radius:99px;background:var(--gh);color:var(--go);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
+.kh-d-who{display:flex;flex-direction:column;gap:1px}
+.kh-d-name{font-size:14.5px;color:var(--tx2);font-weight:700;line-height:1.3}
+.kh-d-role{font-size:11px;color:var(--mu)}
+.kh-d-date{font-size:12px;color:var(--fa);margin-inline-start:auto;font-variant-numeric:tabular-nums;align-self:flex-start;padding-top:3px}
+.kh-d-tags{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+
+.kh-content{font-size:16px;line-height:2.05;color:var(--tx);padding-top:10px}
+.kh-content.lg{font-size:18px;line-height:2.15}
+.kh-content p{margin:0 0 17px}
+.kh-content p:last-child{margin-bottom:0}
+.kh-content h3{font-size:18px;color:var(--gd);font-weight:700;line-height:1.5;margin:26px 0 11px}
+.kh-content.lg h3{font-size:20px}
+.kh-content em{font-style:normal;font-weight:700;color:var(--tx2)}
+.kh-content .kh-verse{background:linear-gradient(90deg,var(--sah),transparent 78%);border-inline-start:3px solid var(--sa);border-radius:0 11px 11px 0;padding:14px 18px;margin:20px 0;color:var(--tx2);font-size:17px;line-height:2;font-weight:500}
+.kh-content.lg .kh-verse{font-size:19px}
+.kh-content .kh-verse .m2{color:var(--mu);text-align:start;display:block}
+
+.kh-backband{display:flex;align-items:center;gap:12px;background:var(--sf);border:1px solid var(--br);border-radius:13px;padding:13px 15px;margin-top:26px;cursor:pointer;transition:all .15s}
+.kh-backband:hover{border-color:var(--sa);background:var(--sah)}
+.kh-backband:active{transform:scale(.99)}
+.kh-bb-ic{width:40px;height:40px;border-radius:11px;background:var(--sah);color:var(--sa2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kh-bb-ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7}
+.kh-bb-tx{flex:1;min-width:0}
+.kh-bb-lab{font-size:11px;color:var(--mu);margin-bottom:2px}
+.kh-bb-t{font-size:15px;color:var(--gd);font-weight:700}
+.kh-bb-chev{color:var(--sa2);flex-shrink:0;display:flex;align-items:center}
+.kh-bb-chev svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* related-in-band section (inside terjee) */
+.kh-rel-sec{margin-top:24px;padding-top:18px;border-top:1px solid var(--br2)}
+.kh-rel-h{font-size:13px;color:var(--gd);font-weight:700;letter-spacing:.02em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.kh-rel-h svg{width:17px;height:17px;stroke:var(--sa2);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.kh-rel-h .cnt{font-size:11px;color:var(--sa2);background:var(--sah);border-radius:99px;padding:1px 9px;font-weight:600;margin-inline-start:2px}
+.kh-rel-card{display:flex;align-items:center;gap:11px;background:var(--sf);border:1px solid var(--br2);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all .15s;margin-bottom:8px}
+.kh-rel-card:hover{border-color:var(--sa);background:var(--sah)}
+.kh-rel-card:active{transform:scale(.99)}
+.kh-rel-ic{width:36px;height:36px;border-radius:10px;background:var(--gh);color:var(--go);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kh-rel-ic svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7}
+.kh-rel-body{flex:1;min-width:0}
+.kh-rel-title{font-size:14.5px;color:var(--gd);font-weight:700;line-height:1.45}
+.kh-rel-by{font-size:11.5px;color:var(--mu);margin-top:2px}
+.kh-rel-chev{color:var(--vf);flex-shrink:0;display:flex;align-items:center}
+.kh-rel-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kh-empty{font-size:13px;color:var(--mu);text-align:center;line-height:1.9;padding:18px 16px;background:var(--sf);border:1px dashed var(--br);border-radius:12px}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="hd">
+    <button class="hd-back" id="btn-back" aria-label="بازگشت">→</button>
+    <div class="hd-logo" aria-hidden="true"><img src="assets/logo-mark.png" alt=""></div>
+    <div class="hd-title">
+      <div class="hd-t1" id="hd-t1">بیدلی</div>
+      <div class="hd-t2 fa" id="hd-t2" style="display:none"></div>
+    </div>
+    <button class="hd-icon" id="btn-rand" aria-label="غزل تصادفی" title="غزل تصادفی"><svg viewBox="0 0 24 24"><path d="M16 4h4v4"></path><path d="M20 4L4 20"></path><path d="M16 20h4v-4"></path><path d="M4 4l5 5"></path><path d="M15 15l5 5"></path></svg></button>
+    <button class="hd-avatar guest" id="btn-profile" aria-label="حساب کاربری" title="حساب کاربری">م</button>
+  </header>
+
+  <div class="subnav hide" id="subnav-g">
+    <button id="gp">→ قبلی</button>
+    <button id="gn">بعدی ←</button>
+  </div>
+  <div class="subnav hide" id="subnav-t">
+    <button id="tp">→ قبلی</button>
+    <button id="tallbands">همه بندها</button>
+    <button id="tn">بعدی ←</button>
+  </div>
+
+  <main class="ct" id="ct"></main>
+
+  <nav class="bn">
+    <button class="bn-item on" data-tab="home">
+      <span class="bn-ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2z"/></svg></span>
+      <span class="bn-lab">خانه</span>
+    </button>
+    <button class="bn-item" data-tab="browse">
+      <span class="bn-ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg></span>
+      <span class="bn-lab">کتابخانه</span>
+    </button>
+    <div class="bn-fab">
+      <button class="bn-item bn-c" data-tab="srch">
+        <span class="bn-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg></span>
+        <span class="bn-lab">کاوش</span>
+      </button>
+    </div>
+    <button class="bn-item" data-tab="bm">
+      <span class="bn-ic"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span>
+      <span class="bn-lab">نشان‌ها</span>
+    </button>
+    <button class="bn-item" data-tab="profile">
+      <span class="bn-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+      <span class="bn-lab">حساب</span>
+    </button>
+  </nav>
+</div>
+
+<div class="mbg" id="mbg">
+  <div class="mo">
+    <div class="mt2">یادداشت برای بیت</div>
+    <div class="mv" id="mv"></div>
+    <textarea class="mta" id="mn" placeholder="یادداشت خود را بنویسید..."></textarea>
+    <div class="mbs">
+      <button class="mcl" id="btn-mcancel">انصراف</button>
+      <button class="msv" id="btn-msave">ذخیره ✓</button>
+    </div>
+  </div>
+</div>
+
+<div class="shbg" id="shbg">
+  <div class="sho">
+    <div class="sh-t" id="sh-t">اشتراکِ بیت</div>
+    <div class="sh-v" id="sh-v"></div>
+    <div class="sh-row"><span class="sh-url" id="sh-url"></span><button class="sh-copy" id="sh-copy">کپی لینک</button></div>
+    <button class="sh-share" id="sh-share"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>اشتراک‌گذاری…</span></button>
+  </div>
+</div>
+
+<div class="ts-wrap" id="tswrap"></div>
+
+<div class="ms-bg" id="mood-sheet-bg">
+  <div class="ms-sheet" id="mood-sheet">
+    <div class="ms-grip"></div>
+    <div id="mood-sheet-body"></div>
+  </div>
+</div>
+
+<div class="cf-bg" id="cf-bg">
+  <div class="cf-box">
+    <div class="cf-t">خروج از حساب</div>
+    <div class="cf-sub">مطمئن هستید می‌خواهید خارج شوید؟ نشان‌ها و یادداشت‌های شما در سرور محفوظ می‌مانند.</div>
+    <div class="cf-bts">
+      <button class="cf-cancel" id="cf-cancel">انصراف</button>
+      <button class="cf-confirm" id="cf-confirm">خروج</button>
+    </div>
+  </div>
+</div>
+
+<div class="tw-panel" id="tw-panel">
+  <div class="tw-head">
+    <span class="tw-title">Tweaks</span>
+    <button class="tw-close" id="tw-close">✕</button>
+  </div>
+  <div class="tw-row">
+    <div class="tw-label">سبک کارت واژه</div>
+    <div class="tw-seg" data-tweak="cardStyle">
+      <button data-v="full" class="on">با نمودار</button>
+      <button data-v="compact">فشرده</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <div class="tw-label">مرتب‌سازی واژه‌ها</div>
+    <div class="tw-seg" data-tweak="sortBy">
+      <button data-v="count" class="on">تعداد</button>
+      <button data-v="alpha">الفبا</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <div class="tw-label">نمودار حال و هوا</div>
+    <div class="tw-seg" data-tweak="moodChart">
+      <button data-v="radar" class="on">شعاعی</button>
+      <button data-v="bars">میله‌ای</button>
+    </div>
+  </div>
+</div>
+
+<div class="auth-screen" id="auth-screen"><div class="auth-body" id="auth-body"></div></div>
+
+<script>
+(async function(){
+const TOT=2827, TB=34;
+let cg=0, ct=0;
+let curTab='home';      // active bottom-nav tab
+let curView='home';     // active "screen" — home/browse/kw/bm/srch/gh/tr/zsec/kwd
+let browseSub='g';      // browse segmented sub: g/t/z
+let mkey=null;
+let _poemCache={}, _listCache={};
+let _kwFilter='all', _curKw=null;
+let _bms={}, _nts={};
+let _user=null;          // {username, email} if logged in
+let _editingProfile=false;
+let _pendingAction=null; // action to retry after login
+let backStack=[];
+let _khFrom='list', _khSlug=null, _khBand=1;
+
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "cardStyle": "full",
+  "sortBy": "count",
+  "moodChart": "radar"
+}/*EDITMODE-END*/;
+
+function toFa(n){return String(n).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);}
+
+// ─── KHANESH (readings / interpretive essays) ──────
+// In production these come from GET /khanesh. Here: in-file mock, newest→oldest by `date`.
+const KHANESH = [
+  {
+    slug:'ayine-hayrat',
+    title:'آینهٔ حیرت: خوانشی بر بندِ نخست',
+    instructor:'شروین وکیلی', role:'پژوهشگرِ بیدل‌شناسی',
+    terjee:1, date:'2024-12-02', dateFa:'۱۲ آذر ۱۴۰۳',
+    tags:['حیرت','آینه','خودشناسی'],
+    content:
+      '<p>بندِ نخستِ ترجیع‌بندِ حیرت با تصویرِ <em>آینه</em> آغاز می‌شود؛ نه آینه‌ای که چهره را بازمی‌تاباند، بلکه آینه‌ای که هر بازتاب را به پرسش بدل می‌کند. بیدل در همان بیتِ آغازین، نگاهِ بیرونی را به درون برمی‌گرداند و خواننده را در برابرِ تصویرِ خویش می‌نشاند.</p>'+
+      '<blockquote class="kh-verse">هر چه جستیم در این آینه، صورتِ ما بود<span class="m2">از تماشای جهان دل به جنونی دادیم</span></blockquote>'+
+      '<p>حیرت در زبانِ بیدل واژه‌ای منفی نیست؛ مقامی‌ست میانِ دانستن و ندانستن، جایی که عقلِ مدّعی از نفس می‌افتد و جان مجالِ تماشا می‌یابد. آنچه در این بند «صورتِ ما» خوانده می‌شود، همان تصویری‌ست که هستی از ما در آینهٔ خود نگاه می‌دارد.</p>'+
+      '<h3>چرا تماشا به جنون می‌رسد؟</h3>'+
+      '<p>برای بیدل، تماشای جهان اگر از سرِ تعلق باشد، آدمی را به بند می‌کشد؛ اما اگر از سرِ حیرت باشد، رهایش می‌کند. <em>جنون</em> در این‌جا گسستن از قاعده‌های عقلِ معامله‌گر است — همان دلی که «به جنونی داده‌اند» تا از حسابِ سود و زیان بیرون بیاید.</p>'+
+      '<p>ترجیعِ تکرارشونده‌ی این بند، خواننده را هر بار به همان آستانه بازمی‌گرداند: ایستادن در برابرِ آینه، و پذیرفتنِ این‌که شناختِ جهان، در نهایت، شناختِ خویش است.</p>'
+  },
+  {
+    slug:'del-bineshan',
+    title:'دلِ بی‌نشان و راهِ نیستی',
+    instructor:'مریم حسینی', role:'استادِ ادبیاتِ عرفانی',
+    terjee:1, date:'2024-11-18', dateFa:'۲۸ آبان ۱۴۰۳',
+    tags:['دل','فنا','نشان'],
+    content:
+      '<p>اگر بندِ نخست را از دریچهٔ «دل» بخوانیم، چهره‌ای دیگر از آن آشکار می‌شود. بیدل پیوسته از دلی سخن می‌گوید که نشانش گم شده است؛ دلی که هرچه بیشتر بجویی، کمتر می‌یابی.</p>'+
+      '<blockquote class="kh-verse">در این بیدل که ز ما رفته است، نشانی نیست<span class="m2">نشانِ بی‌نشانی، در نشانی نیست</span></blockquote>'+
+      '<p>این بازیِ <em>نشان</em> و <em>بی‌نشانی</em>، هستهٔ اندیشهٔ بیدل است. رسیدن به بی‌نشانی، خود نشانی می‌طلبد؛ اما آن نشان در جهانِ نشانه‌ها یافت نمی‌شود. اینجاست که زبانِ شعر از توضیح بازمی‌ماند و به اشاره بسنده می‌کند.</p>'+
+      '<p>خوانشِ این بند در کنارِ خوانشِ «آینه»، نشان می‌دهد که حیرتِ بیدل دو رو دارد: رویی که به جهان نگاه می‌کند، و رویی که از خویش می‌گذرد.</p>'
+  },
+  {
+    slug:'tamashagah-jahan',
+    title:'تماشاگاهِ جهان در نگاهِ بیدل',
+    instructor:'علی‌محمد صابری', role:'مدرّسِ متونِ کهن',
+    terjee:3, date:'2024-11-05', dateFa:'۱۵ آبان ۱۴۰۳',
+    tags:['جهان','تماشا','رنگ'],
+    content:
+      '<p>بندِ سوم، جهان را همچون نمایشگاهی می‌بیند که هر لحظه پرده‌ای تازه می‌گشاید. بیدل در اینجا از <em>رنگ</em> سخن می‌گوید — رنگ نه به‌معنای زیبایی، بلکه به‌معنای فریب و گذرابودنِ صورت‌ها.</p>'+
+      '<p>تماشاگرِ راستین کسی‌ست که در پسِ این رنگ‌ها، بی‌رنگیِ آغازین را نمی‌بازد. حیرت اینجا حالتِ کسی‌ست که زیباییِ جهان را می‌بیند، اما در آن گرفتار نمی‌شود.</p>'+
+      '<blockquote class="kh-verse">عالمِ رنگ است و بیدل محوِ تماشای اوست<span class="m2">دیده تا وا کرده‌ایم، آیینه بر ما باز شد</span></blockquote>'+
+      '<p>این بند پلی‌ست میانِ نگاهِ بیرونی و درونی؛ نشان می‌دهد که چگونه «دیدن» در شعرِ بیدل همواره به «دیده‌شدن» می‌انجامد.</p>'
+  },
+  {
+    slug:'sahra-hayrat',
+    title:'صحرای حیرت و گم‌شدنِ نشان',
+    instructor:'کاظم محمدی', role:'پژوهشگرِ عرفانِ ادبی',
+    terjee:7, date:'2024-10-21', dateFa:'۳۰ مهر ۱۴۰۳',
+    tags:['حیرت','صحرا','سلوک'],
+    content:
+      '<p>بندِ هفتم، حیرت را از حالتی درونی به فضایی بیرونی بدل می‌کند: <em>صحرا</em>. صحرا در ادبِ عرفانی جایِ گم‌شدن است؛ پهنه‌ای بی‌نشان که در آن، راه و بی‌راه یکی می‌شوند.</p>'+
+      '<p>سالکی که به این صحرا پا می‌گذارد، نخست نشانه‌ها را می‌جوید و سپس درمی‌یابد که جستنِ نشانه، خود حجابِ راه است. حیرتِ بیدل در این بند، نه سرگردانیِ بی‌حاصل، که گشودگیِ پذیرنده است.</p>'+
+      '<blockquote class="kh-verse">به کجا برم شکایت، که نشانِ راه گم شد<span class="m2">همه عمر در پیِ‌اش، قدمی به راه ننهادیم</span></blockquote>'+
+      '<p>این خوانش پیشنهاد می‌کند که «گم‌شدن» در نگاهِ بیدل، آغازِ یافتن است؛ نه پایانِ آن.</p>'
+  },
+  {
+    slug:'shekast-saghar',
+    title:'شکستِ ساغر؛ تأویلی بر بندِ دوازدهم',
+    instructor:'شروین وکیلی', role:'پژوهشگرِ بیدل‌شناسی',
+    terjee:12, date:'2024-10-09', dateFa:'۱۸ مهر ۱۴۰۳',
+    tags:['می','ساغر','شکست'],
+    content:
+      '<p>بندِ دوازدهم با تصویری از میکده و ساغرِ شکسته آغاز می‌شود. بیدل از شرابی سخن می‌گوید که جام برنمی‌تابد؛ شرابی که <em>شکستن</em> شرطِ نوشیدنِ آن است.</p>'+
+      '<blockquote class="kh-verse">در میکده‌ای که ساغر و می هر دو شکستند<span class="m2">ما تشنه‌لبان، جرعهٔ حیرت طلبیدیم</span></blockquote>'+
+      '<p>اینجا <em>شکست</em> ارزشی مثبت می‌یابد: تا قالبِ خودی نشکند، شرابِ معنا در آن نمی‌گنجد. حیرت، همان جرعه‌ای‌ست که از این شکستن به‌دست می‌آید.</p>'+
+      '<p>بندِ دوازدهم را می‌توان نقطهٔ اوجِ ترجیع‌بند دانست؛ جایی که مفهوم‌های پراکنده‌ی بندهای پیشین — آینه، دل، صحرا — در تصویرِ ساغرِ شکسته به‌هم می‌رسند.</p>'
+  },
+  {
+    slug:'naqsh-ayine-tekrar',
+    title:'نقشِ آینه و تکرارِ ترجیع',
+    instructor:'مریم حسینی', role:'استادِ ادبیاتِ عرفانی',
+    terjee:3, date:'2024-09-15', dateFa:'۲۵ شهریور ۱۴۰۳',
+    tags:['آینه','ترجیع','ساختار'],
+    content:
+      '<p>این خوانش به‌جای محتوا، به <em>ساختار</em> می‌پردازد: چرا بیدل قالبِ ترجیع‌بند را برگزیده است؟ بندِ بازگردان (ترجیع) که میانِ بندها تکرار می‌شود، همچون آینه‌ای‌ست که هر بند در آن خود را بازمی‌بیند.</p>'+
+      '<p>تکرار در ترجیع‌بند، یکنواختی نیست؛ هر بار که بندِ بازگردان می‌آید، معنای تازه‌ای از بندِ پیش از خود می‌گیرد. این همان کارِ آینه است: نقشی واحد که در هر نگاه دگرگون می‌شود.</p>'+
+      '<p>از این منظر، فرمِ ترجیع‌بند خود مضمونِ حیرت را بازی می‌کند: بازگشتِ پیوسته به یک نقطه، و یافتنِ آن نقطه به‌گونه‌ای نو در هر بازگشت.</p>'
+  }
+];
+function khAll(){ return KHANESH.slice().sort((a,b)=> a.date<b.date?1:a.date>b.date?-1:0); }
+function khBySlug(s){ return KHANESH.find(k=>k.slug===s)||null; }
+function khByBand(n){ return khAll().filter(k=>k.terjee===n); }
+
+// ─── API ──────────────────────────────────
+const API_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8000'
+  : 'https://' + window.location.hostname + '/api';
+
+let MOCK_MODE = false;
+const MOCK_TITLES = ['مفروز هر هوس','بهانه دل','شب خاموش','کاسه گدا','قطره و دریا','بی‌نشان','تماشاگاه','عالم رنگ','صحرای حیرت','خموشی سر'];
+function _mockGhazal(n){
+  let kws = (window.GHAZAL_KEYWORDS && window.GHAZAL_KEYWORDS[n]) || null;
+  if(!kws){
+    const pool = window.KEYWORDS || [];
+    kws = [];
+    for(let i=0;i<4 && pool.length;i++){
+      const k = pool[(n*7 + i*13) % pool.length];
+      if(k && !kws.includes(k.w)) kws.push(k.w);
+    }
+  }
+  const couplets = [
+    [`در این ${kws[0]||'دل'} که ز ما رفته است، نشانی نیست`, `هر چه جستیم در این ${kws[1]||'آینه'}، صورت ما بود`],
+    [`${kws[2]||'گل'} از تماشای رخت دامن کشید`, `بلبل از شرم زبان در کام برد`],
+    [`${kws[0]||'دل'} ما با غم تو خو گرفته است`, `در این ویرانه ${kws[3]||'کاشانه'} دارد`],
+    [`بیدل، نه ${kws[1]||'جان'} داریم و نه جانان، چه کنیم`, `در میکده‌ای که ساغر و می هر دو شکستند`],
+    [`${kws[2]||'شب'} تار است و دل پُر شور و چشم خواب‌آلود`, `کجا چراغی که این راه را روشن کند`],
+  ];
+  return {
+    number:n,
+    title: MOCK_TITLES[n%MOCK_TITLES.length],
+    couplets,
+    keywords: kws.map((w,i)=>({id:i+1, word:w})),
+  };
+}
+async function apiFetch(url){
+  if(MOCK_MODE) return _mockResolve(url);
+  try{
+    const r = await fetch(url);
+    if(!r.ok) throw new Error('bad');
+    return await r.json();
+  }catch(e){ MOCK_MODE = true; return _mockResolve(url); }
+}
+function _mockResolve(url){
+  let m = url.match(/poems\/ghazal\/(\d+)/);
+  if(m) return _mockGhazal(parseInt(m[1]));
+  if(url.match(/poems\/ghazal\/random/)) return _mockGhazal(Math.floor(Math.random()*TOT)+1);
+  m = url.match(/poems\/terjee\/(\d+)/);
+  if(m){ const n=parseInt(m[1]); return {number:n, couplets:_mockGhazal(n).couplets}; }
+  if(url.match(/poems\/ghazals$/)){
+    return Array.from({length:60}, (_,i)=>({number:i+1, title:MOCK_TITLES[i%MOCK_TITLES.length], first_couplet:_mockGhazal(i+1).couplets[0]}));
+  }
+  if(url.match(/poems\/terjees$/)){
+    return Array.from({length:TB}, (_,i)=>({number:i+1, first_couplet:_mockGhazal(i+1).couplets[0]}));
+  }
+  if(url.match(/poems\/zand$/)){
+    return [
+      {number:1, title:'پیشگفتار', type:'bakhsh', has_content:true},
+      {number:2, title:'فصل یکم — حیرت', type:'fasl', has_content:true},
+      {number:3, title:'فصل دوم — آینه', type:'fasl', has_content:true},
+    ];
+  }
+  m = url.match(/poems\/zand\/(\d+)/);
+  if(m) return {title:'بخشی از زند بیدل', content:'این بخش در حالت پیش‌نمایش در دسترس نیست. در حالت اصلی، متن کامل شرح شروین وکیلی از API بارگیری می‌شود.\n\nمتن این فصل شامل تحلیل‌های فلسفی و عرفانی شروین وکیلی بر روی غزلیات بیدل است که نشان می‌دهد چگونه استعاره‌های شعری بیدل دلالت‌های فلسفی-معرفت‌شناختی دارند.'};
+  if(url.match(/poems\/search/)){
+    const kw = decodeURIComponent(url.split('q=')[1].split('&')[0]);
+    return {results: Array.from({length:5},(_,i)=>{
+      const n = (i+1)*43 % TOT + 1;
+      return {number:n, title:MOCK_TITLES[n%MOCK_TITLES.length], matches:[{couplet:_mockGhazal(n).couplets[i%5]}]};
+    })};
+  }
+  return null;
+}
+
+function getToken(){return localStorage.getItem('bidel_token')}
+function setToken(t){if(t)localStorage.setItem('bidel_token',t);else localStorage.removeItem('bidel_token')}
+function authHeaders(){return{'Authorization':'Bearer '+getToken(),'Content-Type':'application/json'}}
+function isAuthed(){return !!_user}
+// showAuthModal / hideAuthModal / switchAuthTab live in auth-flow.js
+
+function _loadCachedUser(){
+  try{
+    const raw = localStorage.getItem('bidel_user');
+    if(raw){ _user = JSON.parse(raw); }
+  }catch(e){}
+}
+function _saveUser(u){
+  _user = u;
+  if(u) localStorage.setItem('bidel_user', JSON.stringify(u));
+  else localStorage.removeItem('bidel_user');
+  updateProfileBadge();
+  refreshNav();
+}
+function updateProfileBadge(){
+  const btn = document.getElementById('btn-profile');
+  if(!btn) return;
+  if(_user){
+    // Profile is now reachable via the bottom nav — hide the header button.
+    btn.style.display = 'none';
+  } else {
+    btn.style.display = '';
+    btn.classList.add('guest');
+    btn.textContent = 'ورود / ثبت‌نام';
+  }
+}
+function setNavHidden(hidden){
+  // Always honor guest mode: nav is hidden whenever there's no user.
+  const finalHidden = hidden || !_user;
+  document.querySelector('.bn').classList.toggle('hide', finalHidden);
+}
+function refreshNav(){
+  document.querySelector('.bn').classList.toggle('hide', !_user);
+}
+
+async function loadUserData(){
+  _loadCachedUser();
+  updateProfileBadge();
+  refreshNav();
+  const token=getToken();
+  if(!token){
+    // Guest mode — try API once silently to see if we should go to mock
+    try{
+      const r = await fetch(API_URL+'/poems/ghazal/1');
+      if(!r.ok) throw new Error();
+    }catch(e){
+      MOCK_MODE = true;
+    }
+    return;
+  }
+  const [rb,rn]=await Promise.all([
+    fetch(API_URL+'/bookmarks',{headers:{'Authorization':'Bearer '+token}}),
+    fetch(API_URL+'/notes',{headers:{'Authorization':'Bearer '+token}})
+  ]);
+  if(rb.status===401||rn.status===401){setToken(null);_saveUser(null);return;}
+  const bmsArr=await rb.json(), ntsArr=await rn.json();
+  const _toFetch={};
+  for(const b of bmsArr) _toFetch[b.poem_type+'_'+b.poem_id]=b;
+  await Promise.all(Object.values(_toFetch).map(async b=>{
+    const ep=b.poem_type==='g'?'/poems/ghazal/':'/poems/terjee/';
+    const r=await fetch(API_URL+ep+b.poem_id);
+    if(r.ok) _poemCache[b.poem_type+'_'+b.poem_id]=await r.json();
+  }));
+  _bms={};
+  for(const b of bmsArr){
+    const key=bkey(b.poem_type,b.poem_id,b.couplet_index);
+    const poem=_poemCache[b.poem_type+'_'+b.poem_id];
+    const c=poem?(poem.couplets[b.couplet_index]||['','']):['',''];
+    const ti2=b.poem_type==='g'?(poem?.title||''):'بند '+b.poem_id;
+    _bms[key]={tp:b.poem_type,id:b.poem_id,ci:b.couplet_index,ti2,c};
+  }
+  _nts={};
+  for(const n of ntsArr){
+    _nts[bkey(n.poem_type,n.poem_id,n.couplet_index)]=n.text;
+  }
+  updateBmBadge();
+}
+function bkey(tp,id,ci){return tp+'_'+id+'_'+ci}
+
+// ─── ELEMENTS ─────────────────────────────
+const ctEl=document.getElementById('ct');
+const subnavG=document.getElementById('subnav-g');
+const subnavT=document.getElementById('subnav-t');
+const gp=document.getElementById('gp');
+const gn=document.getElementById('gn');
+const tp2=document.getElementById('tp');
+const tn2=document.getElementById('tn');
+const hdT1=document.getElementById('hd-t1');
+const hdT2=document.getElementById('hd-t2');
+const btnBack=document.getElementById('btn-back');
+const mbg=document.getElementById('mbg');
+
+// ─── HEADER / NAV CHROME ─────────────────
+function setHeader(t1, t2){
+  hdT1.textContent = t1;
+  hdT2.textContent = t2 || '';
+  hdT2.style.display = t2 ? 'block' : 'none';
+}
+function setBack(show){ btnBack.classList.toggle('show', !!show); }
+function hideSubnavs(){ subnavG.classList.add('hide'); subnavT.classList.add('hide'); }
+
+function setBnActive(tab){
+  document.querySelectorAll('.bn-item').forEach(b=>{
+    b.classList.toggle('on', b.dataset.tab===tab);
+  });
+}
+
+// ─── HIGHLIGHT ───────────────────────────
+function hl(txt,kw){
+  if(!kw||!txt) return txt||'';
+  var out='',i=0,kl=kw.length;
+  while(i<txt.length){
+    var j=txt.indexOf(kw,i);
+    if(j===-1){out+=txt.slice(i);break;}
+    out+=txt.slice(i,j)+'<mark>'+kw+'</mark>';
+    i=j+kl;
+  }
+  return out;
+}
+
+function resolveGhazalKeywords(n, poem){
+  if(poem && poem.keywords && poem.keywords.length) return poem.keywords.map(k=>k.word);
+  if(window.GHAZAL_KEYWORDS && window.GHAZAL_KEYWORDS[n]) return window.GHAZAL_KEYWORDS[n];
+  if(!poem) return [];
+  const text = poem.couplets.map(c=>c.join(' ')).join(' ');
+  const found = [];
+  for(const k of (window.KEYWORDS||[])){
+    if(text.indexOf(k.w)!==-1){ found.push(k); }
+  }
+  found.sort((a,b)=>b.n-a.n);
+  return found.slice(0,5).map(k=>k.w);
+}
+function kwBy(word){ return (window.KEYWORDS||[]).find(k=>k.w===word); }
+
+// ─── MOOD / حال و هوا ─────────────────────
+// The Seven Valleys (هفت وادیِ سلوک) — Bidel's mystical landscape.
+// Order: from the top vertex, clockwise.
+const MOODS = [
+  {id:'talab',    label:'طلب',    color:'#b0823e',
+   sub:'آغازِ راه و جست‌وجو',
+   desc:'نخستین وادی؛ بیداریِ دل و تشنگیِ جست‌وجوی حقیقت. سالک باید از تعلقات دست بشوید و صد دشواری را پشت سر بگذارد تا آتشِ طلب در جانش شعله‌ور شود. در شعر بیدل، شور و بی‌قراریِ آغازِ سفر.'},
+  {id:'eshgh',    label:'عشق',    color:'#b0566a',
+   sub:'وادیِ آتش',
+   desc:'سالک سراپا آتشِ عشق می‌شود و عقل و حساب را وامی‌نهد. اینجا جان را در راه می‌بازند و سود و زیان معنا ندارد؛ نیرویی که کلِ هستیِ بیدل را به حرکت درمی‌آورد و راهِ رسیدن است.'},
+  {id:'marefat',  label:'معرفت',  color:'#6a7bb0',
+   sub:'شناخت به قدرِ استعداد',
+   desc:'وادیِ شناخت؛ هر سالک به اندازهٔ ظرفیتِ خویش به معرفتِ حق می‌رسد. راه‌ها به شمارِ نفوسِ خلایق است و حقیقت بر هر کس به گونه‌ای جلوه می‌کند. در بیدل: آینه و بصیرتِ باطن.'},
+  {id:'esteghna',  label:'استغنا', color:'#5d8f7e',
+   sub:'بی‌نیازی و فراغت',
+   desc:'وادیِ بی‌نیازی؛ نه کوشش به کار آید نه دانش. هفت آسمان و زمین در برابرِ بی‌نیازیِ حق چون ذره‌ای است و سالک از همه چیز فارغ می‌شود؛ همان قناعت و کاسهٔ تهیِ گدا که گنجِ بیدل است.'},
+  {id:'towhid',   label:'توحید',  color:'#5d8f5d',
+   sub:'یگانگی و وحدت',
+   desc:'وادیِ یگانگی؛ کثرت رخت برمی‌بندد و همه در وحدت محو می‌شوند. آنچه هست یکی است و دوگانگی از میان برمی‌خیزد — همان قطره و دریا و سیمرغِ سی‌مرغ.'},
+  {id:'heyrat',   label:'حیرت',   color:'#7b6cae',
+   sub:'سرگشتگی و بهت',
+   desc:'وادیِ سرگردانی؛ سالک از فرطِ حیرت دانسته‌هایش را گم می‌کند، نه می‌داند که هست یا نیست. حالتِ بنیادینِ شعر بیدل: بهت در برابرِ شگفتیِ هستی، آنجا که عقل خاموش می‌ماند.'},
+  {id:'fana',     label:'فنا',    color:'#8a8076',
+   sub:'فقر و نیستی',
+   desc:'واپسین وادی؛ فقر و فنا. سالک در حق فانی می‌شود و قطره به دریا می‌پیوندد؛ خود نمی‌ماند تا حق بماند. در بیدل اوجِ سلوک: شکستن، نیست شدن و رهایی از منِ خویش — فنا که عینِ بقاست.'},
+];
+const MOOD_BY = Object.fromEntries(MOODS.map(m=>[m.id,m]));
+
+// per-category baseline weights
+const CAT_MOOD = {
+  sufi:  {towhid:0.5, marefat:0.4, fana:0.4},
+  emo:   {eshgh:0.6, talab:0.4},
+  body:  {eshgh:0.5, talab:0.3},
+  nature:{eshgh:0.35, heyrat:0.3, esteghna:0.3},
+  obj:   {fana:0.35, heyrat:0.3, esteghna:0.25},
+  place: {talab:0.45, heyrat:0.4},
+  state: {heyrat:0.4, esteghna:0.3, talab:0.25},
+  other: {heyrat:0.35, fana:0.3, towhid:0.25},
+};
+// strong word-specific overrides
+const WORD_MOOD = {
+  'طلب':{talab:1}, 'جست':{talab:0.8}, 'راه':{talab:0.6,heyrat:0.3}, 'سفر':{talab:0.7},
+  'دل':{eshgh:0.6,talab:0.4}, 'شب':{talab:0.45,heyrat:0.3},
+  'عشق':{eshgh:1}, 'جان':{eshgh:0.5,fana:0.4}, 'وصل':{eshgh:0.6,towhid:0.4},
+  'هجر':{talab:0.5,eshgh:0.45}, 'حسرت':{talab:0.6,eshgh:0.3}, 'خون':{eshgh:0.5,talab:0.3},
+  'اشک':{eshgh:0.5,talab:0.3}, 'سرشک':{eshgh:0.5}, 'درد':{eshgh:0.4,talab:0.4}, 'غم':{eshgh:0.35,talab:0.35},
+  'شور':{eshgh:0.7,talab:0.3}, 'جنون':{eshgh:0.7,heyrat:0.4}, 'مستی':{eshgh:0.6,fana:0.3},
+  'می':{eshgh:0.5,fana:0.3}, 'ساغر':{eshgh:0.45,fana:0.35}, 'بلبل':{eshgh:0.6}, 'گل':{eshgh:0.4,heyrat:0.3},
+  'چمن':{eshgh:0.35,heyrat:0.3}, 'بهار':{eshgh:0.45},
+  'معرفت':{marefat:1}, 'دانش':{marefat:0.8}, 'علم':{marefat:0.8}, 'عقل':{marefat:0.6,heyrat:0.3},
+  'چشم':{marefat:0.55,heyrat:0.3}, 'نگاه':{marefat:0.5,heyrat:0.4}, 'بصیرت':{marefat:0.8},
+  'آینه':{heyrat:0.7,marefat:0.5}, 'نقش':{heyrat:0.5,marefat:0.4}, 'رنگ':{heyrat:0.5,marefat:0.3},
+  'جلوه':{heyrat:0.6,marefat:0.4},
+  'استغنا':{esteghna:1}, 'بی‌نیاز':{esteghna:0.9}, 'فارغ':{esteghna:0.7}, 'قناعت':{esteghna:0.8},
+  'صبر':{esteghna:0.6,towhid:0.3}, 'گدا':{esteghna:0.7}, 'کاسه':{esteghna:0.6},
+  'توحید':{towhid:1}, 'یکی':{towhid:0.8}, 'وحدت':{towhid:0.9}, 'سیمرغ':{towhid:0.6,fana:0.4},
+  'عنقا':{towhid:0.55,fana:0.4}, 'قاف':{talab:0.4,towhid:0.4}, 'دریا':{towhid:0.6,fana:0.4},
+  'حیرت':{heyrat:1}, 'سرگشته':{heyrat:0.8}, 'سرگشتگی':{heyrat:0.9}, 'مبهوت':{heyrat:0.8},
+  'فنا':{fana:1}, 'نیست':{fana:0.85}, 'عدم':{fana:0.9}, 'قطره':{fana:0.6,towhid:0.4},
+  'خاک':{fana:0.6,esteghna:0.3}, 'شکست':{fana:0.6,heyrat:0.35}, 'نشان':{fana:0.5,heyrat:0.4},
+  'خاموشی':{fana:0.45,towhid:0.4}, 'خموشی':{fana:0.45,towhid:0.4}, 'سکوت':{fana:0.4,towhid:0.45},
+  'لب':{fana:0.4,towhid:0.3}, 'بیدل':{heyrat:0.4,fana:0.4,talab:0.3},
+};
+function _seed(n){ // deterministic 0..1 stream per ghazal
+  let s = (n*2654435761) % 2147483647; if(s<=0) s+=2147483646;
+  return ()=>{ s = (s*16807) % 2147483647; return (s-1)/2147483646; };
+}
+// Returns {scores:{id:0..1}, dom:id, list:[{...mood, val, kws:[...], couplets:[...]}]}
+function computeMoods(n, poem, kws){
+  const raw = {}; MOODS.forEach(m=>raw[m.id]=0);
+  const moodKws = {}; MOODS.forEach(m=>moodKws[m.id]=[]);
+  (kws||[]).forEach(w=>{
+    let map = WORD_MOOD[w];
+    if(!map){ const k=kwBy(w); if(k && CAT_MOOD[k.cat]) map=CAT_MOOD[k.cat]; }
+    if(!map) map={heyrat:0.3, talab:0.3};
+    for(const id in map){
+      raw[id]+=map[id];
+      if(map[id]>=0.4 && !moodKws[id].includes(w)) moodKws[id].push(w);
+    }
+  });
+  // deterministic base so every chart has texture, plus subtle per-ghazal tilt
+  const rnd=_seed(n);
+  MOODS.forEach(m=>{ raw[m.id]+= 0.12 + rnd()*0.5; });
+  const max = Math.max(...MOODS.map(m=>raw[m.id]), 0.001);
+  const scores={}; MOODS.forEach(m=>scores[m.id]=raw[m.id]/max);
+  // couplets evoking each mood (contain one of its words)
+  const couplets = poem ? poem.couplets : [];
+  const list = MOODS.map(m=>{
+    const cps=[];
+    couplets.forEach((c,ci)=>{
+      const txt=(c[0]||'')+' '+(c[1]||'');
+      if(moodKws[m.id].some(w=>txt.indexOf(w)!==-1)) cps.push({m1:c[0]||'',m2:c[1]||'',ci});
+    });
+    return {...m, val:scores[m.id], pct:Math.round(scores[m.id]*100), kws:moodKws[m.id], couplets:cps};
+  });
+  let dom=MOODS[0].id, dv=-1;
+  MOODS.forEach(m=>{ if(scores[m.id]>dv){dv=scores[m.id]; dom=m.id;} });
+  return {scores, dom, list};
+}
+
+// ─── MOOD RENDERING ──────────────────────
+let _moodState=null; // {n, kws, data}
+function renderMoodCard(n, poem, kws){
+  const data = computeMoods(n, poem, kws);
+  _moodState = {n, kws, data};
+  const domMood = MOOD_BY[data.dom];
+  let h='<div class="mood-card" id="mood-card">';
+  h+='<div class="mood-head"><span class="mood-title">حال و هوای غزل</span>';
+  h+='<span class="mood-dom" data-mood="'+data.dom+'">غالب: '+domMood.label+'</span></div>';
+  h+= (TWEAKS.moodChart==='bars') ? renderMoodBars(data, (kws||[]).length) : renderMoodRadar(data, (kws||[]).length);
+  h+='<div class="mood-hint fa">روی هر حالت بزنید تا واژه‌ها و ابیاتش را ببینید</div>';
+  h+='</div>';
+  return h;
+}
+function renderMoodRadar(data, kwCount){
+  const N=MOODS.length, cx=150, cy=116, R=70;
+  const step=360/N;
+  const rings=[0.34,0.67,1];
+  const pt=(i,r)=>{ const a=(-90 + i*step)*Math.PI/180; return [cx+R*r*Math.cos(a), cy+R*r*Math.sin(a)]; };
+  let s='<div class="mood-radar-wrap"><svg class="mood-radar" viewBox="0 0 300 250" role="img" aria-label="نمودار هفت‌وادیِ حال و هوا">';
+  rings.forEach(r=>{
+    const pts=MOODS.map((_,i)=>pt(i,r).map(v=>v.toFixed(1)).join(',')).join(' ');
+    s+='<polygon class="mr-grid" points="'+pts+'"/>';
+  });
+  MOODS.forEach((_,i)=>{ const [x,y]=pt(i,1); s+='<line class="mr-spoke" x1="'+cx+'" y1="'+cy+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'"/>'; });
+  const dpts=MOODS.map((m,i)=>pt(i, Math.max(0.08,data.scores[m.id])).map(v=>v.toFixed(1)).join(',')).join(' ');
+  s+='<polygon class="mr-area" points="'+dpts+'"/>';
+  MOODS.forEach((m,i)=>{
+    const a=(-90 + i*step)*Math.PI/180;
+    const ux=Math.cos(a), uy=Math.sin(a);            // outward radial direction of this axis
+    const [rx,ry]=pt(i,1);                            // its vertex on the outer ring
+    const [vx,vy]=pt(i, Math.max(0.08,data.scores[m.id])); // the data point
+    const isDom=(m.id===data.dom);
+    // Anchor each label just OUTSIDE its own vertex and let it grow further outward.
+    // Labels are RTL (Persian): "start" pins the RIGHT edge, "end" pins the LEFT edge —
+    // so a right-side label uses "end" (grows right) and a left-side label uses "start"
+    // (grows left). Combined with a small radial gap, the text can never re-enter the graph.
+    const GAP=8;
+    let anchor, lx;
+    if(ux > 0.30){ anchor='end';   lx = rx + GAP; }   // right of centre → grow rightward
+    else if(ux < -0.30){ anchor='start'; lx = rx - GAP; } // left of centre → grow leftward
+    else { anchor='middle'; lx = rx; }                // top / bottom → centred over vertex
+    let lyName, lyPct;
+    if(uy < -0.30){ lyName = ry - 15; lyPct = ry - 3; }       // upper axes → stack above
+    else if(uy > 0.30){ lyName = ry + 17; lyPct = ry + 29; }  // lower axes → stack below
+    else { lyName = ry - 2; lyPct = ry + 11; }               // side axes → straddle vertex
+    s+='<g class="mood-axis-g" data-mood="'+m.id+'" style="cursor:pointer">';
+    s+='<text class="mr-lab'+(isDom?' dom':'')+'" x="'+lx.toFixed(1)+'" y="'+lyName.toFixed(1)+'" text-anchor="'+anchor+'">'+m.label+'</text>';
+    s+='<text class="mr-lab-pct" x="'+lx.toFixed(1)+'" y="'+lyPct.toFixed(1)+'" text-anchor="'+anchor+'">٪'+toFa(Math.round(data.scores[m.id]*100))+'</text>';
+    s+='<circle class="mr-hit" cx="'+rx.toFixed(1)+'" cy="'+ry.toFixed(1)+'" r="22"/>';
+    s+='<circle class="mr-vtx" cx="'+vx.toFixed(1)+'" cy="'+vy.toFixed(1)+'" r="'+(isDom?5:3.5)+'"'+(isDom?' style="fill:var(--sa);stroke:var(--sa2)"':'')+'/>';
+    s+='</g>';
+  });
+  // center: total keyword count
+  if(kwCount){
+    s+='<text class="mr-center-n" x="'+cx+'" y="'+(cy-3)+'" text-anchor="middle">'+toFa(kwCount)+'</text>';
+    s+='<text class="mr-center-lab" x="'+cx+'" y="'+(cy+11)+'" text-anchor="middle">واژهٔ کلیدی</text>';
+  }
+  s+='</svg></div>';
+  return s;
+}
+function renderMoodBars(data, kwCount){
+  const sorted=data.list.slice().sort((a,b)=>b.val-a.val);
+  let s='';
+  if(kwCount) s+='<div class="mood-bars-count fa">بر پایهٔ <b>'+toFa(kwCount)+'</b> واژهٔ کلیدی</div>';
+  s+='<div class="mood-bars">';
+  for(const m of sorted){
+    const isDom=(m.id===data.dom);
+    s+='<div class="mood-bar-row'+(isDom?' mbar-row-dom':'')+'" data-mood="'+m.id+'">';
+    s+='<span class="mbar-name">'+m.label+'</span>';
+    s+='<span class="mbar-track"><span class="mbar-fill" style="width:'+Math.max(4,Math.round(m.val*100))+'%"></span></span>';
+    s+='<span class="mbar-pct fa">٪'+toFa(m.pct)+'</span>';
+    s+='</div>';
+  }
+  s+='</div>';
+  return s;
+}
+
+// ─── MOOD SHEET ──────────────────────────
+const moodSheetBg=document.getElementById('mood-sheet-bg');
+const moodSheetBody=document.getElementById('mood-sheet-body');
+function openMoodSheet(moodId){
+  if(!_moodState) return;
+  moodSheetBody.innerHTML = moodId ? renderMoodDetail(moodId) : renderMoodOverview();
+  document.getElementById('mood-sheet').scrollTop=0;
+  moodSheetBg.classList.add('open');
+}
+function closeMoodSheet(){ moodSheetBg.classList.remove('open'); }
+function _tint(hex,a){ // hex -> rgba
+  const c=hex.replace('#',''); const r=parseInt(c.slice(0,2),16),g=parseInt(c.slice(2,4),16),b=parseInt(c.slice(4,6),16);
+  return 'rgba('+r+','+g+','+b+','+a+')';
+}
+function renderMoodOverview(){
+  const sorted=_moodState.data.list.slice().sort((a,b)=>b.val-a.val);
+  let h='<div class="ms-h"><div class="ms-dot" style="background:'+_tint(MOOD_BY[_moodState.data.dom].color,0.16)+'"><div style="width:14px;height:14px;border-radius:99px;background:'+MOOD_BY[_moodState.data.dom].color+'"></div></div>';
+  h+='<div class="ms-h-tx"><div class="ms-h-name">حال و هوای غزل</div><div class="ms-h-sub fa">شدّتِ نسبیِ هر حالت در این غزل</div></div></div>';
+  for(const m of sorted){
+    h+='<div class="ms-ov-row" data-mood="'+m.id+'">';
+    h+='<span class="ms-ov-dot" style="background:'+m.color+'"></span>';
+    h+='<span class="ms-ov-name">'+m.label+'</span>';
+    h+='<span class="ms-ov-track"><span class="ms-ov-fill" style="width:'+Math.max(4,Math.round(m.val*100))+'%;background:'+m.color+'"></span></span>';
+    h+='<span class="ms-ov-pct fa">٪'+toFa(m.pct)+'</span>';
+    h+='<span class="ms-ov-chev">‹</span>';
+    h+='</div>';
+  }
+  return h;
+}
+function renderMoodDetail(moodId){
+  const m=_moodState.data.list.find(x=>x.id===moodId); if(!m) return renderMoodOverview();
+  let h='<div class="ms-h"><div class="ms-dot" style="background:'+_tint(m.color,0.16)+'"><div style="width:15px;height:15px;border-radius:99px;background:'+m.color+'"></div></div>';
+  h+='<div class="ms-h-tx"><div class="ms-h-name">'+m.label+'</div><div class="ms-h-sub fa">'+m.sub+'</div></div></div>';
+  h+='<div class="ms-meter"><span class="ms-meter-track"><span class="ms-meter-fill" style="width:'+Math.max(4,Math.round(m.val*100))+'%;background:'+m.color+'"></span></span><span class="ms-meter-val" style="color:'+m.color+'">٪'+toFa(m.pct)+'</span></div>';
+  h+='<div class="ms-desc">'+m.desc+'</div>';
+  h+='<div class="ms-sec"><div class="ms-sec-h">واژه‌های این حالت در غزل</div>';
+  if(m.kws.length){ h+='<div class="ms-chips">'; for(const w of m.kws) h+='<button class="gkw" data-kwword="'+w+'">'+w+'</button>'; h+='</div>'; }
+  else h+='<div class="ms-empty fa">واژهٔ شاخصی از این حالت در این غزل نیست</div>';
+  h+='</div>';
+  h+='<div class="ms-sec"><div class="ms-sec-h">ابیاتِ هم‌حال</div>';
+  if(m.couplets.length){
+    for(const c of m.couplets){
+      h+='<div class="ms-cp" data-ci="'+c.ci+'"><div class="ms-cp1">'+c.m1+'</div>';
+      if(c.m2) h+='<div class="ms-cp2">'+c.m2+'</div>';
+      h+='<div class="ms-cp-n fa">بیت '+toFa(c.ci+1)+' · برای رفتن بزنید</div></div>';
+    }
+  } else h+='<div class="ms-empty fa">بیتِ شاخصی برای این حالت یافت نشد</div>';
+  h+='</div>';
+  return h;
+}
+
+// ─── HOME ─────────────────────────────────
+function showHome(){
+  curTab='home'; curView='home'; backStack=[];
+  setBnActive('home'); setBack(false); hideSubnavs(); setNavHidden(false);
+  setHeader('بیدلی','');
+  const greeting = (()=>{ const h=new Date().getHours(); return h<5?'شب بخیر':h<12?'صبح بخیر':h<17?'ظهر بخیر':h<20?'عصر بخیر':'شب بخیر' })();
+  // Pick a "verse of the day" deterministically
+  const dayNum = Math.floor(Date.now()/86400000) % TOT + 1;
+  const sampleVerse = ['هر چه جستیم در این آینه، صورت ما بود','از تماشای جهان دل به جنونی دادیم'];
+  // Top keywords for strip
+  const topKw = (window.KEYWORDS||[]).slice().sort((a,b)=>b.n-a.n).slice(0,6);
+
+  let h = '<div class="home">';
+
+  // Hero (guest) / سلوک من (logged in)
+  if(_user){
+    h += solukCard();
+  } else {
+  h += '<div class="hero">';
+  h += '<svg class="hero-net" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">';
+  h += '<g class="drift"><path class="nl" d="M90 58 L250 42 M90 58 L160 100 M160 100 L230 110 M230 110 L300 120 M250 42 L230 110 M160 100 L190 180 M190 180 L300 120 M90 58 L60 150 M60 150 L120 205 M120 205 L190 180 M20 95 L60 150 M300 120 L330 190 M330 190 L190 180 M20 95 L90 58"/></g>';
+  h += '<g class="drift2"><circle class="nd sa" cx="90" cy="58" r="6"/><circle class="nd" cx="250" cy="42" r="4"/><circle class="nd sa" cx="300" cy="120" r="6.5"/><circle class="nd" cx="60" cy="150" r="4.5"/><circle class="nd" cx="190" cy="180" r="5"/><circle class="nd" cx="160" cy="100" r="2.5"/><circle class="nd" cx="230" cy="110" r="3"/><circle class="nd" cx="330" cy="190" r="2.2"/><circle class="nd" cx="120" cy="205" r="2.6"/><circle class="nd" cx="20" cy="95" r="2.2"/>';
+  h += '<text class="nt" x="90" y="44" font-size="15">دل</text><text class="nt" x="250" y="29" font-size="13">آیینه</text><text class="nt" x="300" y="106" font-size="15">حیرت</text><text class="nt" x="60" y="137" font-size="13">رنگ</text><text class="nt" x="190" y="167" font-size="14">نفس</text></g>';
+  h += '</svg>';
+  h += '<h1 class="hero-t">بیدلی؛ سفر تو در دنیای بیدل از همین‌جا شروع می‌شه.</h1>';
+  h += '<div class="hero-s">هر کلمه در شعر بیدل معنای دقیق خودش را دارد. بیدلی کمک می‌کند این معناها را پیدا کنی.</div>';
+  h += '<button class="hero-cta" data-go="register"><span>شروع کن</span><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></button>';
+  h += '</div>';
+  }
+
+  // Seven steps of one cycle (not a linear ladder)
+  const w1 = topKw[0] ? topKw[0].w : 'دل';
+  const _allKw = (window.KEYWORDS||[]).map(function(k){return k.w});
+  const ghKw = (function(){ const out=[]; for(let i=0;i<_allKw.length&&out.length<34;i++){ if((i*7+dayNum)%3!==0) out.push(_allKw[(i*11+dayNum)%_allKw.length]); } return out.filter(function(w,i,a){return a.indexOf(w)===i}); })();
+  h += '<div class="cyc-kick fa">هفت گام؛ این یک دور است، نه یک خط.</div>';
+  h += '<div class="cyc">';
+  h += '<div class="cyc-step on" data-go="ghazal" data-n="'+dayNum+'"><span class="cyc-num fa">۱</span><div class="cyc-bd"><div class="cyc-t">از یک غزل شروع کن</div><div class="cyc-s">بیت امروز، و غزلی که از آن آمده.</div><div class="cyc-verse"><div class="cyc-verse-tag fa">✦ بیت امروز</div><div class="cyc-verse-m1">'+sampleVerse[0]+'</div><div class="cyc-verse-m2">'+sampleVerse[1]+'</div><div class="cyc-verse-from fa">از غزل '+toFa(dayNum)+' · برای خواندنِ همه‌ی غزل بزنید</div></div></div><span class="cyc-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  h += '<div class="cyc-step" data-go="explore" data-n="'+dayNum+'"><span class="cyc-num fa">۲</span><div class="cyc-bd"><div class="cyc-t">غزل را در جای خودش ببین</div><div class="cyc-s">جایگاه معنایی غزل در مقامات سلوک.</div></div><span class="cyc-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  h += '<div class="cyc-step" data-go="kw"><span class="cyc-num fa">۳</span><div class="cyc-bd"><div class="cyc-t">یک کلمه را در غزل انتخاب کن</div><div class="cyc-s">کلیدواژه‌های همان غزل؛ معناش رو از خود بیدل استخراج کن.</div>'+'<div class="cyc-words" id="cyc-gk">'+ghKw.map(function(k,i){return '<span'+(i>=8?' style="display:none"':'')+'>'+k+'</span>'}).join('')+'<button class="cyc-words-more" id="cyc-gk-more">همه ('+toFa(ghKw.length)+')</button></div>'+'</div><span class="cyc-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  h += '<div class="cyc-step" data-go="kw"><span class="cyc-num fa">۴</span><div class="cyc-bd"><div class="cyc-t">کلمه را در بافتار شعرهای دیگر ببین</div><div class="cyc-s">همان کلمه، در بیت‌هایی که درشان آمده.</div></div><span class="cyc-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  h += '<div class="cyc-step" data-go="search"><span class="cyc-num fa">۵</span><div class="cyc-bd"><div class="cyc-t">دنبالش را بگیر</div><div class="cyc-s">کلماتی که معمولاً با این کلمه به کار می‌روند رو دنبال کن.</div></div><span class="cyc-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  h += '<div class="cyc-step" data-go="'+(_user?'bm':'profile')+'"><span class="cyc-num fa">۶</span><div class="cyc-bd"><div class="cyc-t">مسیر سلوکت را نگه دار</div><div class="cyc-s">نشان، یادداشت، تاریخچه و وضع سلوک شخصی.</div></div><span class="cyc-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  h += '<div class="cyc-step" data-go="library"><span class="cyc-num fa">۷</span><div class="cyc-bd"><div class="cyc-t">به متن کامل برگرد</div><div class="cyc-s">غزلیات، ترجیع‌بند، زند بیدل و خوانش‌ها.</div></div><span class="cyc-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  h += '</div>';
+  h += '<div class="cyc-turn"><span class="cyc-turn-ic">↻</span><span class="cyc-turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند.</span></div>';
+  h += '<button class="cyc-cta" data-go="ghazal" data-n="'+dayNum+'"><span>دور امروز را شروع کن</span><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></button>';
+  h += '<div class="cyc-note fa">هر گام هر وقت خواستی جداگانه هم در دسترس است.</div>';
+
+  // Keywords of the day
+  h += '<div class="section-h fa">کلمات کلیدی امروز</div>';
+  h += '<div class="kw-strip">';
+  for(const k of topKw){
+    h += '<div class="kw-strip-card" data-kwword="'+k.w+'">';
+    h += '<div class="kw-strip-tag">کلمه</div>';
+    h += '<div class="kw-strip-word">'+k.w+'</div>';
+    h += '<div class="kw-strip-n">'+toFa(k.n)+' بار</div>';
+    h += '</div>';
+  }
+  h += '</div>';
+
+  // Quick access
+  h += '<div class="section-h fa">دسترسی سریع</div>';
+  h += '<div class="qa">';
+  h += '<div class="qa-c" data-go="random"><svg viewBox="0 0 24 24"><path d="M16 4h4v4"/><path d="M20 4L4 20"/><path d="M16 20h4v-4"/><path d="M4 4l5 5"/><path d="M15 15l5 5"/></svg><span>غزل تصادفی</span></div>';
+  h += '<div class="qa-c" data-go="browse-g"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg><span>غزلیات</span></div>';
+  h += '<div class="qa-c" data-go="kw"><svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="13" r="2.4"/><circle cx="7" cy="19" r="2.4"/><path d="M7.8 8.4 10.5 11.6M14 12.2 16.4 8M11 14.8 8.2 17.2"/></svg><span>کلمات کلیدی</span></div>';
+  h += '<div class="qa-c" data-go="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg><span>جستجو</span></div>';
+  h += '<div class="qa-c" data-go="browse-t"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><span>ترجیع‌بند</span></div>';
+  h += '<div class="qa-c" data-go="khanesh"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>خوانش‌ها</span></div>';
+  h += '<div class="qa-c" data-go="browse-z"><svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>زند بیدل</span></div>';
+  h += '</div>';
+
+  h += '</div>';
+  ctEl.innerHTML = h;
+  ctEl.scrollTop = 0;
+}
+
+// ─── LIBRARY (landing for the three collections) ────
+function showLibrary(){
+  curTab='browse'; curView='library'; backStack=[]; setBack(true);
+  setBnActive('browse'); hideSubnavs(); setNavHidden(false);
+  setHeader('کتابخانه','متن کاملِ دیوان');
+  const items = [
+    {k:'g', t:'غزلیات', s:'۲۸۲۷ غزل', d:'متن کاملِ غزلیات بیدل دهلوی.'},
+    {k:'t', t:'ترجیع‌بند', s:'۳۴ بند · حیرت', d:'ترجیع‌بندِ حیرت، بند به بند.'},
+    {k:'z', t:'زند بیدل', s:'شرح شروین وکیلی', d:'شرح و تحلیلِ سراسرِ دیوان.'},
+    {k:'kh', t:'خوانش‌ها', s:'تفسیر و شرحِ ترجیع‌بند', d:'خوانش‌های تفسیری، بند به بند.'}
+  ];
+  let h = '<div class="lib">';
+  for(const it of items){
+    h += '<div class="lib-card" data-lib="'+it.k+'"><div class="lib-bd"><div class="lib-t">'+it.t+'</div><div class="lib-d">'+it.d+'</div><div class="lib-s fa">'+it.s+'</div></div><span class="lib-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  }
+  h += '</div>';
+  ctEl.innerHTML = h;
+  ctEl.scrollTop = 0;
+}
+
+// ─── BROWSE (ghazals / terjees / zand) ────
+async function showBrowse(sub){
+  curTab='browse'; curView='browse'; backStack=[]; setBack(true);
+  setBnActive('browse'); hideSubnavs(); setNavHidden(false);
+  browseSub = sub || browseSub || 'g';
+  const titles = {g:'غزلیات', t:'ترجیع‌بند', z:'زند بیدل'};
+  const subs = {g:'۲۸۲۷ غزل', t:'۳۴ بند · حیرت', z:'شرح شروین وکیلی'};
+  setHeader(titles[browseSub], subs[browseSub]);
+
+  let h = '<div id="browse-body"></div>';
+  ctEl.innerHTML = h;
+  ctEl.scrollTop = 0;
+  await renderBrowseBody();
+}
+
+async function renderBrowseBody(){
+  const body = document.getElementById('browse-body');
+  if(!body) return;
+  body.innerHTML = '<div class="nr2">در حال بارگذاری…</div>';
+  if(browseSub==='z' && !_user){ needsLogin(()=>showBrowse('z')); return; }
+  if(browseSub==='g'){
+    if(!_listCache.ghazals) _listCache.ghazals=await apiFetch(API_URL+'/poems/ghazals');
+    if(!_listCache.ghazals){ body.innerHTML='<div class="er">خطا در بارگذاری</div>'; return; }
+    let h='<div class="rh fa">فهرست غزلیات</div>';
+    for(const g of _listCache.ghazals){
+      const pv=g.first_couplet[0]||'';
+      h+='<div class="ri" data-tp="g" data-n="'+g.number+'"><div class="rt fa">غزل '+toFa(g.number)+'</div><div class="rti">'+g.title+'</div><div class="rp">'+pv+'</div></div>';
+    }
+    body.innerHTML = h;
+  } else if(browseSub==='t'){
+    if(!_listCache.terjees) _listCache.terjees=await apiFetch(API_URL+'/poems/terjees');
+    if(!_listCache.terjees){ body.innerHTML='<div class="er">خطا در بارگذاری</div>'; return; }
+    let h='<div class="rh fa">ترجیع‌بند حیرت · '+toFa(TB)+' بند</div>';
+    for(const b of _listCache.terjees){
+      const prev=b.first_couplet[0]||'';
+      h+='<div class="ri tr" data-tp="t" data-n="'+b.number+'"><div class="rt fa">بند '+toFa(b.number)+'</div><div class="rp">'+prev+'</div></div>';
+    }
+    body.innerHTML = h;
+  } else if(browseSub==='z'){
+    const sections=await apiFetch(API_URL+'/poems/zand');
+    if(!sections){ body.innerHTML='<div class="er">خطا در بارگذاری</div>'; return; }
+    let h='<div class="rh fa">زند بیدل · شروین وکیلی</div>';
+    for(const z of sections){
+      if(!z.has_content) continue;
+      h+='<div class="zcard'+(z.type==='bakhsh'?' bakhsh':'')+'" data-zid="'+z.number+'"><div class="zcard-title">'+z.title+'</div></div>';
+    }
+    body.innerHTML = h;
+  }
+}
+
+// ─── COUPLET RENDERING ───────────────────
+function mkCp(m1,m2,key,isBm,note,type,kw,ci){
+  const cls = isBm?(type==='g'?' gbm':' tbm'):'';
+  const onCls = isBm?(type==='g'?'gon':'ton'):'';
+  const IC_BM='<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>';
+  const IC_NOTE='<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>';
+  const IC_COPY='<svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>';
+  const IC_SHARE='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+  let h='<div class="cp'+cls+'" data-key="'+key+'">';
+  if(ci!=null) h+='<span class="cn">'+toFa(ci+1)+'</span>';
+  h+='<div class="cpb"><div class="ms">'+hl(m1,kw)+'</div>';
+  if(m2) h+='<div class="ms s2">'+hl(m2,kw)+'</div>';
+  h+='</div>';
+  if(note) h+='<div class="nd" data-action="note" data-key="'+key+'">'+IC_NOTE+'<span>'+note+'</span></div>';
+  h+='<div class="acts"><div class="ca">';
+  h+='<button data-action="bm" class="'+onCls+'">'+IC_BM+'<span class="cal">'+(isBm?'نشان‌شده':'نشان')+'</span></button>';
+  h+='<button data-action="note">'+IC_NOTE+'<span class="cal">یادداشت</span></button>';
+  h+='<button data-action="share">'+IC_SHARE+'<span class="cal">اشتراک</span></button>';
+  h+='<button data-action="copy">'+IC_COPY+'<span class="cal">رونوشت</span></button>';
+  h+='</div></div></div>';
+  return h;
+}
+
+// ─── GHAZAL ──────────────────────────────
+async function showG(n,kw){
+  cg=n; markSeen('g',n);
+  curView='gh';
+  setBack(true);
+  hideSubnavs();
+  setNavHidden(false);
+  subnavG.classList.remove('hide');
+  const p=await apiFetch(API_URL+'/poems/ghazal/'+n);
+  if(!p){ctEl.innerHTML='<div class="er">غزل یافت نشد</div>';return;}
+  _poemCache['g_'+n]=p;
+  setHeader('غزل '+toFa(n), p.title+' · '+toFa(p.couplets.length)+' بیت');
+  let h='<div class="pm">';
+  h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل" title="اشتراکِ غزل"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button><div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div></div>';
+  const ghazalKws = resolveGhazalKeywords(n, p);
+  h+=renderMoodCard(n, p, ghazalKws);
+  p.couplets.forEach(([m1,m2],ci)=>{
+    const key=bkey('g',n,ci);
+    h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','g',kw||'',ci);
+  });
+  h+='<div class="pf fa">'+toFa(p.couplets.length)+' بیت</div></div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+  gp.disabled=(n<=1); gn.disabled=(n>=TOT);
+  if(kw) setTimeout(()=>{const el=ctEl.querySelector('mark');if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},100);
+}
+
+// ─── TERJEE ──────────────────────────────
+async function showT(n,kw){
+  ct=n; markSeen('t',n);
+  curView='tr';
+  setBack(true);
+  hideSubnavs();
+  setNavHidden(false);
+  subnavT.classList.remove('hide');
+  const band=await apiFetch(API_URL+'/poems/terjee/'+n);
+  if(!band){ctEl.innerHTML='<div class="er">بند یافت نشد</div>';return;}
+  _poemCache['t_'+n]=band;
+  setHeader('بند '+toFa(n), 'ترجیع‌بند حیرت · '+toFa(band.couplets.length)+' بیت');
+  let h='<div class="pm"><div class="pmeta"><div class="pnum fa">ترجیع‌بند حیرت</div><div class="ptitle">بند '+toFa(n)+'</div><div class="psub fa">از '+toFa(TB)+' بند</div><button class="pshare" data-pshare="t_'+n+'" aria-label="اشتراکِ بند" title="اشتراکِ بند"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button></div>';
+  band.couplets.forEach(([m1,m2],ci)=>{
+    const key=bkey('t',n,ci);
+    h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','t',kw||'',ci);
+  });
+  h+='</div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+  tp2.disabled=(n<=1); tn2.disabled=(n>=TB);
+  if(kw) setTimeout(()=>{const el=ctEl.querySelector('mark');if(el)el.scrollIntoView({behavior:'smooth',block:'center'})},100);
+}
+
+async function showZand(id){
+  curView='zsec'; setBack(true); hideSubnavs(); setNavHidden(false);
+  setHeader('زند بیدل','شرح شروین وکیلی');
+  if(needsLogin(()=>showZand(id))) return;
+  const z=await apiFetch(API_URL+'/poems/zand/'+id);
+  if(!z) return;
+  setHeader(z.title, 'زند بیدل · شروین وکیلی');
+  let h='<div class="zsec"><div class="zsec-title">'+z.title+'</div>';
+  h+='<div class="zsec-body">'+z.content+'</div></div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+// ─── KHANESH (readings) ──────────────────
+const IC_KH='<svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
+const IC_PEN='<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>';
+const IC_TERJEE='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>';
+function khLoader(msg){
+  return '<div class="book-loading"><div class="book-loader"><span></span><span></span><span></span></div><div class="book-loading-msg fa">'+(msg||'در حال بارگذاری…')+'</div></div>';
+}
+function khRelHtml(n){
+  const rel = khByBand(n);
+  let h = '<div class="kh-rel-sec">';
+  h += '<div class="kh-rel-h">'+IC_KH+'<span>خوانش‌های این بند</span>'+(rel.length?'<span class="cnt fa">'+toFa(rel.length)+'</span>':'')+'</div>';
+  if(!rel.length){
+    h += '<div class="kh-empty fa">هنوز خوانشی برای این بند ثبت نشده</div>';
+  } else {
+    for(const k of rel){
+      h += '<div class="kh-rel-card" data-slug="'+k.slug+'"><div class="kh-rel-ic">'+IC_PEN+'</div><div class="kh-rel-body"><div class="kh-rel-title">'+k.title+'</div><div class="kh-rel-by fa">به خوانشِ '+k.instructor+'</div></div><span class="kh-rel-chev"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+    }
+  }
+  h += '</div>';
+  return h;
+}
+function needsLogin(pending){
+  if(_user) return false;
+  showHome();
+  showAuthModal(pending||null);
+  return true;
+}
+
+async function showKhaneshList(instant){
+  curTab='kh'; curView='khlist'; backStack=[];
+  setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
+  setHeader('خوانش‌ها','تفسیر و شرحِ ترجیع‌بند');
+  if(needsLogin(()=>showKhaneshList())) return;
+  if(!instant){ ctEl.innerHTML = khLoader('در حالِ گردآوریِ خوانش‌ها…'); ctEl.scrollTop = 0; await new Promise(r=>setTimeout(r,420)); }
+  const list = khAll();
+  if(!list.length){ ctEl.innerHTML = '<div class="nb2"><div class="nbi">✦</div>هنوز خوانشی ثبت نشده است</div>'; return; }
+  const showTags = true;
+  let h = '<div class="kh-lead">خوانش‌ها مقاله‌های تفسیری‌اند که هر یک به یکی از بندهای ترجیع‌بندِ حیرت می‌پردازند — از تازه به قدیم.</div>';
+  h += '<div class="kh-list">';
+  for(const k of list){
+    h += '<div class="kh-card" data-slug="'+k.slug+'">';
+    h += '<div class="kh-card-top"><span class="kh-band fa">ترجیع‌بند · بند '+toFa(k.terjee)+'</span><span class="kh-date fa">'+k.dateFa+'</span></div>';
+    h += '<div class="kh-title">'+k.title+'</div>';
+    h += '<div class="kh-by">'+IC_PEN+'<span>به خوانشِ <b>'+k.instructor+'</b></span></div>';
+    h += '<div class="kh-tags'+(showTags?'':' hide')+'">'+k.tags.map(t=>'<span class="kh-tag">'+t+'</span>').join('')+'</div>';
+    h += '</div>';
+  }
+  h += '</div>';
+  ctEl.innerHTML = h; ctEl.scrollTop = 0;
+}
+async function showKhanesh(slug, from, instant){
+  if(from) _khFrom = from;
+  curTab='kh'; curView='khd'; _khSlug=slug;
+  _khBand = (khBySlug(slug)||{}).terjee || 1;
+  setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
+  setHeader('خوانش','تفسیر و شرح');
+  if(needsLogin(()=>showKhanesh(slug))) return;
+  if(!instant){ ctEl.innerHTML = khLoader('در حالِ گشودنِ خوانش…'); ctEl.scrollTop = 0; await new Promise(r=>setTimeout(r,360)); }
+  const k = khBySlug(slug);
+  if(!k){ ctEl.innerHTML='<div class="er">خطا در بارگذاری</div>'; return; }
+  setHeader('خوانش','بند '+toFa(k.terjee)+' · '+k.instructor);
+  const initial=(k.instructor||'?').trim().charAt(0);
+  const lg = '';
+  let h = '<div class="kh-d">';
+  h += '<div class="kh-d-band fa">ترجیع‌بندِ حیرت · بند '+toFa(k.terjee)+'</div>';
+  h += '<div class="kh-d-title">'+k.title+'</div>';
+  h += '<div class="kh-d-meta"><div class="kh-d-av">'+initial+'</div><div class="kh-d-who"><span class="kh-d-name">'+k.instructor+'</span><span class="kh-d-role fa">'+k.role+'</span></div><span class="kh-d-date fa">'+k.dateFa+'</span></div>';
+  h += '<div class="kh-d-tags">'+k.tags.map(t=>'<span class="kh-tag">'+t+'</span>').join('')+'</div>';
+  h += '<div class="kh-content'+lg+'">'+k.content+'</div>';
+  h += '<div class="kh-backband" data-band="'+k.terjee+'"><div class="kh-bb-ic">'+IC_TERJEE+'</div><div class="kh-bb-tx"><div class="kh-bb-lab fa">بازگشت به متنِ شعر</div><div class="kh-bb-t">ترجیع‌بند · بند '+toFa(k.terjee)+'</div></div><span class="kh-bb-chev"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  h += '</div>';
+  ctEl.innerHTML = h; ctEl.scrollTop = 0;
+}
+
+// ─── KEYWORDS ────────────────────────────
+function showKeywords(){
+  curTab='kw'; curView='kw'; backStack=[];
+  setBnActive('kw'); setBack(true); hideSubnavs(); setNavHidden(false);
+  _curKw=null;
+  renderKeywordList();
+}
+function renderKeywordList(){
+  const all = (window.KEYWORDS||[]).slice();
+  let list = _kwFilter==='all' ? all : all.filter(k=>k.cat===_kwFilter);
+  if(TWEAKS.sortBy==='alpha') list.sort((a,b)=>a.w.localeCompare(b.w,'fa'));
+  else list.sort((a,b)=>b.n-a.n);
+  const maxN = Math.max(...all.map(k=>k.n));
+  setHeader('کلمات کلیدی', toFa(list.length)+' واژه از ۲۲۲');
+  let h = '<div class="kw-filters">';
+  for(const c of window.KEYWORD_CATEGORIES){
+    h += '<button class="kw-chip'+(_kwFilter===c.id?' on':'')+'" data-kwfilter="'+c.id+'">'+c.label+'</button>';
+  }
+  h += '</div>';
+  h += '<div class="kw-count-hint fa">'+toFa(list.length)+' واژه · ' + (TWEAKS.sortBy==='alpha'?'الفبایی':'بر اساس تکرار') + '</div>';
+  if(!list.length){
+    h += '<div class="nr2">در این دسته واژه‌ای نیست</div>';
+  } else {
+    for(const k of list){
+      const w = Math.round((k.n/maxN)*100);
+      h += '<div class="kw-card '+(TWEAKS.cardStyle==='compact'?'compact':'')+'" data-kwword="'+k.w+'">';
+      h += '<div class="kw-card-tag fa">واژه · '+window.CATEGORY_LABEL[k.cat]+'</div>';
+      h += '<div class="kw-card-title"><span class="kw-card-word">'+k.w+'</span><span class="kw-card-count fa">'+toFa(k.n)+' بار</span></div>';
+      if(TWEAKS.cardStyle!=='compact'){
+        h += '<div class="kw-card-preview">'+toFa(k.pct.toFixed(2))+'٪<span class="sep">·</span><span class="kw-card-bar"><span class="kw-card-bar-fill" style="width:'+w+'%"></span></span><span class="sep">·</span>'+toFa(Math.round(k.n/4.27))+' غزل</div>';
+      }
+      h += '</div>';
+    }
+  }
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+function showKeyword(word){
+  const k = kwBy(word);
+  if(!k){ ctEl.innerHTML='<div class="er">واژه یافت نشد</div>'; return; }
+  _curKw=word; curView='kwd';
+  setBack(true); hideSubnavs(); setNavHidden(false);
+  setHeader('واژه «'+k.w+'»', window.CATEGORY_LABEL[k.cat]);
+  const numGhazals = Math.round(k.n / 4.27);
+  let h='<div class="pm kw-detail">';
+  h+='<div class="kw-d-head"><div class="kw-d-word">'+k.w+'</div><div class="kw-d-cat fa">'+window.CATEGORY_LABEL[k.cat]+'</div></div>';
+  h+='<div class="kw-d-section"><h4>معنی</h4><div class="kw-d-meaning">'+k.mean+'</div></div>';
+  h+='<div class="kw-d-section"><h4>دسته‌بندی</h4><div class="kw-d-tags">';
+  h+='<div class="kw-d-tag"><span class="kw-d-tag-label">موضوعی</span><span class="kw-d-tag-val">'+window.CATEGORY_LABEL[k.cat]+'</span></div>';
+  h+='<div class="kw-d-tag"><span class="kw-d-tag-label">مقام سلوک</span><span class="kw-d-tag-val'+(k.maqam?'':' empty')+'">'+(k.maqam||'—')+'</span></div>';
+  h+='<div class="kw-d-tag"><span class="kw-d-tag-label">دوگانه</span><span class="kw-d-tag-val'+(k.dogan?'':' empty')+'">'+(k.dogan||'—')+'</span></div>';
+  h+='</div></div>';
+  h+='<div class="kw-d-section"><h4>آمار تکرار</h4><div class="kw-d-stats">';
+  h+='<div class="kw-d-stat"><div class="kw-d-stat-val">'+toFa(k.n)+'</div><div class="kw-d-stat-lab fa">بار در دیوان</div></div>';
+  h+='<div class="kw-d-stat"><div class="kw-d-stat-val">'+toFa(k.pct.toFixed(2))+'٪</div><div class="kw-d-stat-lab fa">از کل اشعار</div></div>';
+  h+='<div class="kw-d-stat"><div class="kw-d-stat-val">'+toFa(numGhazals)+'</div><div class="kw-d-stat-lab fa">غزل شامل</div></div>';
+  h+='</div></div>';
+  h+='<div class="kw-d-poems-head fa">اشعار شامل «<b>'+k.w+'</b>» — '+toFa(numGhazals)+' غزل</div>';
+  for(const p of (k.poems||[])){
+    const m1 = hl(p.m1, k.w);
+    const m2 = p.m2 ? hl(p.m2, k.w) : '';
+    h+='<div class="ri" data-tp="g" data-n="'+p.n+'" data-kw="'+k.w+'"><div class="rti">غزل '+toFa(p.n)+(p.t?' · '+p.t:'')+'</div><div class="rp">'+m1+(m2?' / '+m2:'')+'</div></div>';
+  }
+  if(numGhazals > (k.poems||[]).length){
+    h+='<div class="nr2" style="padding:18px 0 4px;font-size:12px">… و '+toFa(numGhazals-(k.poems||[]).length)+' غزل دیگر</div>';
+  }
+  h+='</div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+// ─── BOOKMARKS ───────────────────────────
+function showBm(){
+  curTab='bm'; curView='bm'; backStack=[];
+  setBnActive('bm'); setBack(true); hideSubnavs(); setNavHidden(false);
+  updateBmBadge();
+  const ks=Object.keys(_bms);
+  setHeader('نشان‌های من', ks.length?toFa(ks.length)+' بیت ذخیره‌شده':'بیت‌های دلخواه شما');
+  if(!ks.length){ctEl.innerHTML='<div class="nb2"><div class="nbi">★</div>هنوز بیتی نشان نکرده‌اید<br><span style="font-size:12px;color:var(--vf);font-family:Vazirmatn,sans-serif">با ستاره روی هر بیت می‌توانید آن را اینجا ذخیره کنید</span></div>';return}
+  let h='<div class="bst fa">'+toFa(ks.length)+' بیت نشان‌شده</div>';
+  for(const key of ks){
+    const b=_bms[key], nt=_nts[key]||'';
+    const [m1,m2]=b.c||['',''];
+    h+='<div class="bi '+(b.tp==='t'?'tbx':'gbx')+'" data-tp="'+b.tp+'" data-id="'+b.id+'">';
+    h+='<button class="bdl" data-key="'+key+'">✕</button>';
+    h+='<div class="bpt fa">'+(b.tp==='t'?'ترجیع‌بند · ':'غزل · ')+b.ti2+' · بیت '+toFa(b.ci+1)+'</div>';
+    h+='<div class="bm2"><div>'+m1+'</div>'+(m2?'<div class="bm-m2">'+m2+'</div>':'')+'</div>';
+    if(nt) h+='<div class="bnt">📝 '+nt+'</div>';
+    h+='</div>';
+  }
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+async function toggleBm(tp,id,ci){
+  if(!isAuthed()){ showAuthModal({type:'bm',tp,id,ci}); return; }
+  if(MOCK_MODE){
+    const key=bkey(tp,id,ci);
+    const _adding=!_bms[key];
+    if(_bms[key]){ delete _bms[key]; }
+    else{
+      const poem=_poemCache[tp+'_'+id];
+      const c=poem?(poem.couplets[ci]||['','']):['',''];
+      const ti2=tp==='g'?(poem?.title||''):'بند '+id;
+      _bms[key]={tp,id,ci,ti2,c};
+    }
+    _saveMockBms();
+    updateBmBadge();
+    const _sc=ctEl.scrollTop;
+    if(tp==='g') await showG(cg); else await showT(ct);
+    ctEl.scrollTop=_sc;
+    showToast(_adding?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
+    return;
+  }
+  const resp=await fetch(API_URL+'/bookmarks',{method:'POST',headers:authHeaders(),body:JSON.stringify({poem_type:tp,poem_id:id,couplet_index:ci})});
+  if(resp.status===401){setToken(null);_saveUser(null);showAuthModal({type:'bm',tp,id,ci});return;}
+  await loadUserData();
+  const _added=!!_bms[bkey(tp,id,ci)];
+  const _sc2=ctEl.scrollTop;
+  if(tp==='g') await showG(cg); else await showT(ct);
+  ctEl.scrollTop=_sc2;
+  showToast(_added?'به نشان‌های من افزوده شد':'از نشان‌ها حذف شد');
+}
+
+function _saveMockBms(){
+  try{
+    localStorage.setItem('bidel_mock_bms', JSON.stringify(_bms));
+    localStorage.setItem('bidel_mock_nts', JSON.stringify(_nts));
+  }catch(e){}
+}
+function _loadMockBms(){
+  try{
+    const b=localStorage.getItem('bidel_mock_bms'); if(b) _bms=JSON.parse(b);
+    const n=localStorage.getItem('bidel_mock_nts'); if(n) _nts=JSON.parse(n);
+  }catch(e){}
+}
+
+function updateBmBadge(){ /* could decorate bn button — left out for minimalism */ }
+
+let _seen=[];
+function _loadSeen(){
+  try{ const v=JSON.parse(localStorage.getItem('bidel_seen')||'[]'); if(Array.isArray(v)) _seen=v; }catch(e){}
+}
+function markSeen(kind,n){
+  const key=kind+':'+n;
+  if(_seen.indexOf(key)>=0) return;
+  _seen.push(key);
+  try{ localStorage.setItem('bidel_seen', JSON.stringify(_seen)); }catch(e){}
+}
+function _readCount(){ return _seen.length }
+function solukCard(){
+  const bmN = Object.keys(_bms).length, goal = 8;
+  const pct = Math.min(100, Math.round(bmN/goal*100));
+  let s = '<div class="sk-card" data-go="soluk">';
+  s += '<div class="sk-card-tx"><div class="sk-card-lab fa">سلوک من</div>';
+  s += '<div class="sk-card-line dim">سلوکت در حال شکل‌گیری است</div>';
+  s += '<div class="sk-prog"><span class="sk-prog-track"><span class="sk-prog-fill" style="width:'+pct+'%"></span></span><span class="sk-prog-n fa">'+toFa(Math.min(bmN,goal))+' از '+toFa(goal)+'</span></div>';
+  s += '</div>';
+  s += '<div class="sk-card-thumb"><svg class="mr mr-faint" viewBox="0 0 68 68" role="img" aria-hidden="true"><polygon class="mr-grid" points="34.0,25.4 40.7,28.7 42.4,35.9 37.7,41.7 30.3,41.7 25.6,35.9 27.3,28.7"/><polygon class="mr-grid" points="34.0,16.8 47.4,23.3 50.7,37.8 41.4,49.5 26.6,49.5 17.3,37.8 20.6,23.3"/><polygon class="mr-grid" points="34.0,8.0 54.3,17.8 59.3,39.8 45.3,57.4 22.7,57.4 8.7,39.8 13.7,17.8"/><line class="mr-spoke" x1="34" y1="34" x2="34.0" y2="8.0"/><line class="mr-spoke" x1="34" y1="34" x2="54.3" y2="17.8"/><line class="mr-spoke" x1="34" y1="34" x2="59.3" y2="39.8"/><line class="mr-spoke" x1="34" y1="34" x2="45.3" y2="57.4"/><line class="mr-spoke" x1="34" y1="34" x2="22.7" y2="57.4"/><line class="mr-spoke" x1="34" y1="34" x2="8.7" y2="39.8"/><line class="mr-spoke" x1="34" y1="34" x2="13.7" y2="17.8"/></svg></div><span class="sk-card-chev">‹</span>';
+  s += '</div>';
+  return s;
+}
+
+// ─── PROFILE ─────────────────────────────
+function showProfile(){
+  curView='profile'; curTab='profile';
+  setBnActive('profile');
+  hideSubnavs();
+  _editingProfile=false;
+  if(_user){
+    setBack(false);
+    setNavHidden(false);
+    setHeader('حساب کاربری', _user.username||'');
+    renderProfileLoggedIn();
+  } else {
+    showHome();
+    showAuthModal();
+    return;
+  }
+}
+
+function renderProfileLoggedIn(){
+  const initial=(_user.username||_user.email||'?').trim().charAt(0).toUpperCase();
+  const bmCount=Object.keys(_bms).length;
+  const ntCount=Object.keys(_nts).length;
+  let h='<div class="pr">';
+  h+='<div class="pr-card">';
+  h+='<div class="pr-av">'+initial+'</div>';
+  h+='<div class="pr-name">'+(_user.username||'کاربر')+'</div>';
+  h+='<div class="pr-email">'+(_user.email||'')+'</div>';
+  h+='</div>';
+
+  h+=solukCard();
+
+  h+='<div class="pr-stats">';
+  h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa(bmCount)+'</div><div class="pr-stat-lab">نشان</div></div>';
+  h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa(ntCount)+'</div><div class="pr-stat-lab">یادداشت</div></div>';
+  h+='<div class="pr-stat"><div class="pr-stat-val">'+toFa(_readCount())+'</div><div class="pr-stat-lab">غزل خوانده</div></div>';
+  h+='</div>';
+
+  if(_editingProfile){
+    h+='<div class="pr-section-h fa">ویرایش اطلاعات</div>';
+    h+='<div class="pr-edit-form">';
+    h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">نام کاربری</label>';
+    h+='<input class="pr-edit-inp" dir="rtl" id="pr-inp-name" value="'+(_user.username||'').replace(/"/g,'&quot;')+'" placeholder="نام کاربری"></div>';
+    h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">ایمیل</label>';
+    h+='<input class="pr-edit-inp" id="pr-inp-email" type="email" value="'+(_user.email||'').replace(/"/g,'&quot;')+'" placeholder="email"></div>';
+    h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">رمز عبور جدید <span style="color:var(--vf)">(اختیاری)</span></label>';
+    h+='<input class="pr-edit-inp" id="pr-inp-pass" type="password" placeholder="••••••••"></div>';
+    h+='<div class="pr-edit-msg" id="pr-edit-msg"></div>';
+    h+='<div class="pr-edit-bts">';
+    h+='<button class="pr-edit-cancel" id="pr-cancel-edit">انصراف</button>';
+    h+='<button class="pr-edit-save" id="pr-save-edit">ذخیره ✓</button>';
+    h+='</div></div>';
+  } else {
+    h+='<div class="pr-section-h fa">حسابِ من</div>';
+    h+='<div class="pr-list">';
+    h+=_prRow('bms','نشان‌های من',toFa(bmCount)+' بیت ذخیره‌شده',
+      '<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>', 'sa');
+    h+=_prRow('edit','ویرایش اطلاعات','نام، ایمیل و رمز عبور',
+      '<svg viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4-11 11z"/><path d="M14 5l4 4"/></svg>');
+    h+=_prRow('logout','خروج از حساب','پایانِ نشستِ فعلی',
+      '<svg viewBox="0 0 24 24"><path d="M15 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 16l-4-4 4-4"/><path d="M6 12h14"/></svg>', 'er');
+    h+='</div>';
+  }
+
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه ۱.۰</div>';
+  h+='</div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+function renderProfileGuest(){
+  let h='<div class="pr">';
+  h+='<div class="pr-card">';
+  h+='<div class="pr-av guest">م</div>';
+  h+='<div class="pr-name">مهمان</div>';
+  h+='<div class="pr-guest-msg fa">برای ذخیره نشان‌ها و یادداشت‌ها می‌توانید وارد شوید. سایر بخش‌ها بدون ورود نیز در دسترس است.</div>';
+  h+='</div>';
+
+  h+='<div class="pr-guest-bts">';
+  h+='<button class="pr-login" id="pr-guest-login">ورود</button>';
+  h+='<button class="pr-reg" id="pr-guest-reg">ثبت‌نام</button>';
+  h+='</div>';
+
+  h+='<div class="pr-section-h fa">امکانات بدون ورود</div>';
+  h+='<div class="pr-list">';
+  h+=_prRow('go-browse','مطالعه غزلیات','۲۸۲۷ غزل · ترجیع‌بند',
+    '<svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg>');
+  h+=_prRow('go-kw','کلمات کلیدی','۲۲۲ واژه کلیدی',
+    '<svg viewBox="0 0 24 24"><path d="M12 3l2.5 6 6.5.5-5 4.5 1.5 6.5L12 17l-5.5 3.5L8 14 3 9.5l6.5-.5z"/></svg>', 'sa');
+  h+=_prRow('go-search','جستجو','در غزل‌ها و واژه‌ها',
+    '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
+  h+='</div>';
+
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه ۱.۰</div>';
+  h+='</div>';
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+function _prRow(act,t1,t2,svg,extra){
+  return '<button class="pr-row" data-pract="'+act+'">'
+    +'<span class="pr-row-ic '+(extra||'')+'">'+svg+'</span>'
+    +'<span class="pr-row-tx"><span class="pr-row-t1">'+t1+'</span><span class="pr-row-t2 fa">'+t2+'</span></span>'
+    +'<span class="pr-row-chev">‹</span>'
+    +'</button>';
+}
+
+async function saveProfileEdit(){
+  const name=document.getElementById('pr-inp-name').value.trim();
+  const email=document.getElementById('pr-inp-email').value.trim();
+  const pass=document.getElementById('pr-inp-pass').value;
+  const msg=document.getElementById('pr-edit-msg');
+  msg.className='pr-edit-msg';
+  if(!name || !email){
+    msg.classList.add('er');
+    msg.textContent='نام و ایمیل الزامی است';
+    return;
+  }
+  if(MOCK_MODE){
+    _saveUser({username:name, email:email});
+    msg.classList.add('ok');
+    msg.textContent='اطلاعات با موفقیت ذخیره شد ✓';
+    setTimeout(()=>{ _editingProfile=false; showProfile(); }, 800);
+    return;
+  }
+  try{
+    const body={username:name, email:email};
+    if(pass) body.password=pass;
+    const r=await fetch(API_URL+'/auth/me',{method:'PATCH',headers:authHeaders(),body:JSON.stringify(body)});
+    if(!r.ok){
+      msg.classList.add('er');
+      msg.textContent='خطا در ذخیره اطلاعات';
+      return;
+    }
+    _saveUser({username:name, email:email});
+    msg.classList.add('ok');
+    msg.textContent='ذخیره شد ✓';
+    setTimeout(()=>{ _editingProfile=false; showProfile(); }, 800);
+  }catch(e){
+    _saveUser({username:name, email:email});
+    msg.classList.add('ok');
+    msg.textContent='ذخیره شد ✓';
+    setTimeout(()=>{ _editingProfile=false; showProfile(); }, 800);
+  }
+}
+
+function doLogout(){
+  setToken(null);
+  _saveUser(null);
+  _bms={}; _nts={};
+  _loadMockBms();
+_loadSeen();  // restore any mock-mode local data
+  hideConfirm();
+  showProfile();
+}
+function showConfirm(){document.getElementById('cf-bg').classList.add('open')}
+function hideConfirm(){document.getElementById('cf-bg').classList.remove('open')}
+
+// ─── SEARCH ──────────────────────────────
+function showSearch(){
+  curTab='srch'; curView='srch'; backStack=[];
+  setBnActive('srch'); setBack(true); hideSubnavs(); setNavHidden(false);
+  setHeader('جستجو در دیوان', 'شماره غزل، یا واژه');
+  const suggest = ['دل','آینه','حیرت','گل','شکست','جان'];
+  let h = '<div class="search-screen">';
+  h += '<div class="search-input-wrap"><span class="search-icon">🔍</span><input type="search" id="srch-input" placeholder="مثلاً: ۲۳۴ یا «حیرت»…" autocomplete="off"></div>';
+  h += '<div class="search-hints"><div class="search-hint fa">با عدد فارسی یا انگلیسی به <b>غزل</b> یا <b>بند</b> برو، یا کلمه‌ای را جستجو کن.</div></div>';
+  h += '<div class="search-suggest-h fa">واژه‌های پُربسامد</div>';
+  h += '<div class="search-suggest">';
+  for(const w of suggest) h+='<button class="gkw" data-kwword="'+w+'">'+w+'</button>';
+  h += '</div>';
+  h += '<div id="srch-results"></div>';
+  h += '</div>';
+  ctEl.innerHTML = h; ctEl.scrollTop=0;
+  const inp = document.getElementById('srch-input');
+  inp.focus();
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doSrch(); } });
+}
+
+async function doSrch(){
+  const inp = document.getElementById('srch-input');
+  const raw = inp ? inp.value.trim() : ''; if(!raw) return;
+  const resultsEl = document.getElementById('srch-results');
+  if(!resultsEl) return;
+  resultsEl.innerHTML = '<div class="nr2">در حال جستجو…</div>';
+
+  const persianMap={'۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9'};
+  const normalized=raw.trim().replace(/[۰-۹]/g,d=>persianMap[d]);
+  const num=parseInt(normalized);
+  if(!isNaN(num) && num>0 && String(num)===normalized){
+    if(num>=1 && num<=TOT){ showG(num); return; }
+    if(num>=1 && num<=TB){ showT(num); return; }
+    resultsEl.innerHTML='<div class="nr2">شماره '+toFa(num)+' یافت نشد</div>';
+    return;
+  }
+
+  const kw=raw;
+  const allKw = window.KEYWORDS || [];
+  const exactKw = allKw.filter(k=>k.w===kw);
+  const partialKw = allKw.filter(k=>k.w!==kw && (k.w.indexOf(kw)!==-1 || kw.indexOf(k.w)!==-1));
+  const kwMatches = [...exactKw, ...partialKw].slice(0,3);
+  const [rg,rt]=await Promise.all([
+    apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=g'),
+    apiFetch(API_URL+'/poems/search?q='+encodeURIComponent(kw)+'&type=t'),
+  ]);
+  const rgX = rg||{results:[]}, rtX = rt||{results:[]};
+  const ms=[];
+  for(const r of (rgX.results||[])){
+    const c=r.matches[0]?.couplet||['',''];
+    ms.push({tp:'g',n:r.number,ti2:r.title,pv:c[0]+(c[1]?' / '+c[1]:'')});
+  }
+  for(const r of (rtX.results||[])){
+    const c=r.matches[0]?.couplet||['',''];
+    ms.push({tp:'t',n:r.number,ti2:'بند '+toFa(r.number),pv:c[0]+(c[1]?' / '+c[1]:'')});
+  }
+  if(!ms.length && !kwMatches.length){resultsEl.innerHTML='<div class="nr2">«'+kw+'» یافت نشد</div>';return}
+  let h='<div class="rh fa">'+toFa(ms.length)+' نتیجه برای «'+kw+'»'+(kwMatches.length?' · '+toFa(kwMatches.length)+' واژه':'')+'</div>';
+  for(const k of kwMatches){
+    const numGh = Math.round(k.n/4.27);
+    const meanShort = k.mean.length>70 ? k.mean.slice(0,70)+'…' : k.mean;
+    h += '<div class="ri kw" data-kwword="'+k.w+'">';
+    h += '<div class="rt fa">واژه · '+window.CATEGORY_LABEL[k.cat]+'</div>';
+    h += '<div class="rti-row"><span class="rti">'+hl(k.w,kw)+'</span><span class="rti-count fa">'+toFa(k.n)+' بار · '+toFa(numGh)+' غزل</span></div>';
+    h += '<div class="rp">'+meanShort+'</div></div>';
+  }
+  for(const m of ms){
+    h+='<div class="ri'+(m.tp==='t'?' tr':'')+'" data-tp="'+m.tp+'" data-n="'+m.n+'" data-kw="'+kw+'">';
+    if(m.tp==='t') h+='<div class="rt fa">ترجیع‌بند</div>';
+    h+='<div class="rti">'+m.ti2+'</div><div class="rp">'+hl(m.pv,kw)+'</div></div>';
+  }
+  resultsEl.innerHTML = h;
+}
+
+// ─── EVENT DELEGATION ────────────────────
+ctEl.addEventListener('click', function(e){
+  // Mood chart: axis / dominant chip / bar row → open sheet
+  const moodEl = e.target.closest('#mood-card [data-mood]');
+  if(moodEl){ openMoodSheet(moodEl.dataset.mood); return; }
+  if(e.target.closest('#mood-card .mood-title') || e.target.closest('#mood-card .mood-hint')){ openMoodSheet(null); return; }
+  // Profile rows
+  const pr = e.target.closest('.pr-row');
+  if(pr){
+    const act = pr.dataset.pract;
+    if(act==='edit'){ _editingProfile=true; renderProfileLoggedIn(); setTimeout(()=>{const el=document.getElementById('pr-inp-name');if(el)el.focus();},50); return; }
+    if(act==='bms'){ showBm(); return; }
+    if(act==='logout'){ showConfirm(); return; }
+    if(act==='go-browse'){ showBrowse('g'); return; }
+    if(act==='go-kw'){ showKeywords(); return; }
+    if(act==='go-search'){ showSearch(); return; }
+    return;
+  }
+  // Profile edit save/cancel
+  if(e.target.closest('#pr-save-edit')){ saveProfileEdit(); return; }
+  if(e.target.closest('#pr-cancel-edit')){ _editingProfile=false; showProfile(); return; }
+  // Profile guest buttons
+  if(e.target.closest('#pr-guest-login')){ switchAuthTab('login'); showAuthModal(); return; }
+  if(e.target.closest('#pr-guest-reg')){ switchAuthTab('register'); showAuthModal(); return; }
+
+  const libc = e.target.closest('[data-lib]');
+  if(libc){ if(libc.dataset.lib==='kh'){ showKhaneshList(); return; } browseSub = libc.dataset.lib; showBrowse(browseSub); return; }
+  const gkMore = e.target.closest('#cyc-gk-more');
+  if(gkMore){
+    e.stopPropagation();
+    const box = document.getElementById('cyc-gk');
+    const exp = box.dataset.exp === '1';
+    box.dataset.exp = exp ? '' : '1';
+    box.classList.toggle('all', !exp);
+    box.querySelectorAll('span').forEach((s,i)=>{ s.style.display = (exp && i>=8) ? 'none' : '' });
+    gkMore.textContent = exp ? ('همه ('+toFa(box.querySelectorAll('span').length)+')') : 'کمتر';
+    return;
+  }
+  // Home quick cards
+  const qc = e.target.closest('[data-go]');
+  if(qc){
+    const dest = qc.dataset.go;
+    if(dest==='library'){ showLibrary(); }
+    else if(dest==='ghazal'){ showG(parseInt(qc.dataset.n)); }
+    else if(dest==='browse-g'){ browseSub='g'; showBrowse('g'); }
+    else if(dest==='browse-t'){ browseSub='t'; showBrowse('t'); }
+    else if(dest==='browse-z'){ browseSub='z'; showBrowse('z'); }
+    else if(dest==='kw'){ showKeywords(); }
+    else if(dest==='explore'){ (async()=>{ await showG(parseInt(qc.dataset.n)); openMoodSheet(null); })(); }
+    else if(dest==='bm'){ showBm(); }
+    else if(dest==='profile'){ showProfile(); }
+    else if(dest==='search'){ showSearch(); }
+    else if(dest==='khanesh'){ showKhaneshList(); }
+    else if(dest==='register'){ switchAuthTab('register'); showAuthModal(); }
+    else if(dest==='soluk'){ showProfile(); }
+    else if(dest==='random'){ (async()=>{ const g=await apiFetch(API_URL+'/poems/ghazal/random'); if(g) showG(g.number); })(); }
+    return;
+  }
+  // Khanesh cards
+  const khc = e.target.closest('.kh-card');
+  if(khc){ showKhanesh(khc.dataset.slug, 'list'); return; }
+  const khr = e.target.closest('.kh-rel-card');
+  if(khr){ showKhanesh(khr.dataset.slug, 'terjee'); return; }
+  const khbb = e.target.closest('.kh-backband');
+  if(khbb){ showT(parseInt(khbb.dataset.band)); return; }
+  // Verse of day → open ghazal
+  const vod = e.target.closest('#verse-of-day');
+  if(vod){ showG(parseInt(vod.dataset.n)); return; }
+  // Home search bar → open search
+  const hs = e.target.closest('#home-search');
+  if(hs){ showSearch(); return; }
+  // Top keyword strip
+  const ksc = e.target.closest('[data-kwword]');
+  if(ksc){ showKeyword(ksc.dataset.kwword); return; }
+  // Browse segmented
+  const segb = e.target.closest('#browse-seg button');
+  if(segb){
+    browseSub = segb.dataset.sub;
+    document.querySelectorAll('#browse-seg button').forEach(b=>b.classList.toggle('on', b===segb));
+    setHeader('غزلیات بیدل', browseSub==='g'?'۲۸۲۷ غزل':browseSub==='t'?'۳۴ بند · ترجیع‌بند':'شرح شروین وکیلی');
+    renderBrowseBody();
+    return;
+  }
+  // Keyword filter chip
+  const fc = e.target.closest('.kw-chip');
+  if(fc){ _kwFilter = fc.dataset.kwfilter; renderKeywordList(); return; }
+  // Keyword card
+  const kc = e.target.closest('.kw-card');
+  if(kc){ showKeyword(kc.dataset.kwword); return; }
+  // Tag inside ghazal/search
+  const gtag = e.target.closest('.gkw');
+  if(gtag){ showKeyword(gtag.dataset.kwword); return; }
+  // Keyword inside search results
+  const kwr = e.target.closest('.ri.kw');
+  if(kwr){ showKeyword(kwr.dataset.kwword); return; }
+  // Zand section
+  const zc = e.target.closest('.zcard');
+  if(zc){ showZand(parseInt(zc.dataset.zid)); return; }
+  // Result item
+  const ri = e.target.closest('.ri');
+  if(ri && !e.target.closest('button')){
+    const kw=ri.dataset.kw||'';
+    if(ri.dataset.tp==='g'){ showG(parseInt(ri.dataset.n),kw); }
+    else if(ri.dataset.tp==='t'){ showT(parseInt(ri.dataset.n),kw); }
+    return;
+  }
+  // Bookmark item
+  const bi = e.target.closest('.bi');
+  if(bi && !e.target.closest('button')){
+    if(bi.dataset.tp==='g'){ showG(parseInt(bi.dataset.id)); }
+    else{ showT(parseInt(bi.dataset.id)); }
+    return;
+  }
+  // Delete bookmark
+  if(e.target.closest('.bdl')){
+    const k=e.target.closest('.bdl').dataset.key;
+    const p2=k.split('_');
+    toggleBm(p2[0],parseInt(p2[1]),parseInt(p2[2]));
+    return;
+  }
+  // Share whole ghazal/band from the poem-meta card
+  const psh=e.target.closest('.pshare');
+  if(psh){ const pp=psh.dataset.pshare.split('_'); openShareGhazal(pp[0], parseInt(pp[1])); return; }
+  // Couplet buttons
+  const btn=e.target.closest('.ca button');
+  const cp=e.target.closest('.cp');
+  const nd=e.target.closest('.nd');
+  if(!cp) return;
+  const key=cp.dataset.key;
+  const parts=key.split('_');
+  const tp=parts[0], id=parseInt(parts[1]), ci=parseInt(parts[2]);
+  if(nd && !btn){ openModal(key, getVerse(tp,id,ci)); return; }
+  if(!btn){
+    // tap the couplet body → reveal / hide the action bar (accordion)
+    const wasOpen=cp.classList.contains('open');
+    ctEl.querySelectorAll('.cp.open').forEach(c=>{ if(c!==cp) c.classList.remove('open'); });
+    cp.classList.toggle('open', !wasOpen);
+    return;
+  }
+  const action=btn.dataset.action;
+  if(action==='bm'){ toggleBm(tp,id,ci); return; }
+  if(action==='note'){ openModal(key, getVerse(tp,id,ci)); return; }
+  if(action==='share'){ openShare(tp,id,ci); return; }
+  if(action==='copy'){
+    const [m1,m2]=getCouplet(tp,id,ci);
+    const txt=m1+(m2?'\n'+m2:'');
+    const el=document.createElement('div');
+    el.contentEditable=true;
+    el.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;opacity:0.01;white-space:pre;';
+    el.innerText=txt; document.body.appendChild(el);
+    const sel=window.getSelection(), range=document.createRange();
+    range.selectNodeContents(el); sel.removeAllRanges(); sel.addRange(range);
+    try{document.execCommand('copy');}catch(e){}
+    sel.removeAllRanges(); document.body.removeChild(el);
+    const lab=btn.querySelector('.cal')||btn; const o=lab.textContent; lab.textContent='کپی شد ✓'; setTimeout(()=>lab.textContent=o,1000);
+    showToast('بیت کپی شد');
+  }
+});
+
+function getVerse(tp,id,ci){
+  const [m1,m2]=getCouplet(tp,id,ci);
+  return m1+(m2?' / '+m2:'');
+}
+function getCouplet(tp,id,ci){
+  const poem=_poemCache[tp+'_'+id];
+  return poem?(poem.couplets[ci]||['','']):['',''];
+}
+
+// ─── BOTTOM NAV ──────────────────────────
+document.querySelector('.bn').addEventListener('click', e=>{
+  const it = e.target.closest('.bn-item');
+  if(!it) return;
+  const tab = it.dataset.tab;
+  if(tab==='home') showHome();
+  else if(tab==='browse') showLibrary();
+  else if(tab==='kw') showKeywords();
+  else if(tab==='bm') showBm();
+  else if(tab==='srch') showSearch();
+  else if(tab==='profile') showProfile();
+});
+
+// ─── HEADER BACK ─────────────────────────
+btnBack.addEventListener('click', ()=>{
+  // Smart back: depending on current view, go to its parent
+  if(curView==='gh' || curView==='tr'){
+    if(curTab==='browse') showBrowse(browseSub);
+    else if(curTab==='kw') showKeywords();
+    else if(curTab==='srch') showSearch();
+    else if(curTab==='bm') showBm();
+    else if(curTab==='kh') showKhaneshList();
+    else if(curTab==='profile') showProfile();
+    else showHome();
+  } else if(curView==='browse'){
+    showLibrary();
+  } else if(curView==='library'){
+    showHome();
+  } else if(curView==='zsec'){
+    showBrowse('z');
+  } else if(curView==='khlist'){
+    showLibrary();
+  } else if(curView==='khd'){
+    if(_khFrom==='terjee'){ showT(_khBand||1); } else { showKhaneshList(); }
+  } else if(curView==='kwd'){
+    showKeywords();
+  } else if(curView==='profile'){
+    showHome();
+  } else {
+    showHome();
+  }
+});
+
+// ─── PROFILE BUTTON ──────────────────────
+document.getElementById('btn-profile').addEventListener('click', showProfile);
+
+// ─── LOGOUT CONFIRM ──────────────────────
+document.getElementById('cf-cancel').addEventListener('click', hideConfirm);
+document.getElementById('cf-confirm').addEventListener('click', doLogout);
+document.getElementById('cf-bg').addEventListener('click', e=>{ if(e.target.id==='cf-bg') hideConfirm(); });
+
+// ─── AUTH CLOSE ──────────────────────────
+
+
+// ─── RANDOM ──────────────────────────────
+document.getElementById('btn-rand').addEventListener('click', async ()=>{
+  const g = await apiFetch(API_URL+'/poems/ghazal/random');
+  if(g) showG(g.number);
+});
+
+// ─── PREV/NEXT ───────────────────────────
+gp.addEventListener('click', ()=>showG(Math.max(1,cg-1)));
+gn.addEventListener('click', ()=>showG(Math.min(TOT,cg+1)));
+tp2.addEventListener('click', ()=>showT(Math.max(1,ct-1)));
+tn2.addEventListener('click', ()=>showT(Math.min(TB,ct+1)));
+document.getElementById('tallbands').addEventListener('click', ()=>{ browseSub='t'; showBrowse('t'); });
+
+// ─── NOTE MODAL ──────────────────────────
+function openModal(key,verse){
+  mkey=key;
+  document.getElementById('mv').textContent=verse;
+  document.getElementById('mn').value=_nts[key]||'';
+  mbg.classList.add('open');
+  setTimeout(()=>document.getElementById('mn').focus(),300);
+}
+function cmob(){mbg.classList.remove('open');mkey=null}
+async function svn(){
+  const v=document.getElementById('mn').value.trim();
+  const parts=mkey.split('_');
+  const tp=parts[0],pid=parseInt(parts[1]),ci=parseInt(parts[2]);
+  if(!isAuthed()){ showAuthModal({type:'note',tp,id:pid,ci,text:v}); return; }
+  if(MOCK_MODE){
+    if(v) _nts[bkey(tp,pid,ci)] = v;
+    else delete _nts[bkey(tp,pid,ci)];
+    _saveMockBms();
+    cmob();
+    const _sc=ctEl.scrollTop;
+    if(curView==='gh') await showG(cg);
+    else if(curView==='tr') await showT(ct);
+    else if(curView==='bm') showBm();
+    if(curView==='gh'||curView==='tr') ctEl.scrollTop=_sc;
+    showToast(v?'یادداشت ذخیره شد':'یادداشت حذف شد');
+    return;
+  }
+  const token=getToken();
+  if(!token){showAuthModal({type:'note',tp,id:pid,ci,text:v});return;}
+  if(v){
+    await fetch(API_URL+'/notes',{method:'POST',headers:authHeaders(),body:JSON.stringify({poem_type:tp,poem_id:pid,couplet_index:ci,text:v})});
+  } else {
+    await fetch(API_URL+'/notes/'+tp+'/'+pid+'/'+ci,{method:'DELETE',headers:authHeaders()});
+  }
+  await loadUserData();
+  cmob();
+  const _sc=ctEl.scrollTop;
+  if(curView==='gh') await showG(cg);
+  else if(curView==='tr') await showT(ct);
+  else if(curView==='bm') showBm();
+  if(curView==='gh'||curView==='tr') ctEl.scrollTop=_sc;
+  showToast(v?'یادداشت ذخیره شد':'یادداشت حذف شد');
+}
+document.getElementById('btn-mcancel').addEventListener('click', cmob);
+document.getElementById('btn-msave').addEventListener('click', svn);
+mbg.addEventListener('click', e=>{ if(e.target===mbg) cmob(); });
+
+// ─── SHARE LINK SHEET ────────────────────
+const shbg=document.getElementById('shbg');
+let _shData=null;
+let _tstTimer=null;
+function showToast(msg){
+  const wrap=document.getElementById('tswrap');
+  const t=document.createElement('div');
+  t.className='tst';
+  t.innerHTML='<span class="chk"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span><span>'+msg+'</span>';
+  wrap.innerHTML=''; wrap.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  clearTimeout(_tstTimer);
+  _tstTimer=setTimeout(()=>{ t.classList.remove('show'); t.classList.add('hide'); setTimeout(()=>{ if(t.parentElement) t.remove(); },300); }, 1900);
+}
+function _copyFallback(t){ try{const el=document.createElement('textarea');el.value=t;el.style.cssText='position:fixed;opacity:0;top:0;left:0';document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();}catch(e){} }
+function copyTextTo(t){ try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).catch(()=>_copyFallback(t)); return; } }catch(e){} _copyFallback(t); }
+function openShare(tp,id,ci){
+  const [m1,m2]=getCouplet(tp,id,ci);
+  const seg = tp==='g'?'g':'t';
+  const path = 'bideli.app/'+seg+'/'+id+'/'+(ci+1);
+  _shData={ url:'https://'+path, text:(m1+(m2?' / '+m2:''))+' — بیدل دهلوی' };
+  document.getElementById('sh-t').textContent='اشتراکِ بیت '+toFa(ci+1);
+  document.getElementById('sh-v').textContent=m1;
+  document.getElementById('sh-url').textContent=path;
+  shbg.classList.add('open');
+}
+function openShareGhazal(tp,id){
+  const seg = tp==='g'?'g':'t';
+  const poem=_poemCache[tp+'_'+id];
+  const title = tp==='g'?(poem?.title||'') : '';
+  const path='bideli.app/'+seg+'/'+id;
+  _shData={ url:'https://'+path, text:(tp==='g'?('غزل '+toFa(id)+(title?' «'+title+'»':'')):('ترجیع‌بند حیرت · بند '+toFa(id)))+' — بیدل دهلوی' };
+  document.getElementById('sh-t').textContent = tp==='g'?('اشتراکِ غزل '+toFa(id)):('اشتراکِ بند '+toFa(id));
+  document.getElementById('sh-v').textContent = tp==='g'?(title||('غزل '+toFa(id))):('ترجیع‌بند حیرت');
+  document.getElementById('sh-url').textContent=path;
+  shbg.classList.add('open');
+}
+function cshare(){ shbg.classList.remove('open'); _shData=null; }
+document.getElementById('sh-copy').addEventListener('click',()=>{
+  if(_shData) copyTextTo(_shData.url);
+  showToast('لینک کپی شد');
+  const b=document.getElementById('sh-copy'); const o=b.textContent; b.textContent='کپی شد ✓'; setTimeout(()=>{b.textContent=o;},1300);
+});
+document.getElementById('sh-share').addEventListener('click',()=>{
+  if(!_shData) return;
+  if(navigator.share){ navigator.share({title:'بیدلی',text:_shData.text,url:_shData.url}).catch(()=>{}); }
+  else { copyTextTo(_shData.url); showToast('لینک کپی شد'); const b=document.getElementById('sh-share'); const sp=b.querySelector('span'); const o=sp.textContent; sp.textContent='لینک کپی شد ✓'; setTimeout(()=>{sp.textContent=o;},1300); }
+});
+shbg.addEventListener('click', e=>{ if(e.target===shbg) cshare(); });
+
+// ─── MOOD SHEET EVENTS ───────────────────
+moodSheetBg.addEventListener('click', e=>{
+  if(e.target===moodSheetBg){ closeMoodSheet(); return; }
+  const kw=e.target.closest('.gkw');
+  if(kw){ closeMoodSheet(); showKeyword(kw.dataset.kwword); return; }
+  const ov=e.target.closest('.ms-ov-row');
+  if(ov){ openMoodSheet(ov.dataset.mood); return; }
+  const cp=e.target.closest('.ms-cp');
+  if(cp){
+    const ci=parseInt(cp.dataset.ci);
+    closeMoodSheet();
+    setTimeout(()=>{
+      const el=ctEl.querySelector('.cp[data-key="'+bkey('g',cg,ci)+'"]');
+      if(el){ ctEl.scrollTo({top:Math.max(0,el.offsetTop-12),behavior:'smooth'}); el.classList.add('cp-flash'); setTimeout(()=>el.classList.remove('cp-flash'),1400); }
+    },230);
+    return;
+  }
+});
+
+// ─── AUTH ────────────────────────────────
+function addTap(id, handler){
+  const el=document.getElementById(id);
+  el.addEventListener('touchstart',function(e){e.preventDefault();handler();},{passive:false});
+  el.addEventListener('click',handler);
+}
+
+function _runPending(){
+  const p = _pendingAction; _pendingAction=null;
+  if(typeof p === 'function'){ p(); return; }
+  if(!p){
+    // refresh current view if profile
+    if(curView==='profile') showProfile();
+    return;
+  }
+  if(p.type==='bm'){ toggleBm(p.tp, p.id, p.ci); return; }
+  if(p.type==='note'){
+    // restore the note draft and re-open save flow
+    const k = bkey(p.tp,p.id,p.ci);
+    if(p.text){
+      _nts[k] = p.text;
+      _saveMockBms();
+    }
+    if(curView==='gh') showG(cg);
+    else if(curView==='tr') showT(ct);
+    return;
+  }
+}
+
+// ─── TWEAKS PANEL ────────────────────────
+const twPanel = document.getElementById('tw-panel');
+function setTweak(key, val){
+  TWEAKS[key] = val;
+  twPanel.querySelectorAll('[data-tweak="'+key+'"] button').forEach(b=>{
+    b.classList.toggle('on', b.dataset.v===val);
+  });
+  try{ window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[key]:val}}, '*'); }catch(e){}
+  if(curView==='kw') renderKeywordList();
+  else if(curView==='gh' && cg) showG(cg);
+}
+function openTweaks(){ twPanel.classList.add('open'); }
+function closeTweaks(){ twPanel.classList.remove('open'); try{ window.parent.postMessage({type:'__edit_mode_dismissed'}, '*'); }catch(e){} }
+twPanel.addEventListener('click', e=>{
+  const b = e.target.closest('button[data-v]');
+  if(b){ const key = b.parentElement.dataset.tweak; setTweak(key, b.dataset.v); }
+});
+document.getElementById('tw-close').addEventListener('click', closeTweaks);
+window.addEventListener('message', e=>{
+  const d = e.data||{};
+  if(d.type==='__activate_edit_mode') openTweaks();
+  else if(d.type==='__deactivate_edit_mode') closeTweaks();
+});
+try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
+
+// ─── BOOT ────────────────────────────────
+_loadMockBms();
+_loadSeen();
+loadUserData();
+showHome();
+
+window.__bidel={saveUser:_saveUser,runPending:_runPending,setPending:v=>{_pendingAction=v},refresh:()=>{if(curView==='home')showHome()},setMock:()=>{MOCK_MODE=true}};
+})();
+</script>
+</body>
+</html>
