@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20260921_235409">
+<meta name="deploy-version" content="20260922_101743">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -100,6 +100,26 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .bn-item.on{color:var(--go)}
 .bn-item.on .bn-lab{font-weight:700}
 .bn-item.on .bn-ic{background:var(--gh);border-radius:99px;padding:0;width:48px;height:24px;color:var(--go)}
+.bn-fab{flex:0 0 62px;display:flex;justify-content:center;align-items:flex-start}
+.bn-c{flex:0 0 auto!important;padding:7px 0 5px!important;gap:3px!important}
+.bn-c .bn-ic{width:52px;height:52px;margin:-33px 0 5px;border-radius:50%;border:3px solid var(--sf2);background:var(--sa);color:#fff;box-shadow:0 5px 14px -5px rgba(168,116,32,.7);transition:background .2s,transform .12s}
+.bn-c .bn-ic svg{width:23px;height:23px;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.bn-c .bn-lab{color:var(--gd);font-weight:700}
+.bn-c:active .bn-ic{transform:scale(.95)}
+.bn-c.on .bn-ic{background:var(--sa2);border-radius:50%;padding:0;width:52px;height:52px;color:#fff}
+.bn-c.on{color:var(--gd)}
+
+/* ─── LIBRARY (landing for the collections) ─── */
+.lib{display:flex;flex-direction:column;gap:11px;padding:16px}
+.lib-card{display:flex;align-items:center;gap:12px;background:var(--sf2);border:1px solid var(--br);border-radius:16px;padding:18px 17px;cursor:pointer;transition:border-color .15s,background .15s}
+.lib-card:hover{border-color:var(--go);background:var(--gh)}
+.lib-card:active{transform:scale(.995)}
+.lib-bd{flex:1;min-width:0}
+.lib-t{font-size:19px;font-weight:800;color:var(--gd);line-height:1.4}
+.lib-d{font-size:13px;color:var(--mu);line-height:1.9;margin-top:5px;text-wrap:pretty}
+.lib-s{font-size:11.5px;color:var(--sa2);margin-top:9px}
+.lib-ar{flex-shrink:0;color:var(--vf);display:flex}
+.lib-ar svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
 
 /* ─── HOME ─────────────────────────────────── */
 .home{padding:4px 4px}
@@ -200,7 +220,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:"IRANYeka
 .cyc-words span{font-size:12.5px;color:var(--gd);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:3px 11px}
 .cyc-words-more{font-family:"IRANYekanX",sans-serif;font-size:12.5px;font-weight:600;color:var(--go);background:transparent;border:1px dashed var(--go);border-radius:99px;padding:0 16px;min-height:44px;cursor:pointer;line-height:1.7;display:inline-flex;align-items:center}
 .cyc-words-more:hover{background:var(--gh)}
-.cyc-verse{position:relative;background:linear-gradient(135deg,var(--sah),var(--sf));border:1px solid var(--sa);border-radius:18px;padding:22px 20px 18px;margin:14px -43px 0 0;overflow:hidden}
+.cyc-verse{position:relative;background:linear-gradient(135deg,var(--sah),var(--sf));border:1px solid var(--sa);border-radius:18px;padding:22px 20px 18px;margin:14px -45px 0 -31px;overflow:hidden}
 .cyc-verse::before{content:'۞';position:absolute;top:-10px;right:-10px;font-size:100px;color:var(--sa);opacity:.09;font-family:serif;line-height:1}
 .cyc-verse-tag{position:relative;font-size:10px;color:var(--sa2);letter-spacing:.16em;font-weight:600;margin-bottom:13px}
 .cyc-verse-m1{position:relative;font-size:20px;color:var(--tx);line-height:2.1}
@@ -1317,6 +1337,16 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
       <span class="bn-ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2z"/></svg></span>
       <span class="bn-lab">خانه</span>
     </button>
+    <button class="bn-item" data-tab="browse">
+      <span class="bn-ic"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 1-2-2zM9 3v18"/></svg></span>
+      <span class="bn-lab">کتابخانه</span>
+    </button>
+    <div class="bn-fab">
+      <button class="bn-item bn-c" data-tab="srch">
+        <span class="bn-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg></span>
+        <span class="bn-lab">کاوش</span>
+      </button>
+    </div>
     <button class="bn-item" data-tab="bm">
       <span class="bn-ic"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span>
       <span class="bn-lab">نشان‌ها</span>
@@ -2345,8 +2375,8 @@ function showHome(){
   const chipsBox='<div class="cyc-words" id="cyc-gk" data-vis="6"></div>';
 
   const STEPS=[
-    {go:'ghazal',n:dayNum,feat:true,t:'از یک غزل شروع کن',s:'بیت امروز، و غزلی که از آن آمده.'},
-    {go:'explore',n:dayNum,t:'غزل را در جای خودش ببین',s:'جایگاه معنایی غزل در مقامات سلوک.'},
+    {go:'ghazal',n:vodNum,feat:true,t:'از یک غزل شروع کن',s:'بیت امروز، و غزلی که از آن آمده.'},
+    {go:'explore',n:vodNum,t:'غزل را در جای خودش ببین',s:'جایگاه معنایی غزل در مقامات سلوک.'},
     {go:'kw',chips:true,t:'یک کلمه را در غزل انتخاب کن',s:'کلیدواژه‌های همان غزل؛ معناش رو از خود بیدل استخراج کن.'},
     {go:'kw',t:'کلمه را در بافتار شعرهای دیگر ببین',s:'همان کلمه، در بیت‌هایی که درشان آمده.'},
     {go:'search',t:'دنبالش را بگیر',s:'کلماتی که معمولاً با این کلمه به کار می‌روند رو دنبال کن.'},
@@ -2394,7 +2424,7 @@ function showHome(){
       +'<div class="cyc">'+steps+'</div></div>';
     // بنر دور
     h += '<div class="cyc-turn turn"><span class="turn-ic">↻</span><span class="turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند. هر گام هر وقت خواستی جداگانه هم در دسترس است.</span>'
-      +'<button class="turn-cta" data-go="ghazal" data-n="'+dayNum+'"><span>دور امروز را شروع کن</span>'+arrow+'</button></div>';
+      +'<button class="turn-cta" data-go="ghazal" data-n="'+vodNum+'"><span>دور امروز را شروع کن</span>'+arrow+'</button></div>';
     // دو ستون پایین
     h += '<div class="dual">';
     h += '<div><div class="sec-h"><span class="sec-t">کلمات کلیدی امروز</span></div><div class="kw-row">'+kwCards('کلمه')+'</div></div>';
@@ -2413,7 +2443,7 @@ function showHome(){
     h += '<div class="cyc">'+steps+'</div>';
     // بنر دور + CTA
     h += '<div class="cyc-turn"><span class="cyc-turn-ic">↻</span><span class="cyc-turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند.</span></div>';
-    h += '<button class="cyc-cta" data-go="ghazal" data-n="'+dayNum+'"><span>دور امروز را شروع کن</span>'+arrow+'</button>';
+    h += '<button class="cyc-cta" data-go="ghazal" data-n="'+vodNum+'"><span>دور امروز را شروع کن</span>'+arrow+'</button>';
     h += '<div class="cyc-note fa">هر گام هر وقت خواستی جداگانه هم در دسترس است.</div>';
     // کلمات کلیدی امروز
     h += '<div class="section-h fa">کلمات کلیدی امروز</div>';
@@ -2451,6 +2481,27 @@ function renderLoginGate(title, subtitle, resumePath){
   h+='<button class="pr-login" id="gate-login">ورود</button><button class="pr-reg" id="gate-reg">ثبت‌نام</button>';
   h+='</div></div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+// ─── LIBRARY (landing for the collections) ─
+function showLibrary(){
+  curTab='browse'; curView='library'; backStack=[]; setBack(true);
+  setBnActive('browse'); hideSubnavs(); setNavHidden(false);
+  setHeader('کتابخانه','متن کاملِ دیوان');
+  setMeta('کتابخانه','متن کاملِ دیوان بیدل دهلوی');
+  const items = [
+    {k:'g', t:'غزلیات', s:'۲۸۲۷ غزل', d:'متن کاملِ غزلیات بیدل دهلوی.'},
+    {k:'t', t:'ترجیع‌بند', s:'۳۴ بند · حیرت', d:'ترجیع‌بندِ حیرت، بند به بند.'},
+    {k:'z', t:'زند بیدل', s:'شرح شروین وکیلی', d:'شرح و تحلیلِ سراسرِ دیوان.'},
+    {k:'kh', t:'خوانش‌ها', s:'تفسیر و شرحِ ترجیع‌بند', d:'خوانش‌های تفسیری، بند به بند.'}
+  ];
+  let h = '<div class="lib">';
+  for(const it of items){
+    h += '<div class="lib-card" data-lib="'+it.k+'"><div class="lib-bd"><div class="lib-t">'+it.t+'</div><div class="lib-d">'+it.d+'</div><div class="lib-s fa">'+it.s+'</div></div><span class="lib-ar"><svg viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg></span></div>';
+  }
+  h += '</div>';
+  ctEl.innerHTML = h;
+  ctEl.scrollTop = 0;
 }
 
 // ─── BROWSE (ghazals / terjees / zand) ────
@@ -3238,7 +3289,7 @@ function renderProfileLoggedIn(){
     h+='</div>';
   }
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.21</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.22</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
   _loadReadStat();
@@ -3259,7 +3310,7 @@ function _loadReadStat(){
 
 async function showHistory(){
   curView='history'; setBack(true); hideSubnavs(); setNavHidden(false);
-  setBnActive('ac');
+  setBnActive('profile');
   setHeader('تاریخچه','غزل‌هایی که خوانده‌اید');
   ctEl.innerHTML='<div class="book-loader"><span></span><span></span><span></span></div>';
   const token=getToken();
@@ -3351,7 +3402,7 @@ function renderProfileGuest(){
     '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l4 4"/></svg>');
   h+='</div>';
 
-  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.21</div>';
+  h+='<div class="pr-foot fa">دیوان بیدل دهلوی · نسخه 2026.09.22</div>';
   h+='</div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
 }
@@ -3937,6 +3988,15 @@ ctEl.addEventListener('click', function(e){
   // کارت واژهٔ خانهٔ دسکتاپ
   const kwc = e.target.closest('.kwc');
   if(kwc){ navigate('/keywords/'+encodeURIComponent(kwc.dataset.kwword)); return; }
+  // Library cards
+  const libc = e.target.closest('[data-lib]');
+  if(libc){
+    const k=libc.dataset.lib;
+    if(k==='kh'){ showKhaneshList(); return; }
+    browseSub=k;
+    navigate(k==='g'?'/ghazals':k==='t'?'/terjee':'/zand');
+    return;
+  }
   // Home quick cards
   const qc = e.target.closest('.qc');
   if(qc){
@@ -3960,6 +4020,9 @@ ctEl.addEventListener('click', function(e){
     else if(dest==='bm'){ navigate('/bookmarks'); }
     else if(dest==='profile'||dest==='soluk'){ navigate('/profile'); }
     else if(dest==='library'){ navigate('/ghazals'); }
+    else if(dest==='browse-g'){ navigate('/ghazals'); }
+    else if(dest==='browse-t'){ navigate('/terjee'); }
+    else if(dest==='browse-z'){ navigate('/zand'); }
     else if(dest==='khanesh'){ showKhaneshList(); }
     else if(dest==='random'){ (async()=>{ const g=await apiFetch(API_URL+'/poems/ghazal/random'); if(g) navigate('/ghazal/'+g.number); })(); }
     return;
@@ -4760,7 +4823,7 @@ document.querySelector('.bn').addEventListener('click', e=>{
   if(!it) return;
   const tab = it.dataset.tab;
   if(tab==='home') navigate('/');
-  else if(tab==='browse') navigate(browseSub==='t'?'/terjee':browseSub==='z'?'/zand':'/ghazals');
+  else if(tab==='browse') navigate('/library');
   else if(tab==='kw') navigate('/keywords');
   else if(tab==='bm') navigate('/bookmarks');
   else if(tab==='srch') navigate('/search');
@@ -5271,6 +5334,7 @@ function handleRoute(path, restore){
   const mt = path.match(/^\/terjee\/(\d+)$/);
   if(mt){ showT(parseInt(mt[1])); return; }
   if(path === '/ghazals'){ showBrowse('g'); return; }
+  if(path === '/library'){ showLibrary(); return; }
   if(path === '/terjee'){ showBrowse('t'); return; }
   const mz = path.match(/^\/zand\/(\d+)$/);
   if(mz){ showZand(parseInt(mz[1])); return; }
