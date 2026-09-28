@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bidel-v20260929_012549';
+const CACHE_NAME = 'bidel-v20260929_013437';
 
 self.addEventListener('install', e => {
   self.skipWaiting();
