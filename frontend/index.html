@@ -1383,6 +1383,189 @@ svg.graph{display:block;width:100%;height:auto;overflow:visible;touch-action:man
   .vfm-act{flex:0 0 auto;width:88px;min-height:56px}
   .cp{cursor:pointer}
 }
+
+/* ── PAJVAK ─────────────────────────── */
+.pj-bds{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.pj-bd{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--go);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:1px 9px 1px 8px;line-height:1.6;white-space:nowrap}
+.pj-bd .i{width:13px;height:13px;stroke-width:1.8}
+.pj-bds.ic .pj-bd{padding:0;width:24px;height:24px;justify-content:center}
+.pj-bds.ic .pj-bd span{display:none}
+.pj-cov{--s:84px;width:var(--s);height:var(--s);flex-shrink:0;border-radius:calc(var(--s)*.11);position:relative;overflow:hidden;border:1px solid var(--br2);display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:calc(var(--s)*.1);text-align:right}
+.pj-cov.img{background:repeating-linear-gradient(135deg,var(--ik) 0 7px,var(--sf) 7px 14px);align-items:center;justify-content:center}
+.pj-cov.img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.pj-cov-w{position:relative;font-size:calc(var(--s)*.17);font-weight:800;line-height:1.3;color:var(--gd);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pj-cov-k{position:relative;font-size:max(9px,calc(var(--s)*.058));letter-spacing:.08em;color:var(--mu);font-weight:600;margin-top:calc(var(--s)*.03)}
+.pj-cov-ic{display:none;position:relative;color:var(--gd)}
+.pj-cov.md .pj-cov-k{display:none}.pj-cov.md .pj-cov-w{font-size:calc(var(--s)*.155);-webkit-line-clamp:2}
+.pj-cov.sm{align-items:center;justify-content:center;padding:0}
+.pj-cov.sm .pj-cov-w,.pj-cov.sm .pj-cov-k{display:none}
+.pj-cov.sm .pj-cov-ic{display:flex}
+.pj-cov.sm .pj-cov-ic .i{width:calc(var(--s)*.36);height:calc(var(--s)*.36);stroke-width:1.5}
+.pj-cov.d-song{background:repeating-radial-gradient(circle at 20% 24%,transparent 0 calc(var(--s)*.068),rgba(90,112,72,.2) calc(var(--s)*.068) calc(var(--s)*.075)),var(--gh)}
+.pj-cov.d-song::before{content:'';position:absolute;left:20%;top:24%;width:calc(var(--s)*.06);height:calc(var(--s)*.06);margin:calc(var(--s)*-.03);border-radius:50%;background:var(--sa)}
+.pj-cov.d-poem{background:repeating-linear-gradient(180deg,transparent 0 calc(var(--s)*.1 - 1px),rgba(168,116,32,.2) calc(var(--s)*.1 - 1px) calc(var(--s)*.1)),var(--sah)}
+.pj-cov.d-poem::before{content:'';position:absolute;top:0;bottom:0;left:18%;width:1px;background:rgba(168,116,32,.35)}
+.pj-cov.d-poem .pj-cov-w,.pj-cov.d-poem .pj-cov-ic{color:var(--sa2)}
+.pj-cov.d-poem .pj-cov-k{color:var(--sa2);opacity:.8}
+.pj-cov.d-video{background:var(--gd);border-color:var(--gd)}
+.pj-cov.d-video::before{content:'';position:absolute;inset:9%;border:1px solid rgba(251,248,238,.28);border-radius:calc(var(--s)*.05)}
+.pj-cov.d-video::after{content:'';position:absolute;top:15%;left:15%;border-style:solid;border-width:calc(var(--s)*.05) 0 calc(var(--s)*.05) calc(var(--s)*.085);border-color:transparent transparent transparent var(--sa)}
+.pj-cov.d-video .pj-cov-w,.pj-cov.d-video .pj-cov-ic{color:var(--sf2)}
+.pj-cov.d-video .pj-cov-k{color:rgba(251,248,238,.65)}
+.pj-cov.d-video.sm::after{display:none}
+.pj-shd{display:flex;align-items:center;justify-content:space-between;margin:4px 4px 8px}
+.pj-shd a{color:var(--go);text-decoration:none;white-space:nowrap;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:2px;min-height:44px;margin:-10px 0}
+.pj-shd a .i{width:15px;height:15px;stroke-width:2}
+.pj-sh{font-size:13px;color:var(--gd);font-weight:700;display:flex;align-items:center;gap:8px;margin:28px 2px 12px}
+.pj-sh .i{width:17px;height:17px;color:var(--sa2)}
+.pj-sh .cnt{font-size:11px;color:var(--sa2);background:var(--sah);border-radius:99px;padding:1px 9px;font-weight:600}
+.pj-hc{display:flex;flex-direction:column;gap:12px;background:var(--sf2);border:1px solid var(--br2);border-radius:16px;padding:12px;margin-bottom:18px;color:inherit;transition:border-color .15s}
+a.pj-hc:hover,.pj-hc-lnk:hover{color:inherit}
+a.pj-hc:hover{border-color:var(--sa)}
+.pj-hc-top{display:flex;gap:12px;align-items:center;color:inherit}
+.pj-hc-bd{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.pj-hc-t{font-size:16px;font-weight:700;color:var(--gd);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-wrap:pretty}
+.pj-hc-v{font-size:13px;color:var(--tx2);line-height:1.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pj-hc-r{font-size:11px;color:var(--sa2);font-weight:600}
+.pj-hc-r::before,.pj-row-r::before{content:'✦ ';color:var(--sa)}
+.pj-chev{color:var(--vf);display:flex;flex-shrink:0}.pj-chev .i{width:18px;height:18px;stroke-width:1.8}
+.pj-hc .pl{border-top:1px solid var(--br2);padding-top:10px}
+.pl{direction:ltr;display:flex;align-items:center;gap:12px}
+.pl-btn{width:52px;height:52px;border-radius:50%;border:none;background:var(--go);color:#fbf8ee;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .15s,transform .1s}
+.pl-btn:hover{background:var(--gl)}.pl-btn:active{transform:scale(.95)}
+.pl-btn svg{width:22px;height:22px;fill:currentColor;stroke:none}
+.pl-btn .i-play{margin-left:2px}
+.pl-btn .i-alert{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
+.pl-btn .i-pause,.pl-btn .i-alert,.pl-spin{display:none}
+.pl[data-state=playing] .i-play,.pl[data-state=loading] .i-play,.pl[data-state=error] .i-play{display:none}
+.pl[data-state=playing] .i-pause,.pl[data-state=loading] .pl-spin,.pl[data-state=error] .i-alert{display:block}
+.pl[data-state=error] .pl-btn{background:var(--ik);color:var(--fa);cursor:default}
+.pl[data-state=loading] .pl-btn{background:var(--gl)}
+.pl-spin{width:22px;height:22px;border-radius:50%;border:2px solid rgba(251,248,238,.35);border-top-color:#fbf8ee;animation:plspin .8s linear infinite}
+@keyframes plspin{to{transform:rotate(360deg)}}
+.pl-mid{flex:1;min-width:0}
+.pl-bar{position:relative;height:26px;display:flex;align-items:center;cursor:pointer;touch-action:none}
+.pl-trk{position:relative;width:100%;height:4px;border-radius:99px;background:var(--ik);overflow:hidden}
+.pl-fill{position:absolute;top:0;bottom:0;left:0;width:0;background:var(--go);border-radius:99px}
+.pl-th{position:absolute;top:50%;left:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--sf2);border:2px solid var(--go);box-shadow:0 1px 3px rgba(58,72,48,.25);opacity:0;transition:opacity .15s,transform .15s}
+.pl[data-state=playing] .pl-th,.pl[data-state=paused] .pl-th,.pl.drag .pl-th,.pl-bar:hover .pl-th{opacity:1}
+.pl.drag .pl-th{transform:scale(1.3)}
+.pl[data-state=loading] .pl-trk{background:linear-gradient(90deg,var(--ik) 0%,var(--br2) 50%,var(--ik) 100%);background-size:200% 100%;animation:plshim 1.2s linear infinite}
+@keyframes plshim{to{background-position:-200% 0}}
+.pl[data-state=error] .pl-bar{opacity:.45;pointer-events:none}
+.pl-t{display:flex;justify-content:space-between;font-size:11.5px;color:var(--mu);font-variant-numeric:tabular-nums;margin-top:-2px;min-height:18px}
+.pl-err,.pl-ld{display:none;direction:rtl}
+.pl-err{color:var(--er);font-weight:600}
+.pl[data-state=error] .pl-cur,.pl[data-state=error] .pl-dur{display:none}
+.pl[data-state=error] .pl-err{display:block;margin-left:auto}
+.pl[data-state=loading] .pl-cur{display:none}
+.pl[data-state=loading] .pl-ld{display:block;color:var(--fa)}
+.pl.cm{gap:10px}
+.pl.cm .pl-btn{width:44px;height:44px}.pl.cm .pl-btn svg,.pl.cm .pl-spin{width:18px;height:18px}
+.pl.cm .pl-t{font-size:10.5px}
+.pl-card{background:var(--sf);border:1px solid var(--br2);border-radius:16px;padding:14px 14px 4px}
+.pl-dl{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;margin-top:10px;border-top:1px solid var(--br2);font-size:13px;font-weight:600;color:var(--gd)}
+.pl-dl .i{width:18px;height:18px;color:var(--go)}
+.pl-dl:hover{color:var(--go)}
+.pl-card.err .pl-dl{color:var(--vf);pointer-events:none}.pl-card.err .pl-dl .i{color:var(--vf)}
+.pj-beit{display:block;background:linear-gradient(90deg,var(--sah),transparent 78%);border-inline-start:3px solid var(--sa);border-radius:0 11px 11px 0;padding:12px 18px 2px;color:var(--tx2)}
+.pj-beit:hover{color:var(--tx2);background:linear-gradient(90deg,var(--sah),var(--sf) 90%)}
+.pj-beit-k{font-size:11px;color:var(--sa2);font-weight:700;display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;margin-bottom:6px;letter-spacing:.02em}
+.pj-beit-k::before{content:'✦';color:var(--sa)}
+.pj-beit-k span{font-weight:500;color:var(--mu)}
+.pj-beit-m{font-size:17px;line-height:2;font-weight:500;text-wrap:pretty}
+.pj-beit-m.s2{color:var(--mu);text-align:left}
+.pj-beit-go{display:flex;align-items:center;justify-content:flex-end;gap:3px;font-size:12px;font-weight:600;color:var(--go);min-height:40px}
+.pj-beit-go .i{width:15px;height:15px;stroke-width:2}
+.pj-poem{background:var(--sf2);border:1px solid var(--br2);border-radius:16px;padding:18px 16px 14px;text-align:center}
+.pj-poem-k{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;font-weight:700;color:var(--go);background:var(--gh);border:1px solid var(--br2);border-radius:99px;padding:2px 11px;margin-bottom:14px}
+.pj-poem-k .i{width:14px;height:14px}
+.pj-poem-c+.pj-poem-c{margin-top:14px}
+.pj-poem-c div{font-size:16.5px;line-height:1.95;color:var(--tx2);text-wrap:balance}
+.pj-poem-n{font-size:11.5px;color:var(--mu);margin-top:16px;padding-top:12px;border-top:1px dashed var(--br);line-height:1.8}
+.pj-narr p{font-size:15.5px;line-height:2.05;color:var(--tx);margin-bottom:14px;text-wrap:pretty}
+.pj-narr p:last-child{margin-bottom:0}
+.pj-cred{background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:2px 14px}
+.pj-cred div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-bottom:1px solid var(--br2);font-size:14px}
+.pj-cred div:last-child{border-bottom:none}
+.pj-cred dt{color:var(--mu);font-size:13px}.pj-cred dd{color:var(--gd);font-weight:700;text-align:left}
+.pj-dh{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:8px 0 22px}
+.pj-dh .pj-cov{box-shadow:0 16px 30px -18px rgba(58,72,48,.55)}
+.pj-dt{font-size:23px;font-weight:800;color:var(--gd);line-height:1.45;text-wrap:balance;margin-top:8px}
+.pj-dm{display:flex;flex-wrap:wrap;gap:6px 10px;justify-content:center;align-items:center;font-size:12px;color:var(--fa)}
+.pj-gap{margin-top:16px}
+.pj-vid-f{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(135deg,#34402b 0 10px,#3a4830 10px 20px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:rgba(251,248,238,.7)}
+.pj-vid-f iframe{width:100%;height:100%;border:0}
+.pj-vid-f>span:last-child{font-family:ui-monospace,"SF Mono",monospace;font-size:11px;direction:ltr}
+.pj-vid-p{width:56px;height:56px;border-radius:50%;background:rgba(251,248,238,.14);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.pj-vid-p svg{width:22px;height:22px;fill:#fbf8ee;margin-left:3px}
+.pj-vid-f.blocked{background:var(--ik);color:var(--fa)}
+.pj-vid-f.blocked .pj-vid-p{background:var(--br2)}.pj-vid-f.blocked .pj-vid-p svg{fill:var(--sf2)}
+.pj-vid-n{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12px;color:var(--mu);padding:8px 2px 0;line-height:1.7}
+.pj-vid-n>.i{width:15px;height:15px;color:var(--fa)}
+.pj-vid-n a{color:var(--go);text-decoration:none;margin-inline-start:auto;display:inline-flex;align-items:center;gap:4px;font-weight:700;min-height:44px;margin-block:-8px}
+.pj-vid-n a .i{width:14px;height:14px}
+.pj-lead{font-size:13px;color:var(--mu);line-height:1.9;margin:0 2px 16px;text-wrap:pretty}
+.pj-list{display:flex;flex-direction:column;gap:10px}
+.pj-row{display:flex;gap:12px;align-items:center;background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:10px;color:inherit;transition:border-color .15s,background .15s;cursor:pointer}
+.pj-row:hover{border-color:var(--sa);background:var(--sf2);color:inherit}
+.pj-row-bd{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pj-row-t{font-size:15px;font-weight:700;color:var(--gd);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pj-row-r{font-size:11.5px;color:var(--sa2);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pj-row-m{display:flex;align-items:center;gap:5px;margin-top:4px}
+.pj-row-d{margin-inline-start:auto;font-size:11px;color:var(--fa);white-space:nowrap}
+.pj-feat{display:flex;gap:14px;align-items:flex-start;background:var(--sf2);border:1px solid var(--br2);border-radius:18px;padding:12px;color:inherit;transition:border-color .15s;cursor:pointer}
+.pj-feat:hover{border-color:var(--sa);color:inherit}
+.pj-feat .pj-row-t{font-size:16.5px}
+.pj-feat-v{font-size:12.5px;line-height:1.85;color:var(--tx2);border-inline-start:2px solid var(--sa);padding-inline-start:8px;margin:6px 0 4px}
+.pj-feat-v div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pj-feat-v div+div{color:var(--mu)}
+.pj-yr{font-size:12px;font-weight:700;color:var(--mu);display:flex;align-items:center;gap:10px;margin:10px 4px 0}
+.pj-yr::after{content:'';flex:1;height:1px;background:var(--br2)}
+.pj-yr span{font-weight:500;color:var(--fa)}
+.pj-end{text-align:center;font-size:12px;color:var(--fa);margin-top:22px;display:flex;align-items:center;gap:10px}
+.pj-end::before,.pj-end::after{content:'';flex:1;height:1px;background:var(--br2)}
+.pj-seg{display:flex;background:var(--ik);border-radius:14px;padding:3px;gap:2px;margin-bottom:14px}
+.pj-seg button{flex:1;min-height:44px;border:none;background:transparent;border-radius:11px;font-size:13px;color:var(--mu);display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer;font-family:inherit}
+.pj-seg button .i{width:14px;height:14px}
+.pj-seg button.on{background:var(--go);color:#fbf8ee;font-weight:700}
+.pj-empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:48px 18px 30px}
+.pj-rings{position:relative;width:176px;height:176px;margin-bottom:24px}
+.pj-rings i{position:absolute;border-radius:50%;border:1px solid var(--br);animation:ring 5s ease-in-out infinite}
+.pj-rings i:nth-child(1){inset:0;opacity:.45;animation-delay:1s}
+.pj-rings i:nth-child(2){inset:24px;opacity:.7;animation-delay:.5s}
+.pj-rings i:nth-child(3){inset:48px;border-color:var(--sa)}
+.pj-rings b{position:absolute;inset:70px;border-radius:50%;background:var(--sah);border:1px solid var(--sa);display:flex;align-items:center;justify-content:center;color:var(--sa2)}
+.pj-rings b .i{width:18px;height:18px}
+@keyframes ring{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+@media (prefers-reduced-motion:reduce){.pj-rings i{animation:none}}
+.pj-rings.lost i{border-style:dashed;animation:none}
+.pj-rings.lost b{background:var(--ik);border-color:var(--br);color:var(--fa)}
+.pj-empty h3{font-size:19px;line-height:1.5;font-weight:800;color:var(--gd);margin-bottom:8px}
+.pj-empty p{font-size:13.5px;color:var(--mu);line-height:1.95;max-width:290px;text-wrap:pretty}
+.pj-btn{text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 20px;border-radius:12px;background:var(--go);color:#fbf8ee;font-weight:700;font-size:14px;margin-top:22px;border:none;cursor:pointer;font-family:inherit}
+.pj-btn:hover{background:var(--gl);color:#fbf8ee}
+.pj-btn .i{width:17px;height:17px;stroke-width:2}
+.pj-btn.gh{background:transparent;border:1px solid var(--br);color:var(--gd)}
+.pj-btn.gh:hover{border-color:var(--go);background:var(--sf2)}
+.pj-empty .pj-btn+.pj-btn{margin-top:8px}
+.pj-mk{position:absolute;top:40px;left:5px;width:32px;min-height:32px;padding:4px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;border:none;background:transparent;color:var(--sa);border-radius:9px;cursor:pointer;transition:background .15s,color .15s}
+.pj-mk::before{content:'';position:absolute;inset:-6px}
+.pj-mk .i{width:17px;height:17px;stroke-width:1.8}
+.pj-mk b{font-size:10px;font-weight:800;color:var(--sa2);line-height:1;margin-top:2px}
+.pj-mk:hover,.pj-mk.on{background:var(--sah);color:var(--sa2)}
+.pj-bn{display:flex;align-items:center;gap:11px;background:var(--sah);border:1px solid var(--br2);border-radius:13px;padding:9px 12px;margin:0 0 12px;color:inherit;min-height:56px;cursor:pointer}
+.pj-bn:hover{border-color:var(--sa);color:inherit}
+.pj-bn-ic{width:36px;height:36px;border-radius:10px;background:var(--sf2);color:var(--sa2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pj-bn-ic .i{width:19px;height:19px}
+.pj-bn-tx{flex:1;min-width:0}
+.pj-bn-t{font-size:13px;color:var(--tx2);font-weight:600;line-height:1.6}
+.pj-bn-s{font-size:12px;color:var(--sa2);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pj-sheet-list{margin-top:4px}
+@media(min-width:1024px){
+  .pj-dh{padding:0}
+  .pj-dh .pj-dt{text-align:center}
+}
 </style>
 <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="Mi Ri init Vi Gi Rr Wi Ji Bi capture calculateEventProperties tn register register_once register_for_session unregister unregister_for_session an getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync un identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset setIdentity clearIdentity get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException addExceptionStep captureLog startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty nn Xi createPersonProfile setInternalOrTestUser sn Hi cn opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing Ki debug Lr rn getPageViewId captureTraceFeedback captureTraceMetric Di".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -1945,6 +2128,289 @@ async function showKhanesh(slug, from, instant){
   ctEl.innerHTML=h; ctEl.scrollTop=0;
   _vfmHydrateKhVerses(k.terjee_number);
 }
+
+// ─── PAJVAK ───────────────────────────────
+const IC_PJ_ECHO='<svg class="i" viewBox="0 0 24 24"><circle cx="16.5" cy="12" r="2" fill="currentColor" stroke="none"/><path d="M11.5 8a5.5 5.5 0 0 0 0 8"/><path d="M8 5a10 10 0 0 0 0 14"/></svg>';
+const IC_PJ_SONG='<svg class="i" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>';
+const IC_PJ_POEM='<svg class="i" viewBox="0 0 24 24"><path d="M20 3C12 4 7 9 6 17"/><path d="M6 17c5-.5 9.5-4 11-9.5"/><path d="M6 17l-2 4"/><path d="M10.5 12h4"/></svg>';
+const IC_PJ_VIDEO='<svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10.5 9.5v5l4-2.5z"/></svg>';
+const IC_PJ_DL='<svg class="i" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>';
+const IC_PJ_CRED='<svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5a6 6 0 0 1 3 5.5"/></svg>';
+const IC_PJ_NARR='<svg class="i" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>';
+const IC_PJ_INFO='<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/></svg>';
+const IC_PJ_EXT='<svg class="i" viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+const IC_PJ_CHEV='<svg class="i" viewBox="0 0 24 24"><path d="M14 6l-6 6 6 6"/></svg>';
+const IC_PJ_PLAY='<svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+const IC_PJ_PAUSE='<svg class="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></svg>';
+const IC_PJ_ALERT='<svg class="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.5h.01"/></svg>';
+const PJ_LAB={song:'آهنگ',poem:'سروده',video:'ویدیو'};
+const PJ_ICONS={song:IC_PJ_SONG,poem:IC_PJ_POEM,video:IC_PJ_VIDEO};
+const PJ_GO_TXT={beit:'رفتن به این بیت در غزل',ghazal:'خواندن غزل',band:'خواندن بند'};
+
+let _pajvakCache=null, _pajvakByGhazal={}, _pajvakByTerjee={};
+let _pjCoupletMap={}, _pjBannerList=[];
+
+async function fetchPajvakList(){
+  if(_pajvakCache) return _pajvakCache;
+  const data = await apiFetch(API_URL+'/pajvak');
+  _pajvakCache = data || [];
+  return _pajvakCache;
+}
+async function fetchPajvakForGhazal(n){
+  if(_pajvakByGhazal[n]) return _pajvakByGhazal[n];
+  const data = await apiFetch(API_URL+'/pajvak/ghazal/'+n);
+  _pajvakByGhazal[n] = data || [];
+  return _pajvakByGhazal[n];
+}
+async function fetchPajvakForTerjee(n){
+  if(_pajvakByTerjee[n]) return _pajvakByTerjee[n];
+  const data = await apiFetch(API_URL+'/pajvak/terjee/'+n);
+  _pajvakByTerjee[n] = data || [];
+  return _pajvakByTerjee[n];
+}
+
+function pjTypes(p){ return ['song','video','poem'].filter(t=> t==='song'?p.has_audio:t==='video'?p.has_video:p.has_poem); }
+function pjBadges(p, ic){
+  return '<div class="pj-bds'+(ic?' ic':'')+'">'+pjTypes(p).map(t=>'<span class="pj-bd" title="'+PJ_LAB[t]+'">'+PJ_ICONS[t]+'<span>'+PJ_LAB[t]+'</span></span>').join('')+'</div>';
+}
+function pjRefLabel(ref){
+  if(!ref) return '';
+  if(ref.type==='beit') return 'غزل '+toFa(ref.ghazal_number)+'، بیت '+toFa(ref.beit_index+1);
+  if(ref.type==='ghazal') return 'غزل '+toFa(ref.ghazal_number);
+  if(ref.type==='band') return 'ترجیع‌بند، بند '+toFa(ref.terjee_number);
+  return '';
+}
+function pjFmtDur(s){ s=Math.max(0,Math.floor(s||0)); return toFa(Math.floor(s/60)+':'+String(s%60).padStart(2,'0')); }
+function pjCover(p, size, force){
+  const sm = size<72?' sm':size<120?' md':'';
+  if(p.cover_url && !force){
+    return '<div class="pj-cov img'+sm+'" style="--s:'+size+'px"><img src="'+API_URL+p.cover_url+'" alt="" loading="lazy"></div>';
+  }
+  const t = force || (p.has_audio?'song':p.has_video?'video':'poem');
+  return '<div class="pj-cov d-'+t+sm+'" style="--s:'+size+'px"><span class="pj-cov-ic">'+PJ_ICONS[t]+'</span><span class="pj-cov-w">'+p.title+'</span><span class="pj-cov-k">پژواک · '+PJ_LAB[t]+'</span></div>';
+}
+function pjBeitCardHTML(ref){
+  const kick = ref.type==='ghazal' ? pjRefLabel(ref)+' · مطلع غزل' : pjRefLabel(ref);
+  const num = ref.type==='band' ? ref.terjee_number : ref.ghazal_number;
+  return '<div class="pj-beit" data-pjref="'+ref.type+'" data-pjrefnum="'+num+'">'
+    +'<div class="pj-beit-k">الهام از بیدل <span>· '+kick+'</span></div>'
+    +'<div class="pj-beit-m">'+(ref.verse[0]||'')+'</div><div class="pj-beit-m s2">'+(ref.verse[1]||'')+'</div>'
+    +'<div class="pj-beit-go">'+(PJ_GO_TXT[ref.type]||'')+IC_PJ_CHEV+'</div></div>';
+}
+function pjRowHTML(p){
+  return '<div class="pj-row" data-pjopen="'+p.slug+'" data-types="'+pjTypes(p).join(' ')+'">'+pjCover(p,64)+'<div class="pj-row-bd"><div class="pj-row-t">'+p.title+'</div><div class="pj-row-r">'+pjRefLabel(p.ref)+'</div><div class="pj-row-m">'+pjBadges(p, pjTypes(p).length>2)+'<span class="pj-row-d">'+toFaPubDate(p.published_at)+'</span></div></div></div>';
+}
+function pjFeatHTML(p){
+  return '<div class="pj-feat" data-pjopen="'+p.slug+'" data-types="'+pjTypes(p).join(' ')+'">'+pjCover(p,112)+'<div class="pj-row-bd"><div class="pj-row-t">'+p.title+'</div><div class="pj-feat-v"><div>'+(p.ref.verse[0]||'')+'</div><div>'+(p.ref.verse[1]||'')+'</div></div><div class="pj-row-r">'+pjRefLabel(p.ref)+'</div><div class="pj-row-m">'+pjBadges(p)+'<span class="pj-row-d">'+toFaPubDate(p.published_at)+'</span></div></div></div>';
+}
+function pjSh(icon,label,cnt){ return '<div class="pj-sh">'+icon+label+(cnt?'<span class="cnt">'+cnt+'</span>':'')+'</div>'; }
+function pjCredHTML(credits){ return '<dl class="pj-cred">'+credits.map(c=>'<div><dt>'+c.role+'</dt><dd>'+c.name+'</dd></div>').join('')+'</dl>'; }
+function pjPoemBoxHTML(poem){
+  return '<div class="pj-poem"><div class="pj-poem-k">'+IC_PJ_POEM+'سروده‌ی تازه</div>'
+    +poem.map(c=>'<div class="pj-poem-c"><div>'+(c[0]||'')+'</div><div>'+(c[1]||'')+'</div></div>').join('')
+    +'<div class="pj-poem-n">این شعر سروده‌ی صاحب بیدلی است، با الهام از بیت بالا؛ از بیدل نیست.</div></div>';
+}
+function pjYtId(url){
+  if(!url) return '';
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+  return m ? m[1] : '';
+}
+function pjVideoHTML(url){
+  const id = pjYtId(url);
+  if(!id) return '<div class="pj-vid"><div class="pj-vid-f blocked"><span>نشانی ویدیو نامعتبر است</span></div></div>';
+  return '<div class="pj-vid"><div class="pj-vid-f"><iframe src="https://www.youtube.com/embed/'+id+'" title="ویدیو" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'
+    +'<div class="pj-vid-n">'+IC_PJ_INFO+'<span>در صورت عدم نمایش، از فیلترشکن استفاده کنید</span><a href="https://youtu.be/'+id+'" target="_blank" rel="noopener">تماشا در یوتیوب'+IC_PJ_EXT+'</a></div></div>';
+}
+function pjPlayerHTML(url, dur, opts){
+  opts=opts||{};
+  const full = url ? API_URL+url : '';
+  return '<div class="pl'+(opts.cm?' cm':'')+'" data-state="ready" data-src="'+full+'" data-dur="'+(dur||0)+'" data-cur="0">'
+    +'<button class="pl-btn" aria-label="پخش">'+IC_PJ_PLAY+IC_PJ_PAUSE+'<i class="pl-spin"></i>'+IC_PJ_ALERT+'</button>'
+    +'<div class="pl-mid"><div class="pl-bar" role="slider" aria-label="پیشرفت"><div class="pl-trk"><div class="pl-fill" style="width:0%"></div></div><div class="pl-th" style="left:0%"></div></div>'
+    +'<div class="pl-t"><span class="pl-cur">۰:۰۰</span><span class="pl-ld">در حال بارگذاری…</span><span class="pl-err">فایل صوتی در دسترس نیست</span><span class="pl-dur">'+pjFmtDur(dur)+'</span></div></div></div>';
+}
+function pjPlayerCardHTML(url, dur){
+  const full = url ? API_URL+url : '';
+  return '<div class="pl-card">'+pjPlayerHTML(url,dur,{})+'<a href="'+full+'" download class="pl-dl">'+IC_PJ_DL+'<span>دانلود فایل صوتی</span></a></div>';
+}
+function pjEmptyHTML(){
+  return '<div class="pj-empty"><div class="pj-rings"><i></i><i></i><i></i><b>'+IC_PJ_ECHO+'</b></div><h3>هنوز پژواکی منتشر نشده</h3><p>اینجا جای سروده‌ها، آهنگ‌ها و ویدیوهایی است که هر کدام از یک بیت یا غزل بیدل برخاسته‌اند.</p><a href="#" class="pj-btn" data-pjgo="browse-g">خواندن غزلیات'+IC_PJ_CHEV+'</a></div>';
+}
+function pjNotFoundHTML(){
+  return '<div class="pj-empty"><div class="pj-rings lost"><i></i><i></i><i></i><b>'+IC_PJ_ECHO+'</b></div><h3>این پژواک یافت نشد</h3><p>ممکن است نشانی نادرست باشد یا این اثر دیگر در دسترس نباشد.</p><a href="#" class="pj-btn" data-pjgo="pajvak">بازگشت به پژواک‌ها'+IC_PJ_CHEV+'</a><a href="#" class="pj-btn gh" data-pjgo="home">صفحه‌ی اصلی'+IC_PJ_CHEV+'</a></div>';
+}
+function pjYear(iso){
+  if(!iso) return '';
+  try{ return new Date(iso).toLocaleDateString('fa-IR',{year:'numeric'}); }catch(e){ return ''; }
+}
+function pjListBodyHTML(list){
+  if(!list.length) return pjEmptyHTML();
+  let h = '<p class="pj-lead">سروده‌ها، آهنگ‌ها و ویدیوهایی که هر کدام از یک بیت یا غزل بیدل برخاسته‌اند.</p>';
+  if(list.length>=8){
+    h+='<div class="pj-seg"><button class="on" data-f="">همه</button><button data-f="song">'+IC_PJ_SONG+'آهنگ</button><button data-f="poem">'+IC_PJ_POEM+'سروده</button><button data-f="video">'+IC_PJ_VIDEO+'ویدیو</button></div>';
+  }
+  h+='<div class="pj-list">';
+  if(list.length<=3){
+    h += list.map(pjFeatHTML).join('');
+  } else {
+    h += pjFeatHTML(list[0]);
+    const yearCounts={};
+    list.slice(1).forEach(p=>{ const y=pjYear(p.published_at||p.created_at); if(y) yearCounts[y]=(yearCounts[y]||0)+1; });
+    let y='';
+    for(let i=1;i<list.length;i++){
+      const yr = pjYear(list[i].published_at||list[i].created_at);
+      if(yr && yr!==y){ y=yr; h+='<div class="pj-yr">'+yr+'<span>'+toFa(yearCounts[yr])+' اثر</span></div>'; }
+      h += pjRowHTML(list[i]);
+    }
+  }
+  h += '</div><div class="pj-end">پژواک‌های تازه به‌مرور افزوده می‌شوند</div>';
+  return h;
+}
+
+async function showPajvakList(instant){
+  curView='pjlist'; backStack=[];
+  if(!instant) history.pushState({view:'pjlist'}, '', '/pajvak');
+  if(!isAuthed()){ renderLoginGate('پژواک‌ها','آثار الهام‌گرفته از بیدل','/pajvak'); return; }
+  setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
+  setHeader('پژواک‌ها','آثار الهام‌گرفته از بیدل');
+  setMeta('پژواک‌ها', 'سروده‌ها، آهنگ‌ها و ویدیوهایی که از شعر بیدل دهلوی الهام گرفته‌اند');
+  if(!instant){ ctEl.innerHTML=khLoader(''); ctEl.scrollTop=0; await new Promise(r=>setTimeout(r,360)); }
+  const list = await fetchPajvakList();
+  ctEl.innerHTML = pjListBodyHTML(list);
+  ctEl.scrollTop = 0;
+}
+
+let _pjSlug=null, _pjFrom='list';
+async function showPajvak(slug, from, instant){
+  if(from) _pjFrom=from;
+  curView='pjd'; _pjSlug=slug;
+  if(!instant) history.pushState({view:'pjd', slug:slug, from:_pjFrom}, '', '/pajvak/'+slug);
+  if(!isAuthed()){ renderLoginGate('پژواک','آثار الهام‌گرفته از بیدل','/pajvak/'+slug); return; }
+  setBnActive(null); setBack(true); hideSubnavs(); setNavHidden(false);
+  if(!instant){ ctEl.innerHTML=khLoader(''); ctEl.scrollTop=0; await new Promise(r=>setTimeout(r,320)); }
+  let p;
+  try{ p=await apiFetch(API_URL+'/pajvak/'+slug); }catch(e){ p=null; }
+  if(!p){ setHeader('پژواک',''); ctEl.innerHTML=pjNotFoundHTML(); ctEl.scrollTop=0; return; }
+  setHeader('پژواک', p.title);
+  setMeta(p.title, 'اثری الهام‌گرفته از '+pjRefLabel(p.ref)+' بیدل دهلوی');
+  let h='<div class="pj-dh">'+pjCover(p, p.cover_url?220:152)+'<h1 class="pj-dt">'+p.title+'</h1><div class="pj-dm">'+pjBadges(p)+'<span>'+toFaPubDate(p.published_at)+'</span></div></div>';
+  h+=pjBeitCardHTML(p.ref);
+  if(p.has_audio) h+='<div class="pj-gap">'+pjPlayerCardHTML(p.audio_url,p.audio_duration)+'</div>';
+  if(p.has_video) h+='<div class="pj-gap">'+pjVideoHTML(p.video_url)+'</div>';
+  if(p.poem && p.poem.length) h+=pjSh(IC_PJ_POEM,'متن سروده')+pjPoemBoxHTML(p.poem);
+  if(p.narrative && p.narrative.length) h+=pjSh(IC_PJ_NARR,'روایت')+'<div class="pj-narr">'+p.narrative.map(t=>'<p>'+t+'</p>').join('')+'</div>';
+  if(p.credits && p.credits.length) h+=pjSh(IC_PJ_CRED,'همکاران')+pjCredHTML(p.credits);
+  ctEl.innerHTML=h; ctEl.scrollTop=0;
+}
+
+function pjBannerTitle(list){
+  const noun = list[0] && list[0].ref.type==='band' ? 'بند' : 'غزل';
+  if(list.length===1){
+    const kindLab = PJ_LAB[pjTypes(list[0])[0]] || 'اثر';
+    return {t:'این '+noun+' الهام‌بخش یک '+kindLab+' شده است', s:'«'+list[0].title+'»'};
+  }
+  return {t:'این '+noun+' الهام‌بخش '+toFa(list.length)+' پژواک شده است', s:list.map(p=>'«'+p.title+'»').join(' و ')};
+}
+function pjBannerHTML(list){
+  const {t,s} = pjBannerTitle(list);
+  return '<div class="pj-bn" data-pjbanner="1"><span class="pj-bn-ic">'+IC_PJ_ECHO+'</span><span class="pj-bn-tx"><div class="pj-bn-t">'+t+'</div><div class="pj-bn-s">'+s+'</div></span><span class="pj-chev">'+IC_PJ_CHEV+'</span></div>';
+}
+function pjOpenSheet(title, subtitle, list){
+  const body=document.getElementById('mood-sheet-body');
+  if(!body) return;
+  let h='<div class="ms-grip"></div><div class="ms-h"><div class="ms-dot" style="background:var(--sah);color:var(--sa2)">'+IC_PJ_ECHO+'</div><div class="ms-h-tx"><div class="ms-h-name">'+title+'</div><div class="ms-h-sub fa">'+subtitle+'</div></div></div>';
+  const ref = list[0] ? list[0].ref : null;
+  if(ref) h += pjBeitCardHTML(ref);
+  h += '<div class="pj-list pj-sheet-list">'+list.map(pjRowHTML).join('')+'</div>';
+  body.innerHTML=h;
+  document.getElementById('mood-sheet').scrollTop=0;
+  document.getElementById('mood-sheet-bg').classList.add('open');
+}
+
+function pjHomeTeaserHTML(){
+  return '<div class="pj-shd"><span class="section-h fa">پژواک</span></div>'
+    +'<div class="pj-hc" data-pjgo="pajvak"><div class="pj-hc-top"><div class="pj-cov d-song sm" style="--s:64px"><span class="pj-cov-ic">'+IC_PJ_ECHO+'</span></div><div class="pj-hc-bd"><div class="pj-hc-t">تازه‌ترین پژواک</div><div class="pj-hc-v">سروده، آهنگ و ویدیو، الهام‌گرفته از بیدل</div></div><span class="pj-chev">'+IC_PJ_CHEV+'</span></div></div>';
+}
+function pjHomeBlockHTML(p){
+  const top='<div class="pj-hc-top">'+pjCover(p,84)+'<div class="pj-hc-bd">'+pjBadges(p)+'<div class="pj-hc-t">'+p.title+'</div><div class="pj-hc-v">'+(p.ref.verse[0]||'')+'</div><div class="pj-hc-r">از بیدل · '+pjRefLabel(p.ref)+'</div></div>'+(p.has_audio?'':'<span class="pj-chev">'+IC_PJ_CHEV+'</span>')+'</div>';
+  const card = p.has_audio
+    ? '<div class="pj-hc"><div data-pjopen="'+p.slug+'">'+top+'</div>'+pjPlayerHTML(p.audio_url,p.audio_duration,{cm:1})+'</div>'
+    : '<div class="pj-hc" data-pjopen="'+p.slug+'">'+top+'</div>';
+  return '<div class="pj-shd"><span class="section-h fa">تازه‌ترین پژواک</span><a href="#" data-pjgo="pajvak">همه‌ی پژواک‌ها'+IC_PJ_CHEV+'</a></div>'+card;
+}
+async function loadHomePajvak(){
+  const list = await fetchPajvakList();
+  const slot = document.getElementById('home-pj-slot');
+  if(!slot) return;
+  slot.innerHTML = list.length ? pjHomeBlockHTML(list[0]) : '';
+}
+
+// پخش‌کننده‌ی واقعی صوت
+const _pjAudioEls = new WeakMap();
+function pjGetAudio(el){
+  let a = _pjAudioEls.get(el);
+  if(!a){
+    a = new Audio(el.dataset.src);
+    a.preload = 'none';
+    _pjAudioEls.set(el, a);
+    a.addEventListener('loadedmetadata', ()=>{ if(a.duration && isFinite(a.duration)){ el.dataset.dur = Math.round(a.duration); pjUpdatePlayer(el); } });
+    a.addEventListener('timeupdate', ()=>{ el.dataset.cur = a.currentTime; pjUpdatePlayer(el); });
+    a.addEventListener('waiting', ()=>{ el.dataset.state = 'loading'; });
+    a.addEventListener('playing', ()=>{ el.dataset.state = 'playing'; });
+    a.addEventListener('canplay', ()=>{ if(el.dataset.state==='loading' && a.paused) el.dataset.state='paused'; });
+    a.addEventListener('ended', ()=>{ el.dataset.state='ready'; el.dataset.cur=0; pjUpdatePlayer(el); });
+    a.addEventListener('error', ()=>{ el.dataset.state='error'; });
+  }
+  return a;
+}
+function pjUpdatePlayer(el){
+  const dur=+el.dataset.dur||0, cur=+el.dataset.cur||0;
+  const pct = dur ? Math.min(100, cur/dur*100) : 0;
+  const fill=el.querySelector('.pl-fill'); if(fill) fill.style.width=pct+'%';
+  const th=el.querySelector('.pl-th'); if(th) th.style.left=pct+'%';
+  const curEl=el.querySelector('.pl-cur'); if(curEl) curEl.textContent=pjFmtDur(cur);
+  const durEl=el.querySelector('.pl-dur'); if(durEl) durEl.textContent=pjFmtDur(dur);
+}
+function pjTogglePlay(el){
+  const st = el.dataset.state;
+  if(st==='error') return;
+  const audio = pjGetAudio(el);
+  if(st==='playing'){ audio.pause(); el.dataset.state='paused'; return; }
+  document.querySelectorAll('.pl[data-state="playing"]').forEach(o=>{ if(o!==el){ const oa=_pjAudioEls.get(o); if(oa) oa.pause(); o.dataset.state='paused'; } });
+  if(audio.readyState<2) el.dataset.state='loading';
+  audio.play().catch(()=>{ el.dataset.state='error'; });
+}
+document.addEventListener('pointerdown', e=>{
+  const bar = e.target.closest('.pl-bar'); if(!bar) return;
+  const el = bar.closest('.pl'); if(!el || el.dataset.state==='error') return;
+  e.preventDefault(); e.stopPropagation();
+  bar.setPointerCapture(e.pointerId); el.classList.add('drag');
+  const audio = pjGetAudio(el);
+  const seek = ev=>{
+    const r=bar.getBoundingClientRect();
+    const p=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width));
+    const dur = +el.dataset.dur || audio.duration || 0;
+    el.dataset.cur = p*dur;
+    if(dur) audio.currentTime = p*dur;
+    pjUpdatePlayer(el);
+  };
+  seek(e);
+  const mv=ev=>seek(ev);
+  const up=()=>{ el.classList.remove('drag'); bar.removeEventListener('pointermove',mv); bar.removeEventListener('pointerup',up); bar.removeEventListener('pointercancel',up); };
+  bar.addEventListener('pointermove',mv); bar.addEventListener('pointerup',up); bar.addEventListener('pointercancel',up);
+}, true);
+
+// #mood-sheet-bg زندگی خارج از ctEl دارد، پس رخدادهای پژواک داخل شیت را جدا می‌گیریم
+document.getElementById('mood-sheet-bg').addEventListener('click', e=>{
+  const pjOpen = e.target.closest('[data-pjopen]');
+  if(pjOpen){ closeMoodSheet(); navigate('/pajvak/'+pjOpen.dataset.pjopen); return; }
+  const pjBeit = e.target.closest('.pj-beit');
+  if(pjBeit){
+    closeMoodSheet();
+    const t = pjBeit.dataset.pjref, num = parseInt(pjBeit.dataset.pjrefnum);
+    if(t==='band') navigate('/terjee/'+num); else navigate('/ghazal/'+num);
+  }
+});
 
 let MOCK_MODE = false;
 const MOCK_TITLES = ['مفروز هر هوس','بهانه دل','شب خاموش','کاسه گدا','قطره و دریا','بی‌نشان','تماشاگاه','عالم رنگ','صحرای حیرت','خموشی سر'];
@@ -2629,6 +3095,8 @@ function showHome(){
     // بنر دور
     h += '<div class="cyc-turn turn"><span class="turn-ic">↻</span><span class="turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند. هر گام هر وقت خواستی جداگانه هم در دسترس است.</span>'
       +'<button class="turn-cta" data-go="ghazal" data-n="'+vodNum+'"><span>دور امروز را شروع کن</span>'+arrow+'</button></div>';
+    // پژواک
+    h += '<div id="home-pj-slot">'+(isAuthed()?'<div class="ghost" style="height:150px">در حال بارگذاری پژواک…</div>':pjHomeTeaserHTML())+'</div>';
     // دو ستون پایین
     h += '<div class="dual">';
     h += '<div><div class="sec-h"><span class="sec-t">کلمات کلیدی امروز</span></div><div class="kw-row">'+kwCards('کلمه')+'</div></div>';
@@ -2649,6 +3117,8 @@ function showHome(){
     h += '<div class="cyc-turn"><span class="cyc-turn-ic">↻</span><span class="cyc-turn-tx"><b>و دوباره از غزلی تازه.</b> هر دور، بابی دیگر از معنا را باز می‌کند.</span></div>';
     h += '<button class="cyc-cta" data-go="ghazal" data-n="'+vodNum+'"><span>دور امروز را شروع کن</span>'+arrow+'</button>';
     h += '<div class="cyc-note fa">هر گام هر وقت خواستی جداگانه هم در دسترس است.</div>';
+    // پژواک
+    h += '<div id="home-pj-slot">'+(isAuthed()?'<div class="ghost" style="height:150px">در حال بارگذاری پژواک…</div>':pjHomeTeaserHTML())+'</div>';
     // کلمات کلیدی امروز
     h += '<div class="section-h fa">کلمات کلیدی امروز</div>';
     h += '<div class="kw-strip">'+kwStrip+'</div>';
@@ -2670,7 +3140,7 @@ function showHome(){
   ctEl.scrollTop = 0;
   renderHomeChips(ghKw, ghKw.length);
   loadHomeGhazalKw(vodNum);
-  if(isAuthed()) loadHomeSoluk();
+  if(isAuthed()){ loadHomeSoluk(); loadHomePajvak(); }
 }
 
 // ─── LOGIN GATE (برای بخش‌های ویژهٔ کاربران واردشده) ────
@@ -2697,7 +3167,8 @@ function showLibrary(){
     {k:'g', t:'غزلیات', s:'۲۸۲۷ غزل', d:'متن کاملِ غزلیات بیدل دهلوی.'},
     {k:'t', t:'ترجیع‌بند', s:'۳۴ بند · حیرت', d:'ترجیع‌بندِ حیرت، بند به بند.'},
     {k:'z', t:'زند بیدل', s:'شرح شروین وکیلی', d:'شرح و تحلیلِ سراسرِ دیوان.'},
-    {k:'kh', t:'خوانش‌ها', s:'تفسیر و شرحِ ترجیع‌بند', d:'خوانش‌های تفسیری، بند به بند.'}
+    {k:'kh', t:'خوانش‌ها', s:'تفسیر و شرحِ ترجیع‌بند', d:'خوانش‌های تفسیری، بند به بند.'},
+    {k:'pj', t:'پژواک‌ها', s:'آثار الهام‌گرفته از بیدل', d:'سروده، آهنگ و ویدیوهایی که از شعر بیدل الهام گرفته‌اند.'}
   ];
   let h = '<div class="lib">';
   for(const it of items){
@@ -2780,7 +3251,7 @@ async function renderBrowseBody(){
 }
 
 // ─── COUPLET RENDERING ───────────────────
-function mkCp(m1,m2,key,isBm,note,type,kw,ci){
+function mkCp(m1,m2,key,isBm,note,type,kw,ci,pjList){
   const cls = isBm?(type==='g'?' gbm':' tbm'):'';
   const onCls = isBm?(type==='g'?'gon':'ton'):'';
   const IC_BM='<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg>';
@@ -2790,6 +3261,7 @@ function mkCp(m1,m2,key,isBm,note,type,kw,ci){
   const longVerse = Math.max((m1||'').length,(m2||'').length) > 34;
   let h='<div class="cp'+cls+'" data-key="'+key+'" id="cp-'+key+'">';
   if(ci!=null) h+='<span class="cn">'+toFa(ci+1)+'</span>';
+  if(pjList && pjList.length) h+='<button class="pj-mk" data-pjmk="'+key+'" aria-label="پژواک‌های این بیت">'+IC_PJ_ECHO+(pjList.length>1?'<b>'+toFa(pjList.length)+'</b>':'')+'</button>';
   h+='<div class="cpb'+(longVerse?' long':'')+'"><div class="ms">'+hl(m1,kw)+'</div>';
   if(m2) h+='<div class="ms s2">'+hl(m2,kw)+'</div>';
   h+='</div>';
@@ -3022,15 +3494,22 @@ async function showG(n,kw){
   const _c0=p.couplets[0]||['',''];
   setMeta('غزل '+toPersianNum(n)+' — '+((_c0[0]||'').slice(0,30)), (_c0[0]||'')+(_c0[1]?'\n'+_c0[1]:''));
   const IC_SHARE_BTN='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+  const pjForGhazal = await fetchPajvakForGhazal(n);
+  _pjCoupletMap = {}; _pjBannerList = [];
+  pjForGhazal.forEach(pw=>{
+    if(pw.ref.type==='beit'){ const k=bkey('g',n,pw.ref.beit_index); (_pjCoupletMap[k]=_pjCoupletMap[k]||[]).push(pw); }
+    else if(pw.ref.type==='ghazal'){ _pjBannerList.push(pw); }
+  });
   let h='<div class="pm">';
   h+='<div class="pmeta"><button class="pshare" data-pshare="g_'+n+'" aria-label="اشتراکِ غزل">'+IC_SHARE_BTN+'</button>'+_pnavHTML('/ghazal/',n,TOT)+'<div class="pnum fa">غزل '+toFa(n)+' از '+toFa(TOT)+'</div><div class="ptitle">'+p.title+'</div>'+(p.vazn?'<div class="pvazn fa">وزن: '+p.vazn+'</div>':'')+'<div class="pview" id="ghazal-view-info"></div></div>';
+  if(_pjBannerList.length) h+=pjBannerHTML(_pjBannerList);
   h+='<div class="ghazal-kw-row" id="ghazal-keywords"><span class="gkw-lab fa">واژگان کلیدی</span></div>';
   const ghazalKwWords=resolveGhazalKeywords(n,p);
   const ghazalKwObjs=ghazalKwWords.map(w=>kwBy(w)).filter(Boolean);
   h+=renderMoodCard(n,p,ghazalKwObjs);
   p.couplets.forEach(([m1,m2],ci)=>{
     const key=bkey('g',n,ci);
-    h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','g',kw||'',ci);
+    h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','g',kw||'',ci,_pjCoupletMap[key]);
   });
   h+='<div class="pf fa">'+toFa(p.couplets.length)+' بیت</div></div>';
   ctEl.innerHTML=h; ctEl.scrollTop=0;
@@ -3095,7 +3574,10 @@ async function showT(n,kw){
   setHeader('بند '+toFa(n), 'ترجیع‌بند حیرت · '+toFa(band.couplets.length)+' بیت');
   setMeta('ترجیع‌بند '+toPersianNum(n), 'ترجیع‌بند شماره '+toPersianNum(n)+' از دیوان بیدل دهلوی');
   const IC_SHARE_BTN2='<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+  _pjCoupletMap = {};
+  _pjBannerList = await fetchPajvakForTerjee(n);
   let h='<div class="pm"><div class="pmeta"><button class="pshare" data-pshare="t_'+n+'" aria-label="اشتراکِ بند">'+IC_SHARE_BTN2+'</button>'+_pnavHTML('/terjee/',n,TB)+'<div class="pnum fa">ترجیع‌بند حیرت</div><div class="ptitle">بند '+toFa(n)+'</div><div class="psub fa">از '+toFa(TB)+' بند</div></div>';
+  if(_pjBannerList.length) h+=pjBannerHTML(_pjBannerList);
   band.couplets.forEach(([m1,m2],ci)=>{
     const key=bkey('t',n,ci);
     h+=mkCp(m1,m2||'',key,!!_bms[key],_nts[key]||'','t',kw||'',ci);
@@ -4610,6 +5092,7 @@ ctEl.addEventListener('click', function(e){
   if(libc){
     const k=libc.dataset.lib;
     if(k==='kh'){ showKhaneshList(); return; }
+    if(k==='pj'){ navigate('/pajvak'); return; }
     browseSub=k;
     navigate(k==='g'?'/ghazals':k==='t'?'/terjee':'/zand');
     return;
@@ -4725,6 +5208,50 @@ ctEl.addEventListener('click', function(e){
     const num = parseInt(beitCard.dataset.num);
     if(type==='g') showG(num);
     else showT(num);
+    return;
+  }
+  // Pajvak
+  const pjBtn = e.target.closest('.pl-btn');
+  if(pjBtn){ e.preventDefault(); pjTogglePlay(pjBtn.closest('.pl')); return; }
+  const pjOpen = e.target.closest('[data-pjopen]');
+  if(pjOpen && !e.target.closest('.pl')){ closeMoodSheet(); navigate('/pajvak/'+pjOpen.dataset.pjopen); return; }
+  const pjGo = e.target.closest('[data-pjgo]');
+  if(pjGo){
+    const d = pjGo.dataset.pjgo;
+    if(d==='browse-g') navigate('/ghazals');
+    else if(d==='pajvak') navigate('/pajvak');
+    else navigate('/');
+    return;
+  }
+  const pjMk = e.target.closest('.pj-mk');
+  if(pjMk){
+    const list = _pjCoupletMap[pjMk.dataset.pjmk] || [];
+    pjOpenSheet('پژواک‌های این بیت', toFa(list.length)+' اثر الهام‌گرفته از این بیت', list);
+    return;
+  }
+  const pjBn = e.target.closest('.pj-bn');
+  if(pjBn){
+    if(_pjBannerList.length===1){ navigate('/pajvak/'+_pjBannerList[0].slug); return; }
+    const noun = _pjBannerList[0] && _pjBannerList[0].ref.type==='band' ? 'بند' : 'غزل';
+    pjOpenSheet('پژواک‌های این '+noun, toFa(_pjBannerList.length)+' اثر الهام‌گرفته از این '+noun, _pjBannerList);
+    return;
+  }
+  const pjBeit = e.target.closest('.pj-beit');
+  if(pjBeit){
+    const t = pjBeit.dataset.pjref, num = parseInt(pjBeit.dataset.pjrefnum);
+    if(t==='band') navigate('/terjee/'+num); else navigate('/ghazal/'+num);
+    return;
+  }
+  const pjSeg = e.target.closest('.pj-seg button');
+  if(pjSeg){
+    const seg = pjSeg.parentNode;
+    seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b===pjSeg));
+    const f = pjSeg.dataset.f;
+    const lst = seg.nextElementSibling;
+    lst.querySelectorAll('.pj-row,.pj-feat').forEach(r=>{
+      const t = r.dataset.types || 'song video poem';
+      r.style.display = !f || t.indexOf(f)>-1 ? '' : 'none';
+    });
     return;
   }
   // Load more ghazals on keyword page
@@ -5992,12 +6519,17 @@ function handleRoute(path, restore){
   if(path === '/khanesh'){ showKhaneshList(true); return; }
   const khMatch = path.match(/^\/khanesh\/([^/]+)$/);
   if(khMatch){ showKhanesh(khMatch[1], 'direct', true); return; }
+  if(path === '/pajvak'){ showPajvakList(true); return; }
+  const pjMatch = path.match(/^\/pajvak\/([^/]+)$/);
+  if(pjMatch){ showPajvak(pjMatch[1], 'direct', true); return; }
   showHome();
 }
 window.addEventListener('popstate', e=>{
   const st = e.state || {};
   if(st.view==='khlist'){ showKhaneshList(true); return; }
   if(st.view==='khd' && st.slug){ showKhanesh(st.slug, st.from||'list', true); return; }
+  if(st.view==='pjlist'){ showPajvakList(true); return; }
+  if(st.view==='pjd' && st.slug){ showPajvak(st.slug, st.from||'list', true); return; }
   handleRoute(location.pathname, true);
 });
 

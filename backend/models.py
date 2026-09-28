@@ -174,6 +174,27 @@ class Khanesh(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class Pajvak(Base):
+    __tablename__ = "pajvaks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    slug = Column(String, unique=True, nullable=False, index=True)
+    title = Column(String, nullable=False)
+    ref_type = Column(String, nullable=False)  # beit | ghazal | band
+    ref_ghazal_number = Column(Integer, nullable=True, index=True)
+    ref_beit_index = Column(Integer, nullable=True)
+    ref_terjee_number = Column(Integer, nullable=True, index=True)
+    cover_filename = Column(String, nullable=True)
+    audio_filename = Column(String, nullable=True)
+    audio_duration = Column(Integer, nullable=True)
+    video_url = Column(String, nullable=True)
+    poem = Column(JSON, nullable=True)
+    narrative = Column(JSON, nullable=True)
+    credits = Column(JSON, nullable=True)
+    published_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class UserActivity(Base):
     __tablename__ = "user_activity"
 
