@@ -21,3 +21,4 @@ server_setup.sh
 upload.sh
 *.zip
 dev-spec-neighbors-graph.md
+khanesh-admin .html
