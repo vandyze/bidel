@@ -2,11 +2,12 @@ import asyncio
 import html as html_lib
 import os
 import random
+import secrets
 import re
 import shutil
 import threading
 import uuid
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from typing import List, Optional
 from urllib.parse import quote
 
@@ -16,7 +17,8 @@ from fastapi.responses import HTMLResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from database import Base, engine, SessionLocal
@@ -26,10 +28,18 @@ from text_utils import normalize, tokenize
 import neighbors_index
 from neighbors_index import build_index, cached_live_neighbors, matched_bayts
 import soluk
+from sanitize import sanitize_html
 
+# migrationهای قدیمی فرض می‌کنند جدول‌ها از قبل هست، پس create_all فعلاً لازم است
 Base.metadata.create_all(bind=engine)
 
 ADMIN_USER_ID = 1  # your user id
+
+IRAN_TZ = timezone(timedelta(hours=3, minutes=30))  # ایران ساعت تابستانی ندارد
+
+
+def tehran_today() -> date:
+    return datetime.now(IRAN_TZ).date()
 
 app = FastAPI()
 
@@ -94,8 +104,8 @@ async def notify_telegram(msg: str):
                 f"https://api.telegram.org/bot{token}/sendMessage",
                 json={"chat_id": chat_id, "text": msg}
             )
-    except:
-        pass
+    except Exception as e:
+        print(f"[telegram] failed: {e}", flush=True)
 
 # ── کاوه‌نگار SMS ──
 SMS_IR_API_KEY = os.getenv("SMS_IR_API_KEY", "")
@@ -107,8 +117,8 @@ async def send_sms_otp(phone: str, code: str):
         print(f"[OTP] {phone} → {code}", flush=True)
         sys.stdout.flush()
         return
-    async with httpx.AsyncClient() as client:
-        await client.post(
+    async with httpx.AsyncClient(timeout=10) as client:
+        resp = await client.post(
             "https://api.sms.ir/v1/send/verify",
             headers={"x-api-key": SMS_IR_API_KEY, "Content-Type": "application/json"},
             json={
@@ -117,9 +127,12 @@ async def send_sms_otp(phone: str, code: str):
                 "parameters": [{"name": "OTP", "value": code}]
             }
         )
+        if resp.status_code >= 400:
+            print(f"[sms] send failed: {resp.status_code} {resp.text[:200]}", flush=True)
+            raise HTTPException(status_code=502, detail="ارسال پیامک ناموفق بود")
 
 def gen_otp() -> str:
-    return str(random.randint(10000, 99999))
+    return str(secrets.randbelow(90000) + 10000)
 
 def validate_phone(phone: str) -> bool:
     return bool(re.match(r'^09\d{9}$', phone))
@@ -127,13 +140,47 @@ def validate_phone(phone: str) -> bool:
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=["https://bideli.ir", "https://www.bideli.ir"],
+    allow_origin_regex=r"^http://(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?$",
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 bearer_scheme = HTTPBearer()
+
+_CACHEABLE = {"/poems/ghazals", "/poems/terjees", "/poems/zand", "/keywords/graph",
+              "/keywords/categories", "/sitemap.xml"}
+
+
+@app.middleware("http")
+async def add_cache_headers(request: Request, call_next):
+    response = await call_next(request)
+    path = request.url.path
+    if request.method == "GET" and response.status_code == 200 and (
+        path in _CACHEABLE or path.startswith("/keywords/graph/")
+    ) and "cache-control" not in response.headers:
+        response.headers["Cache-Control"] = "public, max-age=3600"
+    return response
+
+
+_TITLE_RE = re.compile(r"<title>(.*?)</title>", re.S)
+_DESC_RE = re.compile(r'<meta name="description" content="(.*?)">', re.S)
+_CANON_RE = re.compile(r'<link rel="canonical" href="(.*?)">', re.S)
+
+
+def with_og(page: str) -> str:
+    """تگ‌های Open Graph را از title/description/canonical صفحه می‌سازد (پیش‌نمایش تلگرام و واتس‌اپ)."""
+    t, d, c = _TITLE_RE.search(page), _DESC_RE.search(page), _CANON_RE.search(page)
+    if not (t and c):
+        return page
+    og = (f'<meta property="og:type" content="article">\n'
+          f'<meta property="og:site_name" content="دیوان بیدل دهلوی">\n'
+          f'<meta property="og:title" content="{t.group(1)}">\n'
+          f'<meta property="og:url" content="{c.group(1)}">\n')
+    if d:
+        og += f'<meta property="og:description" content="{d.group(1)}">\n'
+    return page.replace("</head>", og + "</head>", 1)
 
 
 # --- Schemas ---
@@ -200,7 +247,7 @@ def get_current_user(
 ) -> models.User:
     token = credentials.credentials
     payload = decode_access_token(token)
-    if payload is None:
+    if payload is None or "purpose" in payload:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="توکن نامعتبر است")
 
     user = db.query(models.User).filter(models.User.id == payload.get("sub")).first()
@@ -209,11 +256,17 @@ def get_current_user(
     return user
 
 
+def require_admin(current_user: models.User = Depends(get_current_user)) -> models.User:
+    if current_user.id != ADMIN_USER_ID:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="دسترسی مجاز نیست")
+    return current_user
+
+
 def touch_activity(db, user_id: int):
     """ثبت یک ردیف «روز فعال» برای کاربر — بدون race condition (ON CONFLICT DO NOTHING)."""
     from sqlalchemy.dialects.postgresql import insert as pg_insert
 
-    today = date.today()
+    today = tehran_today()
     try:
         stmt = pg_insert(models.UserActivity).values(user_id=user_id, date=today)
         stmt = stmt.on_conflict_do_nothing(index_elements=["user_id", "date"])
@@ -257,6 +310,10 @@ async def send_otp(data: SendOTPInput, db: Session = Depends(get_db)):
         user = db.query(models.User).filter(models.User.phone == data.phone).first()
         if not user:
             raise HTTPException(status_code=404, detail="این شماره در سیستم ثبت نشده است")
+
+    db.query(models.OTPCode).filter(
+        models.OTPCode.created_at < datetime.utcnow() - timedelta(days=1)
+    ).delete(synchronize_session=False)
 
     code = gen_otp()
     expires = datetime.utcnow() + timedelta(minutes=2)
@@ -364,15 +421,33 @@ def reset_password(data: ResetPasswordInput, db: Session = Depends(get_db)):
     return {"access_token": token, "token_type": "bearer"}
 
 
+_LOGIN_FAILS = {}  # (ip, login_id) -> [timestamps]
+_LOGIN_MAX = 8
+_LOGIN_WINDOW = 600
+
+
+def _login_throttled(key) -> bool:
+    now = datetime.utcnow().timestamp()
+    hits = [t for t in _LOGIN_FAILS.get(key, []) if now - t < _LOGIN_WINDOW]
+    _LOGIN_FAILS[key] = hits
+    return len(hits) >= _LOGIN_MAX
+
+
 @app.post("/auth/login")
-def login(body: LoginRequest, db: Session = Depends(get_db)):
+def login(body: LoginRequest, request: Request, db: Session = Depends(get_db)):
+    ip = request.headers.get("x-real-ip") or (request.client.host if request.client else "")
+    key = (ip, body.login_id)
+    if _login_throttled(key):
+        raise HTTPException(status_code=429, detail="تلاش‌های ناموفق زیاد است؛ چند دقیقه بعد دوباره امتحان کنید")
     user = db.query(models.User).filter(
         (models.User.username == body.login_id) |
         (models.User.email == body.login_id) |
         (models.User.phone == body.login_id)
     ).first()
     if not user or not verify_password(body.password, user.hashed_password):
+        _LOGIN_FAILS.setdefault(key, []).append(datetime.utcnow().timestamp())
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="اطلاعات ورود اشتباه است")
+    _LOGIN_FAILS.pop(key, None)
 
     token = create_access_token({"sub": str(user.id)})
     return {"access_token": token, "token_type": "bearer"}
@@ -434,6 +509,8 @@ def update_me(
         current_user.email = body.email
 
     if body.password:
+        if len(body.password) < 6:
+            raise HTTPException(status_code=400, detail="رمز عبور حداقل ۶ کاراکتر")
         current_user.hashed_password = hash_password(body.password)
 
     db.commit()
@@ -495,7 +572,11 @@ def toggle_bookmark(
         couplet_index=body.couplet_index,
     )
     db.add(bookmark)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        return {"action": "added"}
     db.refresh(bookmark)
     touch_activity(db, current_user.id)
     soluk.invalidate(current_user.id)
@@ -588,7 +669,11 @@ def upsert_note(
         text=body.text,
     )
     db.add(note)
-    db.commit()
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=409, detail="یادداشت هم‌زمان ثبت شد؛ دوباره تلاش کنید")
     db.refresh(note)
     touch_activity(db, current_user.id)
     soluk.invalidate(current_user.id)
@@ -651,9 +736,9 @@ def record_ghazal_view(
         models.GhazalView.ghazal_id == ghazal.id,
     ).first()
     from datetime import date
-    today = datetime.utcnow().date()
+    today = tehran_today()
     if view:
-        if view.last_viewed_at.date() < today:
+        if view.last_viewed_at.replace(tzinfo=timezone.utc).astimezone(IRAN_TZ).date() < today:
             view.view_count += 1
             view.last_viewed_at = datetime.utcnow()
     else:
@@ -793,6 +878,39 @@ def _snippet_around(text: str, q: str, idx: int, pad: int = 40) -> str:
     return out
 
 
+_POEM_CACHE = {"g": (0.0, []), "t": (0.0, [])}
+_POEM_CACHE_TTL = 600
+
+
+class _PoemRow:
+    __slots__ = ("number", "title", "couplets")
+
+    def __init__(self, number, title, couplets):
+        self.number, self.title, self.couplets = number, title, couplets
+
+
+def _cached_poems(kind, loader):
+    ts, rows = _POEM_CACHE[kind]
+    now = datetime.utcnow().timestamp()
+    if rows and now - ts < _POEM_CACHE_TTL:
+        return rows
+    rows = loader()
+    _POEM_CACHE[kind] = (now, rows)
+    return rows
+
+
+def _all_ghazals(db):
+    return _cached_poems("g", lambda: [
+        _PoemRow(g.number, g.title, g.couplets or [])
+        for g in db.query(models.Ghazal).order_by(models.Ghazal.number).all()])
+
+
+def _all_terjees(db):
+    return _cached_poems("t", lambda: [
+        _PoemRow(t.number, None, t.couplets or [])
+        for t in db.query(models.Terjee).order_by(models.Terjee.number).all()])
+
+
 @app.get("/poems/search")
 def search_poems(
     q: str = Query(..., min_length=2),
@@ -800,8 +918,11 @@ def search_poems(
     db: Session = Depends(get_db),
 ):
     results = []
+    q = q.replace("ي", "ی").replace("ك", "ک").strip()
+    if len(q) < 2:
+        return {"query": q, "count": 0, "results": []}
     if type == "g":
-        ghazals = db.query(models.Ghazal).all()
+        ghazals = _all_ghazals(db)
         for ghazal in ghazals:
             matched = [
                 {"couplet_index": ci, "couplet": c}
@@ -816,7 +937,7 @@ def search_poems(
                     "matches": matched,
                 })
     elif type == "t":
-        bands = db.query(models.Terjee).all()
+        bands = _all_terjees(db)
         for band in bands:
             matched = [
                 {"couplet_index": ci, "couplet": c}
@@ -901,6 +1022,10 @@ def get_zand(number: int, db: Session = Depends(get_db)):
     return {"number": section.number, "title": section.title, "type": section.type, "content": section.content}
 
 
+def esc(v) -> str:
+    return html_lib.escape(str(v if v is not None else ""), quote=True)
+
+
 BOT_AGENTS = ("googlebot", "bingbot", "facebookexternalhit", "twitterbot", "crawler", "spider", "bot")
 
 @app.get("/poems/ghazal/{number}/html", include_in_schema=False)
@@ -918,17 +1043,17 @@ def get_ghazal_html(number: int, request: Request, preview: int = 0, db: Session
 
     couplets_html = ""
     for i, (m1, m2) in enumerate(ghazal.couplets, 1):
-        couplets_html += f'<div class="couplet"><p>{m1}</p>'
+        couplets_html += f'<div class="couplet"><p>{esc(m1)}</p>'
         if m2:
-            couplets_html += f'<p class="m2">{m2}</p>'
+            couplets_html += f'<p class="m2">{esc(m2)}</p>'
         couplets_html += "</div>\n"
 
     html = f"""<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>غزل {number} — {ghazal.title} | دیوان بیدل دهلوی</title>
-<meta name="description" content="{description}">
+<title>غزل {number} — {esc(ghazal.title)} | دیوان بیدل دهلوی</title>
+<meta name="description" content="{esc(description)}">
 <link rel="canonical" href="https://bideli.ir/ghazal/{number}">
 <style>
   body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
@@ -940,15 +1065,15 @@ def get_ghazal_html(number: int, request: Request, preview: int = 0, db: Session
 </style>
 </head>
 <body>
-<h1>غزل {number} — {ghazal.title}</h1>
-<div class="meta">دیوان بیدل دهلوی · {len(ghazal.couplets)} بیت{f' · وزن: {ghazal.vazn}' if ghazal.vazn else ''}</div>
+<h1>غزل {number} — {esc(ghazal.title)}</h1>
+<div class="meta">دیوان بیدل دهلوی · {len(ghazal.couplets)} بیت{f' · وزن: {esc(ghazal.vazn)}' if ghazal.vazn else ''}</div>
 <main>
 {couplets_html}</main>
 <a class="back" href="https://bideli.ir/ghazal/{number}">مشاهده در سایت بیدلی ←</a>
 </body>
 </html>"""
 
-    return HTMLResponse(content=html)
+    return HTMLResponse(content=with_og(html))
 
 
 @app.get("/poems/ghazal/{number}/keywords")
@@ -991,7 +1116,7 @@ def verse_of_day(db: Session = Depends(get_db)):
     if not total:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="داده‌ای یافت نشد")
 
-    today = date.today()
+    today = tehran_today()
     seed = today.year * 10000 + today.month * 100 + today.day
     ghazal_offset = seed % total
     ghazal = db.query(models.Ghazal).order_by(models.Ghazal.number).offset(ghazal_offset).first()
@@ -1013,16 +1138,32 @@ def verse_of_day(db: Session = Depends(get_db)):
 # NOTE: specific paths (/featured, /categories, /graph, /graph/{maqam}) must be
 # defined before /keywords/{word}
 
+_KW_NORM = {"t": 0.0, "map": {}}
+_KW_NORM_TTL = 600
+
+
+def _keyword_norm_map(db):
+    now = datetime.utcnow().timestamp()
+    if now - _KW_NORM["t"] > _KW_NORM_TTL or not _KW_NORM["map"]:
+        _KW_NORM["map"] = {normalize(w): w for (w,) in db.query(models.Keyword.word).all()}
+        _KW_NORM["t"] = now
+    return _KW_NORM["map"]
+
+
 def _find_keyword_by_norm(db, qnorm: str):
     if not qnorm:
         return None
-    kw = db.query(models.Keyword).filter(models.Keyword.word == qnorm).first()
-    if kw:
-        return kw
-    for k in db.query(models.Keyword).all():
-        if normalize(k.word) == qnorm:
-            return k
-    return None
+    word = _keyword_norm_map(db).get(qnorm)
+    if word is None:
+        return None
+    return db.query(models.Keyword).filter(models.Keyword.word == word).first()
+
+
+def _keywords_by_ids(db, ids):
+    ids = list(set(ids))
+    if not ids:
+        return {}
+    return {k.id: k for k in db.query(models.Keyword).filter(models.Keyword.id.in_(ids)).all()}
 
 
 def _example_bayt_text(word: str):
@@ -1064,8 +1205,9 @@ def poems_neighbors(
             .all()
         )
         neighbors = []
+        others = _keywords_by_ids(db, [r.keyword_b_id for r in rows])
         for r in rows:
-            other = db.query(models.Keyword).get(r.keyword_b_id)
+            other = others.get(r.keyword_b_id)
             if not other:
                 continue
             neighbors.append({
@@ -1111,8 +1253,9 @@ def keyword_neighbors(
         .all()
     )
     neighbors = []
+    others = _keywords_by_ids(db, [r.keyword_b_id for r in rows])
     for r in rows:
-        other = db.query(models.Keyword).get(r.keyword_b_id)
+        other = others.get(r.keyword_b_id)
         if not other:
             continue
         color = MAQAM_COLORS.get(other.maqam) or MAQAM_NEUTRAL
@@ -1209,7 +1352,7 @@ def get_featured_keywords(db: Session = Depends(get_db)):
     if not keywords:
         return []
 
-    today = date.today()
+    today = tehran_today()
     seed = today.year * 10000 + today.month * 100 + today.day
     rng = random.Random(seed)
     selected = rng.sample(keywords, min(6, len(keywords)))
@@ -1283,11 +1426,14 @@ def sitemap(db: Session = Depends(get_db)):
     urls.append(url(f"{BASE}/zand",    "0.7"))
     urls.append(url(f"{BASE}/khanesh", "0.7", "weekly"))
 
-    for n in range(1, 2828):
+    for (n,) in db.query(models.Ghazal.number).order_by(models.Ghazal.number).all():
         urls.append(url(f"{BASE}/ghazal/{n}", "0.8"))
 
-    for n in range(1, 35):
+    for (n,) in db.query(models.Terjee.number).order_by(models.Terjee.number).all():
         urls.append(url(f"{BASE}/terjee/{n}", "0.7"))
+
+    for (slug,) in db.query(models.Pajvak.slug).filter(models.Pajvak.published_at.isnot(None)).order_by(models.Pajvak.slug).all():
+        urls.append(url(f"{BASE}/pajvak/{quote(slug, safe='')}", "0.6"))
 
     zand_numbers = db.query(models.Zand.number).order_by(models.Zand.number).all()
     for (n,) in zand_numbers:
@@ -1324,9 +1470,9 @@ def get_keyword_html(word: str, request: Request, preview: int = 0, db: Session 
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>{word} در دیوان بیدل دهلوی</title>
-<meta name="description" content="{description}">
-<link rel="canonical" href="https://bideli.ir/keywords/{word}">
+<title>{esc(word)} در دیوان بیدل دهلوی</title>
+<meta name="description" content="{esc(description)}">
+<link rel="canonical" href="https://bideli.ir/keywords/{quote(word, safe='')}">
 <style>
   body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
   h1{{font-size:1.6rem;margin-bottom:0.3rem}}
@@ -1339,17 +1485,17 @@ def get_keyword_html(word: str, request: Request, preview: int = 0, db: Session 
 </style>
 </head>
 <body>
-<h1>{word}</h1>
+<h1>{esc(word)}</h1>
 <div class="meta">دیوان بیدل دهلوی · {kw.count or 0} بار تکرار</div>
-{"<div class='meaning'>" + kw.meaning + "</div>" if kw.meaning else ""}
-<div class="field"><span class="label">مقام: </span><span class="value">{kw.maqam or '—'}</span></div>
-<div class="field"><span class="label">دسته‌بندی: </span><span class="value">{kw.category or '—'}</span></div>
+{"<div class='meaning'>" + esc(kw.meaning) + "</div>" if kw.meaning else ""}
+<div class="field"><span class="label">مقام: </span><span class="value">{esc(kw.maqam or '—')}</span></div>
+<div class="field"><span class="label">دسته‌بندی: </span><span class="value">{esc(kw.category or '—')}</span></div>
 <div class="field"><span class="label">تعداد تکرار: </span><span class="value">{kw.count or 0}</span></div>
-<a class="back" href="https://bideli.ir/keywords/{word}">مشاهده در سایت بیدلی ←</a>
+<a class="back" href="https://bideli.ir/keywords/{quote(word, safe='')}">مشاهده در سایت بیدلی ←</a>
 </body>
 </html>"""
 
-    return HTMLResponse(content=html)
+    return HTMLResponse(content=with_og(html))
 
 
 @app.get("/poems/terjee/{number}/html", include_in_schema=False)
@@ -1367,9 +1513,9 @@ def get_terjee_html(number: int, request: Request, preview: int = 0, db: Session
 
     couplets_html = ""
     for m1, m2 in band.couplets:
-        couplets_html += f'<div class="couplet"><p>{m1}</p>'
+        couplets_html += f'<div class="couplet"><p>{esc(m1)}</p>'
         if m2:
-            couplets_html += f'<p class="m2">{m2}</p>'
+            couplets_html += f'<p class="m2">{esc(m2)}</p>'
         couplets_html += "</div>\n"
 
     html = f"""<!DOCTYPE html>
@@ -1377,7 +1523,7 @@ def get_terjee_html(number: int, request: Request, preview: int = 0, db: Session
 <head>
 <meta charset="UTF-8">
 <title>ترجیع‌بند {number} | دیوان بیدل دهلوی</title>
-<meta name="description" content="{description}">
+<meta name="description" content="{esc(description)}">
 <link rel="canonical" href="https://bideli.ir/terjee/{number}">
 <style>
   body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
@@ -1397,7 +1543,7 @@ def get_terjee_html(number: int, request: Request, preview: int = 0, db: Session
 </body>
 </html>"""
 
-    return HTMLResponse(content=html)
+    return HTMLResponse(content=with_og(html))
 
 
 @app.get("/poems/zand/{number}/html", include_in_schema=False)
@@ -1416,8 +1562,8 @@ def get_zand_html(number: int, request: Request, preview: int = 0, db: Session =
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>{section.title} — زند بیدل | دیوان بیدل دهلوی</title>
-<meta name="description" content="{description}">
+<title>{esc(section.title)} — زند بیدل | دیوان بیدل دهلوی</title>
+<meta name="description" content="{esc(description)}">
 <link rel="canonical" href="https://bideli.ir/zand/{number}">
 <style>
   body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
@@ -1428,14 +1574,14 @@ def get_zand_html(number: int, request: Request, preview: int = 0, db: Session =
 </style>
 </head>
 <body>
-<h1>{section.title}</h1>
+<h1>{esc(section.title)}</h1>
 <div class="meta">زند بیدل · شرح شروین وکیلی بر دیوان بیدل دهلوی</div>
-<main>{section.content}</main>
+<main>{esc(section.content)}</main>
 <a class="back" href="https://bideli.ir/zand/{number}">مشاهده در سایت بیدلی ←</a>
 </body>
 </html>"""
 
-    return HTMLResponse(content=html)
+    return HTMLResponse(content=with_og(html))
 
 
 @app.get("/khanesh/{slug}/html", include_in_schema=False)
@@ -1452,8 +1598,8 @@ def get_khanesh_html(slug: str, request: Request, preview: int = 0, db: Session 
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>{k.title} | خوانش‌های دیوان بیدل دهلوی</title>
-<meta name="description" content="خوانشِ بندِ {k.terjee_number} ترجیع‌بند بیدل، به قلم {k.instructor}">
+<title>{esc(k.title)} | خوانش‌های دیوان بیدل دهلوی</title>
+<meta name="description" content="خوانشِ بندِ {k.terjee_number} ترجیع‌بند بیدل، به قلم {esc(k.instructor)}">
 <link rel="canonical" href="https://bideli.ir/khanesh/{slug}">
 <style>
   body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
@@ -1463,14 +1609,14 @@ def get_khanesh_html(slug: str, request: Request, preview: int = 0, db: Session 
 </style>
 </head>
 <body>
-<h1>{k.title}</h1>
-<div class="meta">ترجیع‌بند · بند {k.terjee_number} · به خوانشِ {k.instructor}</div>
-<main>{k.content}</main>
+<h1>{esc(k.title)}</h1>
+<div class="meta">ترجیع‌بند · بند {k.terjee_number} · به خوانشِ {esc(k.instructor)}</div>
+<main>{sanitize_html(k.content)}</main>
 <a class="back" href="https://bideli.ir/khanesh/{slug}">مشاهده در سایت بیدلی ←</a>
 </body>
 </html>"""
 
-    return HTMLResponse(content=html)
+    return HTMLResponse(content=with_og(html))
 
 
 def _find_matching_couplet(couplets, word):
@@ -1586,7 +1732,7 @@ def get_khanesh(slug: str, db: Session = Depends(get_db)):
 def create_khanesh(
     data: KhaneshCreate,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(require_admin)
 ):
     existing = db.query(models.Khanesh).filter(models.Khanesh.slug == data.slug).first()
     if existing:
@@ -1594,7 +1740,7 @@ def create_khanesh(
     k = models.Khanesh(
         title=data.title,
         slug=data.slug,
-        content=data.content,
+        content=sanitize_html(data.content),
         terjee_number=data.terjee_number,
         instructor=data.instructor,
         role=data.role,
@@ -1611,14 +1757,14 @@ def update_khanesh(
     slug: str,
     data: KhaneshCreate,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(require_admin)
 ):
     k = db.query(models.Khanesh).filter(models.Khanesh.slug == slug).first()
     if not k:
         raise HTTPException(status_code=404, detail="not found")
     k.title = data.title
     k.slug = data.slug
-    k.content = data.content
+    k.content = sanitize_html(data.content)
     k.terjee_number = data.terjee_number
     k.instructor = data.instructor
     k.role = data.role
@@ -1632,7 +1778,7 @@ def update_khanesh(
 def delete_khanesh(
     slug: str,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(require_admin)
 ):
     k = db.query(models.Khanesh).filter(models.Khanesh.slug == slug).first()
     if not k:
@@ -1648,6 +1794,24 @@ PAJVAK_UPLOAD_EXT = {
     "cover": {".jpg", ".jpeg", ".png", ".webp"},
     "audio": {".mp3", ".ogg", ".wav", ".m4a"},
 }
+
+_SAFE_FILENAME = re.compile(r"^[A-Za-z0-9_-]{1,64}\.[A-Za-z0-9]{1,5}$")
+
+
+def _check_filename(v):
+    if v is not None and not _SAFE_FILENAME.match(v):
+        raise ValueError("invalid filename")
+    return v
+
+
+def _safe_remove(kind: str, filename: str):
+    if not _SAFE_FILENAME.match(filename or ""):
+        return
+    try:
+        os.remove(os.path.join(PAJVAK_MEDIA_DIR, kind, filename))
+    except OSError:
+        pass
+
 
 class PajvakCredit(BaseModel):
     role: str
@@ -1668,6 +1832,18 @@ class PajvakCreate(BaseModel):
     narrative: Optional[List[str]] = None
     credits: Optional[List[PajvakCredit]] = None
     published_at: Optional[datetime] = None
+
+    @field_validator("cover_filename", "audio_filename")
+    @classmethod
+    def _v_filename(cls, v):
+        return _check_filename(v)
+
+    @field_validator("slug")
+    @classmethod
+    def _v_slug(cls, v):
+        if not re.match(r"^[\w-]{1,100}$", v):
+            raise ValueError("invalid slug")
+        return v
 
 
 def _pajvak_ref_info(p: models.Pajvak, db: Session):
@@ -1760,15 +1936,15 @@ def get_pajvak_html(slug: str, request: Request, preview: int = 0, db: Session =
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="پژواک یافت نشد")
 
     ref = _pajvak_ref_info(p, db)
-    poem_html = "".join(f"<p>{a}<br>{b}</p>" for a, b in (p.poem or []))
-    narrative_html = "".join(f"<p>{para}</p>" for para in (p.narrative or []))
+    poem_html = "".join(f"<p>{esc(a)}<br>{esc(b)}</p>" for a, b in (p.poem or []))
+    narrative_html = "".join(f"<p>{esc(para)}</p>" for para in (p.narrative or []))
 
     html = f"""<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>{p.title} | پژواک‌های دیوان بیدل دهلوی</title>
-<meta name="description" content="اثری الهام‌گرفته از {ref['label']} بیدل دهلوی">
+<title>{esc(p.title)} | پژواک‌های دیوان بیدل دهلوی</title>
+<meta name="description" content="اثری الهام‌گرفته از {esc(ref['label'])} بیدل دهلوی">
 <link rel="canonical" href="https://bideli.ir/pajvak/{slug}">
 <style>
   body{{font-family:serif;max-width:600px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
@@ -1778,14 +1954,14 @@ def get_pajvak_html(slug: str, request: Request, preview: int = 0, db: Session =
 </style>
 </head>
 <body>
-<h1>{p.title}</h1>
-<div class="meta">الهام از بیدل · {ref['label']}</div>
+<h1>{esc(p.title)}</h1>
+<div class="meta">الهام از بیدل · {esc(ref['label'])}</div>
 <main>{poem_html}{narrative_html}</main>
 <a class="back" href="https://bideli.ir/pajvak/{slug}">مشاهده در سایت بیدلی ←</a>
 </body>
 </html>"""
 
-    return HTMLResponse(content=html)
+    return HTMLResponse(content=with_og(html))
 
 
 @app.get("/pajvak/{slug}")
@@ -1800,7 +1976,7 @@ def get_pajvak(slug: str, db: Session = Depends(get_db)):
 def create_pajvak(
     data: PajvakCreate,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(require_admin)
 ):
     existing = db.query(models.Pajvak).filter(models.Pajvak.slug == data.slug).first()
     if existing:
@@ -1832,7 +2008,7 @@ def update_pajvak(
     slug: str,
     data: PajvakCreate,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(require_admin)
 ):
     p = db.query(models.Pajvak).filter(models.Pajvak.slug == slug).first()
     if not p:
@@ -1860,17 +2036,15 @@ def update_pajvak(
 def delete_pajvak(
     slug: str,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(require_admin)
 ):
     p = db.query(models.Pajvak).filter(models.Pajvak.slug == slug).first()
     if not p:
         raise HTTPException(status_code=404, detail="not found")
     if p.cover_filename:
-        try: os.remove(os.path.join(PAJVAK_MEDIA_DIR, "cover", p.cover_filename))
-        except OSError: pass
+        _safe_remove("cover", p.cover_filename)
     if p.audio_filename:
-        try: os.remove(os.path.join(PAJVAK_MEDIA_DIR, "audio", p.audio_filename))
-        except OSError: pass
+        _safe_remove("audio", p.audio_filename)
     db.delete(p)
     db.commit()
     return {"status": "ok"}
@@ -1880,7 +2054,7 @@ def delete_pajvak(
 async def upload_pajvak_media(
     kind: str = Query(...),
     file: UploadFile = File(...),
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(require_admin)
 ):
     if kind not in PAJVAK_UPLOAD_EXT:
         raise HTTPException(status_code=400, detail="invalid kind")

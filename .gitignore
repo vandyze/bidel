@@ -22,4 +22,4 @@ upload.sh
 *.zip
 dev-spec-neighbors-graph.md
 admin.html
-backend/media/
+backend/media/.pytest_cache/

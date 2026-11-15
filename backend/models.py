@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON, Boolean, Float, Date
+from sqlalchemy import Index, func, Column, Integer, String, Text, DateTime, ForeignKey, JSON, Boolean, Float, Date
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -46,6 +46,11 @@ class Bookmark(Base):
 
     user = relationship("User", back_populates="bookmarks")
 
+    __table_args__ = (
+        Index("uq_bookmarks_user_poem", "user_id", "poem_type", "poem_id",
+              func.coalesce(couplet_index, -1), unique=True),
+    )
+
 
 class Note(Base):
     __tablename__ = "notes"
@@ -59,6 +64,11 @@ class Note(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
     user = relationship("User", back_populates="notes")
+
+    __table_args__ = (
+        Index("uq_notes_user_poem", "user_id", "poem_type", "poem_id",
+              func.coalesce(couplet_index, -1), unique=True),
+    )
 
 
 class KeywordCooccurrence(Base):

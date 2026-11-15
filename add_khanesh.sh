@@ -2,10 +2,15 @@
 
 # ── config ──────────────────────────────────────────────
 API="https://bideli.ir/api"
-TOKEN=$(curl -s -X POST "$API/auth/login" \
-  -H "Content-Type: application/json" \
-  -d "{\"email\":\"s@g.com\",\"password\":\"123456\"}" | \
-  python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('access_token') or d.get('token',''))")
+# اطلاعات ورود از متغیر محیطی خوانده می‌شود (هرگز داخل فایل ننویسید):
+#   export BIDEL_LOGIN='...' BIDEL_PASSWORD='...'
+if [ -z "$BIDEL_LOGIN" ] || [ -z "$BIDEL_PASSWORD" ]; then
+  echo "Error: BIDEL_LOGIN و BIDEL_PASSWORD را تنظیم کنید." >&2
+  exit 1
+fi
+TOKEN=$(python3 -c "import json,os;print(json.dumps({'login_id':os.environ['BIDEL_LOGIN'],'password':os.environ['BIDEL_PASSWORD']}))" | \
+  curl -s -X POST "$API/auth/login" -H "Content-Type: application/json" -d @- | \
+  python3 -c "import sys,json; print(json.load(sys.stdin).get('access_token',''))")
 echo "==> Got token"
 
 # ── args ────────────────────────────────────────────────

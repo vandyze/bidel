@@ -7,6 +7,8 @@ from passlib.context import CryptContext
 
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY or SECRET_KEY == "your-secret-key-here" or len(SECRET_KEY) < 16:
+    raise RuntimeError("SECRET_KEY تنظیم نشده یا ضعیف است (حداقل ۱۶ کاراکتر در backend/.env)")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 

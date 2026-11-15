@@ -7,7 +7,7 @@ import random
 import re
 import threading
 import time
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -186,7 +186,7 @@ def _streaks(dates):
         else:
             cur = 1
         prev = d
-    today = date.today()
+    today = datetime.now(timezone(timedelta(hours=3, minutes=30))).date()
     cur_streak = 0
     if ds[-1] >= today - timedelta(days=1) and ds[-1] <= today:
         cur_streak = 1
