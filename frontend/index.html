@@ -7,7 +7,7 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/icons/icon-192.png">
 <meta name="theme-color" content="#4a5e3a">
-<meta name="deploy-version" content="20261116_020948">
+<meta name="deploy-version" content="20261116_023405">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -2532,12 +2532,28 @@ function _saveUser(u){
   updateProfileBadge();
   refreshNav();
 }
+// تمدید نشست لغزان: حداکثر روزی یک‌بار، بی‌صدا
+async function _maybeRefreshSession(token) {
+  try {
+    const last = +localStorage.getItem('bidel_token_refreshed') || 0;
+    if (Date.now() - last < 24*3600*1000) return;
+    const rr = await fetch(API_URL + '/auth/refresh', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token } });
+    if (rr.ok) {
+      const j = await rr.json();
+      if (j.access_token) setToken(j.access_token);
+      localStorage.setItem('bidel_token_refreshed', String(Date.now()));
+    }
+  } catch(e) {}
+}
 async function _loadUser() {
   const token = getToken();
   if (!token) return;
   try {
     const resp = await fetch(API_URL + '/auth/me', { headers: { 'Authorization': 'Bearer ' + token } });
-    if (resp.ok) { _saveUser(await resp.json()); }
+    if (resp.ok) {
+      _saveUser(await resp.json());
+      _maybeRefreshSession(token);
+    }
     else if (resp.status === 401) { setToken(null); _saveUser(null); }
   } catch(e) {}
   await loadUserData();
@@ -2613,6 +2629,7 @@ async function loadUserData(){
     fetch(API_URL+'/notes',{headers:{'Authorization':'Bearer '+token}})
   ]);
   if(rb.status===401||rn.status===401){setToken(null);_saveUser(null);return;}
+  _maybeRefreshSession(token);
   const bmsArr=await rb.json(), ntsArr=await rn.json();
   const _toFetch={};
   for(const b of bmsArr) _toFetch[b.poem_type+'_'+b.poem_id]=b;
@@ -4153,7 +4170,9 @@ function renderProfileLoggedIn(){
     h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">نام کاربری</label>';
     h+='<input class="pr-edit-inp" dir="rtl" id="pr-inp-name" value="'+(_user.username||'').replace(/"/g,'&quot;')+'" placeholder="نام کاربری"></div>';
     h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">رمز عبور جدید <span style="color:var(--vf)">(اختیاری)</span></label>';
-    h+='<input class="pr-edit-inp" id="pr-inp-pass" type="password" placeholder="••••••••"></div>';
+    h+='<input class="pr-edit-inp" id="pr-inp-pass" type="password" placeholder="••••••••" autocomplete="new-password"></div>';
+    h+='<div class="pr-edit-field"><label class="pr-edit-lab fa">رمز عبور فعلی <span style="color:var(--vf)">(برای تغییر رمز لازم است)</span></label>';
+    h+='<input class="pr-edit-inp" id="pr-inp-oldpass" type="password" placeholder="••••••••" autocomplete="current-password"></div>';
     h+='<div class="pr-edit-msg" id="pr-edit-msg"></div>';
     h+='<div class="pr-edit-bts">';
     h+='<button class="pr-edit-cancel" id="pr-cancel-edit">انصراف</button>';
@@ -4337,6 +4356,7 @@ function _prRow(act,t1,t2,svg,extra){
 async function saveProfileEdit(){
   const name=document.getElementById('pr-inp-name').value.trim();
   const pass=document.getElementById('pr-inp-pass').value;
+  const oldPass=(document.getElementById('pr-inp-oldpass')||{}).value||'';
   const msg=document.getElementById('pr-edit-msg');
   msg.className='pr-edit-msg';
   if(!name){
@@ -4353,13 +4373,15 @@ async function saveProfileEdit(){
   }
   try{
     const body={username:name};
-    if(pass) body.password=pass;
+    if(pass){ body.password=pass; body.current_password=oldPass; }
     const r=await fetch(API_URL+'/auth/me',{method:'PUT',headers:authHeaders(),body:JSON.stringify(body)});
     if(!r.ok){
       msg.classList.add('er');
-      msg.textContent='خطا در ذخیره اطلاعات';
+      let d=''; try{ d=(await r.json()).detail; }catch(e){}
+      msg.textContent=(typeof d==='string'&&d)?d:'خطا در ذخیره اطلاعات';
       return;
     }
+    try{ const j=await r.json(); if(j&&j.access_token) setToken(j.access_token); }catch(e){}
     _saveUser({..._user, username:name});
     msg.classList.add('ok');
     msg.textContent='ذخیره شد ✓';
@@ -4371,6 +4393,7 @@ async function saveProfileEdit(){
 }
 
 function doLogout(){
+  try{ const t=getToken(); if(t) fetch(API_URL+'/auth/logout',{method:'POST',headers:{'Authorization':'Bearer '+t}}).catch(()=>{}); }catch(e){}
   setToken(null);
   _saveUser(null);
   _bms={}; _nts={};

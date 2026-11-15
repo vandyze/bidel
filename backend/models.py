@@ -4,6 +4,7 @@ from sqlalchemy import Index, func, Column, Integer, String, Text, DateTime, For
 from sqlalchemy.orm import relationship
 
 from database import Base
+from timeutil import utcnow
 
 
 class User(Base):
@@ -15,7 +16,8 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     name = Column(String, nullable=True)
     phone = Column(String, unique=True, nullable=True, index=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    token_version = Column(Integer, nullable=False, default=0, server_default="0")
+    created_at = Column(DateTime, default=utcnow)
 
     bookmarks = relationship("Bookmark", back_populates="user", cascade="all, delete-orphan")
     notes = relationship("Note", back_populates="user", cascade="all, delete-orphan")
@@ -28,7 +30,7 @@ class OTPCode(Base):
     phone = Column(String, nullable=False, index=True)
     code = Column(String, nullable=False)
     purpose = Column(String, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
     expires_at = Column(DateTime, nullable=False)
     used = Column(Boolean, default=False)
     attempts = Column(Integer, default=0)
@@ -42,7 +44,7 @@ class Bookmark(Base):
     poem_type = Column(String, nullable=False)
     poem_id = Column(Integer, nullable=False)
     couplet_index = Column(Integer, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
 
     user = relationship("User", back_populates="bookmarks")
 
@@ -61,7 +63,7 @@ class Note(Base):
     poem_id = Column(Integer, nullable=False)
     couplet_index = Column(Integer, nullable=True)
     text = Column(Text, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
 
     user = relationship("User", back_populates="notes")
 
@@ -153,7 +155,7 @@ class GhazalView(Base):
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
     ghazal_id = Column(Integer, ForeignKey("ghazals.id"), primary_key=True)
     view_count = Column(Integer, default=1)
-    last_viewed_at = Column(DateTime, default=datetime.utcnow)
+    last_viewed_at = Column(DateTime, default=utcnow)
 
     user = relationship("User", back_populates="ghazal_views")
     ghazal = relationship("Ghazal", back_populates="views")
@@ -181,7 +183,7 @@ class Khanesh(Base):
     role = Column(String, nullable=True)
     tags = Column(JSON, default=list)
     published_at = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
 
 
 class Pajvak(Base):
@@ -202,7 +204,7 @@ class Pajvak(Base):
     narrative = Column(JSON, nullable=True)
     credits = Column(JSON, nullable=True)
     published_at = Column(DateTime, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
 
 
 class UserActivity(Base):
@@ -210,6 +212,6 @@ class UserActivity(Base):
 
     user_id = Column(Integer, ForeignKey("users.id"), primary_key=True)
     date = Column(Date, primary_key=True, index=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=utcnow)
 
     user = relationship("User")

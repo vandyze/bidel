@@ -1,9 +1,9 @@
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
+import bcrypt
+import jwt
 from dotenv import load_dotenv
-from jose import JWTError, jwt
-from passlib.context import CryptContext
 
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -12,26 +12,32 @@ if not SECRET_KEY or SECRET_KEY == "your-secret-key-here" or len(SECRET_KEY) < 1
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def _pw_bytes(password: str) -> bytes:
+    # bcrypt فقط ۷۲ بایت اول را می‌خواند؛ همان رفتار passlib برای سازگاری با هش‌های قبلی
+    return password.encode("utf-8")[:72]
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(_pw_bytes(password), bcrypt.gensalt()).decode("ascii")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        return bcrypt.checkpw(_pw_bytes(plain_password), hashed_password.encode("ascii"))
+    except (ValueError, TypeError):
+        return False
 
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
     payload = data.copy()
     expire = expires_delta if expires_delta is not None else timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    payload["exp"] = datetime.utcnow() + expire
+    payload["exp"] = datetime.now(timezone.utc) + expire
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
 
 def decode_access_token(token: str) -> dict | None:
     try:
         return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-    except JWTError:
+    except jwt.PyJWTError:
         return None
