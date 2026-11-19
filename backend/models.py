@@ -11,6 +11,7 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
+    public_id = Column(String, unique=True, nullable=True, index=True)
     username = Column(String, unique=True, index=True, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
@@ -167,6 +168,17 @@ class Zand(Base):
     id = Column(Integer, primary_key=True, index=True)
     number = Column(Integer, unique=True, nullable=False, index=True)
     title = Column(String, nullable=False)
+    type = Column(String, nullable=False)
+    content = Column(Text, nullable=True)
+
+
+class ChaharOnsor(Base):
+    __tablename__ = "chahar_onsor"
+
+    id = Column(Integer, primary_key=True, index=True)
+    number = Column(Integer, unique=True, nullable=False, index=True)
+    title = Column(String, nullable=False)
+    part = Column(String, nullable=True)
     type = Column(String, nullable=False)
     content = Column(Text, nullable=True)
 

@@ -5,12 +5,14 @@ from pathlib import Path
 
 from database import SessionLocal, engine
 import models
+from chahar_md import parse_book
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 GHAZALS_PATH = DATA_DIR / "ghazals.json"
 VAZN_PATH = DATA_DIR / "ganjoor_vazn.json"
 TERJEE_PATH = DATA_DIR / "terjee.json"
 ZAND_PATH = DATA_DIR / "zand.json"
+CHAHAR_PATH = DATA_DIR / "chahar-onsor-baznevesi.md"
 
 
 def import_ghazals(db):
@@ -80,6 +82,29 @@ def import_zand(db):
     print(f"Re-imported {len(records)} zand sections (replaced previous).")
 
 
+def import_chahar(db):
+    if not CHAHAR_PATH.exists():
+        print("Chahar Onsor source not found. Skipping.")
+        return
+
+    _, sections = parse_book(CHAHAR_PATH)
+    db.query(models.ChaharOnsor).delete()
+
+    records = [
+        models.ChaharOnsor(
+            number=int(item["id"]),
+            title=item["title"],
+            part=item.get("part") or None,
+            type=item["type"],
+            content=item.get("content") or None,
+        )
+        for item in sections
+    ]
+    db.bulk_save_objects(records)
+    db.commit()
+    print(f"Re-imported {len(records)} chahar onsor sections (replaced previous).")
+
+
 if __name__ == "__main__":
     models.Base.metadata.create_all(bind=engine)
     db = SessionLocal()
@@ -87,6 +112,7 @@ if __name__ == "__main__":
         import_ghazals(db)
         import_terjee(db)
         import_zand(db)
+        import_chahar(db)
         print("Done.")
     except Exception as e:
         db.rollback()

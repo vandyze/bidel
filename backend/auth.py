@@ -1,4 +1,5 @@
 import os
+import secrets
 from datetime import datetime, timedelta, timezone
 
 import bcrypt
@@ -10,7 +11,12 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY or SECRET_KEY == "your-secret-key-here" or len(SECRET_KEY) < 16:
     raise RuntimeError("SECRET_KEY تنظیم نشده یا ضعیف است (حداقل ۱۶ کاراکتر در backend/.env)")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 365  # 1 year (rolling: refreshed daily)
+
+
+def generate_public_id() -> str:
+    """شناسهٔ عمومیِ تصادفی کاربر؛ عدد ترتیبیِ دیتابیس را لو نمی‌دهد."""
+    return "u" + secrets.token_hex(8)
 
 
 def _pw_bytes(password: str) -> bytes:

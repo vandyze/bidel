@@ -1,5 +1,6 @@
 import asyncio
 import html as html_lib
+import json
 import os
 import random
 import re
@@ -243,6 +244,164 @@ def get_zand(number: int, db: Session = Depends(get_db)):
     if not section:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="بخش یافت نشد")
     return {"number": section.number, "title": section.title, "type": section.type, "content": section.content}
+
+
+@router.get("/poems/chahar")
+def list_chahar(db: Session = Depends(get_db)):
+    sections = db.query(models.ChaharOnsor).order_by(models.ChaharOnsor.number).all()
+    return [
+        {"number": s.number, "title": s.title, "part": s.part,
+         "type": s.type, "has_content": bool(s.content)}
+        for s in sections
+    ]
+
+
+@router.get("/poems/chahar/html", include_in_schema=False)
+def get_chahar_list_html(request: Request, preview: int = 0, db: Session = Depends(get_db)):
+    ua = request.headers.get("user-agent", "").lower()
+    if not preview and not any(b in ua for b in BOT_AGENTS):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    sections = db.query(models.ChaharOnsor).order_by(models.ChaharOnsor.number).all()
+    if not sections:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="کتاب یافت نشد")
+
+    grouped = []
+    current = object()
+    for s in sections:
+        part = s.part or ""
+        if part != current:
+            grouped.append((part, []))
+            current = part
+        grouped[-1][1].append(s)
+
+    list_html = ""
+    for part, items in grouped:
+        if part:
+            list_html += f"<h2>{esc(part)}</h2>\n"
+        list_html += "<ul>\n"
+        for s in items:
+            list_html += f'<li><a href="/chahar/{s.number}">{esc(s.title)}</a></li>\n'
+        list_html += "</ul>\n"
+
+    description = "بازنویسی خودزندگینامهٔ بیدل دهلوی (چهار عنصر) به فارسی امروز؛ ۱۶۳ فصل، از دیباچه تا پایان عنصر چهارم."
+    jsonld = {
+        "@context": "https://schema.org",
+        "@type": "Book",
+        "name": "چهار عنصر",
+        "alternateName": "خودزندگینامهٔ بیدل دهلوی",
+        "author": {"@type": "Person", "name": "بیدل دهلوی",
+                   "sameAs": ["https://fa.wikipedia.org/wiki/%D8%A8%DB%8C%D8%AF%D9%84_%D8%AF%D9%87%D9%84%D9%88%DB%8C",
+                              "https://www.wikidata.org/wiki/Q2355593"]},
+        "inLanguage": "fa",
+        "url": "https://bideli.ir/chahar",
+        "description": description,
+    }
+
+    html = f"""<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>چهار عنصر — خودزندگینامهٔ بیدل دهلوی | دیوان بیدل</title>
+<meta name="description" content="{esc(description)}">
+<link rel="canonical" href="https://bideli.ir/chahar">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/ld+json">
+{json.dumps(jsonld, ensure_ascii=False)}
+</script>
+<style>
+  body{{font-family:serif;max-width:720px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
+  h1{{font-size:1.8rem;margin-bottom:0.3rem}}
+  h2{{font-size:1.2rem;margin-top:1.6rem;border-bottom:1px solid #ddd;padding-bottom:0.3rem}}
+  ul{{padding-right:1.2rem}}
+  li{{margin:0.3rem 0}}
+  a{{color:#5a7048;text-decoration:none}}
+  a:hover{{text-decoration:underline}}
+  .meta{{color:#777;font-size:0.9rem;margin-bottom:1.4rem}}
+  .back{{display:block;margin-top:2rem;color:#5a7048}}
+</style>
+</head>
+<body>
+<h1>چهار عنصر</h1>
+<div class="meta">خودزندگینامهٔ بیدل دهلوی · بازنویسی به فارسی امروز · {len(sections)} فصل</div>
+<main>
+{list_html}</main>
+<a class="back" href="https://bideli.ir/chahar">مشاهده در سایت بیدلی ←</a>
+</body>
+</html>"""
+
+    return HTMLResponse(content=with_og(html))
+
+
+@router.get("/poems/chahar/{number}/html", include_in_schema=False)
+def get_chahar_html(number: int, request: Request, preview: int = 0, db: Session = Depends(get_db)):
+    ua = request.headers.get("user-agent", "").lower()
+    if not preview and not any(b in ua for b in BOT_AGENTS):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+    section = db.query(models.ChaharOnsor).filter(models.ChaharOnsor.number == number).first()
+    if not section:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="بخش یافت نشد")
+
+    content = section.content or ""
+    description = re.sub(r"<[^>]+>", " ", content)
+    description = re.sub(r"\s+", " ", description).strip()[:160]
+    part = section.part or ""
+    title = (f"{section.title} — چهار عنصر | دیوان بیدل دهلوی")
+    canonical = f"https://bideli.ir/chahar/{number}"
+    jsonld = {
+        "@context": "https://schema.org",
+        "@type": "Chapter",
+        "name": section.title,
+        "isPartOf": {"@type": "Book", "name": "چهار عنصر", "url": "https://bideli.ir/chahar"},
+        "author": {"@type": "Person", "name": "بیدل دهلوی"},
+        "inLanguage": "fa",
+        "url": canonical,
+    }
+
+    html = f"""<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>{esc(title)}</title>
+<meta name="description" content="{esc(description)}">
+<link rel="canonical" href="{canonical}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="application/ld+json">
+{json.dumps(jsonld, ensure_ascii=False)}
+</script>
+<style>
+  body{{font-family:serif;max-width:720px;margin:2rem auto;padding:0 1rem;direction:rtl;line-height:2}}
+  h1{{font-size:1.8rem;margin-bottom:0.3rem}}
+  .meta{{color:#777;font-size:0.9rem;margin-bottom:1.4rem}}
+  .content p{{margin-bottom:0.9rem}}
+  .content h3{{font-size:1.2rem;margin:1.4rem 0 0.6rem}}
+  .content h4{{font-size:1.05rem;margin:1.2rem 0 0.5rem;color:#5a7048}}
+  .content h5{{font-size:1rem;margin:1rem 0 0.4rem;color:#5a7048}}
+  .content blockquote{{margin:1rem 0;padding:0.6rem 1rem;border-right:3px solid #c89030;background:#f7f3e6}}
+  .content blockquote em{{color:#777}}
+  .back{{display:block;margin-top:2rem;color:#5a7048}}
+</style>
+</head>
+<body>
+<h1>{esc(section.title)}</h1>
+<div class="meta">{esc(part) + ' · ' if part else ''}چهار عنصر · خودزندگینامهٔ بیدل دهلوی</div>
+<main class="content">
+{content}</main>
+<a class="back" href="https://bideli.ir/chahar">بازگشت به فهرست چهار عنصر ←</a>
+</body>
+</html>"""
+
+    return HTMLResponse(content=with_og(html))
+
+
+@router.get("/poems/chahar/{number}")
+def get_chahar(number: int, db: Session = Depends(get_db)):
+    section = db.query(models.ChaharOnsor).filter(models.ChaharOnsor.number == number).first()
+    if not section:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="بخش یافت نشد")
+    return {"number": section.number, "title": section.title, "part": section.part,
+            "type": section.type, "content": section.content}
 
 
 @router.get("/poems/ghazal/{number}/html", include_in_schema=False)

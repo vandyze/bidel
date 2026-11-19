@@ -321,11 +321,16 @@ def sitemap(db: Session = Depends(get_db)):
     urls = []
 
     urls.append(url(f"{BASE}/",        "1.0", "weekly"))
+    urls.append(url(f"{BASE}/en/",     "0.9"))
+    urls.append(url(f"{BASE}/hi/",     "0.9"))
     urls.append(url(f"{BASE}/ghazals", "0.9"))
     urls.append(url(f"{BASE}/terjee",  "0.8"))
     urls.append(url(f"{BASE}/keywords","0.8"))
-    urls.append(url(f"{BASE}/zand",    "0.7"))
-    urls.append(url(f"{BASE}/khanesh", "0.7", "weekly"))
+    urls.append(url(f"{BASE}/chahar",  "0.7"))
+    urls.append(url(f"{BASE}/library", "0.6"))
+    urls.append(url(f"{BASE}/bidel-dehlavi", "0.9"))
+    urls.append(url(f"{BASE}/en/bidel-dehlavi", "0.9"))
+    urls.append(url(f"{BASE}/hi/bidel-dehlavi", "0.9"))
 
     for (n,) in db.query(models.Ghazal.number).order_by(models.Ghazal.number).all():
         urls.append(url(f"{BASE}/ghazal/{n}", "0.8"))
@@ -333,20 +338,13 @@ def sitemap(db: Session = Depends(get_db)):
     for (n,) in db.query(models.Terjee.number).order_by(models.Terjee.number).all():
         urls.append(url(f"{BASE}/terjee/{n}", "0.7"))
 
-    for (slug,) in db.query(models.Pajvak.slug).filter(models.Pajvak.published_at.isnot(None)).order_by(models.Pajvak.slug).all():
-        urls.append(url(f"{BASE}/pajvak/{quote(slug, safe='')}", "0.6"))
-
-    zand_numbers = db.query(models.Zand.number).order_by(models.Zand.number).all()
-    for (n,) in zand_numbers:
-        urls.append(url(f"{BASE}/zand/{n}", "0.6"))
+    chahar_numbers = db.query(models.ChaharOnsor.number).order_by(models.ChaharOnsor.number).all()
+    for (n,) in chahar_numbers:
+        urls.append(url(f"{BASE}/chahar/{n}", "0.6"))
 
     keywords = db.query(models.Keyword.word).order_by(models.Keyword.word).all()
     for (word,) in keywords:
         urls.append(url(f"{BASE}/keywords/{quote(word, safe='')}", "0.7"))
-
-    khanesh_slugs = db.query(models.Khanesh.slug).order_by(models.Khanesh.slug).all()
-    for (slug,) in khanesh_slugs:
-        urls.append(url(f"{BASE}/khanesh/{quote(slug, safe='')}", "0.7", "monthly"))
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
@@ -482,7 +480,7 @@ def get_zand_html(number: int, request: Request, preview: int = 0, db: Session =
 </body>
 </html>"""
 
-    return HTMLResponse(content=with_og(html))
+    return HTMLResponse(content=with_og(html), headers={"X-Robots-Tag": "noindex, nofollow"})
 
 
 @router.get("/khanesh/{slug}/html", include_in_schema=False)
@@ -517,7 +515,7 @@ def get_khanesh_html(slug: str, request: Request, preview: int = 0, db: Session 
 </body>
 </html>"""
 
-    return HTMLResponse(content=with_og(html))
+    return HTMLResponse(content=with_og(html), headers={"X-Robots-Tag": "noindex, nofollow"})
 
 
 def _find_matching_couplet(couplets, word):

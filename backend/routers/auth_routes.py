@@ -22,7 +22,7 @@ from sqlalchemy.orm import Session
 import models
 import neighbors_index
 import soluk
-from auth import hash_password, verify_password, create_access_token, decode_access_token
+from auth import hash_password, verify_password, create_access_token, decode_access_token, generate_public_id
 from neighbors_index import cached_live_neighbors, matched_bayts
 from sanitize import sanitize_html
 from timeutil import utcnow
@@ -37,7 +37,7 @@ router = APIRouter()
 
 
 def user_token(user: models.User) -> str:
-    return create_access_token({"sub": str(user.id), "ver": int(user.token_version or 0)})
+    return create_access_token({"sub": user.public_id or str(user.id), "ver": int(user.token_version or 0)})
 
 # --- Telegram Notification ---
 
@@ -125,9 +125,10 @@ class UpdateMeRequest(BaseModel):
     current_password: Optional[str] = None
 
 class UserResponse(BaseModel):
-    id: int
+    id: str
     username: str
     email: str
+    name: Optional[str] = None
     phone: Optional[str] = None
     created_at: str
     access_token: Optional[str] = None  # فقط بعد از تغییر رمز پر می‌شود
@@ -238,6 +239,7 @@ async def register(data: RegisterWithOTPInput, db: Session = Depends(get_db)):
     user = models.User(
         name=data.name,
         username=data.username,
+        public_id=generate_public_id(),
         email=f"{data.username}@phone.local",
         phone=data.phone,
         hashed_password=hash_password(data.password),
@@ -341,9 +343,10 @@ def login_otp(data: VerifyOTPInput, db: Session = Depends(get_db)):
 @router.get("/auth/me", response_model=UserResponse)
 def me(current_user: models.User = Depends(get_current_user)):
     return UserResponse(
-        id=current_user.id,
+        id=current_user.public_id or str(current_user.id),
         username=current_user.username,
         email=current_user.email,
+        name=current_user.name,
         phone=current_user.phone,
         created_at=current_user.created_at.isoformat(),
     )
@@ -378,9 +381,10 @@ def update_me(
     db.commit()
     db.refresh(current_user)
     return UserResponse(
-        id=current_user.id,
+        id=current_user.public_id or str(current_user.id),
         username=current_user.username,
         email=current_user.email,
+        name=current_user.name,
         phone=current_user.phone,
         created_at=current_user.created_at.isoformat(),
         access_token=user_token(current_user) if password_changed else None,
@@ -397,5 +401,5 @@ def logout(db: Session = Depends(get_db), current_user: models.User = Depends(ge
 
 @router.post("/auth/refresh")
 def refresh(current_user: models.User = Depends(get_current_user)):
-    """تمدید نشست: توکن جدید با ۷ روز اعتبار تازه."""
+    """تمدید نشست: توکن جدید با یک سال اعتبار تازه."""
     return {"access_token": user_token(current_user), "token_type": "bearer"}

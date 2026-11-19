@@ -5,7 +5,7 @@
       "name": "frontend",
       "autoPort": true,
       "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "exec python3 -m http.server \"$PORT\" --bind 127.0.0.1 --directory frontend"]
+      "runtimeArgs": ["-c", "exec python3 frontend/serve.py \"$PORT\" --bind 127.0.0.1"]
     },
     {
       "name": "backend",

@@ -251,6 +251,7 @@ def record_ghazal_view(
         db.add(view)
     db.commit()
     touch_activity(db, current_user.id)
+    soluk.invalidate(current_user.id)
     return {"view_count": view.view_count, "last_viewed_at": view.last_viewed_at}
 
 

@@ -318,6 +318,52 @@ def _pick_highlight(couplet_meta, dominant_pm):
     )
 
 
+def _view_highlight_candidates(db, views, dominant_pm):
+    """برای هر غزلِ خوانده‌شده، بیتِ پرتکرارِ مقام غالب را کاندید بیت شاخص می‌کند."""
+    if not views or not dominant_pm:
+        return []
+
+    by_id = {}
+    for v in views:
+        by_id.setdefault(v.ghazal_id, v)
+
+    ghazals = []
+    ids = list(by_id)
+    for i in range(0, len(ids), 500):
+        ghazals.extend(
+            db.query(models.Ghazal)
+            .filter(models.Ghazal.id.in_(ids[i:i + 500]))
+            .all()
+        )
+
+    out = []
+    for g in ghazals:
+        num = _GHAZAL_NUM_BY_ID.get(g.id)
+        if num is None or not g.couplets:
+            continue
+        v = by_id.get(g.id)
+        best = None
+        for ci, entry in enumerate(g.couplets):
+            pair = _pair(entry)
+            mc, _ = _match_couplet(normalize(pair[0] + " " + pair[1]))
+            score = mc.get(dominant_pm, 0)
+            if best is None or score > best[0]:
+                best = (score, ci, pair, mc)
+        if best is None:
+            continue
+        _, ci, pair, mc = best
+        out.append({
+            "type": "g",
+            "id": num,
+            "ci": ci,
+            "pair": pair,
+            "mc": mc,
+            "w": max(1, v.view_count or 1),
+            "created_at": v.last_viewed_at or datetime.min,
+        })
+    return out
+
+
 def _compute_profile(db: Session, user_id: int):
     _load_keyword_caches(db)
     bookmarks = db.query(models.Bookmark).filter_by(user_id=user_id).all()
@@ -361,6 +407,9 @@ def _compute_profile(db: Session, user_id: int):
             tied = order90[1]
     dominant = {"id": top1_id, "label": MAQAM_BY_ID[top1_id], "tied_with": tied}
     dominant_pm = dominant["label"]
+
+    # خوانده‌ها هم در انتخاب بیت شاخص سهم دارند: بیتِ پرتکرارِ مقام غالبِ هر غزل
+    couplet_meta = couplet_meta + _view_highlight_candidates(db, views, dominant_pm)
 
     # ── سیر سلوک ──
     months = sorted(month_raw.keys())

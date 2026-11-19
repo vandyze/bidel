@@ -206,7 +206,7 @@ def get_pajvak_html(slug: str, request: Request, preview: int = 0, db: Session =
 </body>
 </html>"""
 
-    return HTMLResponse(content=with_og(html))
+    return HTMLResponse(content=with_og(html), headers={"X-Robots-Tag": "noindex, nofollow"})
 
 
 @router.get("/pajvak/{slug}")

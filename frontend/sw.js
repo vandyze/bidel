@@ -1,10 +1,10 @@
-const CACHE_NAME = 'bidel-v20261116_023405';
+const CACHE_NAME = 'bidel-v20261120_024755';
 const INDEX_CACHE = 'bidel-index';   // نسخهٔ آفلاین index.html (فقط وقتی شبکه نیست استفاده می‌شود)
 const DATA_CACHE = 'bidel-data';     // پاسخ‌های شعر که کاربر دیده (برای خواندن آفلاین)
 const DATA_MAX = 400;
 
 // فقط محتوای عمومی و ثابت شعر؛ هرگز مسیرهای کاربری (auth، bookmarks، notes، profile، history)
-const DATA_RE = /^\/api\/(poems\/(ghazal|terjee|zand)\/\d+|poems\/(ghazals|terjees|zand)|keywords\/[^/]+)$/;
+const DATA_RE = /^\/api\/(poems\/(ghazal|terjee|zand|chahar)\/\d+|poems\/(ghazals|terjees|zand|chahar)|keywords\/[^/]+)$/;
 
 self.addEventListener('install', e => {
   self.skipWaiting();

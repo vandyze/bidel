@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /profile
+Disallow: /bookmarks
+Disallow: /soluk
+Disallow: /history
+Disallow: /search
+Disallow: /zand
+Disallow: /khanesh
+Disallow: /pajvak
 
 Sitemap: https://bideli.ir/sitemap.xml

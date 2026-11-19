@@ -9,7 +9,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
 import models
-from auth import decode_access_token
+from auth import decode_access_token, generate_public_id
 from database import SessionLocal
 
 ADMIN_USER_ID = 1  # your user id
@@ -65,11 +65,19 @@ def with_og(page: str) -> str:
     if not (t and c):
         return page
     og = (f'<meta property="og:type" content="article">\n'
-          f'<meta property="og:site_name" content="دیوان بیدل دهلوی">\n'
+          f'<meta property="og:site_name" content="بیدلی">\n'
           f'<meta property="og:title" content="{t.group(1)}">\n'
-          f'<meta property="og:url" content="{c.group(1)}">\n')
+          f'<meta property="og:url" content="{c.group(1)}">\n'
+          f'<meta property="og:image" content="https://bideli.ir/assets/logo-lockup.png">\n'
+          f'<meta property="og:image:width" content="1260">\n'
+          f'<meta property="og:image:height" content="1260">\n'
+          f'<meta property="og:locale" content="fa_IR">\n'
+          f'<meta name="twitter:card" content="summary_large_image">\n'
+          f'<meta name="twitter:title" content="{t.group(1)}">\n'
+          f'<meta name="twitter:image" content="https://bideli.ir/assets/logo-lockup.png">\n')
     if d:
         og += f'<meta property="og:description" content="{d.group(1)}">\n'
+        og += f'<meta name="twitter:description" content="{d.group(1)}">\n'
     return page.replace("</head>", og + "</head>", 1)
 
 
@@ -92,9 +100,16 @@ def get_current_user(
     if payload is None or "purpose" in payload:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="توکن نامعتبر است")
 
-    user = db.query(models.User).filter(models.User.id == payload.get("sub")).first()
+    user = db.query(models.User).filter(models.User.public_id == str(payload.get("sub"))).first()
+    # توکن‌های قدیمی، شناسهٔ عددی دارند؛ تا انقضای همان نشست پشتیبانی می‌شوند
+    if user is None and str(payload.get("sub", "")).isdigit():
+        user = db.query(models.User).filter(models.User.id == int(payload.get("sub"))).first()
     if user is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="کاربر یافت نشد")
+    if not user.public_id:
+        user.public_id = generate_public_id()
+        db.commit()
+        db.refresh(user)
     # توکن‌های قدیمی فیلد ver ندارند و با نسخهٔ ۰ برابرند؛ خروج یا تغییر رمز نسخه را بالا می‌برد
     if int(payload.get("ver", 0)) != int(user.token_version or 0):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="نشست منقضی شده است")

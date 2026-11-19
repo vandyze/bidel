@@ -28,7 +28,7 @@ cd ..
 # اجرای frontend
 echo "راه‌اندازی Frontend..."
 cd frontend
-python3 -m http.server "$FRONTEND_PORT" --bind 0.0.0.0 &
+python3 ../serve.py "$FRONTEND_PORT" --bind 0.0.0.0 &
 FRONTEND_PID=$!
 cd ..
 
